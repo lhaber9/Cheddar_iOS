@@ -8,12 +8,14 @@
 
 import Foundation
 
-class SelectionViewController: FrontPageViewController {
+class SelectionViewController: FrontPageViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBOutlet var oneOnOneButton: UIView!
     @IBOutlet var groupButton: UIView!
     @IBOutlet var singleImageContainer: UIView!
     @IBOutlet var groupImageContainer: UIView!
+    
+    @IBOutlet var pickerView: UIPickerView!
     
     var scaledSingleImage: UIImageView!
     var scaledGroupImage: UIImageView!
@@ -21,6 +23,8 @@ class SelectionViewController: FrontPageViewController {
     var scaledGroupSelectedImage: UIImageView!
     
     var singleSelected: Bool = true
+    var selectedColor: UIColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha: 1)
+    var dormNames: [String] = ["-", "West Village", "Kennedy", "Stetson West"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,14 +37,14 @@ class SelectionViewController: FrontPageViewController {
     }
     
     func selectedOneOnOne() {
-        oneOnOneButton.backgroundColor = UIColor.lightGrayColor()
+        oneOnOneButton.backgroundColor = selectedColor
         groupButton.backgroundColor = UIColor.whiteColor()
         singleSelected = true
         showButtonImages()
     }
     
     func selectedGroup() {
-        groupButton.backgroundColor = UIColor.lightGrayColor()
+        groupButton.backgroundColor = selectedColor
         oneOnOneButton.backgroundColor = UIColor.whiteColor()
         singleSelected = false
         showButtonImages()
@@ -103,5 +107,17 @@ class SelectionViewController: FrontPageViewController {
         groupSelectedImage.drawInRect(CGRect(origin: CGPointZero, size: groupSelectedImageSize))
         scaledGroupSelectedImage = UIImageView(image:UIGraphicsGetImageFromCurrentImageContext())
         UIGraphicsEndImageContext()
+    }
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 4
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return dormNames[row]
     }
 }

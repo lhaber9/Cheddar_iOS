@@ -10,6 +10,7 @@
                 <outlet property="groupButton" destination="kBQ-gh-dfQ" id="GBa-bl-P65"/>
                 <outlet property="groupImageContainer" destination="Vt7-Dp-abs" id="emT-1z-buy"/>
                 <outlet property="oneOnOneButton" destination="3aE-hK-2Fd" id="cj6-C1-4h0"/>
+                <outlet property="pickerView" destination="Aq4-Ko-L2b" id="2sh-VY-5UN"/>
                 <outlet property="singleImageContainer" destination="xES-op-srT" id="c2d-gT-TJ1"/>
                 <outlet property="view" destination="iN0-l3-epB" id="cQz-A6-tXI"/>
             </connections>
@@ -23,41 +24,101 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aE-hK-2Fd">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="175"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xES-op-srT">
-                                    <rect key="frame" x="0.0" y="0.0" width="75" height="175"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="75" height="200"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="bMy-9O-Yfw"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get paired with one other for a more intimate setting. Perfect for macking new connections" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FyB-nH-z8B">
+                                    <rect key="frame" x="75" y="36" width="220" height="43"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Optional] Select your dorm and we'll try to match you with someone nearby." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85x-IV-UbB">
+                                    <rect key="frame" x="75" y="83" width="220" height="29"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Aq4-Ko-L2b">
+                                    <rect key="frame" x="75" y="112" width="220" height="87.5"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="Vnt-mc-FBq"/>
+                                        <outlet property="delegate" destination="-1" id="ybZ-KN-AQj"/>
+                                    </connections>
+                                </pickerView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Single" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZpH-LG-fLV">
+                                    <rect key="frame" x="75" y="12" width="47" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.86054755671902261" green="0.86054755671902261" blue="0.86054755671902261" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
+                                <constraint firstItem="85x-IV-UbB" firstAttribute="leading" secondItem="xES-op-srT" secondAttribute="trailing" id="0yo-4w-4Pv"/>
                                 <constraint firstItem="xES-op-srT" firstAttribute="leading" secondItem="3aE-hK-2Fd" secondAttribute="leading" id="9Qx-wL-wxI"/>
-                                <constraint firstAttribute="height" constant="175" id="Cer-1V-eHn"/>
+                                <constraint firstItem="FyB-nH-z8B" firstAttribute="top" secondItem="ZpH-LG-fLV" secondAttribute="bottom" constant="4" id="9Ux-db-347"/>
+                                <constraint firstAttribute="trailing" secondItem="85x-IV-UbB" secondAttribute="trailing" constant="25" id="CYI-JZ-cNh"/>
+                                <constraint firstAttribute="height" constant="200" id="Cer-1V-eHn"/>
                                 <constraint firstItem="xES-op-srT" firstAttribute="top" secondItem="3aE-hK-2Fd" secondAttribute="top" id="PEb-6R-LC2"/>
+                                <constraint firstItem="ZpH-LG-fLV" firstAttribute="leading" secondItem="xES-op-srT" secondAttribute="trailing" id="TBF-tm-Nv5"/>
+                                <constraint firstItem="Aq4-Ko-L2b" firstAttribute="bottom" secondItem="xES-op-srT" secondAttribute="bottom" id="UqB-SA-xXM"/>
+                                <constraint firstItem="85x-IV-UbB" firstAttribute="top" secondItem="FyB-nH-z8B" secondAttribute="bottom" constant="4" id="V8l-Vv-Iy9"/>
+                                <constraint firstItem="Aq4-Ko-L2b" firstAttribute="leading" secondItem="xES-op-srT" secondAttribute="trailing" id="Vrp-so-XFF"/>
+                                <constraint firstAttribute="trailing" secondItem="FyB-nH-z8B" secondAttribute="trailing" constant="25" id="aUE-cS-4UO"/>
+                                <constraint firstItem="ZpH-LG-fLV" firstAttribute="top" secondItem="3aE-hK-2Fd" secondAttribute="top" constant="12" id="ggH-a9-p4v"/>
+                                <constraint firstAttribute="trailing" secondItem="Aq4-Ko-L2b" secondAttribute="trailing" constant="25" id="jj5-a8-p1G"/>
+                                <constraint firstItem="Aq4-Ko-L2b" firstAttribute="bottom" secondItem="xES-op-srT" secondAttribute="bottom" id="l0B-ub-MrD"/>
+                                <constraint firstItem="FyB-nH-z8B" firstAttribute="leading" secondItem="xES-op-srT" secondAttribute="trailing" id="meR-GO-OLS"/>
+                                <constraint firstItem="Aq4-Ko-L2b" firstAttribute="top" secondItem="85x-IV-UbB" secondAttribute="bottom" id="mqT-mz-WZg"/>
                                 <constraint firstAttribute="bottom" secondItem="xES-op-srT" secondAttribute="bottom" id="y5e-T8-hly"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="UqB-SA-xXM"/>
+                                </mask>
+                            </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kBQ-gh-dfQ">
-                            <rect key="frame" x="0.0" y="175" width="320" height="125"/>
+                            <rect key="frame" x="0.0" y="200" width="320" height="100"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vt7-Dp-abs">
-                                    <rect key="frame" x="0.0" y="0.0" width="75" height="125"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="75" height="100"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="75" id="c8L-vg-dad"/>
                                     </constraints>
                                 </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVf-Cv-0g1">
+                                    <rect key="frame" x="75" y="12" width="47.5" height="20.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Join the mayhem. Anything goes in this up to 5 person chat room. Warning: Not for the faint of heart" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REN-Qw-Rmu">
+                                    <rect key="frame" x="75" y="36" width="220" height="43"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="mVf-Cv-0g1" firstAttribute="leading" secondItem="Vt7-Dp-abs" secondAttribute="trailing" id="90q-uV-dki"/>
                                 <constraint firstItem="Vt7-Dp-abs" firstAttribute="leading" secondItem="kBQ-gh-dfQ" secondAttribute="leading" id="AFL-6q-20e"/>
                                 <constraint firstItem="Vt7-Dp-abs" firstAttribute="top" secondItem="kBQ-gh-dfQ" secondAttribute="top" id="MYz-la-NYd"/>
                                 <constraint firstAttribute="bottom" secondItem="Vt7-Dp-abs" secondAttribute="bottom" id="NhA-fa-pKD"/>
-                                <constraint firstAttribute="height" constant="125" id="V2R-9x-0ge"/>
+                                <constraint firstAttribute="trailing" secondItem="REN-Qw-Rmu" secondAttribute="trailing" constant="25" id="QgP-IY-Xec"/>
+                                <constraint firstAttribute="height" constant="100" id="V2R-9x-0ge"/>
+                                <constraint firstItem="REN-Qw-Rmu" firstAttribute="top" secondItem="mVf-Cv-0g1" secondAttribute="bottom" constant="4" id="XNg-WL-sfK"/>
+                                <constraint firstItem="REN-Qw-Rmu" firstAttribute="leading" secondItem="Vt7-Dp-abs" secondAttribute="trailing" id="agA-iF-RAV"/>
+                                <constraint firstItem="mVf-Cv-0g1" firstAttribute="top" secondItem="kBQ-gh-dfQ" secondAttribute="top" constant="12" id="w1p-I6-eMv"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uGm-mQ-CXT">
