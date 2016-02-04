@@ -7,16 +7,46 @@
 //
 
 import UIKit
+import PubNub
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     var window: UIWindow?
-
+    var pnClient: PubNub?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+//        [self.client publish: @"Hello from PubNub iOS!" toChannel: @"my_channel" storeInHistory:YES
+//        withCompletion:^(PNPublishStatus *status)
+        
+        let configuration = PNConfiguration(publishKey: "XXXX", subscribeKey: "XXXX")
+        let client = PubNub.clientWithConfiguration(configuration)
+        client.addListener(self)
+        client.subscribeToChannels(["test"], withPresence: true)
+        
+        client.publish("Hello", toChannel: "test", mobilePushPayload: ["test":"test"], storeInHistory: true, withCompletion: { (status: PNPublishStatus!) -> Void in
+            
+        })
+        
+        pnClient = client
+        
         return true
+    }
+    
+    func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
+        
+        
+        NSLog("here1")
+    }
+    
+    func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
+        NSLog("here2")
+    }
+    
+    func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
+        NSLog("here3")
     }
 
     func applicationWillResignActive(application: UIApplication) {
