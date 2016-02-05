@@ -13,6 +13,7 @@ class RegisterViewController: FrontPageViewController {
     @IBOutlet var emailTextField: UITextField!
     
     @IBAction func goToNext() {
+        tapOut()
         if (isEmailVaildated()) {
             delegate?.goToNextPageWithController(SelectionViewController())
         }
