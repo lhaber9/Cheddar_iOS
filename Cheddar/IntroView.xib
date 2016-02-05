@@ -32,7 +32,7 @@
                             <rect key="frame" x="137" y="320" width="46" height="30"/>
                             <state key="normal" title="Button"/>
                             <connections>
-                                <action selector="goToNext" destination="-1" eventType="touchUpInside" id="UTi-Ir-CEJ"/>
+                                <action selector="goToNext" destination="-1" eventType="touchUpInside" id="huP-XY-M9R"/>
                             </connections>
                         </button>
                     </subviews>

@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegisterViewController" customModule="Cheddar" customModuleProvider="target">
             <connections>
-                <outlet property="emailTextField" destination="gId-gI-8lw" id="91b-OK-44R"/>
+                <outlet property="emailTextField" destination="gId-gI-8lw" id="syg-Ei-3bN"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Lra-Eh-oGx"/>
             </connections>
         </placeholder>
