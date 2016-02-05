@@ -10,6 +10,8 @@ import Foundation
 
 protocol FrontPageViewControllerDelegate: class {
     func goToNextPageWithController(viewController: FrontPageViewController)
+    func raiseScrollView()
+    func lowerScrollView()
 }
 
 class FrontPageViewController: UIViewController {

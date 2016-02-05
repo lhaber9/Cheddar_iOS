@@ -25,9 +25,13 @@
 		A393D6231C63C80D00EBB94C /* FrontPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A393D6221C63C80D00EBB94C /* FrontPageViewController.swift */; };
 		A393D6251C63C9D200EBB94C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A393D6241C63C9D200EBB94C /* IntroViewController.swift */; };
 		A393D6271C63C9DD00EBB94C /* IntroView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A393D6261C63C9DD00EBB94C /* IntroView.xib */; };
+		A393D6291C63EA7B00EBB94C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A393D6281C63EA7B00EBB94C /* RegisterViewController.swift */; };
+		A393D62B1C63EA8700EBB94C /* RegisterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A393D62A1C63EA8700EBB94C /* RegisterView.xib */; };
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
+		A3ECAE7E1C643063003F981C /* EmailValidateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE7D1C643063003F981C /* EmailValidateViewController.swift */; };
+		A3ECAE801C643076003F981C /* EmailValidateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE7F1C643076003F981C /* EmailValidateView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +78,8 @@
 		A393D6221C63C80D00EBB94C /* FrontPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontPageViewController.swift; sourceTree = "<group>"; };
 		A393D6241C63C9D200EBB94C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		A393D6261C63C9DD00EBB94C /* IntroView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroView.xib; sourceTree = "<group>"; };
+		A393D6281C63EA7B00EBB94C /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A393D62A1C63EA8700EBB94C /* RegisterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterView.xib; sourceTree = "<group>"; };
 		A3C59BD01C61BE07009B82EE /* Cheddar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cheddar-Bridging-Header.h"; sourceTree = "<group>"; };
 		A3C59BD11C61BE07009B82EE /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
 		A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
@@ -84,6 +90,8 @@
 		A3C59BD71C61BE07009B82EE /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		A3ECAE7D1C643063003F981C /* EmailValidateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailValidateViewController.swift; sourceTree = "<group>"; };
+		A3ECAE7F1C643076003F981C /* EmailValidateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailValidateView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +203,10 @@
 				A393D6221C63C80D00EBB94C /* FrontPageViewController.swift */,
 				A393D6241C63C9D200EBB94C /* IntroViewController.swift */,
 				A393D6261C63C9DD00EBB94C /* IntroView.xib */,
+				A393D6281C63EA7B00EBB94C /* RegisterViewController.swift */,
+				A393D62A1C63EA8700EBB94C /* RegisterView.xib */,
+				A3ECAE7D1C643063003F981C /* EmailValidateViewController.swift */,
+				A3ECAE7F1C643076003F981C /* EmailValidateView.xib */,
 				A393D61E1C63C58300EBB94C /* SelectionViewController.swift */,
 				A393D61A1C63C32700EBB94C /* SelectionView.xib */,
 			);
@@ -333,12 +345,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A393D62B1C63EA8700EBB94C /* RegisterView.xib in Resources */,
 				A38896D31C60664A002017B9 /* LaunchScreen.storyboard in Resources */,
 				A393D6101C63BB5400EBB94C /* group.png in Resources */,
 				A393D61B1C63C32700EBB94C /* SelectionView.xib in Resources */,
 				A393D6161C63C1C400EBB94C /* cheese.png in Resources */,
 				A38896D01C60664A002017B9 /* Assets.xcassets in Resources */,
 				A393D6121C63BB5400EBB94C /* single.png in Resources */,
+				A3ECAE801C643076003F981C /* EmailValidateView.xib in Resources */,
 				A393D6111C63BB5400EBB94C /* group_selected.png in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
@@ -415,10 +429,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A393D6291C63EA7B00EBB94C /* RegisterViewController.swift in Sources */,
 				A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */,
 				A393D61F1C63C58300EBB94C /* SelectionViewController.swift in Sources */,
 				A393D6231C63C80D00EBB94C /* FrontPageViewController.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A3ECAE7E1C643063003F981C /* EmailValidateViewController.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,

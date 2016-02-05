@@ -14,11 +14,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
     @IBOutlet var shadowBackgroundView: UIView!
     @IBOutlet var container0: UIView!
     
-    @IBOutlet var emailView: UIView!
-    @IBOutlet var confirmView: UIView!
-    
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
+    @IBOutlet var scrollViewHeightRaisedConstrait: NSLayoutConstraint!
     
     var containers: [UIView]!
     var currentPage: Int = 0
@@ -34,7 +34,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
         let introViewController = IntroViewController()
         addViewControllerPageToLastContainer(introViewController)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -44,6 +44,22 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
         scrollToPage(currentPage + 1)
     }
     
+    func raiseScrollView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.priority = 200;
+            self.scrollViewHeightRaisedConstrait.priority = 900;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func lowerScrollView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.priority = 900;
+            self.scrollViewHeightRaisedConstrait.priority = 200;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
     func scrollToPage(pageIdx: Int) {
         scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(pageIdx), 0.0), animated:true)
         currentPage = pageIdx
@@ -51,6 +67,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
     
     func addContainer() {
         containers.last!.removeConstraint(scrollViewWidthConstraint)
+        scrollViewWidthConstraint = nil
         let containerView = UIView()
         scrollView.addSubview(containerView)
         
@@ -58,7 +75,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
         containerView.autoPinEdgeToSuperviewEdge(ALEdge.Top, withInset: 5)
         containerView.autoPinEdgeToSuperviewEdge(ALEdge.Bottom, withInset: 5)
         containerView.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: containers.last!)
-        scrollViewWidthConstraint = containerView.autoPinEdgeToSuperviewEdge(ALEdge.Trailing)
+        
+        scrollViewWidthConstraint = NSLayoutConstraint(item: containerView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
+        scrollViewWidthConstraint.priority = 900
+        
+        view.addConstraint(scrollViewWidthConstraint)
 
         containers.append(containerView)
     }

@@ -11,7 +11,15 @@ import Foundation
 class IntroViewController: FrontPageViewController {
 
     @IBAction func goToNext() {
-        delegate?.goToNextPageWithController(SelectionViewController())
+        if (isNewUser()) {
+            delegate?.goToNextPageWithController(RegisterViewController())
+        }
+        else {
+            delegate?.goToNextPageWithController(SelectionViewController())
+        }
     }
     
+    func isNewUser() -> Bool {
+        return true
+    }
 }
