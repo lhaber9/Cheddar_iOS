@@ -114,5 +114,9 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
         addViewControllerPageToLastContainer(viewController)
         goToNext()
     }
+    
+    func showChat() {
+        performSegueWithIdentifier("PresentChat", sender: self)
+    }
 }
 

@@ -26,19 +26,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         client.addListener(self)
         client.subscribeToChannels(["test"], withPresence: true)
         
-        client.publish("Hello", toChannel: "test", mobilePushPayload: ["test":"test"], storeInHistory: true, withCompletion: { (status: PNPublishStatus!) -> Void in
-            
-        })
-        
-        pnClient = client
+        pnClient = client        
         
         return true
     }
     
+    func sendPubNubMessage(message: Message, mobilePushPayload: [NSObject : AnyObject]!, toChannel channel: String) {
+        pnClient!.publish(message.toJson(), toChannel: channel, mobilePushPayload: mobilePushPayload, storeInHistory: true, withCompletion: { (status: PNPublishStatus!) -> Void in
+            
+        })
+    }
+    
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
-        
-        
-        NSLog("here1")
+        let jsonMessage = message.data.message as! [NSObject:AnyObject]
+        NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(jsonMessage))
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {

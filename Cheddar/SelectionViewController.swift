@@ -36,6 +36,10 @@ class SelectionViewController: FrontPageViewController, UIPickerViewDataSource, 
         showButtonImages()
     }
     
+    @IBAction func goToChat() {
+        delegate!.showChat()
+    }
+    
     func selectedOneOnOne() {
         oneOnOneButton.backgroundColor = selectedColor
         groupButton.backgroundColor = UIColor.whiteColor()

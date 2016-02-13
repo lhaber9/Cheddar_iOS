@@ -10,6 +10,7 @@ import Foundation
 
 protocol FrontPageViewControllerDelegate: class {
     func goToNextPageWithController(viewController: FrontPageViewController)
+    func showChat()
     func raiseScrollView()
     func lowerScrollView()
 }
