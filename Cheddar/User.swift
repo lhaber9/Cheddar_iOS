@@ -12,10 +12,6 @@ class User {
     
     static let theUser = User()
     
-    var userId: String
-
-    init() {
-        userId = "1111"
-    }
+    var objectId: String!
     
 }

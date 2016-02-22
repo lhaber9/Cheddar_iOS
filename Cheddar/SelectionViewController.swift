@@ -37,7 +37,7 @@ class SelectionViewController: FrontPageViewController, UIPickerViewDataSource, 
     }
     
     @IBAction func goToChat() {
-        delegate!.showChat()
+        delegate!.joinChat(singleSelected)
     }
     
     func selectedOneOnOne() {

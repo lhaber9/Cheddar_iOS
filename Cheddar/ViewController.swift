@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Parse
 
+class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatViewControllerDelegate {
 
-class ViewController: UIViewController, FrontPageViewControllerDelegate {
-
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet var shadowBackgroundView: UIView!
     @IBOutlet var container0: UIView!
     
@@ -18,7 +19,9 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
-    @IBOutlet var scrollViewHeightRaisedConstrait: NSLayoutConstraint!
+    
+    var scrollViewHeightRaisedConstant: CGFloat = -130
+    var scrollViewHeightLoweredConstant: CGFloat = 180
     
     var containers: [UIView]!
     var currentPage: Int = 0
@@ -26,9 +29,12 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        backgroundView.backgroundColor = ColorConstants.colorPrimary
+        
         setShawdowForView(shadowBackgroundView)
         shadowBackgroundView.layer.shadowRadius = 5;
         shadowBackgroundView.layer.shadowOpacity = 0.8;
+        shadowBackgroundView.backgroundColor = ColorConstants.solidGray
         
         containers = [container0]
         let introViewController = IntroViewController()
@@ -41,28 +47,25 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
     }
     
     func goToNext() {
-        scrollToPage(currentPage + 1)
+        scrollToPage(currentPage + 1, animated: true)
     }
     
-    func raiseScrollView() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.priority = 200;
-            self.scrollViewHeightRaisedConstrait.priority = 900;
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func lowerScrollView() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.priority = 900;
-            self.scrollViewHeightRaisedConstrait.priority = 200;
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func scrollToPage(pageIdx: Int) {
-        scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(pageIdx), 0.0), animated:true)
+    func scrollToPage(pageIdx: Int, animated: Bool) {
+        scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(pageIdx), 0.0), animated:animated)
         currentPage = pageIdx
+    }
+    
+    func setShawdowForView(view: UIView) {
+        view.layer.masksToBounds = false;
+        view.layer.shadowOffset = CGSizeMake(0, 0);
+        view.layer.shadowRadius = 3;
+        view.layer.shadowOpacity = 0.5;
+    }
+    
+    func goToNextPageWithController(viewController: FrontPageViewController) {
+        addContainer()
+        addViewControllerPageToLastContainer(viewController)
+        goToNext()
     }
     
     func addContainer() {
@@ -102,21 +105,57 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate {
         setShawdowForView(view)
     }
     
-    func setShawdowForView(view: UIView) {
-        view.layer.masksToBounds = false;
-        view.layer.shadowOffset = CGSizeMake(0, 0);
-        view.layer.shadowRadius = 3;
-        view.layer.shadowOpacity = 0.5;
+    // FrontPageViewControllerDelegate
+    
+    func joinChat(isSingle: Bool) {
+        
+        if (isSingle) {
+            UIAlertView(title: "Oops", message: "One on One Chat Not Available Yet", delegate: self, cancelButtonTitle: "ok").show()
+        }
+        else {
+            let chatRooms = ChatRoom.fetchAll()
+            if (chatRooms.count == 0) {
+                PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
+                    let alias = Alias.createAliasFromParseObject(object as! PFObject)
+                    ChatRoom.createWithMyAlias(alias)
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+                    self.showChatWithAlias(alias)
+                }
+            }
+            else {
+                let chatRoom = chatRooms[0]
+                self.showChatWithAlias(chatRoom.myAlias)
+            }
+        }
     }
     
-    func goToNextPageWithController(viewController: FrontPageViewController) {
-        addContainer()
-        addViewControllerPageToLastContainer(viewController)
-        goToNext()
+    func showChatWithAlias(alias: Alias) {
+        let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        chatViewController.delegate = self
+        chatViewController.channelId = alias.chatRoomId
+        chatViewController.alias = alias
+        self.presentViewController(chatViewController, animated: true, completion: nil)
     }
     
-    func showChat() {
-        performSegueWithIdentifier("PresentChat", sender: self)
+    func raiseScrollView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.constant = self.scrollViewHeightRaisedConstant;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func lowerScrollView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.constant = 0;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    // ChatViewContollerDelegate
+    
+    func closeChat() {
+        self.scrollToPage(self.currentPage, animated: false);
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

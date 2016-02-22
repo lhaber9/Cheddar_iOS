@@ -10,7 +10,7 @@ import Foundation
 
 protocol FrontPageViewControllerDelegate: class {
     func goToNextPageWithController(viewController: FrontPageViewController)
-    func showChat()
+    func joinChat(isSingle: Bool)
     func raiseScrollView()
     func lowerScrollView()
 }
@@ -21,5 +21,9 @@ class FrontPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    func goToNextPageWithController(viewController: FrontPageViewController) {
+        delegate?.goToNextPageWithController(viewController)
     }
 }

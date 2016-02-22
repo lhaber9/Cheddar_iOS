@@ -37,6 +37,12 @@
 		A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE811C66E730003F981C /* ChatViewController.swift */; };
 		A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE951C67273C003F981C /* ChatCell.swift */; };
 		A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE971C673B8C003F981C /* ChatCell.xib */; };
+		A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920571C77ECBA003E0BC3 /* StringConstants.swift */; };
+		A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920591C783BE8003E0BC3 /* ColorConstants.swift */; };
+		A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */; };
+		A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920621C7AA2E9003E0BC3 /* Alias.swift */; };
+		A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */; };
+		A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +108,12 @@
 		A3ECAE811C66E730003F981C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A3ECAE951C67273C003F981C /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		A3ECAE971C673B8C003F981C /* ChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
+		A3F920571C77ECBA003E0BC3 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
+		A3F920591C783BE8003E0BC3 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
+		A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayConstants.swift; sourceTree = "<group>"; };
+		A3F920621C7AA2E9003E0BC3 /* Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
+		A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
+		A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,18 +178,17 @@
 		A38896C71C60664A002017B9 /* Cheddar */ = {
 			isa = PBXGroup;
 			children = (
+				A3F9205D1C783E77003E0BC3 /* Constants */,
+				A393D6171C63C2BF00EBB94C /* Front Pages */,
+				A3F9205E1C783EA0003E0BC3 /* Chat */,
+				A3F920611C7AA2D2003E0BC3 /* Objects */,
 				A38896C81C60664A002017B9 /* AppDelegate.swift */,
 				A38896CA1C60664A002017B9 /* ViewController.swift */,
-				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
-				A3B12D481C6FC83900B75645 /* User.swift */,
-				A3ECAE951C67273C003F981C /* ChatCell.swift */,
-				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
-				A37297D61C6BF5AF00625C7F /* Message.swift */,
+				A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */,
 				A38896CC1C60664A002017B9 /* Main.storyboard */,
-				A393D6171C63C2BF00EBB94C /* Front Pages */,
-				A38896CF1C60664A002017B9 /* Assets.xcassets */,
 				A38896D11C60664A002017B9 /* LaunchScreen.storyboard */,
 				A38896D41C60664A002017B9 /* Info.plist */,
+				A38896CF1C60664A002017B9 /* Assets.xcassets */,
 			);
 			path = Cheddar;
 			sourceTree = "<group>";
@@ -242,6 +253,37 @@
 				A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */,
 			);
 			name = "Pure Layout";
+			sourceTree = "<group>";
+		};
+		A3F9205D1C783E77003E0BC3 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */,
+				A3F920571C77ECBA003E0BC3 /* StringConstants.swift */,
+				A3F920591C783BE8003E0BC3 /* ColorConstants.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		A3F9205E1C783EA0003E0BC3 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
+				A3ECAE951C67273C003F981C /* ChatCell.swift */,
+				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		A3F920611C7AA2D2003E0BC3 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				A37297D61C6BF5AF00625C7F /* Message.swift */,
+				A3F920621C7AA2E9003E0BC3 /* Alias.swift */,
+				A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */,
+				A3B12D481C6FC83900B75645 /* User.swift */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 		FD5D000EB21F8744CEE9A8F4 /* Pods */ = {
@@ -318,12 +360,21 @@
 		A38896BD1C60664A002017B9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					ChatViewController,
+				);
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Lucas Haber";
 				TargetAttributes = {
 					A38896C41C60664A002017B9 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 7DAS5PPLAD;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					A38896D81C60664A002017B9 = {
 						CreatedOnToolsVersion = 7.2;
@@ -453,11 +504,17 @@
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
+				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
+				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
 				A3ECAE7E1C643063003F981C /* EmailValidateViewController.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A37297D71C6BF5AF00625C7F /* Message.swift in Sources */,
+				A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */,
 				A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */,
+				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
+				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,
 				A393D6251C63C9D200EBB94C /* IntroViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,7 +606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -588,7 +645,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -602,10 +659,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Cheddar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -617,10 +677,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Cheddar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 			};
 			name = Release;
@@ -713,6 +776,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */,
+			);
+			currentVersion = A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A38896BD1C60664A002017B9 /* Project object */;
 }

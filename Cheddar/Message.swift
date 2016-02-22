@@ -7,47 +7,34 @@
 //
 
 import Foundation
-import PubNub
 
-class Message: NSObject {
+class Message {
 
-    var messageText: String = ""
-    var fromUserId: String = ""
-    var channel: String = ""
-    
-    
-    func toJson() -> String {
-        
-        var jsonString = "{"
-        
-        jsonString += "\"messageText\":\"" + messageText + "\","
-        jsonString +=  "\"fromUserId\":\"" + fromUserId + "\","
-        jsonString +=  "\"channel\":\"" + channel + "\"}"
-        
-        return jsonString
-    }
+    var body: String!
+    var alias: Alias!
+    var chatRoomId: String!
     
     class func createMessage(jsonMessage: [NSObject: AnyObject]) -> Message {
         let newMessage = Message()
         
-        if let text = jsonMessage["messageText"] as? String {
-            newMessage.messageText = text
+        if let body = jsonMessage["body"] as? String {
+            newMessage.body = body
         }
-        if let userId = jsonMessage["fromUserId"] as? String {
-            newMessage.fromUserId = userId
+        if let aliasDict = jsonMessage["alias"] as? [NSObject:AnyObject] {
+            newMessage.alias = Alias.createAliasFromJson(aliasDict)
         }
-        if let channel = jsonMessage["channel"] as? String {
-            newMessage.channel = channel
+        if let chatRoomId = jsonMessage["chatRoomId"] as? String {
+            newMessage.chatRoomId = chatRoomId
         }
         
         return newMessage
     }
     
-    class func createMessage(text: String, userId: String, channel: String) -> Message {
+    class func createMessage(body: String, alias: Alias, chatRoomId: String) -> Message {
         let newMessage = Message()
-        newMessage.messageText = text
-        newMessage.fromUserId = userId
-        newMessage.channel = channel
+        newMessage.body = body
+        newMessage.alias = alias
+        newMessage.chatRoomId = chatRoomId
     
         return newMessage
     }
