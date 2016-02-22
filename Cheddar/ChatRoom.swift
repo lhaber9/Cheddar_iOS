@@ -16,7 +16,6 @@ class ChatRoom: NSManagedObject {
     @NSManaged var numOccupants: Int
     
     @NSManaged var myAlias: Alias!
-    @NSManaged var messages: NSArray
     
     var maxMessagesStored = 100
     
@@ -60,9 +59,25 @@ class ChatRoom: NSManagedObject {
             return []
         }
     }
-    
-    func addMessages(newMessages: [Message]) {
-        messages = messages.arrayByAddingObjectsFromArray(newMessages)
-        (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+
+    class func fetchById(chatRoomId:String) -> ChatRoom! {
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "ChatRoom")
+        dataFetch.predicate = NSPredicate(format: "objectId == %@", chatRoomId)
+        
+        do {
+            return (try moc.executeFetchRequest(dataFetch) as! [ChatRoom])[0]
+        } catch {
+            return nil
+        }
     }
+    
+//    class func addMessagesToRoom(newMessages: [Message], chatRoomId:String) {
+//        let chatRoom = fetchById(chatRoomId)
+//        chatRoom.addMessages(newMessages)
+//    }
+//    
+//    func addMessages(newMessages: [Message]) {
+//        messages.appendContentsOf(newMessages)
+//    }
 }

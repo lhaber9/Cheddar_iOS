@@ -22,21 +22,20 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var tableView: UITableView!
     
+    var chatRoomId: String!
+    var myAlias: Alias!
     var messages: [Message] = []
-    var channelId: String!
-    var alias: Alias!
     
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deselectTextView"))
-        
         chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectTextView"))
         
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).subscripeToPubNubChannel(channelId)
+        (UIApplication.sharedApplication().delegate as! AppDelegate).subscripeToPubNubChannel(chatRoomId)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
            self.receiveMessage(notification.object as! Message)
         }
@@ -45,6 +44,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
     }
     
     @IBAction func closeChat() {
@@ -59,8 +59,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let text = textView.text!
         textView.text = ""
         
-        let message = Message.createMessage(text, alias: alias, chatRoomId: channelId)
+        let message = Message.createMessage(text, alias: myAlias, chatRoomId: chatRoomId)
         sendMessage(message)
+        addMessage(message)
+    }
+    
+    func isMyMessage(message: Message) -> Bool {
+        return (message.alias.objectId == myAlias.objectId)
     }
     
     func deselectTextView() {
@@ -76,6 +81,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func receiveMessage(message: Message) {
+        if (isMyMessage(message)) {
+            return;
+        }
+        
+        addMessage(message)
+    }
+    
+    func addMessage(message: Message) {
         messages.append(message)
         
         tableView.reloadData()
@@ -132,7 +145,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let message = messages[indexPath.row]
         
         cell.setMessageText(message.body)
-        cell.isOutbound = (message.alias.objectId == self.alias.objectId)
+        cell.isOutbound = isMyMessage(message)
         cell.showAliasLabel = shouldShowAliasForMessageIndex(indexPath.row)
         cell.alias = message.alias
         

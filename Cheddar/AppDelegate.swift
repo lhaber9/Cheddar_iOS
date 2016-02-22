@@ -55,10 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func sendPubNubMessage(message: Message, mobilePushPayload: [NSObject : AnyObject]!, toChannel channel: String) {
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":pnPubKey, "subkey":pnSubKey]) { (object: AnyObject?,error: NSError?) -> Void in
-        
-            NSLog("here")
-        }
+        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":pnPubKey, "subkey":pnSubKey])
     }
     
     func subscripeToPubNubChannel(channelId: String) {

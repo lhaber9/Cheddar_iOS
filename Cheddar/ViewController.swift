@@ -117,23 +117,23 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             if (chatRooms.count == 0) {
                 PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
                     let alias = Alias.createAliasFromParseObject(object as! PFObject)
-                    ChatRoom.createWithMyAlias(alias)
+                    let chatRoom = ChatRoom.createWithMyAlias(alias)
                     (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-                    self.showChatWithAlias(alias)
+                    self.showChatRoom(chatRoom)
                 }
             }
             else {
                 let chatRoom = chatRooms[0]
-                self.showChatWithAlias(chatRoom.myAlias)
+                self.showChatRoom(chatRoom)
             }
         }
     }
     
-    func showChatWithAlias(alias: Alias) {
+    func showChatRoom(chatRoom: ChatRoom) {
         let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
-        chatViewController.channelId = alias.chatRoomId
-        chatViewController.alias = alias
+        chatViewController.chatRoomId = chatRoom.objectId
+        chatViewController.myAlias = chatRoom.myAlias
         self.presentViewController(chatViewController, animated: true, completion: nil)
     }
     
