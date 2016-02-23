@@ -13,22 +13,31 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
 
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var shadowBackgroundView: UIView!
+    @IBOutlet var spinnerView: UIView!
     @IBOutlet var container0: UIView!
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
+    @IBOutlet var backgroundViewHeightConstrait: NSLayoutConstraint!
     
     var scrollViewHeightRaisedConstant: CGFloat = -130
+    var scrollViewHeightMiddleConstant: CGFloat = -70
+    var scrollViewHeightDefaultConstant: CGFloat = 0
     var scrollViewHeightLoweredConstant: CGFloat = 400
     var scrollViewHeightOffScreenConstant: CGFloat = 550
+    
+    var backgroundViewHeightDefaultConstant: CGFloat = 300
+    var backgroundViewHeightLoweredConstant: CGFloat = 50
     
     var containers: [UIView]!
     var currentPage: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        spinnerView.alpha = 0
         
         backgroundView.backgroundColor = ColorConstants.colorPrimary
         
@@ -42,9 +51,20 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         addViewControllerPageToLastContainer(introViewController)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        checkInChatRoom()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func checkInChatRoom() {
+        let chatRoom = ChatRoom.fetchSingleRoom()
+        if (chatRoom != nil) {
+            self.showChatRoom(chatRoom)
+        }
     }
     
     func goToNext() {
@@ -109,22 +129,37 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     // FrontPageViewControllerDelegate
     
     func joinChat(isSingle: Bool) {
-        
         if (isSingle) {
             UIAlertView(title: "Oops", message: "One on One Chat Not Available Yet", delegate: self, cancelButtonTitle: "ok").show()
         }
         else {
-            let chatRooms = ChatRoom.fetchAll()
-            if (chatRooms.count == 0) {
-                PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
-                    let alias = Alias.createAliasFromParseObject(object as! PFObject)
-                    let chatRoom = ChatRoom.createWithMyAlias(alias)
-                    (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-                    self.showChatRoom(chatRoom)
-                }
+            let chatRoom = ChatRoom.fetchSingleRoom()
+            if (chatRoom == nil) {
+                joinNextAndAnimate()
             }
             else {
-                let chatRoom = chatRooms[0]
+                self.showChatRoom(chatRoom)
+            }
+        }
+    }
+    
+    func joinNextAndAnimate() {
+        
+        var chatRoom: ChatRoom!
+        var animationComplete = false
+        
+        PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
+            let alias = Alias.createAliasFromParseObject(object as! PFObject)
+            chatRoom = ChatRoom.createWithMyAlias(alias)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+            if (animationComplete) {
+                self.showChatRoom(chatRoom)
+            }
+        }
+        
+        performJoinChatAnimation { () -> Void in
+            animationComplete = true
+            if (chatRoom != nil) {
                 self.showChatRoom(chatRoom)
             }
         }
@@ -136,7 +171,12 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         chatViewController.chatRoomId = chatRoom.objectId
         chatViewController.myAlias = chatRoom.myAlias
         NSLog("Joining ChatRoom: " + chatRoom.objectId)
-        self.presentViewController(chatViewController, animated: true, completion: nil)
+        self.presentViewController(chatViewController, animated: true) { () -> Void in
+            self.scrollViewToDefault()
+            self.scrollBackgroundViewToDefault()
+            self.spinnerView.hidden = false
+            self.spinnerView.alpha = 0
+        }
     }
     
     func animateScrollViewToRaised() {
@@ -148,9 +188,18 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func animateScrollViewToDefault() {
         UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.constant = 0;
-            self.view.layoutIfNeeded()
+            self.scrollViewToDefault()
         }
+    }
+    
+    func scrollViewToDefault() {
+        self.scrollViewHeightConstrait.constant = self.scrollViewHeightDefaultConstant;
+        self.view.layoutIfNeeded()
+    }
+    
+    func scrollBackgroundViewToDefault() {
+        self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightDefaultConstant;
+        self.view.layoutIfNeeded()
     }
     
     func animateScrollViewToLowered() {
@@ -167,11 +216,51 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         }
     }
     
+    func startSpinner() {
+        UIView.animateWithDuration(0.5, animations: { () -> Void in
+            self.spinnerView.alpha = 1
+            self.spinnerView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
+            self.view.layoutIfNeeded()
+            }) { (success: Bool) -> Void in
+                let options : UIViewAnimationOptions = [UIViewAnimationOptions.Repeat, UIViewAnimationOptions.CurveLinear]
+                UIView.animateWithDuration(0.25, delay: 0, options: options, animations: { () -> Void in
+                        let transform = CGAffineTransformMakeRotation(CGFloat(M_PI * -0.05));
+                        self.spinnerView.transform = transform;
+                        self.view.layoutIfNeeded()
+                    }) { (success: Bool) -> Void in
+                }
+        }
+    }
+    
+    func performJoinChatAnimation(callback: () -> Void) {
+        UIView.animateWithDuration(0.333, animations: { () -> Void in
+            self.scrollViewHeightConstrait.constant = self.scrollViewHeightMiddleConstant
+            self.view.layoutIfNeeded()
+            self.startSpinner()
+            }) { (success: Bool) -> Void in
+                UIView.animateWithDuration(0.666, animations: { () -> Void in
+                    self.scrollViewHeightConstrait.constant = self.scrollViewHeightOffScreenConstant
+                    self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightLoweredConstant
+                    self.view.layoutIfNeeded()
+                    }) { (success: Bool) -> Void in
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(UInt64(2) * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+                            callback()
+                        })
+                }
+        }
+    }
+    
     // ChatViewContollerDelegate
     
-    func closeChat() {
-        self.scrollToPage(self.currentPage, animated: false);
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func leaveChat(alias:Alias) {
+        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!]) { (object: AnyObject?, error: NSError?) -> Void in
+            let chatRoom = ChatRoom.fetchSingleRoom()
+            (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+            self.scrollToPage(self.currentPage, animated: false)
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
 }
 

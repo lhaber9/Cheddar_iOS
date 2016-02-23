@@ -13,7 +13,6 @@ protocol FrontPageViewControllerDelegate: class {
     func joinChat(isSingle: Bool)
     func animateScrollViewToRaised()
     func animateScrollViewToDefault()
-    func animateScrollViewToLowered()
 }
 
 class FrontPageViewController: UIViewController {

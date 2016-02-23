@@ -49,6 +49,21 @@ class ChatRoom: NSManagedObject {
         return newRoom
     }
     
+    class func fetchSingleRoom() -> ChatRoom! {
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "ChatRoom")
+        do {
+            let result = (try moc.executeFetchRequest(dataFetch) as! [ChatRoom])
+            if (result.count > 0) {
+                return result[0]
+            }
+            return nil
+        } catch {
+            return nil
+        }
+
+    }
+    
     class func fetchAll() -> [ChatRoom] {
         let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatRoom")

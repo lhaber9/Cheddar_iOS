@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ChatViewControllerDelegate: class {
-    func closeChat()
+    func leaveChat(alias:Alias)
 }
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -48,7 +48,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func closeChat() {
-        delegate?.closeChat()
+        delegate?.leaveChat(myAlias)
     }
     
     @IBAction func sendPress() {
