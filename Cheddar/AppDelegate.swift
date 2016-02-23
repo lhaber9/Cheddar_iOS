@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var window: UIWindow?
     var pnClient: PubNub!
     
-    var pnPubKey = "pub-c-1164a995-8327-4ff5-9219-088934f339f7"
-    var pnSubKey = "sub-c-503c4680-ca23-11e5-837e-02ee2ddab7fe"
+    var pnPubKey = ""
+    var pnSubKey = ""
     
     var userIdFieldName = "cheddarUserId"
 
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         pnClient = PubNub.clientWithConfiguration(configuration)
         pnClient.addListener(self)
         
-        Parse.setApplicationId("tzuRtC3yGeR9js54uTpe0rAAeuYLNrldzrLy1sEG", clientKey:"SrQgIHFsq2eRTvBOAak6aCaWX7Q1NAJYckXd10hb")
+        Parse.setApplicationId("", clientKey:"")
         
         initializeUser()
         
