@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var window: UIWindow?
     var pnClient: PubNub!
     
-    var pnPubKey = "pub-c-4946bdc5-b51e-4660-9d68-8434255c72e5"
-    var pnSubKey = "sub-c-aaab95d8-9870-11e5-9a49-02ee2ddab7fe"
+    var pnPubKey = "pub-c-1164a995-8327-4ff5-9219-088934f339f7"
+    var pnSubKey = "sub-c-503c4680-ca23-11e5-837e-02ee2ddab7fe"
     
     var userIdFieldName = "cheddarUserId"
 

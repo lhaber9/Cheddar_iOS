@@ -134,6 +134,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         chatViewController.delegate = self
         chatViewController.chatRoomId = chatRoom.objectId
         chatViewController.myAlias = chatRoom.myAlias
+        NSLog("Joining ChatRoom: " + chatRoom.objectId)
         self.presentViewController(chatViewController, animated: true, completion: nil)
     }
     
