@@ -174,7 +174,6 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         self.presentViewController(chatViewController, animated: true) { () -> Void in
             self.scrollViewToDefault()
             self.scrollBackgroundViewToDefault()
-            self.spinnerView.hidden = false
             self.spinnerView.alpha = 0
         }
     }
@@ -254,9 +253,10 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func leaveChat(alias:Alias) {
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!]) { (object: AnyObject?, error: NSError?) -> Void in
-            let chatRoom = ChatRoom.fetchSingleRoom()
-            (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
-            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+            if let chatRoom = ChatRoom.fetchSingleRoom() {
+                (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
+                (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+            }
             self.scrollToPage(self.currentPage, animated: false)
             self.dismissViewControllerAnimated(true, completion: nil)
         }

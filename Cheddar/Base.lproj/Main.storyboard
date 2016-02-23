@@ -21,7 +21,7 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.13300000000000001" contentMode="center" image="cheese.png" translatesAutoresizingMaskIntoConstraints="NO" id="UnB-fZ-KQY">
                                 <rect key="frame" x="0.0" y="-2" width="600" height="602"/>
                             </imageView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7R-Jt-PEo">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7R-Jt-PEo">
                                 <rect key="frame" x="290" y="290" width="20" height="20"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
