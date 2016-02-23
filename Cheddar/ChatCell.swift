@@ -39,7 +39,8 @@ class ChatCell: UITableViewCell {
         leftIcon.layer.cornerRadius = 15;
         rightIcon.layer.cornerRadius = 15;
         
-        rightIcon.backgroundColor = UIColor.redColor()
+        leftIcon.backgroundColor = ColorConstants.colorPrimary
+        rightIcon.backgroundColor = ColorConstants.colorAccent
     }
     
     var alias: Alias! {
@@ -53,13 +54,12 @@ class ChatCell: UITableViewCell {
     var isOutbound: Bool! {
         didSet {
             if (isOutbound == true) {
-                messageBackground.backgroundColor = UIColor.lightGrayColor()
 //                messageLabel.textAlignment = NSTextAlignment.Right
                 leftSideMessageConstraint.priority = 200;
                 rightSideMessageConstraint.priority = 900;
                 leftSideLabelConstraint.priority = 200;
                 rightSideLabelConstraint.priority = 900;
-                messageBackground.backgroundColor = UIColor.redColor()
+                messageBackground.backgroundColor = ColorConstants.colorAccent
                 messageLabel.textColor = UIColor.whiteColor()
                 rightIcon.hidden = false;
                 leftIcon.hidden = true;
