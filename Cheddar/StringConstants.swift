@@ -9,8 +9,6 @@
 import Foundation
 
 class StringConstants {
-    
-    
     static var appName = "Cheddar"
     static var appNameUppercasePeriod = "CHEDDAR."
     static var appNameUppercase = "CHEDDAR"

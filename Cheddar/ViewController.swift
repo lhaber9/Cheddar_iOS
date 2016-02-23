@@ -21,7 +21,8 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
     
     var scrollViewHeightRaisedConstant: CGFloat = -130
-    var scrollViewHeightLoweredConstant: CGFloat = 180
+    var scrollViewHeightLoweredConstant: CGFloat = 400
+    var scrollViewHeightOffScreenConstant: CGFloat = 550
     
     var containers: [UIView]!
     var currentPage: Int = 0
@@ -138,16 +139,30 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         self.presentViewController(chatViewController, animated: true, completion: nil)
     }
     
-    func raiseScrollView() {
+    func animateScrollViewToRaised() {
         UIView.animateWithDuration(0.333) { () -> Void in
             self.scrollViewHeightConstrait.constant = self.scrollViewHeightRaisedConstant;
             self.view.layoutIfNeeded()
         }
     }
     
-    func lowerScrollView() {
+    func animateScrollViewToDefault() {
         UIView.animateWithDuration(0.333) { () -> Void in
             self.scrollViewHeightConstrait.constant = 0;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func animateScrollViewToLowered() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.constant = self.scrollViewHeightLoweredConstant;
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func animateScrollViewToOffScreen() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.scrollViewHeightConstrait.constant = self.scrollViewHeightOffScreenConstant;
             self.view.layoutIfNeeded()
         }
     }

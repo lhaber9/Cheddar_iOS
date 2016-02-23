@@ -11,8 +11,9 @@ import Foundation
 protocol FrontPageViewControllerDelegate: class {
     func goToNextPageWithController(viewController: FrontPageViewController)
     func joinChat(isSingle: Bool)
-    func raiseScrollView()
-    func lowerScrollView()
+    func animateScrollViewToRaised()
+    func animateScrollViewToDefault()
+    func animateScrollViewToLowered()
 }
 
 class FrontPageViewController: UIViewController {

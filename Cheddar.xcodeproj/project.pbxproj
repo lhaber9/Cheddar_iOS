@@ -43,6 +43,7 @@
 		A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920621C7AA2E9003E0BC3 /* Alias.swift */; };
 		A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */; };
 		A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */; };
+		A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,6 +115,7 @@
 		A3F920621C7AA2E9003E0BC3 /* Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,7 @@
 				A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */,
 				A3F920571C77ECBA003E0BC3 /* StringConstants.swift */,
 				A3F920591C783BE8003E0BC3 /* ColorConstants.swift */,
+				A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,

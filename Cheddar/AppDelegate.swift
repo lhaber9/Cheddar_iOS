@@ -17,9 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var window: UIWindow?
     var pnClient: PubNub!
     
-    var pnPubKey = ""
-    var pnSubKey = ""
-    
     var userIdFieldName = "cheddarUserId"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -28,11 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 //        [self.client publish: @"Hello from PubNub iOS!" toChannel: @"my_channel" storeInHistory:YES
 //        withCompletion:^(PNPublishStatus *status)
         
-        let configuration = PNConfiguration(publishKey: pnPubKey, subscribeKey: pnSubKey)
+        let configuration = PNConfiguration(publishKey: Environment.pubNubPublishKey,
+                                          subscribeKey: Environment.pubNubSubscribeKey)
         pnClient = PubNub.clientWithConfiguration(configuration)
         pnClient.addListener(self)
         
-        Parse.setApplicationId("", clientKey:"")
+        Parse.setApplicationId(Environment.parseApplicationId, clientKey:Environment.parseClientKey)
         
         initializeUser()
         
@@ -55,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func sendPubNubMessage(message: Message, mobilePushPayload: [NSObject : AnyObject]!, toChannel channel: String) {
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":pnPubKey, "subkey":pnSubKey])
+        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":Environment.pubNubPublishKey, "subkey":Environment.pubNubSubscribeKey])
     }
     
     func subscripeToPubNubChannel(channelId: String) {

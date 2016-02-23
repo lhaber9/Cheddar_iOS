@@ -47,11 +47,11 @@ class RegisterViewController: FrontPageViewController {
     }
     
     func keyboardWillShow() {
-        delegate?.raiseScrollView()
+        delegate?.animateScrollViewToRaised()
     }
     
     func keyboardWillHide() {
-        delegate?.lowerScrollView()
+        delegate?.animateScrollViewToDefault()
     }
     
 }
