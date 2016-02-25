@@ -11,17 +11,13 @@ import Foundation
 class PresenceCell: UITableViewCell {
 
     @IBOutlet var aliasLabel: UILabel!
+    var alias: Alias!
+    var action: String!
     
-    var alias: Alias! {
-        didSet {
-            aliasLabel.text = alias.name + " " + getActionString(action)
-        }
-    }
-    
-    var action: String! {
-        didSet {
-             aliasLabel.text = (alias?.name)! + " " + getActionString(action)
-        }
+    func setAlias(alias: Alias, andAction action: String) {
+        self.alias = alias
+        self.action = action
+        aliasLabel.text = alias.name + " " + getActionString(action)
     }
     
     func getActionString(action: String!) -> String! {

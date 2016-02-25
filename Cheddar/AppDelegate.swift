@@ -57,13 +57,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func subscripeToPubNubChannel(channelId: String, alias:Alias) {
-        pnClient.setState(alias.toJsonDict(), forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-            self.pnClient.subscribeToChannels([channelId], withPresence: true)
+        self.pnClient.subscribeToChannels([channelId], withPresence: true)
+        pnClient.setState(["action":"join","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
         }
     }
     
-    func unsubscripeFromPubNubChannel(channelId: String) {
-        pnClient.unsubscribeFromChannels([channelId], withPresence: true)
+    func unsubscripeFromPubNubChannel(channelId: String, alias:Alias) {
+        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
+            self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
+        }
+        
     }
     
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
@@ -72,7 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
-        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(event.data.presenceEvent, timestamp: Int(event.data.presence.timetoken), aliasDict: event.data.presence.state))
+        if (event.data.presenceEvent != "state-change") {
+            return;
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(Int(event.data.presence.timetoken), stateDict: event.data.presence.state))
     }
     
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {

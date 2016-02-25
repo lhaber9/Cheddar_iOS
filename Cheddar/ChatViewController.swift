@@ -34,6 +34,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectTextView"))
         
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
+        tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).subscripeToPubNubChannel(chatRoomId, alias: myAlias)
         
@@ -131,15 +132,22 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func receivePresenceEvent(presenceEvent: Presence) {
-        if (isMyPresenceEvent(presenceEvent)) {
-            return;
-        }
+//        if (isMyPresenceEvent(presenceEvent)) {
+//            return;
+//        }
         
-//        addMessage(presenceEvent)
+        addPresenceEvent(presenceEvent)
     }
     
     func addMessage(message: Message) {
         allActions.append(message)
+        
+        tableView.reloadData()
+        view.setNeedsDisplay()
+    }
+    
+    func addPresenceEvent(presenceEvent: Presence) {
+        allActions.append(presenceEvent)
         
         tableView.reloadData()
         view.setNeedsDisplay()
@@ -199,8 +207,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         else if let presenceEvent = action as? Presence {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.alias = presenceEvent.alias
-            cell.action = presenceEvent.action
+            cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action)
             return cell
         }
         
