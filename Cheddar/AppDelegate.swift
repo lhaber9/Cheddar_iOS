@@ -60,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         pnClient.subscribeToChannels([channelId], withPresence: true)
     }
     
+    func unsubscripeFromPubNubChannel(channelId: String) {
+        pnClient.unsubscribeFromChannels([channelId], withPresence: true)
+    }
+    
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
         NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(jsonMessage))
