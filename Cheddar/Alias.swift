@@ -12,10 +12,10 @@ import CoreData
 
 class Alias: NSManagedObject {
     
-    @NSManaged var objectId: String?
-    @NSManaged var userId: String?
-    @NSManaged var chatRoomId: String?
-    @NSManaged var name: String?
+    @NSManaged var objectId: String!
+    @NSManaged var userId: String!
+    @NSManaged var chatRoomId: String!
+    @NSManaged var name: String!
 
     class func newAlias() -> Alias {
         let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!

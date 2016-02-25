@@ -22,9 +22,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var tableView: UITableView!
     
+    var messageVerticalBuffer:CGFloat = 6
+    
     var chatRoomId: String!
     var myAlias: Alias!
-    var messages: [Message] = []
+//    var messages: [Message] = []
+    var allActions: [AnyObject] = []
     
     override func viewDidLoad() {
         tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deselectTextView"))
@@ -39,12 +42,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
            self.receiveMessage(notification.object as! Message)
         }
+        NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
+            self.receivePresenceEvent(notification.object as! Presence)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newPresenceEvent", object: nil)
     }
     
     @IBAction func closeChat() {
@@ -68,6 +75,41 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return (message.alias.objectId == myAlias.objectId)
     }
     
+    func isMyPresenceEvent(presenceEvent: Presence) -> Bool {
+        return (presenceEvent.alias.objectId == myAlias.objectId)
+    }
+    
+    func findFirstMessageBeforeIndex(index: Int) -> Message! {
+        var position = index - 1
+        if (position < 0) {
+            return nil
+        }
+        
+        var message = allActions[position]
+        while (!message.isKindOfClass(Message)) {
+            position--
+            if (position < 0) { return nil }
+            message = allActions[position]
+        }
+        return message as! Message
+    }
+    
+    func findFirstMessageAfterIndex(index: Int) -> Message! {
+        var position = index + 1
+        if (position >= allActions.count) {
+            return nil
+        }
+        
+        var message = allActions[position]
+        while (!message.isKindOfClass(Message)) {
+            position++
+            if (position >= allActions.count) { return nil }
+            message = allActions[position]
+        }
+        return message as! Message
+    }
+
+    
     func deselectTextView() {
         textView.resignFirstResponder()
     }
@@ -77,7 +119,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func sendMessage(message: Message) {
-        (UIApplication.sharedApplication().delegate as! AppDelegate).sendPubNubMessage(message, mobilePushPayload: nil, toChannel: message.chatRoomId)
+        (UIApplication.sharedApplication().delegate as! AppDelegate).sendPubNubMessage(message, mobilePushPayload: nil, toChannel: message.alias.chatRoomId)
     }
     
     func receiveMessage(message: Message) {
@@ -88,29 +130,34 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addMessage(message)
     }
     
+    func receivePresenceEvent(presenceEvent: Presence) {
+        if (isMyPresenceEvent(presenceEvent)) {
+            return;
+        }
+        
+//        addMessage(presenceEvent)
+    }
+    
     func addMessage(message: Message) {
-        messages.append(message)
+        allActions.append(message)
         
         tableView.reloadData()
         view.setNeedsDisplay()
     }
     
     func shouldShowAliasForMessageIndex(messageIdx: Int) -> Bool {
-        
-        if (messageIdx == 0) {
-            return true;
-        }
-        else if (messageIdx < messages.count) {
-            
-            let thisMessage = messages[messageIdx]
-            let lastMessage = messages[messageIdx - 1]
-            
-            return thisMessage.alias.objectId != lastMessage.alias.objectId
+        if let thisMessage = allActions[messageIdx] as? Message {
+            let messageBefore = findFirstMessageBeforeIndex(messageIdx)
+            if (messageBefore != nil) {
+                return messageBefore.alias.objectId != thisMessage.alias.objectId
+            }
+            else {
+                return true
+            }
         }
         else {
             return false
         }
-        
     }
     
     // Keyboard Delegate Methods
@@ -135,25 +182,48 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return allActions.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
         
-        let message = messages[indexPath.row]
+        let action = allActions[indexPath.row]
+        if let message = action as? Message {
+            let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
+            cell.setMessageText(message.body)
+            cell.isOutbound = isMyMessage(message)
+            cell.showAliasLabel = shouldShowAliasForMessageIndex(indexPath.row)
+            cell.alias = message.alias
+            return cell
+        }
+        else if let presenceEvent = action as? Presence {
+            let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
+            cell.alias = presenceEvent.alias
+            cell.action = presenceEvent.action
+            return cell
+        }
         
-        cell.setMessageText(message.body)
-        cell.isOutbound = isMyMessage(message)
-        cell.showAliasLabel = shouldShowAliasForMessageIndex(indexPath.row)
-        cell.alias = message.alias
-        
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return ChatCell.rowHeightForText(messages[indexPath.row].body, withAliasLabel: shouldShowAliasForMessageIndex(indexPath.row)) + 8
+        let action = allActions[indexPath.row]
+        if let message = action as? Message {
+            
+            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: shouldShowAliasForMessageIndex(indexPath.row)) + 4
+            
+            let nextMessage = findFirstMessageAfterIndex(indexPath.row)
+            if (nextMessage?.alias.objectId != message.alias.objectId) {
+                cellHeight += messageVerticalBuffer
+            }
+            
+            return cellHeight
+        }
+        else if let _ = action as? Presence {
+            return 22
+        }
+        return 0
     }
 
 }

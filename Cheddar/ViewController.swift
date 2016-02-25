@@ -257,7 +257,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
                 (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
                 (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
             }
-            (UIApplication.sharedApplication().delegate as! AppDelegate).unsubscripeFromPubNubChannel(alias.chatRoomId!)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).unsubscripeFromPubNubChannel(alias.chatRoomId)
             self.scrollToPage(self.currentPage, animated: false)
             self.dismissViewControllerAnimated(true, completion: nil)
         }

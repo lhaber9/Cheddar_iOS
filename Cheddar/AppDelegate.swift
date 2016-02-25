@@ -72,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
-        NSLog("here2")
+        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(event.data.presenceEvent, timestamp: Int(event.data.presence.timetoken), aliasDict: event.data.presence.state))
     }
     
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {

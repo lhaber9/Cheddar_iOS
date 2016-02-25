@@ -44,6 +44,9 @@
 		A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */; };
 		A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */; };
 		A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */; };
+		A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AE1C7F6077003E0BC3 /* Presence.swift */; };
+		A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */; };
+		A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +119,9 @@
 		A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentConstants.swift; sourceTree = "<group>"; };
+		A3F920AE1C7F6077003E0BC3 /* Presence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presence.swift; sourceTree = "<group>"; };
+		A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceCell.swift; sourceTree = "<group>"; };
+		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,6 +280,8 @@
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
 				A3ECAE951C67273C003F981C /* ChatCell.swift */,
 				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
+				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
+				A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -282,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				A37297D61C6BF5AF00625C7F /* Message.swift */,
+				A3F920AE1C7F6077003E0BC3 /* Presence.swift */,
 				A3F920621C7AA2E9003E0BC3 /* Alias.swift */,
 				A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */,
 				A3B12D481C6FC83900B75645 /* User.swift */,
@@ -422,6 +431,7 @@
 				A393D6161C63C1C400EBB94C /* cheese.png in Resources */,
 				A38896D01C60664A002017B9 /* Assets.xcassets in Resources */,
 				A393D6121C63BB5400EBB94C /* single.png in Resources */,
+				A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */,
 				A3ECAE801C643076003F981C /* EmailValidateView.xib in Resources */,
 				A393D6111C63BB5400EBB94C /* group_selected.png in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
@@ -501,6 +511,7 @@
 			files = (
 				A393D6291C63EA7B00EBB94C /* RegisterViewController.swift in Sources */,
 				A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */,
+				A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
 				A393D61F1C63C58300EBB94C /* SelectionViewController.swift in Sources */,
 				A393D6231C63C80D00EBB94C /* FrontPageViewController.swift in Sources */,
@@ -516,6 +527,7 @@
 				A37297D71C6BF5AF00625C7F /* Message.swift in Sources */,
 				A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */,
 				A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */,
+				A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */,
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
 				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,

@@ -12,7 +12,6 @@ class Message {
 
     var body: String!
     var alias: Alias!
-    var chatRoomId: String!
     
     class func createMessage(jsonMessage: [NSObject: AnyObject]) -> Message {
         let newMessage = Message()
@@ -23,9 +22,9 @@ class Message {
         if let aliasDict = jsonMessage["alias"] as? [NSObject:AnyObject] {
             newMessage.alias = Alias.createAliasFromJson(aliasDict)
         }
-        if let chatRoomId = jsonMessage["chatRoomId"] as? String {
-            newMessage.chatRoomId = chatRoomId
-        }
+//        if let chatRoomId = jsonMessage["chatRoomId"] as? String {
+//            newMessage.chatRoomId = chatRoomId
+//        }
         
         return newMessage
     }
@@ -34,7 +33,7 @@ class Message {
         let newMessage = Message()
         newMessage.body = body
         newMessage.alias = alias
-        newMessage.chatRoomId = chatRoomId
+//        newMessage.chatRoomId = chatRoomId
     
         return newMessage
     }
