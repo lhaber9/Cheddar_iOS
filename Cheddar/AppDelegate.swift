@@ -56,8 +56,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey])
     }
     
-    func subscripeToPubNubChannel(channelId: String) {
-        pnClient.subscribeToChannels([channelId], withPresence: true)
+    func subscripeToPubNubChannel(channelId: String, alias:Alias) {
+        pnClient.setState(alias.toJsonDict(), forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
+            self.pnClient.subscribeToChannels([channelId], withPresence: true)
+        }
     }
     
     func unsubscripeFromPubNubChannel(channelId: String) {

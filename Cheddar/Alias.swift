@@ -58,6 +58,17 @@ class Alias: NSManagedObject {
         return newAlias
     }
     
+    func toJsonDict() -> [NSObject:AnyObject] {
+        var jsonDict = [NSObject:AnyObject]()
+        
+        jsonDict["objectId"] = objectId
+        jsonDict["chatRoomId"] = chatRoomId
+        jsonDict["name"] = name
+        jsonDict["userId"] = userId
+        
+        return jsonDict
+    }
+    
     func initials() -> String {
         
         var initals = ""
