@@ -63,7 +63,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     func checkInChatRoom() {
         let chatRoom = ChatRoom.fetchSingleRoom()
         if (chatRoom != nil) {
-            self.showChatRoom(chatRoom)
+            self.showChatRoom(chatRoom, sendJoinEvent: false)
         }
     }
     
@@ -138,7 +138,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
                 joinNextAndAnimate()
             }
             else {
-                self.showChatRoom(chatRoom)
+                self.showChatRoom(chatRoom, sendJoinEvent: false)
             }
         }
     }
@@ -150,29 +150,25 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
             let alias = Alias.createAliasFromParseObject(object as! PFObject)
-            let thisChatRoom = ChatRoom.createWithMyAlias(alias)
+            chatRoom = ChatRoom.createWithMyAlias(alias)
             (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-            (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(thisChatRoom.objectId, alias: alias)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoom.objectId, alias: alias)
+            if (animationComplete) {
+                self.showChatRoom(chatRoom, sendJoinEvent: true)
+            }
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(UInt64(5) * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
-                (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(thisChatRoom.objectId, alias: alias)
-                chatRoom = thisChatRoom
-                if (animationComplete) {
-                    self.showChatRoom(chatRoom)
-                }
-            })
             
         }
         
         performJoinChatAnimation { () -> Void in
             animationComplete = true
             if (chatRoom != nil) {
-                self.showChatRoom(chatRoom)
+                self.showChatRoom(chatRoom, sendJoinEvent: true)
             }
         }
     }
     
-    func showChatRoom(chatRoom: ChatRoom) {
+    func showChatRoom(chatRoom: ChatRoom, sendJoinEvent: Bool) {
         let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
         chatViewController.chatRoomId = chatRoom.objectId
@@ -182,6 +178,9 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             self.scrollViewToDefault()
             self.scrollBackgroundViewToDefault()
             self.spinnerView.alpha = 0
+            if (sendJoinEvent) {
+                (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(chatRoom.objectId, alias: chatRoom.myAlias)
+            }
         }
     }
     
