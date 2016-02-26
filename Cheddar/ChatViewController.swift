@@ -50,11 +50,50 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         PFCloud.callFunctionInBackground("replayForAlias", withParameters: ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
-            if let messageEvents = object!["messageEvents"] as? [[NSObject:AnyObject]] {
-                for message in messageEvents {
-                    self.addMessage(Message.createMessage(message))
+            var events = [AnyObject]()
+            
+            if let messageEvents = object!["messageEvents"] as? [[NSObject:AnyObject]],
+                   presenceEvents = object!["presenceEvents"] as? [[NSObject:AnyObject]] {
+                    
+                var messageIdx = 0
+                var presenceIdx = 0
+                    
+                while (messageIdx < messageEvents.count || presenceIdx < presenceEvents.count) {
+                    
+                    if (messageIdx == messageEvents.count) {
+                        let timestamp = presenceEvents[presenceIdx]["timestamp"] as! Int
+                        let action = presenceEvents[presenceIdx]["data"]!["action"] as! String
+                        let aliasDict = presenceEvents[presenceIdx]["data"]!["alias"] as! [NSObject:AnyObject]
+                        
+                        events.append(Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
+                        presenceIdx++
+                    }
+                    else if (presenceIdx == presenceEvents.count) {
+                        events.append(Message.createMessage(messageEvents[messageIdx]))
+                        messageIdx++
+                    }
+                    else {
+                        
+                        if ((messageEvents[messageIdx]["timestamp"] as! Int) < (presenceEvents[presenceIdx]["timestamp"] as! Int)) {
+                            events.append(Message.createMessage(messageEvents[messageIdx]))
+                            messageIdx++
+                        }
+                        else {
+                            let timestamp = presenceEvents[presenceIdx]["timestamp"] as! Int
+                            let action = presenceEvents[presenceIdx]["data"]!["action"] as! String
+                            let aliasDict = presenceEvents[presenceIdx]["data"]!["alias"] as! [NSObject:AnyObject]
+                            
+                            events.append(Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
+                            presenceIdx++
+                        }
+                    }
                 }
+                
+                self.allActions = events
+                self.tableView.reloadData()
+                self.view.setNeedsDisplay()
             }
+            
         }
     }
     
@@ -77,7 +116,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let text = textView.text!
         textView.text = ""
         
-        let message = Message.createMessage(text, alias: myAlias, chatRoomId: chatRoomId)
+        let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
         sendMessage(message)
         addMessage(message)
     }

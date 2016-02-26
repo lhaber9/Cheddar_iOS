@@ -150,12 +150,18 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1]) { (object: AnyObject?, error: NSError?) -> Void in
             let alias = Alias.createAliasFromParseObject(object as! PFObject)
-            chatRoom = ChatRoom.createWithMyAlias(alias)
+            let thisChatRoom = ChatRoom.createWithMyAlias(alias)
             (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-            if (animationComplete) {
-                self.showChatRoom(chatRoom)
-            }
-            (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(chatRoom.objectId, alias: alias)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(thisChatRoom.objectId, alias: alias)
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(UInt64(5) * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+                (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(thisChatRoom.objectId, alias: alias)
+                chatRoom = thisChatRoom
+                if (animationComplete) {
+                    self.showChatRoom(chatRoom)
+                }
+            })
+            
         }
         
         performJoinChatAnimation { () -> Void in
@@ -243,9 +249,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
                     self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightLoweredConstant
                     self.view.layoutIfNeeded()
                     }) { (success: Bool) -> Void in
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(UInt64(2) * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
-                            callback()
-                        })
+                        callback()
                 }
         }
     }

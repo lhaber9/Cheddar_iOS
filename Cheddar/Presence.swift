@@ -31,17 +31,12 @@ class Presence {
         return newPresenceEvent
     }
     
-    class func createPresenceEvent(timestamp: Int, stateDict: [NSObject: AnyObject]) -> Presence {
+    class func createPresenceEvent(timestamp: Int, action: String, aliasDict: [NSObject: AnyObject]) -> Presence {
         let newPresenceEvent = Presence()
         
         newPresenceEvent.timestamp = timestamp
-        
-        if let action = stateDict["action"] as? String {
-            newPresenceEvent.action = action
-        }
-        if let aliasDict = stateDict["alias"] as? [NSObject:AnyObject] {
-            newPresenceEvent.alias = Alias.createAliasFromJson(aliasDict)
-        }
+        newPresenceEvent.action = action
+        newPresenceEvent.alias = Alias.createAliasFromJson(aliasDict)
         
         return newPresenceEvent
     }

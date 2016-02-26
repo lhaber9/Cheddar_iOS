@@ -66,9 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func unsubscribeFromPubNubChannel(channelId: String, alias:Alias) {
-        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-            self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
-        }
+        self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
     }
     
     func leavePubNubChannel(channelId: String, alias:Alias) {
@@ -86,7 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             return;
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(Int(event.data.presence.timetoken), stateDict: event.data.presence.state))
+        let timestamp = event.data.presence.timetoken as Int
+        let action = event.data.presence.state["action"] as! String
+        let aliasDict = event.data.presence.state["alias"] as! [NSObject:AnyObject]
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
     }
     
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
