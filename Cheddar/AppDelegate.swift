@@ -56,17 +56,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey])
     }
     
-    func subscripeToPubNubChannel(channelId: String, alias:Alias) {
+    func subscribeToPubNubChannel(channelId: String, alias:Alias) {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
+    }
+    
+    func joinPubNubChannel(channelId: String, alias:Alias) {
         pnClient.setState(["action":"join","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
         }
     }
     
-    func unsubscripeFromPubNubChannel(channelId: String, alias:Alias) {
+    func unsubscribeFromPubNubChannel(channelId: String, alias:Alias) {
         pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
             self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
         }
-        
+    }
+    
+    func leavePubNubChannel(channelId: String, alias:Alias) {
+        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
+        }
     }
     
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {

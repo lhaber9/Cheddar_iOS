@@ -155,6 +155,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
+            (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(chatRoom.objectId, alias: alias)
         }
         
         performJoinChatAnimation { () -> Void in
@@ -254,10 +255,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     func leaveChat(alias:Alias) {
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!]) { (object: AnyObject?, error: NSError?) -> Void in
             if let chatRoom = ChatRoom.fetchSingleRoom() {
+                (UIApplication.sharedApplication().delegate as! AppDelegate).leavePubNubChannel(chatRoom.objectId, alias: alias)
                 (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
                 (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
             }
-            (UIApplication.sharedApplication().delegate as! AppDelegate).unsubscripeFromPubNubChannel(alias.chatRoomId, alias: alias)
+            (UIApplication.sharedApplication().delegate as! AppDelegate).unsubscribeFromPubNubChannel(alias.chatRoomId, alias: alias)
             self.scrollToPage(self.currentPage, animated: false)
             self.dismissViewControllerAnimated(true, completion: nil)
         }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 protocol ChatViewControllerDelegate: class {
     func leaveChat(alias:Alias)
@@ -36,7 +37,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         
-        (UIApplication.sharedApplication().delegate as! AppDelegate).subscripeToPubNubChannel(chatRoomId, alias: myAlias)
+        (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoomId, alias: myAlias)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
@@ -45,6 +46,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.receivePresenceEvent(notification.object as! Presence)
+        }
+        
+        PFCloud.callFunctionInBackground("replayForAlias", withParameters: ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            if let messageEvents = object!["messageEvents"] as? [[NSObject:AnyObject]] {
+                for message in messageEvents {
+                    self.addMessage(Message.createMessage(message))
+                }
+            }
         }
     }
     
