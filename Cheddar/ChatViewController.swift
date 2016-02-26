@@ -23,7 +23,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var tableView: UITableView!
     
-    var messageVerticalBuffer:CGFloat = 6
+    var messageVerticalBuffer:CGFloat = 8
     
     var chatRoomId: String!
     var myAlias: Alias!
@@ -277,7 +277,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return cellHeight
         }
         else if let _ = action as? Presence {
-            return 22
+            return 33
         }
         return 0
     }

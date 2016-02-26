@@ -7,18 +7,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PresenceCell" rowHeight="51" id="GMK-7a-35H" customClass="PresenceCell" customModule="Cheddar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="381" height="22"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PresenceCell" rowHeight="62" id="GMK-7a-35H" customClass="PresenceCell" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GMK-7a-35H" id="y5W-fa-Gg1">
-                <rect key="frame" x="0.0" y="0.0" width="381" height="21.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="381" height="32.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iID-WJ-CDg">
-                        <rect key="frame" x="0.0" y="0.0" width="381" height="22"/>
+                        <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyb-R8-Ebh">
-                                <rect key="frame" x="0.0" y="0.0" width="381" height="22"/>
+                                <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -29,7 +29,7 @@
                             <constraint firstAttribute="bottom" secondItem="Iyb-R8-Ebh" secondAttribute="bottom" id="24W-rG-aHH"/>
                             <constraint firstItem="Iyb-R8-Ebh" firstAttribute="top" secondItem="iID-WJ-CDg" secondAttribute="top" id="5iw-Oo-8F8"/>
                             <constraint firstAttribute="trailing" secondItem="Iyb-R8-Ebh" secondAttribute="trailing" id="dlR-Ub-dO0"/>
-                            <constraint firstAttribute="height" constant="22" id="iWd-ty-Rw3"/>
+                            <constraint firstAttribute="height" constant="33" id="iWd-ty-Rw3"/>
                             <constraint firstItem="Iyb-R8-Ebh" firstAttribute="leading" secondItem="iID-WJ-CDg" secondAttribute="leading" id="ulY-jx-Ot4"/>
                         </constraints>
                     </view>
@@ -44,7 +44,7 @@
             <connections>
                 <outlet property="aliasLabel" destination="Iyb-R8-Ebh" id="Snc-W8-5HS"/>
             </connections>
-            <point key="canvasLocation" x="422.5" y="16.5"/>
+            <point key="canvasLocation" x="422.5" y="21.5"/>
         </tableViewCell>
     </objects>
 </document>
