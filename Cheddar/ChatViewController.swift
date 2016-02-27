@@ -101,6 +101,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.allActions = events + self.allActions
                 self.tableView.reloadData()
                 self.view.setNeedsDisplay()
+                self.scrollToBottom()
             }
             
         }
@@ -197,11 +198,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addPresenceEvent(presenceEvent)
     }
     
+    func scrollToBottom() {
+        let indexPath = NSIndexPath(forRow: allActions.count - 1, inSection:0)
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
+    }
+    
     func addMessage(message: Message) {
         allActions.append(message)
         
         tableView.reloadData()
         view.setNeedsDisplay()
+        scrollToBottom()
+
     }
     
     func addPresenceEvent(presenceEvent: Presence) {
@@ -209,6 +217,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.reloadData()
         view.setNeedsDisplay()
+        scrollToBottom()
     }
     
     func shouldShowAliasForMessageIndex(messageIdx: Int) -> Bool {
