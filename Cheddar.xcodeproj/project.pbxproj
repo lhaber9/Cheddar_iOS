@@ -47,6 +47,7 @@
 		A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AE1C7F6077003E0BC3 /* Presence.swift */; };
 		A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */; };
 		A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */; };
+		A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B41C8124A1003E0BC3 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		A3F920AE1C7F6077003E0BC3 /* Presence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presence.swift; sourceTree = "<group>"; };
 		A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceCell.swift; sourceTree = "<group>"; };
 		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
+		A3F920B41C8124A1003E0BC3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -270,6 +272,7 @@
 				A3F920571C77ECBA003E0BC3 /* StringConstants.swift */,
 				A3F920591C783BE8003E0BC3 /* ColorConstants.swift */,
 				A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */,
+				A3F920B41C8124A1003E0BC3 /* Utilities.swift */,
 			);
 			name = Constants;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
 				A393D61F1C63C58300EBB94C /* SelectionViewController.swift in Sources */,
 				A393D6231C63C80D00EBB94C /* FrontPageViewController.swift in Sources */,
+				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,

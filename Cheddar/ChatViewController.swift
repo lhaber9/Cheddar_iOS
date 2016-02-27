@@ -18,12 +18,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     weak var delegate: ChatViewControllerDelegate?
     
     @IBOutlet var textView: UITextField!
+    @IBOutlet var topBar: UIView!
+    @IBOutlet var topBarDivider: UIView!
+    @IBOutlet var chatBarDivider: UIView!
     @IBOutlet var chatBar: UIView!
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var tableView: UITableView!
     
-    var messageVerticalBuffer:CGFloat = 8
+    var messageVerticalBuffer:CGFloat = 15
     
     var chatRoomId: String!
     var myAlias: Alias!
@@ -36,6 +39,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
+        
+        topBar.backgroundColor = ColorConstants.solidGray
+        chatBar.backgroundColor = ColorConstants.solidGray
+        
+        topBarDivider.backgroundColor = ColorConstants.dividerGray
+        chatBarDivider.backgroundColor = ColorConstants.dividerGray
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoomId, alias: myAlias)
         

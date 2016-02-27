@@ -21,6 +21,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
     @IBOutlet var backgroundViewHeightConstrait: NSLayoutConstraint!
+    @IBOutlet var textHeightConstrait: NSLayoutConstraint!
     
     var scrollViewHeightRaisedConstant: CGFloat = -130
     var scrollViewHeightMiddleConstant: CGFloat = -70
@@ -49,6 +50,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         containers = [container0]
         let introViewController = IntroViewController()
         addViewControllerPageToLastContainer(introViewController)
+        
+        
+        if (Utilities.IS_IPHONE_6_PLUS()) {
+            textHeightConstrait.constant = 135
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
