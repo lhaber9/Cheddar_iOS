@@ -254,16 +254,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let action = allActions[indexPath.row]
-        if let message = action as? Message {
+        let event = allActions[indexPath.row]
+        if let message = event as? Message {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body)
-            cell.isOutbound = isMyMessage(message)
-            cell.showAliasLabel = shouldShowAliasForMessageIndex(indexPath.row)
-            cell.alias = message.alias
+            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasForMessageIndex(indexPath.row))
             return cell
         }
-        else if let presenceEvent = action as? Presence {
+        else if let presenceEvent = event as? Presence {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
             cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action)
             return cell

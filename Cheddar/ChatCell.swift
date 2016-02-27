@@ -43,43 +43,40 @@ class ChatCell: UITableViewCell {
         rightIcon.backgroundColor = ColorConstants.colorAccent
     }
     
-    var alias: Alias! {
-        didSet {
-            leftIconLabel.text = alias.initials()
-            rightIconLabel.text = alias.initials()
-            aliasLabel.text = alias.name
-        }
-    }
-    
-    var isOutbound: Bool! {
-        didSet {
-            if (isOutbound == true) {
-//                messageLabel.textAlignment = NSTextAlignment.Right
-                leftSideMessageConstraint.priority = 200;
-                rightSideMessageConstraint.priority = 900;
-                leftSideLabelConstraint.priority = 200;
-                rightSideLabelConstraint.priority = 900;
-                messageBackground.backgroundColor = ColorConstants.colorAccent
-                messageLabel.textColor = UIColor.whiteColor()
-                rightIcon.hidden = false;
-                leftIcon.hidden = true;
-            }
-        }
-    }
-    
-    var showAliasLabel: Bool! {
-        didSet {
-            if (showAliasLabel == true) {
-                messageTopConstraintAlias.priority = 900;
-                messageTopConstraint.priority = 200;
-                aliasLabelView.hidden = false;
-            }
-        }
-    }
-    
-    func setMessageText(text: String) {
+    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool) {
         messageLabel.text = text
         messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
+        
+        leftIconLabel.text = alias.initials()
+        rightIconLabel.text = alias.initials()
+        aliasLabel.text = alias.name
+        
+        if (showAliasLabel == true) {
+            messageTopConstraintAlias.priority = 950;
+            messageTopConstraint.priority = 200;
+            aliasLabelView.hidden = false;
+            NSLog(text)
+        }
+        else {
+            messageTopConstraintAlias.priority = 200;
+            messageTopConstraint.priority = 950;
+            aliasLabelView.hidden = true;
+        }
+        
+        if (isOutbound == true) {
+            //                messageLabel.textAlignment = NSTextAlignment.Right
+            leftSideMessageConstraint.priority = 200;
+            rightSideMessageConstraint.priority = 900;
+            leftSideLabelConstraint.priority = 200;
+            rightSideLabelConstraint.priority = 900;
+            messageBackground.backgroundColor = ColorConstants.colorAccent
+            messageLabel.textColor = UIColor.whiteColor()
+            rightIcon.hidden = false;
+            leftIcon.hidden = true;
+        }
+        
+        setNeedsLayout()
+        layoutIfNeeded()
     }
     
     class func labelHeightForText(text: String) -> CGFloat {
