@@ -5,6 +5,15 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -22,25 +31,34 @@
                                 <rect key="frame" x="0.0" y="-2" width="600" height="602"/>
                             </imageView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7R-Jt-PEo">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="262.5" y="262.5" width="75" height="75"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TDY-0E-1Dh">
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="20" id="IJd-0B-enW"/>
-                                    <constraint firstAttribute="height" constant="20" id="aqh-qW-lQI"/>
+                                    <constraint firstAttribute="width" constant="75" id="IJd-0B-enW"/>
+                                    <constraint firstAttribute="height" constant="75" id="aqh-qW-lQI"/>
+                                    <constraint firstAttribute="trailing" secondItem="TDY-0E-1Dh" secondAttribute="trailing" id="fJ1-Qb-ikE"/>
+                                    <constraint firstAttribute="bottom" secondItem="TDY-0E-1Dh" secondAttribute="bottom" id="jNL-Z1-iGM"/>
+                                    <constraint firstItem="TDY-0E-1Dh" firstAttribute="leading" secondItem="e7R-Jt-PEo" secondAttribute="leading" id="ocb-Df-aBi"/>
+                                    <constraint firstItem="TDY-0E-1Dh" firstAttribute="top" secondItem="e7R-Jt-PEo" secondAttribute="top" id="pfM-Ip-tZX"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPF-Z8-4yg">
-                                <rect key="frame" x="50" y="124.5" width="253" height="61"/>
+                                <rect key="frame" x="50" y="124" width="235.5" height="60.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nnj-Xz-K6w">
-                                        <rect key="frame" x="0.0" y="0.0" width="121" height="39.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="117" height="39"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="33"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a friend. Find a date. Troll" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rj8-4C-lse">
-                                        <rect key="frame" x="0.0" y="39" width="253" height="21.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <rect key="frame" x="0.0" y="38.5" width="235.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="18"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -69,8 +87,8 @@
                                 <rect key="frame" x="0.0" y="130" width="600" height="340"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3t-pb-1Ua">
-                                        <rect key="frame" x="50" y="-35" width="131.5" height="29"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <rect key="frame" x="50" y="-35" width="125.5" height="28.5"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="24"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
@@ -137,10 +155,13 @@
                         <outlet property="backgroundView" destination="8bC-Xf-vdC" id="OUd-mh-M2h"/>
                         <outlet property="backgroundViewHeightConstrait" destination="FZd-gI-wgl" id="G8u-AQ-Cep"/>
                         <outlet property="container0" destination="Dzu-YL-fCc" id="qDE-hy-Fir"/>
+                        <outlet property="containerHeightConstraint" destination="pGc-SB-m9n" id="GrG-3q-rkU"/>
                         <outlet property="scrollView" destination="KcI-tv-jSZ" id="gmY-Xx-GeY"/>
-                        <outlet property="scrollViewHeightConstrait" destination="Jek-hf-Pg9" id="gzX-mR-AZ1"/>
+                        <outlet property="scrollViewHeightConstrait" destination="JOE-yW-vZU" id="k7o-C6-Qj4"/>
+                        <outlet property="scrollViewPositionConstrait" destination="Jek-hf-Pg9" id="vKb-ei-Dn4"/>
                         <outlet property="scrollViewWidthConstraint" destination="Lnd-DM-j0X" id="PeT-6y-5Hk"/>
                         <outlet property="shadowBackgroundView" destination="zds-bq-l3x" id="DIl-sw-gXH"/>
+                        <outlet property="spinnerImageView" destination="TDY-0E-1Dh" id="o7x-Be-4TG"/>
                         <outlet property="spinnerView" destination="e7R-Jt-PEo" id="id1-H1-vf9"/>
                         <outlet property="textHeightConstrait" destination="8bf-dK-pWN" id="2xu-k0-FHq"/>
                     </connections>
@@ -165,8 +186,8 @@
                                 <rect key="frame" x="0.0" y="-2" width="600" height="66"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKL-Cf-vP1">
-                                        <rect key="frame" x="276" y="34" width="47.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="276.5" y="34" width="46.5" height="20.5"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -222,7 +243,7 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Say something nice..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bkp-hC-qNe">
                                         <rect key="frame" x="22" y="16" width="488" height="17"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3qh-xg-YbE">

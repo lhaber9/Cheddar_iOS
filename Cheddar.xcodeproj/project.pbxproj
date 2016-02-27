@@ -48,6 +48,7 @@
 		A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */; };
 		A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */; };
 		A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B41C8124A1003E0BC3 /* Utilities.swift */; };
+		A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B61C8249F9003E0BC3 /* Effra-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceCell.swift; sourceTree = "<group>"; };
 		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
 		A3F920B41C8124A1003E0BC3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		A3F920B61C8249F9003E0BC3 /* Effra-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 		A393D6141C63BB5B00EBB94C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				A3F920B61C8249F9003E0BC3 /* Effra-Regular.ttf */,
 				A393D6151C63C1C400EBB94C /* cheese.png */,
 				A393D60C1C63BB5400EBB94C /* group.png */,
 				A393D60D1C63BB5400EBB94C /* group_selected.png */,
@@ -438,6 +441,7 @@
 				A3ECAE801C643076003F981C /* EmailValidateView.xib in Resources */,
 				A393D6111C63BB5400EBB94C /* group_selected.png in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
+				A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
 				A393D6271C63C9DD00EBB94C /* IntroView.xib in Resources */,
 			);

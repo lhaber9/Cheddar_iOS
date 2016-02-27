@@ -14,12 +14,18 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var shadowBackgroundView: UIView!
     @IBOutlet var spinnerView: UIView!
+    @IBOutlet var spinnerImageView: UIImageView!
     @IBOutlet var container0: UIView!
+    
+    @IBOutlet var cheddarLabel: UILabel!
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     
     @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
+    @IBOutlet var containerHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var scrollViewPositionConstrait: NSLayoutConstraint!
     @IBOutlet var backgroundViewHeightConstrait: NSLayoutConstraint!
     @IBOutlet var textHeightConstrait: NSLayoutConstraint!
     
@@ -35,12 +41,19 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     var containers: [UIView]!
     var currentPage: Int = 0
     
+    let kRotationAnimationKey = "cheddar.spinnerrotationanimationkey"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         spinnerView.alpha = 0
         
         backgroundView.backgroundColor = ColorConstants.colorPrimary
+        
+        spinnerImageView.image = UIImage(named: "VectorIcon")
+        view.setNeedsDisplay()
+    
+//        cheddarLabel.font = UIFont(name: "Effra-Regular", size: 33)
         
         setShawdowForView(shadowBackgroundView)
         shadowBackgroundView.layer.shadowRadius = 5;
@@ -51,9 +64,14 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         let introViewController = IntroViewController()
         addViewControllerPageToLastContainer(introViewController)
         
-        
         if (Utilities.IS_IPHONE_6_PLUS()) {
             textHeightConstrait.constant = 135
+        }
+        else if (Utilities.IS_IPHONE_5()) {
+            scrollViewHeightConstrait.constant -= 60
+            containerHeightConstraint.constant -= 60
+            backgroundViewHeightDefaultConstant -= 60
+            scrollBackgroundViewToDefault()
         }
     }
     
@@ -126,7 +144,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         
         view.autoPinEdgeToSuperviewEdge(ALEdge.Bottom)
         view.autoPinEdgeToSuperviewEdge(ALEdge.Top)
-        view.autoSetDimension(ALDimension.Width, toSize: 320)
+//        view.autoSetDimension(ALDimension.Width, toSize: 320)
         view.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
         
         setShawdowForView(view)
@@ -162,8 +180,6 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             if (animationComplete) {
                 self.showChatRoom(chatRoom, sendJoinEvent: true)
             }
-            
-            
         }
         
         performJoinChatAnimation { () -> Void in
@@ -184,6 +200,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             self.scrollViewToDefault()
             self.scrollBackgroundViewToDefault()
             self.spinnerView.alpha = 0
+            self.spinnerView.layer.removeAllAnimations()
             if (sendJoinEvent) {
                 (UIApplication.sharedApplication().delegate as! AppDelegate).joinPubNubChannel(chatRoom.objectId, alias: chatRoom.myAlias)
             }
@@ -192,7 +209,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func animateScrollViewToRaised() {
         UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.constant = self.scrollViewHeightRaisedConstant;
+            self.scrollViewPositionConstrait.constant = self.scrollViewHeightRaisedConstant;
             self.view.layoutIfNeeded()
         }
     }
@@ -204,7 +221,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     }
     
     func scrollViewToDefault() {
-        self.scrollViewHeightConstrait.constant = self.scrollViewHeightDefaultConstant;
+        self.scrollViewPositionConstrait.constant = self.scrollViewHeightDefaultConstant;
         self.view.layoutIfNeeded()
     }
     
@@ -215,46 +232,46 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func animateScrollViewToLowered() {
         UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.constant = self.scrollViewHeightLoweredConstant;
+            self.scrollViewPositionConstrait.constant = self.scrollViewHeightLoweredConstant;
             self.view.layoutIfNeeded()
         }
     }
     
     func animateScrollViewToOffScreen() {
         UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewHeightConstrait.constant = self.scrollViewHeightOffScreenConstant;
+            self.scrollViewPositionConstrait.constant = self.scrollViewHeightOffScreenConstant;
             self.view.layoutIfNeeded()
         }
     }
     
     func startSpinner() {
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
-            self.spinnerView.alpha = 1
-            self.spinnerView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-            self.view.layoutIfNeeded()
-            }) { (success: Bool) -> Void in
-                let options : UIViewAnimationOptions = [UIViewAnimationOptions.Repeat, UIViewAnimationOptions.CurveLinear]
-                UIView.animateWithDuration(0.25, delay: 0, options: options, animations: { () -> Void in
-                        let transform = CGAffineTransformMakeRotation(CGFloat(M_PI * -0.05));
-                        self.spinnerView.transform = transform;
-                        self.view.layoutIfNeeded()
-                    }) { (success: Bool) -> Void in
-                }
-        }
+        self.spinnerView.alpha = 1
+        
+        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
+        
+        rotationAnimation.fromValue = 0.0
+        rotationAnimation.toValue = Float(M_PI * 2.0)
+        rotationAnimation.duration = 1
+        rotationAnimation.repeatCount = Float.infinity
+        
+        spinnerView.layer.addAnimation(rotationAnimation, forKey: kRotationAnimationKey)
     }
     
     func performJoinChatAnimation(callback: () -> Void) {
         UIView.animateWithDuration(0.333, animations: { () -> Void in
-            self.scrollViewHeightConstrait.constant = self.scrollViewHeightMiddleConstant
+            self.scrollViewPositionConstrait.constant = self.scrollViewHeightMiddleConstant
             self.view.layoutIfNeeded()
             self.startSpinner()
             }) { (success: Bool) -> Void in
                 UIView.animateWithDuration(0.666, animations: { () -> Void in
-                    self.scrollViewHeightConstrait.constant = self.scrollViewHeightOffScreenConstant
+                    self.scrollViewPositionConstrait.constant = self.scrollViewHeightOffScreenConstant
                     self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightLoweredConstant
                     self.view.layoutIfNeeded()
                     }) { (success: Bool) -> Void in
-                        callback()
+                        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+                        dispatch_after(delayTime, dispatch_get_main_queue()) {
+                            callback()
+                        }
                 }
         }
     }

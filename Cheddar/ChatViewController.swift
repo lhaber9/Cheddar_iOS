@@ -199,6 +199,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func scrollToBottom() {
+        if (allActions.count == 0) {
+            return;
+        }
+        
         let indexPath = NSIndexPath(forRow: allActions.count - 1, inSection:0)
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
     }
