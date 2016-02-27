@@ -92,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     }
     
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {
-        NSLog("here3")
     }
 
     func applicationWillResignActive(application: UIApplication) {

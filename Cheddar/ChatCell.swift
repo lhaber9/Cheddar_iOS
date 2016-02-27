@@ -55,7 +55,6 @@ class ChatCell: UITableViewCell {
             messageTopConstraintAlias.priority = 950;
             messageTopConstraint.priority = 200;
             aliasLabelView.hidden = false;
-            NSLog(text)
         }
         else {
             messageTopConstraintAlias.priority = 200;
