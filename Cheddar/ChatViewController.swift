@@ -61,8 +61,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             var events = [AnyObject]()
             
-            if let messageEvents = object!["messageEvents"] as? [[NSObject:AnyObject]],
-                   presenceEvents = object!["presenceEvents"] as? [[NSObject:AnyObject]] {
+            if let messageEvents = object?["messageEvents"] as? [[NSObject:AnyObject]],
+                   presenceEvents = object?["presenceEvents"] as? [[NSObject:AnyObject]] {
                     
                 var messageIdx = 0
                 var presenceIdx = 0
