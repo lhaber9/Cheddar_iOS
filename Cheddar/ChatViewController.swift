@@ -98,7 +98,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 }
                 
-                self.allActions = events
+                self.allActions = events + self.allActions
                 self.tableView.reloadData()
                 self.view.setNeedsDisplay()
             }
