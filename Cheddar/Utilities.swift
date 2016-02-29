@@ -9,7 +9,7 @@
 import Foundation
 
 class Utilities {
-    
+    class func IS_IPHONE_4_OR_LESS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height < 568.0) }
     class func IS_IPHONE_5() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height == 568.0) }
     class func IS_IPHONE_6_PLUS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height == 736.0) }
     class func IS_IPAD() -> Bool { return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad) }

@@ -16,8 +16,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     @IBOutlet var spinnerView: UIView!
     @IBOutlet var spinnerImageView: UIImageView!
     @IBOutlet var container0: UIView!
-    
-    @IBOutlet var cheddarLabel: UILabel!
+    @IBOutlet var page0: UIView!
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
@@ -38,7 +37,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     var backgroundViewHeightDefaultConstant: CGFloat = 300
     var backgroundViewHeightLoweredConstant: CGFloat = 50
     
+    var frontPageViewWidthDefault: CGFloat = 320
+    var frontPageViewWidthSmall: CGFloat = 240
+    
     var containers: [UIView]!
+    var pages: [UIView]!
     var currentPage: Int = 0
     
     let kRotationAnimationKey = "cheddar.spinnerrotationanimationkey"
@@ -52,8 +55,6 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         
         spinnerImageView.image = UIImage(named: "VectorIcon")
         view.setNeedsDisplay()
-    
-//        cheddarLabel.font = UIFont(name: "Effra-Regular", size: 33)
         
         setShawdowForView(shadowBackgroundView)
         shadowBackgroundView.layer.shadowRadius = 5;
@@ -61,18 +62,25 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         shadowBackgroundView.backgroundColor = ColorConstants.solidGray
         
         containers = [container0]
+        pages = [page0]
         let introViewController = IntroViewController()
         addViewControllerPageToLastContainer(introViewController)
         
         if (Utilities.IS_IPHONE_6_PLUS()) {
-            textHeightConstrait.constant = 135
+            textHeightConstrait.constant = 145
         }
         else if (Utilities.IS_IPHONE_5()) {
-            scrollViewHeightConstrait.constant -= 60
-            containerHeightConstraint.constant -= 60
+            textHeightConstrait.constant = 45
             backgroundViewHeightDefaultConstant -= 60
-            scrollBackgroundViewToDefault()
         }
+        else if (Utilities.IS_IPHONE_4_OR_LESS()) {
+            textHeightConstrait.constant = 25
+            backgroundViewHeightDefaultConstant -= 110
+            scrollViewHeightConstrait.constant -= 35
+            containerHeightConstraint.constant -= 35
+        }
+        
+        backgroundViewHeightConstrait = shadowBackgroundView.autoSetDimension(ALDimension.Height, toSize: backgroundViewHeightDefaultConstant)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -82,6 +90,10 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func useSmallerViews() -> Bool {
+        return Utilities.IS_IPHONE_5() || Utilities.IS_IPHONE_4_OR_LESS()
     }
     
     func checkInChatRoom() {
@@ -108,28 +120,39 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     }
     
     func goToNextPageWithController(viewController: FrontPageViewController) {
-        addContainer()
+        addContainerAndPage()
         addViewControllerPageToLastContainer(viewController)
         goToNext()
     }
     
-    func addContainer() {
-        let lastContainer = containers.last!
-        lastContainer.removeConstraint(scrollViewWidthConstraint)
+    func addContainerAndPage() {
+        let lastPage = pages.last!
+        lastPage.removeConstraint(scrollViewWidthConstraint)
         scrollViewWidthConstraint = nil
-        let containerView = UIView()
-        scrollView.addSubview(containerView)
+        let pageView = UIView()
+        scrollView.addSubview(pageView)
         
-        containerView.autoMatchDimension(ALDimension.Width, toDimension:ALDimension.Width, ofView: lastContainer)
-        containerView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: lastContainer)
-        containerView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastContainer)
-        containerView.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: lastContainer)
+        pageView.autoMatchDimension(ALDimension.Width, toDimension:ALDimension.Width, ofView: lastPage)
+        pageView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: lastPage)
+        pageView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastPage)
+        pageView.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: lastPage)
         
-        scrollViewWidthConstraint = NSLayoutConstraint(item: containerView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
+        scrollViewWidthConstraint = NSLayoutConstraint(item: lastPage, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
         scrollViewWidthConstraint.priority = 900
         
         view.addConstraint(scrollViewWidthConstraint)
 
+        pages.append(pageView)
+        
+        let lastContainer = containers.last!
+        let containerView = UIView()
+        pageView.addSubview(containerView)
+        
+        containerView.autoMatchDimension(ALDimension.Width, toDimension: ALDimension.Width, ofView: lastContainer)
+        containerView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top,ofView: lastContainer)
+        containerView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastContainer)
+        containerView.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
+        
         containers.append(containerView)
     }
     
@@ -142,10 +165,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         let containerView = containers.last!
         containerView.addSubview(view)
         
-        view.autoPinEdgeToSuperviewEdge(ALEdge.Bottom)
-        view.autoPinEdgeToSuperviewEdge(ALEdge.Top)
-//        view.autoSetDimension(ALDimension.Width, toSize: 320)
-        view.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
+        view.autoPinEdgesToSuperviewEdges()
         
         setShawdowForView(view)
     }

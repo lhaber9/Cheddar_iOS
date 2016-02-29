@@ -5,7 +5,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="chatRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatRoom" inverseName="myAlias" inverseEntity="ChatRoom" syncable="YES"/>
+        <relationship name="chatRoom" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="ChatRoom" inverseName="myAlias" inverseEntity="ChatRoom" syncable="YES"/>
     </entity>
     <entity name="ChatRoom" representedClassName=".ChatRoom" syncable="YES">
         <attribute name="maxOccupants" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
