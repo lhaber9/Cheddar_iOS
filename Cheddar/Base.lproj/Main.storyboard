@@ -48,7 +48,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPF-Z8-4yg">
-                                <rect key="frame" x="35" y="124" width="235.5" height="60.5"/>
+                                <rect key="frame" x="35" y="66.5" width="235.5" height="60.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nnj-Xz-K6w">
                                         <rect key="frame" x="0.0" y="0.0" width="117" height="39"/>
@@ -87,7 +87,7 @@
                                 <rect key="frame" x="0.0" y="135" width="600" height="330"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome To" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r3t-pb-1Ua">
-                                        <rect key="frame" x="35" y="-40" width="125.5" height="28.5"/>
+                                        <rect key="frame" x="35" y="-97.5" width="125.5" height="28.5"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="24"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -112,6 +112,11 @@
                                             <constraint firstAttribute="bottom" secondItem="UfC-7E-11L" secondAttribute="bottom" id="dfy-mT-XCd"/>
                                             <constraint firstAttribute="height" constant="330" id="pGc-SB-m9n"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="ZNj-Ej-ASY"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -139,7 +144,6 @@
                             <constraint firstAttribute="trailing" secondItem="UnB-fZ-KQY" secondAttribute="trailing" id="0bg-Qk-Jqm"/>
                             <constraint firstItem="dPF-Z8-4yg" firstAttribute="top" secondItem="r3t-pb-1Ua" secondAttribute="bottom" id="2PB-sH-JSA"/>
                             <constraint firstItem="e7R-Jt-PEo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="5hQ-Qo-p7N"/>
-                            <constraint firstItem="r3t-pb-1Ua" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="75" id="8bf-dK-pWN"/>
                             <constraint firstItem="zds-bq-l3x" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="CgC-tP-POM"/>
                             <constraint firstItem="e7R-Jt-PEo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FaT-IR-hwT"/>
                             <constraint firstItem="e7R-Jt-PEo" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="HKy-9L-R31"/>
@@ -152,6 +156,7 @@
                             <constraint firstAttribute="trailing" secondItem="zds-bq-l3x" secondAttribute="trailing" id="Wvu-5F-A08"/>
                             <constraint firstItem="Dzu-YL-fCc" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="ZqB-m2-R36"/>
                             <constraint firstItem="dPF-Z8-4yg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="35" id="gc6-LR-xG9"/>
+                            <constraint firstItem="KcI-tv-jSZ" firstAttribute="top" secondItem="dPF-Z8-4yg" secondAttribute="bottom" constant="8" id="iHc-DW-ByM"/>
                             <constraint firstItem="KcI-tv-jSZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qWd-Pi-Aq9"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zds-bq-l3x" secondAttribute="bottom" id="tR9-DZ-oJ5"/>
                             <constraint firstItem="e7R-Jt-PEo" firstAttribute="centerY" secondItem="zds-bq-l3x" secondAttribute="top" id="xNq-5w-Bk4"/>
@@ -171,6 +176,8 @@
                         <outlet property="container0" destination="UfC-7E-11L" id="OCA-bM-OsX"/>
                         <outlet property="containerHeightConstraint" destination="pGc-SB-m9n" id="GrG-3q-rkU"/>
                         <outlet property="page0" destination="Dzu-YL-fCc" id="YXJ-lD-a10"/>
+                        <outlet property="pageLeftConstraint" destination="HNv-RF-TlM" id="ax4-ba-g5d"/>
+                        <outlet property="pageRightConstraint" destination="3dc-Iy-4P0" id="37u-IB-nbf"/>
                         <outlet property="scrollView" destination="KcI-tv-jSZ" id="gmY-Xx-GeY"/>
                         <outlet property="scrollViewHeightConstrait" destination="JOE-yW-vZU" id="k7o-C6-Qj4"/>
                         <outlet property="scrollViewPositionConstrait" destination="Jek-hf-Pg9" id="vKb-ei-Dn4"/>
@@ -178,7 +185,8 @@
                         <outlet property="shadowBackgroundView" destination="zds-bq-l3x" id="DIl-sw-gXH"/>
                         <outlet property="spinnerImageView" destination="TDY-0E-1Dh" id="o7x-Be-4TG"/>
                         <outlet property="spinnerView" destination="e7R-Jt-PEo" id="id1-H1-vf9"/>
-                        <outlet property="textHeightConstrait" destination="8bf-dK-pWN" id="2xu-k0-FHq"/>
+                        <outlet property="textLeftConstrait" destination="gc6-LR-xG9" id="B9y-iG-dmq"/>
+                        <outlet property="welcomeTextLeftConstrait" destination="Xof-cn-vCt" id="mLJ-EB-xVt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -26,7 +26,11 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     @IBOutlet var scrollViewPositionConstrait: NSLayoutConstraint!
     @IBOutlet var backgroundViewHeightConstrait: NSLayoutConstraint!
-    @IBOutlet var textHeightConstrait: NSLayoutConstraint!
+    
+    @IBOutlet var textLeftConstrait: NSLayoutConstraint!
+    @IBOutlet var welcomeTextLeftConstrait: NSLayoutConstraint!
+    @IBOutlet var pageLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var pageRightConstraint: NSLayoutConstraint!
     
     var scrollViewHeightRaisedConstant: CGFloat = -130
     var scrollViewHeightMiddleConstant: CGFloat = -70
@@ -66,15 +70,13 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         let introViewController = IntroViewController()
         addViewControllerPageToLastContainer(introViewController)
         
-        if (Utilities.IS_IPHONE_6_PLUS()) {
-            textHeightConstrait.constant = 145
+        if (Utilities.IS_IPHONE_6_PLUS() || Utilities.IS_IPHONE_6()) {
+            insetContainerEdges(10)
         }
         else if (Utilities.IS_IPHONE_5()) {
-            textHeightConstrait.constant = 45
             backgroundViewHeightDefaultConstant -= 60
         }
         else if (Utilities.IS_IPHONE_4_OR_LESS()) {
-            textHeightConstrait.constant = 25
             backgroundViewHeightDefaultConstant -= 110
             scrollViewHeightConstrait.constant -= 35
             containerHeightConstraint.constant -= 35
@@ -94,6 +96,13 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func useSmallerViews() -> Bool {
         return Utilities.IS_IPHONE_5() || Utilities.IS_IPHONE_4_OR_LESS()
+    }
+    
+    func insetContainerEdges(inset: CGFloat) {
+        textLeftConstrait.constant += inset
+        welcomeTextLeftConstrait.constant += inset
+        pageLeftConstraint.constant += inset
+        pageRightConstraint.constant += inset
     }
     
     func checkInChatRoom() {
