@@ -10,6 +10,8 @@ import UIKit
 import PubNub
 import Parse
 import CoreData
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
@@ -31,6 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         pnClient.addListener(self)
         
         Parse.setApplicationId(EnvironmentConstants.parseApplicationId, clientKey:EnvironmentConstants.parseClientKey)
+        
+        Fabric.with([Crashlytics.self])
         
         initializeUser()
         

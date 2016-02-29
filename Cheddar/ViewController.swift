@@ -308,6 +308,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     // ChatViewContollerDelegate
     
     func leaveChat(alias:Alias) {
+        
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!]) { (object: AnyObject?, error: NSError?) -> Void in
             if let chatRoom = ChatRoom.fetchSingleRoom() {
                 (UIApplication.sharedApplication().delegate as! AppDelegate).leavePubNubChannel(chatRoom.objectId, alias: alias)
