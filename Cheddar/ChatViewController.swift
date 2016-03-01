@@ -94,7 +94,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         loadMessageCallInFlight = true
-        PFCloud.callFunctionInBackground("replayForAlias", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
+        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
             
             var replayEvents = [AnyObject]()
             
