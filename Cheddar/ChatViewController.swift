@@ -28,9 +28,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var messageVerticalBuffer:CGFloat = 15
     
+    var allMessagesLoaded = false
+    var loadMessageCallInFlight = false
+    var currentStartToken: String! = nil
     var chatRoomId: String!
     var myAlias: Alias!
-//    var messages: [Message] = []
     var allActions: [AnyObject] = []
     
     override func viewDidLoad() {
@@ -57,54 +59,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.receivePresenceEvent(notification.object as! Presence)
         }
         
-        PFCloud.callFunctionInBackground("replayForAlias", withParameters: ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            var events = [AnyObject]()
-            
-            if let messageEvents = object?["messageEvents"] as? [[NSObject:AnyObject]],
-                   presenceEvents = object?["presenceEvents"] as? [[NSObject:AnyObject]] {
-                    
-                var messageIdx = 0
-                var presenceIdx = 0
-                    
-                while (messageIdx < messageEvents.count || presenceIdx < presenceEvents.count) {
-                    
-                    if (messageIdx == messageEvents.count) {
-                        let timestamp = presenceEvents[presenceIdx]["timestamp"] as! Int
-                        let action = presenceEvents[presenceIdx]["data"]!["action"] as! String
-                        let aliasDict = presenceEvents[presenceIdx]["data"]!["alias"] as! [NSObject:AnyObject]
-                        
-                        events.append(Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
-                        presenceIdx++
-                    }
-                    else if (presenceIdx == presenceEvents.count) {
-                        events.append(Message.createMessage(messageEvents[messageIdx]))
-                        messageIdx++
-                    }
-                    else {
-                        
-                        if ((messageEvents[messageIdx]["timestamp"] as! Int) < (presenceEvents[presenceIdx]["timestamp"] as! Int)) {
-                            events.append(Message.createMessage(messageEvents[messageIdx]))
-                            messageIdx++
-                        }
-                        else {
-                            let timestamp = presenceEvents[presenceIdx]["timestamp"] as! Int
-                            let action = presenceEvents[presenceIdx]["data"]!["action"] as! String
-                            let aliasDict = presenceEvents[presenceIdx]["data"]!["alias"] as! [NSObject:AnyObject]
-                            
-                            events.append(Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
-                            presenceIdx++
-                        }
-                    }
-                }
-                
-                self.allActions = events + self.allActions
-                self.tableView.reloadData()
-                self.view.setNeedsDisplay()
-                self.scrollToBottom()
-            }
-            
-        }
+        loadNextPageMessages()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -129,6 +84,57 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
         sendMessage(message)
         addMessage(message)
+    }
+    
+    func loadNextPageMessages() {
+        
+        var params: [NSObject:AnyObject] = ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
+        if (currentStartToken != nil) {
+            params["startTimeToken"] = currentStartToken
+        }
+        
+        loadMessageCallInFlight = true
+        PFCloud.callFunctionInBackground("replayForAlias", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            var replayEvents = [AnyObject]()
+            
+            if let startToken = object?["startTimeToken"] as? String {
+                self.currentStartToken = startToken
+            }
+            
+            if let events = object?["events"] as? [[NSObject:AnyObject]] {
+                
+                if (events.count < 25) {
+                    self.allMessagesLoaded = true
+                }
+                
+                for eventDict in events {
+                    
+                    let objectType = eventDict["objectType"] as! String
+                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                    
+                    if (objectType == "messageEvent") {
+                        replayEvents.append(Message.createMessage(objectDict))
+                    }
+                    else if (objectType == "presenceEvent") {
+                        replayEvents.append(Presence.createPresenceEvent(objectDict))
+                    }
+                }
+                
+                self.allActions = replayEvents + self.allActions
+                self.tableView.reloadData()
+                self.view.setNeedsDisplay()
+                
+                if (replayEvents.count == self.allActions.count) {
+                    self.scrollToBottom()
+                }
+                else {
+                    self.scrollToEventIndex(replayEvents.count)
+                }
+            }
+            
+            self.loadMessageCallInFlight = false
+        }
     }
     
     func isMyMessage(message: Message) -> Bool {
@@ -207,13 +213,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
     }
     
+    func scrollToEventIndex(index: Int) {
+        let indexPath = NSIndexPath(forRow: index, inSection:0)
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
+    }
+    
     func addMessage(message: Message) {
         allActions.append(message)
         
         tableView.reloadData()
         view.setNeedsDisplay()
         scrollToBottom()
-
     }
     
     func addPresenceEvent(presenceEvent: Presence) {
@@ -299,6 +309,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return 33
         }
         return 0
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (allMessagesLoaded || loadMessageCallInFlight) {
+            return
+        }
+        
+        if (tableView.contentOffset.y <= 50) {
+            loadNextPageMessages()
+        }
     }
 
 }

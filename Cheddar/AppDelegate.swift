@@ -64,35 +64,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
     }
     
-    func joinPubNubChannel(channelId: String, alias:Alias) {
-        pnClient.setState(["action":"join","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-        }
-    }
+//    func joinPubNubChannel(channelId: String, alias:Alias) {
+//        pnClient.setState(["action":"join","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
+//        }
+//    }
     
     func unsubscribeFromPubNubChannel(channelId: String, alias:Alias) {
         self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
     }
     
-    func leavePubNubChannel(channelId: String, alias:Alias) {
-        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-        }
-    }
+//    func leavePubNubChannel(channelId: String, alias:Alias) {
+//        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
+//        }
+//    }
     
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
-        NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(jsonMessage))
+        let objectType = jsonMessage["objectType"] as! String
+        let objectDict = jsonMessage["object"] as! [NSObject:AnyObject]
+        
+        if (objectType == "messageEvent") {
+            NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(objectDict))
+        }
+        else if (objectType == "presenceEvent") {
+             NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(objectDict))
+        }
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
-        if (event.data.presenceEvent != "state-change") {
-            return;
-        }
-        
-        let timestamp = event.data.presence.timetoken as Int
-        let action = event.data.presence.state["action"] as! String
-        let aliasDict = event.data.presence.state["alias"] as! [NSObject:AnyObject]
-        
-        NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(timestamp, action: action, aliasDict: aliasDict))
     }
     
     func client(client: PubNub!, didReceiveStatus status: PNStatus!) {

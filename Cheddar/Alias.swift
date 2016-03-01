@@ -16,14 +16,28 @@ class Alias: NSManagedObject {
     @NSManaged var userId: String!
     @NSManaged var chatRoomId: String!
     @NSManaged var name: String!
+    
+    var leftAt: NSDate!
+    var joinedAt: NSDate!
 
-    class func newAlias() -> Alias {
+    class func newAlias(isTemporary: Bool) -> Alias {
         let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!
-        return Alias(entity: ent, insertIntoManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)
+        
+        var context: NSManagedObjectContext! = nil
+        if (!isTemporary) {
+            context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        }
+        
+        return Alias(entity: ent, insertIntoManagedObjectContext: context)
     }
     
-    class func createAliasFromJson(jsonMessage: [NSObject: AnyObject]) -> Alias {
-        let newAlias = Alias.newAlias()
+    class func newTempAlias() -> Alias {
+        let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!
+        return Alias(entity: ent, insertIntoManagedObjectContext: nil)
+    }
+    
+    class func createAliasFromJson(jsonMessage: [NSObject: AnyObject], isTemporary:Bool) -> Alias {
+        let newAlias = Alias.newAlias(isTemporary)
         
         if let objectId = jsonMessage["objectId"] as? String {
             newAlias.objectId = objectId
@@ -38,11 +52,21 @@ class Alias: NSManagedObject {
             newAlias.userId = userId
         }
         
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        if let leftAt = jsonMessage["leftAt"] as? String {
+            newAlias.leftAt = dateFor.dateFromString(leftAt)
+        }
+        if let joinedAt = jsonMessage["createdAt"] as? String {
+            newAlias.joinedAt = dateFor.dateFromString(joinedAt)
+        }
+        
         return newAlias
     }
     
-    class func createAliasFromParseObject(pfObject: PFObject) -> Alias {
-        let newAlias = Alias.newAlias()
+    class func createAliasFromParseObject(pfObject: PFObject, isTemporary:Bool) -> Alias {
+        let newAlias = Alias.newAlias(isTemporary)
         newAlias.objectId = pfObject.objectId!
         
         if let chatRoomId = pfObject.objectForKey("chatRoomId") as? String {
@@ -54,20 +78,25 @@ class Alias: NSManagedObject {
         if let userId = pfObject.objectForKey("userId") as? String {
             newAlias.userId = userId
         }
+        if let leftAt = pfObject.objectForKey("leftAt") as? NSDate {
+            newAlias.leftAt = leftAt
+        }
+        
+        newAlias.joinedAt = pfObject.createdAt
         
         return newAlias
     }
     
-    func toJsonDict() -> [NSObject:AnyObject] {
-        var jsonDict = [NSObject:AnyObject]()
-        
-        jsonDict["objectId"] = objectId
-        jsonDict["chatRoomId"] = chatRoomId
-        jsonDict["name"] = name
-        jsonDict["userId"] = userId
-        
-        return jsonDict
-    }
+//    func toJsonDict() -> [NSObject:AnyObject] {
+//        var jsonDict = [NSObject:AnyObject]()
+//        
+//        jsonDict["objectId"] = objectId
+//        jsonDict["chatRoomId"] = chatRoomId
+//        jsonDict["name"] = name
+//        jsonDict["userId"] = userId
+//        
+//        return jsonDict
+//    }
     
     func initials() -> String {
         

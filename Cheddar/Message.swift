@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Parse
 
 class Message {
 
@@ -20,11 +21,15 @@ class Message {
         if let body = jsonMessage["body"] as? String {
             newMessage.body = body
         }
-        if let aliasDict = jsonMessage["alias"] as? [NSObject:AnyObject] {
-            newMessage.alias = Alias.createAliasFromJson(aliasDict)
-        }
         if let timestamp = jsonMessage["timestamp"] as? Int {
             newMessage.timestamp = timestamp
+        }
+        
+        if let aliasDict = jsonMessage["alias"] as? [NSObject:AnyObject] {
+            newMessage.alias = Alias.createAliasFromJson(aliasDict, isTemporary: true)
+        }
+        else if let aliasObject = jsonMessage["alias"] as? PFObject {
+            newMessage.alias = Alias.createAliasFromParseObject(aliasObject, isTemporary: true)
         }
         
         return newMessage
