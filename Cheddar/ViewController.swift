@@ -202,7 +202,8 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         var animationComplete = false
         
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
+            let innerObject = object!["object"] as! [NSObject:AnyObject]
+            let alias = Alias.createAliasFromParseObject(innerObject["alias"] as! PFObject, isTemporary: false)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
             (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoom.objectId, alias: alias)
