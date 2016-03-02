@@ -138,10 +138,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.view.setNeedsDisplay()
                 
                 if (replayEvents.count == self.allActions.count) {
-                    self.scrollToBottom()
+                    self.scrollToBottom(false)
                 }
                 else {
-                    self.scrollToEventIndex(replayEvents.count)
+                    self.scrollToEventIndex(replayEvents.count, animated: false)
                 }
             }
             
@@ -216,18 +216,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addPresenceEvent(presenceEvent)
     }
     
-    func scrollToBottom() {
+    func scrollToBottom(animated: Bool) {
         if (allActions.count == 0) {
             return;
         }
         
         let indexPath = NSIndexPath(forRow: allActions.count - 1, inSection:0)
-        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:animated)
     }
     
-    func scrollToEventIndex(index: Int) {
+    func scrollToEventIndex(index: Int, animated: Bool) {
         let indexPath = NSIndexPath(forRow: index, inSection:0)
-        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:true)
+        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
     }
     
     func addMessage(message: Message) {
@@ -235,7 +235,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.reloadData()
         view.setNeedsDisplay()
-        scrollToBottom()
+        scrollToBottom(true)
     }
     
     func addPresenceEvent(presenceEvent: Presence) {
@@ -243,7 +243,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.reloadData()
         view.setNeedsDisplay()
-        scrollToBottom()
+        scrollToBottom(true)
     }
     
     func shouldShowAliasForMessageIndex(messageIdx: Int) -> Bool {
