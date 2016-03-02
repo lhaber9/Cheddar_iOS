@@ -46,7 +46,7 @@ class Alias: NSManagedObject {
             newAlias.chatRoomId = chatRoomId
         }
         if let name = jsonMessage["name"] as? String {
-            newAlias.name = name
+            newAlias.name = name.capitalizedString
         }
         if let userId = jsonMessage["userId"] as? String {
             newAlias.userId = userId
@@ -73,7 +73,7 @@ class Alias: NSManagedObject {
             newAlias.chatRoomId = chatRoomId
         }
         if let name = pfObject.objectForKey("name") as? String {
-            newAlias.name = name
+            newAlias.name = name.capitalizedString
         }
         if let userId = pfObject.objectForKey("userId") as? String {
             newAlias.userId = userId
