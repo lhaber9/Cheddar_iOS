@@ -308,6 +308,9 @@
                                         <rect key="frame" x="22" y="16" width="632" height="17"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textViewChange" destination="Tzs-Z1-Lsf" eventType="editingChanged" id="2ga-CZ-ENS"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3O-Rr-VRn" customClass="UIImageView">
                                         <rect key="frame" x="558" y="8" width="34" height="34"/>

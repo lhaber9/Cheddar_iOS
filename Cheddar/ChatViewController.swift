@@ -39,6 +39,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var myAlias: Alias!
     var allActions: [AnyObject] = []
     
+    var sendEnabled: Bool = false {
+        didSet {
+            if (sendEnabled) {
+                sendImageContainer.image = UIImage(named: "SendDisabled")
+            }
+            else {
+                sendImageContainer.image = UIImage(named: "SendDisabled")
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
@@ -64,8 +75,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBarDivider.backgroundColor = ColorConstants.dividerGray
         
         backArrowContainer.image = UIImage(named: "BackArrow")
-        sendImageContainer.image = UIImage(named: "SendDisabled")
         dotsImageContainer.image = UIImage(named: "ThreeDots")
+        sendEnabled = false
     }
     
     func setupObervers() {
@@ -87,7 +98,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func sendPress() {
-        if (textView.text == "") {
+        if (!sendEnabled) {
             return
         }
         
@@ -101,6 +112,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func dotsPress() {
         
+    }
+    
+    @IBAction func textViewChange() {
+        sendEnabled = (textView.text != "")
     }
     
     func loadNextPageMessages() {
@@ -337,5 +352,4 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             loadNextPageMessages()
         }
     }
-
 }

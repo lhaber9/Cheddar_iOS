@@ -46,6 +46,9 @@ class ChatCell: UITableViewCell {
     func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool) {
         messageLabel.text = text
         messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
+        if (text.characters.count == 1) {
+            messageLabel.textAlignment = NSTextAlignment.Center
+        }
         
         leftIconLabel.text = alias.initials()
         rightIconLabel.text = alias.initials()
@@ -63,7 +66,6 @@ class ChatCell: UITableViewCell {
         }
         
         if (isOutbound == true) {
-            //                messageLabel.textAlignment = NSTextAlignment.Right
             leftSideMessageConstraint.priority = 200;
             rightSideMessageConstraint.priority = 900;
             leftSideLabelConstraint.priority = 200;
