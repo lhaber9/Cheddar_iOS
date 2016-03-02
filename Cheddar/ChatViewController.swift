@@ -13,11 +13,12 @@ protocol ChatViewControllerDelegate: class {
     func leaveChat(alias:Alias)
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
-    @IBOutlet var textView: UITextField!
+    @IBOutlet var textView: UITextView!
+    @IBOutlet var placeholderLabel: UILabel!
     @IBOutlet var topBar: UIView!
     @IBOutlet var topBarDivider: UIView!
     @IBOutlet var chatBarDivider: UIView!
@@ -42,10 +43,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var sendEnabled: Bool = false {
         didSet {
             if (sendEnabled) {
-                sendImageContainer.image = UIImage(named: "SendDisabled")
+                sendImageContainer.image = UIImage(named: "SendEnabled")
+                placeholderLabel.hidden = true
             }
             else {
                 sendImageContainer.image = UIImage(named: "SendDisabled")
+                placeholderLabel.hidden = false
             }
         }
     }
@@ -53,6 +56,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
+        
+        textView.delegate = self
         
         initStyle()
         
@@ -112,10 +117,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func dotsPress() {
         
-    }
-    
-    @IBAction func textViewChange() {
-        sendEnabled = (textView.text != "")
     }
     
     func loadNextPageMessages() {
@@ -305,6 +306,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         UIView.animateWithDuration(0.333) { () -> Void in
             self.chatBarBottomConstraint.constant = keyboardHeight
             self.view.layoutIfNeeded()
+            self.scrollToBottom(true)
         }
     }
     
@@ -366,5 +368,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if (tableView.contentOffset.y <= 50) {
             loadNextPageMessages()
         }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        sendEnabled = (textView.text != "")
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            sendPress()
+            return false;
+        }
+        
+        return true;
     }
 }

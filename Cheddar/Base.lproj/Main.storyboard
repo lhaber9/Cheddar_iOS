@@ -12,7 +12,6 @@
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
-            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -304,14 +303,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mev-Ht-NUf">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Say something nice..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bkp-hC-qNe">
-                                        <rect key="frame" x="22" y="16" width="528" height="17"/>
-                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <connections>
-                                            <action selector="textViewChange" destination="Tzs-Z1-Lsf" eventType="editingChanged" id="2ga-CZ-ENS"/>
-                                        </connections>
-                                    </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m3O-Rr-VRn" customClass="UIImageView">
                                         <rect key="frame" x="558" y="8" width="34" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -330,24 +321,44 @@
                                             <constraint firstAttribute="height" constant="1" id="E6R-23-tqp"/>
                                         </constraints>
                                     </view>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="z76-Cf-cga">
+                                        <rect key="frame" x="12" y="8" width="538" height="33"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="Ajz-Dw-Dbc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Tzs-Z1-Lsf" id="0dw-SG-0TM"/>
+                                        </connections>
+                                    </textView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Say Something Nice..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h0k-fz-J26">
+                                        <rect key="frame" x="17" y="17" width="142" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.87991519415357766" green="0.87991519415357766" blue="0.87991519415357766" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstItem="h0k-fz-J26" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="27" id="3sg-AE-pgF"/>
+                                    <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="z76-Cf-cga" secondAttribute="trailing" constant="8" id="5eZ-Zj-Xaz"/>
+                                    <constraint firstItem="h0k-fz-J26" firstAttribute="leading" secondItem="z76-Cf-cga" secondAttribute="leading" constant="5" id="A1o-SK-Cjv"/>
                                     <constraint firstAttribute="bottom" secondItem="m3O-Rr-VRn" secondAttribute="bottom" constant="8" id="C6S-mY-wB6"/>
                                     <constraint firstAttribute="trailing" secondItem="m3O-Rr-VRn" secondAttribute="trailing" constant="8" id="DvP-h1-Zh3"/>
-                                    <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="Bkp-hC-qNe" secondAttribute="leading" id="Fef-IJ-Wzv"/>
                                     <constraint firstAttribute="height" constant="50" id="GTK-eM-s73"/>
                                     <constraint firstItem="4Vz-zW-sEj" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" id="KsL-sj-YRY"/>
-                                    <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="Bkp-hC-qNe" secondAttribute="trailing" constant="8" id="OAy-4s-ulY"/>
                                     <constraint firstItem="4Vz-zW-sEj" firstAttribute="top" secondItem="Mev-Ht-NUf" secondAttribute="top" id="Ro2-ha-c6q"/>
-                                    <constraint firstItem="Bkp-hC-qNe" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="22" id="YSf-tD-CH6"/>
+                                    <constraint firstItem="h0k-fz-J26" firstAttribute="centerY" secondItem="Mev-Ht-NUf" secondAttribute="centerY" id="Wed-aa-rYk"/>
+                                    <constraint firstItem="z76-Cf-cga" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="12" id="Y5L-ym-mQk"/>
                                     <constraint firstAttribute="trailing" secondItem="4Vz-zW-sEj" secondAttribute="trailing" id="gEi-Aq-roU"/>
                                     <constraint firstItem="m3O-Rr-VRn" firstAttribute="top" secondItem="Mev-Ht-NUf" secondAttribute="top" constant="8" id="sug-01-XHl"/>
-                                    <constraint firstItem="Bkp-hC-qNe" firstAttribute="centerY" secondItem="Mev-Ht-NUf" secondAttribute="centerY" id="x5E-t9-wRQ"/>
+                                    <constraint firstItem="z76-Cf-cga" firstAttribute="centerY" secondItem="Mev-Ht-NUf" secondAttribute="centerY" id="vQy-7F-4vf"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Fef-IJ-Wzv"/>
+                                        <exclude reference="3sg-AE-pgF"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -378,9 +389,10 @@
                         <outlet property="chatBarBottomConstraint" destination="weW-6k-bNs" id="gHe-FD-iWf"/>
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
                         <outlet property="dotsImageContainer" destination="gdw-6L-CQr" id="LHQ-il-kaS"/>
+                        <outlet property="placeholderLabel" destination="h0k-fz-J26" id="mZS-E3-FMl"/>
                         <outlet property="sendImageContainer" destination="m3O-Rr-VRn" id="NTd-1w-YL0"/>
                         <outlet property="tableView" destination="Ql6-ns-pvM" id="9le-Bl-1Sb"/>
-                        <outlet property="textView" destination="Bkp-hC-qNe" id="pnZ-JY-4Dt"/>
+                        <outlet property="textView" destination="z76-Cf-cga" id="N57-81-YSe"/>
                         <outlet property="topBar" destination="YL3-Pb-2NT" id="HMV-UT-roJ"/>
                         <outlet property="topBarDivider" destination="iOk-2d-mw2" id="vYX-yt-xlI"/>
                         <outlet property="view" destination="6Tz-SO-OJZ" id="7vL-ZW-3Kk"/>
