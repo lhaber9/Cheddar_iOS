@@ -109,6 +109,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let text = textView.text!
         textView.text = ""
+        textViewDidChange(textView)
         
         let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
         sendMessage(message)
