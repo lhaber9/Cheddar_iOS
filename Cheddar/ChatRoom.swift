@@ -20,8 +20,8 @@ class ChatRoom: NSManagedObject {
     var maxMessagesStored = 100
     
     class func newChatRoom() -> ChatRoom {
-        let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!
-        return ChatRoom(entity: ent, insertIntoManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)
+        let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
+        return ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
     }
     
     class func createChatRoom(jsonMessage: [NSObject: AnyObject]) -> ChatRoom {
@@ -50,7 +50,7 @@ class ChatRoom: NSManagedObject {
     }
     
     class func fetchSingleRoom() -> ChatRoom! {
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let moc = Utilities.appDelegate().managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatRoom")
         do {
             let result = (try moc.executeFetchRequest(dataFetch) as! [ChatRoom])
@@ -65,7 +65,7 @@ class ChatRoom: NSManagedObject {
     }
     
     class func fetchAll() -> [ChatRoom] {
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let moc = Utilities.appDelegate().managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatRoom")
         
         do {
@@ -76,7 +76,7 @@ class ChatRoom: NSManagedObject {
     }
 
     class func fetchById(chatRoomId:String) -> ChatRoom! {
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let moc = Utilities.appDelegate().managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatRoom")
         dataFetch.predicate = NSPredicate(format: "objectId == %@", chatRoomId)
         

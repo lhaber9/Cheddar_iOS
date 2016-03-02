@@ -40,33 +40,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var allActions: [AnyObject] = []
     
     override func viewDidLoad() {
-        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deselectTextView"))
-        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectTextView"))
-        
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         
-        topBar.backgroundColor = ColorConstants.solidGray
-        chatBar.backgroundColor = ColorConstants.solidGray
+        initStyle()
         
-        topBarDivider.backgroundColor = ColorConstants.dividerGray
-        chatBarDivider.backgroundColor = ColorConstants.dividerGray
-        
-        backArrowContainer.image = UIImage(named: "BackArrow")
-        sendImageContainer.image = UIImage(named: "SendDisabled")
-        dotsImageContainer.image = UIImage(named: "ThreeDots")
-        
-        (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoomId, alias: myAlias)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-           self.receiveMessage(notification.object as! Message)
-        }
-        NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.receivePresenceEvent(notification.object as! Presence)
-        }
-        
+        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId, alias: myAlias)
+        setupObervers()
         loadNextPageMessages()
     }
     
@@ -75,6 +55,31 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newPresenceEvent", object: nil)
+    }
+    
+    func initStyle() {
+        topBar.backgroundColor = ColorConstants.solidGray
+        chatBar.backgroundColor = ColorConstants.solidGray
+        topBarDivider.backgroundColor = ColorConstants.dividerGray
+        chatBarDivider.backgroundColor = ColorConstants.dividerGray
+        
+        backArrowContainer.image = UIImage(named: "BackArrow")
+        sendImageContainer.image = UIImage(named: "SendDisabled")
+        dotsImageContainer.image = UIImage(named: "ThreeDots")
+    }
+    
+    func setupObervers() {
+        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deselectTextView"))
+        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectTextView"))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
+            self.receiveMessage(notification.object as! Message)
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
+            self.receivePresenceEvent(notification.object as! Presence)
+        }
     }
     
     @IBAction func closeChat() {
@@ -197,7 +202,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func sendMessage(message: Message) {
-        (UIApplication.sharedApplication().delegate as! AppDelegate).sendPubNubMessage(message, mobilePushPayload: nil, toChannel: message.alias.chatRoomId)
+        Utilities.appDelegate().sendPubNubMessage(message, mobilePushPayload: nil, toChannel: message.alias.chatRoomId)
     }
     
     func receiveMessage(message: Message) {

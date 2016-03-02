@@ -205,8 +205,8 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
             chatRoom = ChatRoom.createWithMyAlias(alias)
-            (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
-            (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoom.objectId, alias: alias)
+            Utilities.appDelegate().saveContext()
+            Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId, alias: alias)
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
@@ -308,10 +308,10 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     func leaveChat(alias:Alias) {
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             if let chatRoom = ChatRoom.fetchSingleRoom() {
-                (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext.deleteObject(chatRoom)
-                (UIApplication.sharedApplication().delegate as! AppDelegate).saveContext()
+                Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+                Utilities.appDelegate().saveContext()
             }
-            (UIApplication.sharedApplication().delegate as! AppDelegate).unsubscribeFromPubNubChannel(alias.chatRoomId, alias: alias)
+            Utilities.appDelegate().unsubscribeFromPubNubChannel(alias.chatRoomId, alias: alias)
             self.scrollToPage(self.currentPage, animated: false)
             self.dismissViewControllerAnimated(true, completion: nil)
         }

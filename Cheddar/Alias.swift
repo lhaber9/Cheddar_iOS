@@ -21,18 +21,18 @@ class Alias: NSManagedObject {
     var joinedAt: NSDate!
 
     class func newAlias(isTemporary: Bool) -> Alias {
-        let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!
+        let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         
         var context: NSManagedObjectContext! = nil
         if (!isTemporary) {
-            context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+            context = Utilities.appDelegate().managedObjectContext
         }
         
         return Alias(entity: ent, insertIntoManagedObjectContext: context)
     }
     
     class func newTempAlias() -> Alias {
-        let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext)!
+        let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         return Alias(entity: ent, insertIntoManagedObjectContext: nil)
     }
     
@@ -109,7 +109,7 @@ class Alias: NSManagedObject {
     }
     
 //    func managedObjectContext() -> NSManagedObjectContext? {
-//        return (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+//        return Utilities.appDelegate().managedObjectContext
 //    }
     
 }
