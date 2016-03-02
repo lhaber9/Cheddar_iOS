@@ -24,6 +24,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var chatBar: UIView!
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet var backArrowContainer: UIImageView!
+    @IBOutlet var sendImageContainer: UIImageView!
+    @IBOutlet var dotsImageContainer: UIImageView!
+    
     @IBOutlet var tableView: UITableView!
     
     var messageVerticalBuffer:CGFloat = 15
@@ -47,6 +51,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         topBarDivider.backgroundColor = ColorConstants.dividerGray
         chatBarDivider.backgroundColor = ColorConstants.dividerGray
+        
+        backArrowContainer.image = UIImage(named: "BackArrow")
+        sendImageContainer.image = UIImage(named: "SendDisabled")
+        dotsImageContainer.image = UIImage(named: "ThreeDots")
         
         (UIApplication.sharedApplication().delegate as! AppDelegate).subscribeToPubNubChannel(chatRoomId, alias: myAlias)
         
@@ -84,6 +92,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
         sendMessage(message)
         addMessage(message)
+    }
+    
+    @IBAction func dotsPress() {
+        
     }
     
     func loadNextPageMessages() {

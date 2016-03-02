@@ -58,7 +58,6 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         backgroundView.backgroundColor = ColorConstants.colorPrimary
         
         spinnerImageView.image = UIImage(named: "VectorIcon")
-        view.setNeedsDisplay()
         
         setShawdowForView(shadowBackgroundView)
         shadowBackgroundView.layer.shadowRadius = 5;
@@ -83,6 +82,8 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         }
         
         backgroundViewHeightConstrait = shadowBackgroundView.autoSetDimension(ALDimension.Height, toSize: backgroundViewHeightDefaultConstant)
+        
+        view.setNeedsDisplay()
     }
     
     override func viewDidAppear(animated: Bool) {
