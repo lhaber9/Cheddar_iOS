@@ -43,18 +43,8 @@ class ChatCell: UITableViewCell {
         rightIcon.backgroundColor = ColorConstants.colorAccent
     }
     
-    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool) {
-        messageLabel.text = text
-        messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
-        if (text.characters.count == 1) {
-            messageLabel.textAlignment = NSTextAlignment.Center
-        }
-        
-        leftIconLabel.text = alias.initials()
-        rightIconLabel.text = alias.initials()
-        aliasLabel.text = alias.name
-        
-        if (showAliasLabel == true) {
+    func setShowAliasLabel(showAliasLabel: Bool) {
+        if (showAliasLabel) {
             messageTopConstraintAlias.priority = 950;
             messageTopConstraint.priority = 200;
             aliasLabelView.hidden = false;
@@ -64,8 +54,10 @@ class ChatCell: UITableViewCell {
             messageTopConstraint.priority = 950;
             aliasLabelView.hidden = true;
         }
-        
-        if (isOutbound == true) {
+    }
+    
+    func setIsOutbound(isOutbound: Bool) {
+        if (isOutbound) {
             leftSideMessageConstraint.priority = 200;
             rightSideMessageConstraint.priority = 900;
             leftSideLabelConstraint.priority = 200;
@@ -73,6 +65,39 @@ class ChatCell: UITableViewCell {
             messageBackground.backgroundColor = ColorConstants.colorAccent
             messageLabel.textColor = UIColor.whiteColor()
             rightIcon.hidden = false;
+            leftIcon.hidden = true;
+        }
+        else {
+            leftSideMessageConstraint.priority = 900;
+            rightSideMessageConstraint.priority = 200;
+            leftSideLabelConstraint.priority = 900;
+            rightSideLabelConstraint.priority = 200;
+            messageBackground.backgroundColor = ColorConstants.solidGray
+            messageLabel.textColor = UIColor.blackColor()
+            rightIcon.hidden = true;
+            leftIcon.hidden = false;
+        }
+    }
+
+    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool) {
+        messageLabel.text = text
+        messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
+        if (text.characters.count == 1) {
+            messageLabel.textAlignment = NSTextAlignment.Center
+        }
+        else {
+            messageLabel.textAlignment = NSTextAlignment.Left
+        }
+        
+        leftIconLabel.text = alias.initials()
+        rightIconLabel.text = alias.initials()
+        aliasLabel.text = alias.name
+        
+        setShowAliasLabel(showAliasLabel)
+        setIsOutbound(isOutbound)
+        
+        if (!showAliasIcon){
+            rightIcon.hidden = true;
             leftIcon.hidden = true;
         }
         

@@ -266,11 +266,26 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         scrollToBottom(true)
     }
     
-    func shouldShowAliasForMessageIndex(messageIdx: Int) -> Bool {
+    func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
         if let thisMessage = allActions[messageIdx] as? Message {
             let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             if (messageBefore != nil) {
                 return messageBefore.alias.objectId != thisMessage.alias.objectId
+            }
+            else {
+                return true
+            }
+        }
+        else {
+            return false
+        }
+    }
+    
+    func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
+        if let thisMessage = allActions[messageIdx] as? Message {
+            let messageAfter = findFirstMessageAfterIndex(messageIdx)
+            if (messageAfter != nil) {
+                return messageAfter.alias.objectId != thisMessage.alias.objectId
             }
             else {
                 return true
@@ -312,7 +327,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let event = allActions[indexPath.row]
         if let message = event as? Message {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasForMessageIndex(indexPath.row))
+            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: shouldShowAliasIconForMessageIndex(indexPath.row))
             return cell
         }
         else if let presenceEvent = event as? Presence {
@@ -328,7 +343,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let action = allActions[indexPath.row]
         if let message = action as? Message {
             
-            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: shouldShowAliasForMessageIndex(indexPath.row)) + 4
+            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row)) + 4
             
             let nextMessage = findFirstMessageAfterIndex(indexPath.row)
             if (nextMessage?.alias.objectId != message.alias.objectId) {

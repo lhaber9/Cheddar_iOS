@@ -305,7 +305,7 @@
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Say something nice..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bkp-hC-qNe">
-                                        <rect key="frame" x="22" y="16" width="632" height="17"/>
+                                        <rect key="frame" x="22" y="16" width="528" height="17"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
@@ -338,7 +338,7 @@
                                     <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="Bkp-hC-qNe" secondAttribute="leading" id="Fef-IJ-Wzv"/>
                                     <constraint firstAttribute="height" constant="50" id="GTK-eM-s73"/>
                                     <constraint firstItem="4Vz-zW-sEj" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" id="KsL-sj-YRY"/>
-                                    <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="Bkp-hC-qNe" secondAttribute="trailing" constant="-96" id="OAy-4s-ulY"/>
+                                    <constraint firstItem="m3O-Rr-VRn" firstAttribute="leading" secondItem="Bkp-hC-qNe" secondAttribute="trailing" constant="8" id="OAy-4s-ulY"/>
                                     <constraint firstItem="4Vz-zW-sEj" firstAttribute="top" secondItem="Mev-Ht-NUf" secondAttribute="top" id="Ro2-ha-c6q"/>
                                     <constraint firstItem="Bkp-hC-qNe" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="22" id="YSf-tD-CH6"/>
                                     <constraint firstAttribute="trailing" secondItem="4Vz-zW-sEj" secondAttribute="trailing" id="gEi-Aq-roU"/>
