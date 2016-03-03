@@ -10,7 +10,7 @@ import Foundation
 import Parse
 
 protocol ChatViewControllerDelegate: class {
-    func leaveChat(alias:Alias)
+    func closeChat()
 }
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
@@ -25,9 +25,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var chatBar: UIView!
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet var backArrowContainer: UIImageView!
-    @IBOutlet var sendImageContainer: UIImageView!
-    @IBOutlet var dotsImageContainer: UIImageView!
+    @IBOutlet var sendButton: UIButton!
     
     @IBOutlet var tableView: UITableView!
     
@@ -35,21 +33,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var allMessagesLoaded = false
     var loadMessageCallInFlight = false
+    var leaveChatRoomCalInFlight = false
     var currentStartToken: String! = nil
+    
     var chatRoomId: String!
     var myAlias: Alias!
     var allActions: [AnyObject] = []
     
-    var sendEnabled: Bool = false {
+    var sendEnabled: Bool! {
         didSet {
-            if (sendEnabled) {
-                sendImageContainer.image = UIImage(named: "SendEnabled")
-                placeholderLabel.hidden = true
-            }
-            else {
-                sendImageContainer.image = UIImage(named: "SendDisabled")
-                placeholderLabel.hidden = false
-            }
+            sendButton.enabled = sendEnabled
+            placeholderLabel.hidden = sendEnabled
         }
     }
     
@@ -61,7 +55,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         initStyle()
         
-        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId, alias: myAlias)
+        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId)
         setupObervers()
         loadNextPageMessages()
     }
@@ -78,9 +72,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBar.backgroundColor = ColorConstants.solidGray
         topBarDivider.backgroundColor = ColorConstants.dividerGray
         chatBarDivider.backgroundColor = ColorConstants.dividerGray
-        
-        backArrowContainer.image = UIImage(named: "BackArrow")
-        dotsImageContainer.image = UIImage(named: "ThreeDots")
+
         sendEnabled = false
     }
     
@@ -98,15 +90,29 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    @IBAction func closeChat() {
-        delegate?.leaveChat(myAlias)
-    }
-    
-    @IBAction func sendPress() {
-        if (!sendEnabled) {
+    @IBAction func backTap() {
+        if (leaveChatRoomCalInFlight) {
             return
         }
         
+        leaveChatRoomCalInFlight = true
+        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": myAlias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+            self.leaveChatRoomCalInFlight = false
+            
+            if (error != nil) {
+                return
+            }
+            
+            if let chatRoom = ChatRoom.fetchSingleRoom() {
+                Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+                Utilities.appDelegate().saveContext()
+            }
+            Utilities.appDelegate().unsubscribeFromPubNubChannel(self.myAlias.chatRoomId)
+            self.delegate?.closeChat()
+        }
+    }
+    
+    @IBAction func sendPress() {
         let text = textView.text!
         textView.text = ""
         textViewDidChange(textView)

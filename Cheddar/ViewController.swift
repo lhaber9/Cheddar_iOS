@@ -206,7 +206,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
-            Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId, alias: alias)
+            Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
@@ -305,17 +305,9 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     // ChatViewContollerDelegate
     
-    func leaveChat(alias:Alias) {
-        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            if let chatRoom = ChatRoom.fetchSingleRoom() {
-                Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
-                Utilities.appDelegate().saveContext()
-            }
-            Utilities.appDelegate().unsubscribeFromPubNubChannel(alias.chatRoomId, alias: alias)
-            self.scrollToPage(self.currentPage, animated: false)
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
+    func closeChat() {
+        self.scrollToPage(self.currentPage, animated: false)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

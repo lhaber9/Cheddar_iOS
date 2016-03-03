@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey])
     }
     
-    func subscribeToPubNubChannel(channelId: String, alias:Alias) {
+    func subscribeToPubNubChannel(channelId: String) {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
     }
     
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 //        }
 //    }
     
-    func unsubscribeFromPubNubChannel(channelId: String, alias:Alias) {
+    func unsubscribeFromPubNubChannel(channelId: String) {
         self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
     }
     
