@@ -322,13 +322,18 @@
                                         </constraints>
                                     </view>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="z76-Cf-cga">
-                                        <rect key="frame" x="12" y="8" width="538" height="33"/>
+                                        <rect key="frame" x="12" y="8" width="538" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Ajz-Dw-Dbc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Ajz-Dw-Dbc"/>
+                                            </mask>
+                                        </variation>
                                         <connections>
                                             <outlet property="delegate" destination="Tzs-Z1-Lsf" id="0dw-SG-0TM"/>
                                         </connections>
@@ -343,6 +348,7 @@
                                         <rect key="frame" x="558" y="8" width="34" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="H5I-hN-biP" secondAttribute="height" multiplier="1:1" id="McI-TE-vJW"/>
+                                            <constraint firstAttribute="height" constant="34" id="ZdK-Ai-iny"/>
                                             <constraint firstAttribute="width" constant="28" id="tHO-gD-xdQ"/>
                                         </constraints>
                                         <state key="normal" image="SendEnabled"/>
@@ -363,6 +369,7 @@
                                     <constraint firstItem="h0k-fz-J26" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="27" id="3sg-AE-pgF"/>
                                     <constraint firstAttribute="bottom" secondItem="H5I-hN-biP" secondAttribute="bottom" constant="8" id="996-kX-lou"/>
                                     <constraint firstItem="h0k-fz-J26" firstAttribute="leading" secondItem="z76-Cf-cga" secondAttribute="leading" constant="5" id="A1o-SK-Cjv"/>
+                                    <constraint firstAttribute="bottom" secondItem="z76-Cf-cga" secondAttribute="bottom" constant="8" id="BAB-tJ-Eag"/>
                                     <constraint firstAttribute="height" constant="50" id="GTK-eM-s73"/>
                                     <constraint firstItem="4Vz-zW-sEj" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" id="KsL-sj-YRY"/>
                                     <constraint firstItem="H5I-hN-biP" firstAttribute="leading" secondItem="z76-Cf-cga" secondAttribute="trailing" constant="8" id="MdP-JE-cwY"/>
@@ -371,12 +378,14 @@
                                     <constraint firstItem="z76-Cf-cga" firstAttribute="leading" secondItem="Mev-Ht-NUf" secondAttribute="leading" constant="12" id="Y5L-ym-mQk"/>
                                     <constraint firstItem="H5I-hN-biP" firstAttribute="top" secondItem="Mev-Ht-NUf" secondAttribute="top" constant="8" id="eXY-Rr-HbP"/>
                                     <constraint firstAttribute="trailing" secondItem="4Vz-zW-sEj" secondAttribute="trailing" id="gEi-Aq-roU"/>
+                                    <constraint firstItem="z76-Cf-cga" firstAttribute="top" secondItem="Mev-Ht-NUf" secondAttribute="top" constant="8" id="ohJ-5e-w1P"/>
                                     <constraint firstItem="z76-Cf-cga" firstAttribute="centerY" secondItem="Mev-Ht-NUf" secondAttribute="centerY" id="vQy-7F-4vf"/>
                                     <constraint firstAttribute="trailing" secondItem="H5I-hN-biP" secondAttribute="trailing" constant="8" id="y7o-5l-V7a"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="3sg-AE-pgF"/>
+                                        <exclude reference="996-kX-lou"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -405,6 +414,7 @@
                         <outlet property="chatBar" destination="Mev-Ht-NUf" id="8ww-rE-vAJ"/>
                         <outlet property="chatBarBottomConstraint" destination="weW-6k-bNs" id="gHe-FD-iWf"/>
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
+                        <outlet property="chatBarHeightConstraint" destination="GTK-eM-s73" id="HGE-6w-yU0"/>
                         <outlet property="placeholderLabel" destination="h0k-fz-J26" id="mZS-E3-FMl"/>
                         <outlet property="sendButton" destination="H5I-hN-biP" id="Na4-Hr-yFh"/>
                         <outlet property="tableView" destination="Ql6-ns-pvM" id="9le-Bl-1Sb"/>

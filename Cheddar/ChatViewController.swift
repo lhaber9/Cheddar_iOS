@@ -23,22 +23,55 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var topBarDivider: UIView!
     @IBOutlet var chatBarDivider: UIView!
     @IBOutlet var chatBar: UIView!
+    
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet var sendButton: UIButton!
     
     @IBOutlet var tableView: UITableView!
     
     var messageVerticalBuffer:CGFloat = 15
+    var chatBarHeightDefault:CGFloat = 50
     
     var allMessagesLoaded = false
     var loadMessageCallInFlight = false
     var leaveChatRoomCalInFlight = false
     var currentStartToken: String! = nil
     
+    var previousTextRect = CGRectZero
+    
     var chatRoomId: String!
     var myAlias: Alias!
     var allActions: [AnyObject] = []
+    
+    var numberInputTextLines = 1 {
+        didSet {
+            
+            var offsetFromDefault:CGFloat = 0
+            
+            if (numberInputTextLines == 3){
+                offsetFromDefault = textView.font!.lineHeight
+            }
+            else if (numberInputTextLines >= 4) {
+                offsetFromDefault = textView.font!.lineHeight * 2
+            }
+            
+            UIView.animateWithDuration(0.333) { () -> Void in
+                self.chatBarHeightConstraint.constant = self.chatBarHeightDefault + offsetFromDefault
+                self.view.layoutIfNeeded()
+                if (self.numberInputTextLines <= 4) {
+                    self.textView.scrollRangeToVisible(NSMakeRange(0, 1))
+                }
+                else {
+                    self.textView.scrollRangeToVisible(self.textView.selectedRange)
+                }
+            }
+
+        }
+    }
+    
+    var lastNumberOfTextLines = 0
     
     var sendEnabled: Bool! {
         didSet {
@@ -114,8 +147,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func sendPress() {
         let text = textView.text!
-        textView.text = ""
-        textViewDidChange(textView)
+        clearTextView()
         
         let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
         sendMessage(message)
@@ -124,6 +156,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func dotsPress() {
         
+    }
+    
+    func clearTextView() {
+        textView.text = ""
+        textViewDidChange(textView)
+        numberInputTextLines = 0
     }
     
     func loadNextPageMessages() {
@@ -379,6 +417,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func textViewDidChange(textView: UITextView) {
         sendEnabled = (textView.text != "")
+        
+        let rows = Int(round((textView.contentSize.height - textView.textContainerInset.top - textView.textContainerInset.bottom) / textView.font!.lineHeight))
+        
+        if (numberInputTextLines != rows) {
+            numberInputTextLines = rows
+        }
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
