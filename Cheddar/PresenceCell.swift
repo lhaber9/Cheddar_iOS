@@ -18,6 +18,7 @@ class PresenceCell: UITableViewCell {
         self.alias = alias
         self.action = action
         aliasLabel.text = alias.name + " " + getActionString(action)
+        aliasLabel.textColor = ColorConstants.presenceText
     }
     
     func getActionString(action: String!) -> String! {

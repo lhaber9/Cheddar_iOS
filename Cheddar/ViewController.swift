@@ -55,7 +55,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         
         spinnerView.alpha = 0
         
-        backgroundView.backgroundColor = ColorConstants.colorPrimary
+        backgroundView.backgroundColor = ColorConstants.colorAccent
         
         spinnerImageView.image = UIImage(named: "VectorIcon")
         

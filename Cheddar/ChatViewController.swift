@@ -101,10 +101,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func initStyle() {
-        topBar.backgroundColor = ColorConstants.solidGray
-        chatBar.backgroundColor = ColorConstants.solidGray
-        topBarDivider.backgroundColor = ColorConstants.dividerGray
-        chatBarDivider.backgroundColor = ColorConstants.dividerGray
+        topBar.backgroundColor = ColorConstants.headerBackground
+        chatBar.backgroundColor = ColorConstants.sendBackground
+        topBarDivider.backgroundColor = ColorConstants.headerBorder
+        chatBarDivider.backgroundColor = ColorConstants.sendBorder
 
         sendEnabled = false
     }

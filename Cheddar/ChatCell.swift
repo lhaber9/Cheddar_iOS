@@ -39,8 +39,8 @@ class ChatCell: UITableViewCell {
         leftIcon.layer.cornerRadius = 15;
         rightIcon.layer.cornerRadius = 15;
         
-        leftIcon.backgroundColor = ColorConstants.colorPrimary
-        rightIcon.backgroundColor = ColorConstants.colorAccent
+        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
+        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
     }
     
     func setShowAliasLabel(showAliasLabel: Bool) {
@@ -62,8 +62,8 @@ class ChatCell: UITableViewCell {
             rightSideMessageConstraint.priority = 900;
             leftSideLabelConstraint.priority = 200;
             rightSideLabelConstraint.priority = 900;
-            messageBackground.backgroundColor = ColorConstants.colorAccent
-            messageLabel.textColor = UIColor.whiteColor()
+            messageBackground.backgroundColor = ColorConstants.outboundChatBubble
+            messageLabel.textColor = ColorConstants.outboundMessageText
             rightIcon.hidden = false;
             leftIcon.hidden = true;
         }
@@ -72,8 +72,8 @@ class ChatCell: UITableViewCell {
             rightSideMessageConstraint.priority = 200;
             leftSideLabelConstraint.priority = 900;
             rightSideLabelConstraint.priority = 200;
-            messageBackground.backgroundColor = ColorConstants.solidGray
-            messageLabel.textColor = UIColor.blackColor()
+            messageBackground.backgroundColor = ColorConstants.inboundChatBubble
+            messageLabel.textColor = ColorConstants.inboundMessageText
             rightIcon.hidden = true;
             leftIcon.hidden = false;
         }
@@ -92,6 +92,7 @@ class ChatCell: UITableViewCell {
         leftIconLabel.text = alias.initials()
         rightIconLabel.text = alias.initials()
         aliasLabel.text = alias.name
+        aliasLabel.textColor = ColorConstants.aliasLabelText
         
         setShowAliasLabel(showAliasLabel)
         setIsOutbound(isOutbound)
