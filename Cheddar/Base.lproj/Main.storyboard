@@ -353,7 +353,6 @@
                                         </constraints>
                                         <state key="normal" image="SendEnabled"/>
                                         <state key="disabled" image="SendDisabled"/>
-                                        <state key="highlighted" image="BackArrow"/>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="tHO-gD-xdQ"/>
