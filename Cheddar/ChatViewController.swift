@@ -87,8 +87,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         textView.delegate = self
         
         initStyle()
+        subscribe()
         
-        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId)
         setupObervers()
         loadNextPageMessages()
     }
@@ -98,6 +98,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newPresenceEvent", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
     }
     
     func initStyle() {
@@ -107,6 +108,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBarDivider.backgroundColor = ColorConstants.sendBorder
 
         sendEnabled = false
+    }
+    
+    func subscribe() {
+        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId)
+        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoomId)
     }
     
     func setupObervers() {
@@ -120,6 +126,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.receivePresenceEvent(notification.object as! Presence)
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
+            self.subscribe()
         }
     }
     
@@ -141,6 +150,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 Utilities.appDelegate().saveContext()
             }
             Utilities.appDelegate().unsubscribeFromPubNubChannel(self.myAlias.chatRoomId)
+            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.myAlias.chatRoomId)
             self.delegate?.closeChat()
         }
     }

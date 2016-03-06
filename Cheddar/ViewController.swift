@@ -207,6 +207,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
+            Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }

@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
+    var thisDeviceToken: NSData!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -37,6 +38,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         Fabric.with([Crashlytics.self])
         
         initializeUser()
+        
+        let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
+        
+        let textAction = UIMutableUserNotificationAction()
+        textAction.identifier = "TEXT_ACTION"
+        textAction.title = "Reply"
+        textAction.activationMode = .Background
+        textAction.authenticationRequired = false
+        textAction.destructive = false
+        if #available(iOS 9.0, *) {
+            textAction.behavior = .TextInput
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        let category = UIMutableUserNotificationCategory()
+        category.identifier = "ACTIONABLE_REPLY"
+        category.setActions([textAction], forContext: .Default)
+        category.setActions([textAction], forContext: .Minimal)
+        
+        let categories = NSSet(object: category) as! Set<UIUserNotificationCategory>
+        let mySettings = UIUserNotificationSettings(forTypes: types, categories: categories)
+        
+        UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
+        UIApplication.sharedApplication().registerForRemoteNotifications()
         
         return true
     }
@@ -64,19 +90,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
     }
     
-//    func joinPubNubChannel(channelId: String, alias:Alias) {
-//        pnClient.setState(["action":"join","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-//        }
-//    }
+    func subscribeToPubNubPushChannel(channelId: String) {
+        pnClient.addPushNotificationsOnChannels([channelId], withDevicePushToken: thisDeviceToken) { (status: PNAcknowledgmentStatus!) -> Void in
+            
+            // Check whether request successfully completed or not.
+            if (!status.error) {
+                
+                // Handle successful push notification enabling on passed channels.
+            }
+                // Request processing failed.
+            else {
+                
+                // Handle modification error. Check 'category' property to find out possible issue because
+                // of which request did fail.
+                //
+                // Request can be resent using: [status retry];
+            }
+        }
+    }
     
     func unsubscribeFromPubNubChannel(channelId: String) {
         self.pnClient.unsubscribeFromChannels([channelId], withPresence: true)
     }
     
-//    func leavePubNubChannel(channelId: String, alias:Alias) {
-//        pnClient.setState(["action":"leave","alias":alias.toJsonDict()], forUUID: pnClient.uuid(), onChannel: channelId) { (status: PNClientStateUpdateStatus!) -> Void in
-//        }
-//    }
+    func unsubscribeFromPubNubPushChannel(channelId: String) {
+        pnClient.removePushNotificationsFromChannels([channelId], withDevicePushToken: thisDeviceToken) { (status: PNAcknowledgmentStatus!) -> Void in
+            
+            // Check whether request successfully completed or not.
+            if (!status.error) {
+                
+                // Handle successful push notification enabling on passed channels.
+            }
+                // Request processing failed.
+            else {
+                
+                // Handle modification error. Check 'category' property to find out possible issue because
+                // of which request did fail.
+                //
+                // Request can be resent using: [status retry];
+            }
+        }
+    }
     
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
@@ -181,6 +235,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                 abort()
             }
         }
+    }
+    
+    // Notifications
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        thisDeviceToken = deviceToken
+        NSUserDefaults.standardUserDefaults().setObject(deviceToken, forKey:"DeviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("didSetDeviceToken", object: nil)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        NSLog("error: %@", error);
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        
+        NSLog("HERE1")
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        
+        NSLog("here")
+        
+        if #available(iOS 9.0, *) {
+            let reply = responseInfo[UIUserNotificationActionResponseTypedTextKey]
+            NSLog(String(reply))
+            
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        completionHandler()
     }
 
 }
