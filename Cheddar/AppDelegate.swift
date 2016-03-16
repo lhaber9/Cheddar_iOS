@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     
     var userIdFieldName = "cheddarUserId"
     var thisDeviceToken: NSData!
+    
+    var messagesToSend: [Message] = []
+    var sendingMessages: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -35,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         Parse.setApplicationId(EnvironmentConstants.parseApplicationId, clientKey:EnvironmentConstants.parseClientKey)
         
+        Fabric.sharedSDK().debug = true
         Fabric.with([Crashlytics.self])
         
         initializeUser()
@@ -82,8 +86,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         }
     }
     
-    func sendPubNubMessage(message: Message, mobilePushPayload: [NSObject : AnyObject]!, toChannel channel: String) {
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey])
+    func sendMessage(message: Message) {
+        messagesToSend.append(message)
+        if (!sendingMessages) {
+            sendingMessages = true
+            pushPubNubMessages()
+        }
+    }
+    
+    func pushPubNubMessages() {
+        if (messagesToSend.count == 0) {
+            sendingMessages = false
+            return
+        }
+        
+        let message = messagesToSend.first!
+        
+        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            self.messagesToSend.removeAtIndex(0)
+            self.pushPubNubMessages()
+        }
+        
     }
     
     func subscribeToPubNubChannel(channelId: String) {

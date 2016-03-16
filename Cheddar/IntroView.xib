@@ -12,7 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IntroViewController" customModule="Cheddar" customModuleProvider="target">
             <connections>
-                <outlet property="view" destination="iN0-l3-epB" id="K8b-Up-ECA"/>
+                <outlet property="view" destination="iN0-l3-epB" id="ph3-FU-Hkv"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

@@ -159,13 +159,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let text = textView.text!
         clearTextView()
         
-        let message = Message.createMessage(text, alias: myAlias, timestamp: nil)
-        sendMessage(message)
-        addMessage(message)
+        sendText(text)
     }
     
     @IBAction func dotsPress() {
         
+    }
+    
+    func sendText(text: String) {
+        let message = Message.createMessage(text, alias: myAlias, timestamp: nil, status:MessageStatus.Sent)
+        sendMessage(message)
+        addMessage(message)
     }
     
     func clearTextView() {
@@ -262,7 +266,27 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         return message as! Message
     }
-
+    
+    func findMyFirstSentMessageIndexMatchingText(text: String) -> Int! {
+        if (allActions.count == 0) {
+            return nil
+        }
+        
+        var position = 0
+        var retunIndex: Int! = nil
+        
+        while (retunIndex == nil && position < allActions.count) {
+            
+            if let thisMessage = allActions[position] as? Message {
+                if (isMyMessage(thisMessage) && thisMessage.body == text && thisMessage.status == MessageStatus.Sent) {
+                    retunIndex = position
+                }
+            }
+            
+            position++
+        }
+        return retunIndex
+    }
     
     func deselectTextView() {
         textView.resignFirstResponder()
@@ -273,11 +297,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func sendMessage(message: Message) {
-        Utilities.appDelegate().sendPubNubMessage(message, mobilePushPayload: nil, toChannel: message.alias.chatRoomId)
+        Utilities.appDelegate().sendMessage(message)
     }
     
     func receiveMessage(message: Message) {
         if (isMyMessage(message)) {
+            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
+            (allActions[messageIndex] as! Message).status = MessageStatus.Success
+            tableView.reloadData()
             return;
         }
         
@@ -384,7 +411,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let event = allActions[indexPath.row]
         if let message = event as? Message {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: shouldShowAliasIconForMessageIndex(indexPath.row))
+            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: shouldShowAliasIconForMessageIndex(indexPath.row), status: message.status)
             return cell
         }
         else if let presenceEvent = event as? Presence {

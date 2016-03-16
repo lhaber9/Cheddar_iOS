@@ -9,11 +9,19 @@
 import Foundation
 import Parse
 
+enum MessageStatus {
+    case Sent
+    case Success
+    case Error
+}
+
 class Message {
 
     var body: String!
     var alias: Alias!
     var timestamp: Int!
+    
+    var status: MessageStatus!
     
     class func createMessage(jsonMessage: [NSObject: AnyObject]) -> Message {
         let newMessage = Message()
@@ -32,15 +40,22 @@ class Message {
             newMessage.alias = Alias.createAliasFromParseObject(aliasObject, isTemporary: true)
         }
         
+        newMessage.status = MessageStatus.Success
+        
         return newMessage
     }
     
-    class func createMessage(body: String, alias: Alias, timestamp: Int!) -> Message {
+    class func createMessage(body: String, alias: Alias, timestamp: Int!, status:MessageStatus!) -> Message {
         let newMessage = Message()
         newMessage.body = body
         newMessage.alias = alias
         newMessage.timestamp = timestamp
-    
+        newMessage.status = status
+        
+        if (status == nil) {
+            newMessage.status = MessageStatus.Success
+        }
+        
         return newMessage
     }
     

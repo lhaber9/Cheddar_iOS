@@ -78,8 +78,20 @@ class ChatCell: UITableViewCell {
             leftIcon.hidden = false;
         }
     }
+    
+    func setStatus(status:MessageStatus) {
+        if (status == MessageStatus.Success) {
+            messageBackground.alpha = 1
+        }
+        else if (status == MessageStatus.Sent) {
+            messageBackground.alpha = 0.65
+        }
+        else if (status == MessageStatus.Error) {
+            messageBackground.alpha = 1
+        }
+    }
 
-    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool) {
+    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:MessageStatus) {
         messageLabel.text = text
         messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
         if (text.characters.count == 1) {
@@ -96,6 +108,7 @@ class ChatCell: UITableViewCell {
         
         setShowAliasLabel(showAliasLabel)
         setIsOutbound(isOutbound)
+        setStatus(status)
         
         if (!showAliasIcon){
             rightIcon.hidden = true;
