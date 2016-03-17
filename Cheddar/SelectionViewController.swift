@@ -26,6 +26,14 @@ class SelectionViewController: FrontPageViewController, UIPickerViewDataSource, 
     var selectedColor: UIColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha: 1)
     var dormNames: [String] = ["-", "West Village", "Kennedy", "Stetson West"]
     
+    init () {
+        super.init(nibName: "SelectionView", bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButtonImages()

@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/SelectionViewController.swift"
-            timestampString = "478452895.433888"
+            timestampString = "479935882.584049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "selectedOneOnOne()"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "selectedGroup()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -47,7 +47,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "175"
             endingLineNumber = "175"
-            landmarkName = "addViewControllerPageToLastContainer(_:)"
+            landmarkName = "addViewPageToLastContainer(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -142,8 +142,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "351"
             endingLineNumber = "351"
-            landmarkName = "addPresenceEvent(_:)"
-            landmarkType = "5">
+            landmarkName = "ChatViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -361,11 +361,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "479840840.219432"
+            timestampString = "479935714.922244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "joinNextAndAnimate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -377,11 +377,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "479840840.219432"
+            timestampString = "479935714.922244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
             landmarkName = "animateScrollViewToOffScreen()"
             landmarkType = "5">
          </BreakpointContent>
@@ -409,11 +409,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "479840840.219432"
+            timestampString = "479935714.922244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "showChatRoom(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -446,8 +446,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "274"
             endingLineNumber = "274"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "findMyFirstSentMessageIndexMatchingText(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -478,8 +478,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "399"
             endingLineNumber = "399"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "keyboardWillHide(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -494,8 +494,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "402"
             endingLineNumber = "402"
-            landmarkName = "keyboardWillHide(_:)"
-            landmarkType = "5">
+            landmarkName = "ChatViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -558,8 +558,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "444"
             endingLineNumber = "444"
-            landmarkName = "tableView(_:heightForRowAtIndexPath:)"
-            landmarkType = "5">
+            landmarkName = "ChatViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -574,8 +574,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "104"
             endingLineNumber = "104"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "initStyle()"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -590,7 +590,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "456"
             endingLineNumber = "456"
-            landmarkName = "scrollViewDidScroll(_:)"
+            landmarkName = "textViewDidChange(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -606,7 +606,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "354"
             endingLineNumber = "354"
-            landmarkName = "addPresenceEvent(_:)"
+            landmarkName = "shouldShowAliasLabelForMessageIndex(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -654,8 +654,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "449"
             endingLineNumber = "449"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "scrollViewDidScroll(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -713,11 +713,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "479840840.219432"
+            timestampString = "479935714.922244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "joinNextAndAnimate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -729,11 +729,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "479840840.219432"
+            timestampString = "479935714.922244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "joinNextAndAnimate()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1046,7 +1046,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "238"
             endingLineNumber = "238"
-            landmarkName = "isMyMessage(_:)"
+            landmarkName = "isMyPresenceEvent(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1062,8 +1062,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
-            landmarkName = "loadNextPageMessages()"
-            landmarkType = "5">
+            landmarkName = "ChatViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1094,7 +1094,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "384"
             endingLineNumber = "384"
-            landmarkName = "shouldShowAliasIconForMessageIndex(_:)"
+            landmarkName = "keyboardWillShow(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1110,8 +1110,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "386"
             endingLineNumber = "386"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "keyboardWillShow(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1126,8 +1126,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "387"
             endingLineNumber = "387"
-            landmarkName = "ChatViewController"
-            landmarkType = "3">
+            landmarkName = "keyboardWillShow(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1285,7 +1285,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "466"
             endingLineNumber = "466"
-            landmarkName = "textViewDidChange(_:)"
+            landmarkName = "textView(_:shouldChangeTextInRange:replacementText:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1477,7 +1477,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "283"
             endingLineNumber = "283"
-            landmarkName = "application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)"
+            landmarkName = "application(_:handleActionWithIdentifier:forLocalNotification:withResponseInfo:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1493,7 +1493,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "279"
             endingLineNumber = "279"
-            landmarkName = "application(_:handleActionWithIdentifier:forRemoteNotification:completionHandler:)"
+            landmarkName = "application(_:handleActionWithIdentifier:forLocalNotification:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1509,7 +1509,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "135"
             endingLineNumber = "135"
-            landmarkName = "setupObervers()"
+            landmarkName = "backTap()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1525,8 +1525,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "134"
             endingLineNumber = "134"
-            landmarkName = "setupObervers()"
-            landmarkType = "5">
+            landmarkName = "ChatViewController"
+            landmarkType = "3">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -1573,7 +1573,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "295"
             endingLineNumber = "295"
-            landmarkName = "application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)"
+            landmarkName = "application(_:handleActionWithIdentifier:forLocalNotification:withResponseInfo:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1589,7 +1589,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "285"
             endingLineNumber = "285"
-            landmarkName = "application(_:handleActionWithIdentifier:forRemoteNotification:withResponseInfo:completionHandler:)"
+            landmarkName = "application(_:handleActionWithIdentifier:forLocalNotification:withResponseInfo:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1600,11 +1600,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/SelectionViewController.swift"
-            timestampString = "479762289.905096"
+            timestampString = "479935445.496134"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
             landmarkName = "SelectionViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -1621,7 +1621,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "172"
             endingLineNumber = "172"
-            landmarkName = "addViewControllerPageToLastContainer(_:)"
+            landmarkName = "addViewPageToLastContainer(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1637,7 +1637,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
             endingLineNumber = "173"
-            landmarkName = "addViewControllerPageToLastContainer(_:)"
+            landmarkName = "addViewPageToLastContainer(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1798,6 +1798,54 @@
             startingLineNumber = "310"
             endingLineNumber = "310"
             landmarkName = "receiveMessage(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ViewController.swift"
+            timestampString = "479852265.63536"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ViewController.swift"
+            timestampString = "479935714.922244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "addViewPageToLastContainer(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ViewController.swift"
+            timestampString = "479935714.922244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "addViewPageToLastContainer(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -10,6 +10,14 @@ import Foundation
 
 class IntroViewController: FrontPageViewController {
 
+    init () {
+        super.init(nibName: "IntroView", bundle: nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     @IBAction func goToNext() {
         goToNextPageWithController(SelectionViewController())
     }
