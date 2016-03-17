@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import Crashlytics
 
 class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatViewControllerDelegate {
 
@@ -184,6 +185,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     
     func joinChat(isSingle: Bool) {
         if (isSingle) {
+            Answers.logCustomEventWithName("Selected On on One Chat", customAttributes: nil)
             UIAlertView(title: "Oops", message: "One on One Chat Not Available Yet", delegate: self, cancelButtonTitle: "ok").show()
         }
         else {
