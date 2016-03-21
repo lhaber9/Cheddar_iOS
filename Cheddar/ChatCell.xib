@@ -111,6 +111,12 @@
                                     <constraint firstItem="fjL-ul-4Yc" firstAttribute="top" secondItem="pt8-I5-5ej" secondAttribute="top" constant="2" id="k02-UD-mq6"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
+                                <rect key="frame" x="107" y="9" width="138.5" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -122,16 +128,19 @@
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" priority="900" constant="46" id="9rX-ai-iKW"/>
                             <constraint firstItem="JLw-Dz-RJj" firstAttribute="leading" secondItem="vww-by-hlC" secondAttribute="leading" priority="900" id="EMY-th-ASs"/>
                             <constraint firstAttribute="height" constant="172.5" id="Hj0-gU-VG3"/>
+                            <constraint firstItem="DmO-Gd-Lgq" firstAttribute="leading" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="900" constant="8" id="HsY-hQ-he1"/>
                             <constraint firstAttribute="height" constant="17.5" id="Kri-1Q-gZA"/>
                             <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="KtO-nJ-ME1"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="LHl-Sm-Zed"/>
                             <constraint firstAttribute="bottom" secondItem="gsk-tc-l14" secondAttribute="bottom" constant="2" id="MS5-rL-mrj"/>
+                            <constraint firstItem="DmO-Gd-Lgq" firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="leading" priority="200" constant="-8" id="QSI-0p-oaT"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="vww-by-hlC" secondAttribute="top" id="Qjo-1h-D0F"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="XfA-3E-GJQ"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="leading" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="200" constant="8" id="Xfk-Hw-sTP"/>
                             <constraint firstItem="aoB-dj-1gj" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" id="ZcD-lI-d5P"/>
                             <constraint firstAttribute="trailing" secondItem="aoB-dj-1gj" secondAttribute="trailing" id="Zg2-H0-BUq"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" constant="2" id="ae1-Ki-oDg"/>
+                            <constraint firstItem="DmO-Gd-Lgq" firstAttribute="centerY" secondItem="gsk-tc-l14" secondAttribute="centerY" id="awv-cs-2y8"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="rR7-Sb-RzQ" secondAttribute="trailing" priority="900" constant="8" id="cl2-gh-dXb"/>
                             <constraint firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="200" constant="46" id="eY1-xR-Caf"/>
                             <constraint firstAttribute="trailing" secondItem="pt8-I5-5ej" secondAttribute="trailing" constant="8" id="gEK-uE-T8a"/>
@@ -170,6 +179,9 @@
             <connections>
                 <outlet property="aliasLabel" destination="JLw-Dz-RJj" id="0du-94-fQx"/>
                 <outlet property="aliasLabelView" destination="aoB-dj-1gj" id="cZg-vz-q5e"/>
+                <outlet property="errorLabel" destination="DmO-Gd-Lgq" id="rX8-Ch-dqu"/>
+                <outlet property="errorLeftConstraint" destination="HsY-hQ-he1" id="ipd-P3-1Qu"/>
+                <outlet property="errorRightConstraint" destination="QSI-0p-oaT" id="krn-Pg-11q"/>
                 <outlet property="leftIcon" destination="rR7-Sb-RzQ" id="ReD-t2-8ML"/>
                 <outlet property="leftIconLabel" destination="Ekh-0k-fGA" id="me6-Jx-Tsu"/>
                 <outlet property="leftSideLabelConstraint" destination="EMY-th-ASs" id="KxK-6C-t1J"/>

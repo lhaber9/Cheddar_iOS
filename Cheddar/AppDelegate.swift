@@ -104,6 +104,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
+            if ((error) != nil) {
+                NSLog("%@",error!);
+                NSNotificationCenter.defaultCenter().postNotificationName("messageError", object: message)
+            }
+            
             self.messagesToSend.removeAtIndex(0)
             self.pushPubNubMessages()
         }

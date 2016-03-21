@@ -23,6 +23,10 @@ class ChatCell: UITableViewCell {
     @IBOutlet var messageTopConstraintAlias: NSLayoutConstraint!
     @IBOutlet var messageTopConstraint: NSLayoutConstraint!
     
+    @IBOutlet var errorLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var errorRightConstraint: NSLayoutConstraint!
+    @IBOutlet var errorLabel: UILabel!
+    
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
 
@@ -58,6 +62,8 @@ class ChatCell: UITableViewCell {
     
     func setIsOutbound(isOutbound: Bool) {
         if (isOutbound) {
+            errorLeftConstraint.priority = 200;
+            errorRightConstraint.priority = 900;
             leftSideMessageConstraint.priority = 200;
             rightSideMessageConstraint.priority = 900;
             leftSideLabelConstraint.priority = 200;
@@ -68,6 +74,8 @@ class ChatCell: UITableViewCell {
             leftIcon.hidden = true;
         }
         else {
+            errorLeftConstraint.priority = 900;
+            errorRightConstraint.priority = 200;
             leftSideMessageConstraint.priority = 900;
             rightSideMessageConstraint.priority = 200;
             leftSideLabelConstraint.priority = 900;
@@ -82,12 +90,15 @@ class ChatCell: UITableViewCell {
     func setStatus(status:MessageStatus) {
         if (status == MessageStatus.Success) {
             messageBackground.alpha = 1
+            errorLabel.hidden = true
         }
         else if (status == MessageStatus.Sent) {
             messageBackground.alpha = 0.65
+            errorLabel.hidden = true
         }
         else if (status == MessageStatus.Error) {
-            messageBackground.alpha = 1
+            messageBackground.alpha = 0.65
+            errorLabel.hidden = false
         }
     }
 

@@ -99,6 +99,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "newPresenceEvent", object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "messageError", object: nil)
     }
     
     func initStyle() {
@@ -129,6 +130,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.subscribe()
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName("messageError", object: nil, queue: nil) { (notification: NSNotification) -> Void in
+            let messageIndex = self.findMyFirstSentMessageIndexMatchingText((notification.object as! Message).body)
+            (self.allActions[messageIndex] as! Message).status = MessageStatus.Error
+            self.tableView.reloadData()
         }
     }
     
