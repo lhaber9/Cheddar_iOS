@@ -226,8 +226,7 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
     func showChatRoom(chatRoom: ChatRoom) {
         let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
-        chatViewController.chatRoomId = chatRoom.objectId
-        chatViewController.myAlias = chatRoom.myAlias
+        chatViewController.chatRoom = chatRoom
         NSLog("Joining ChatRoom: " + chatRoom.objectId)
         self.presentViewController(chatViewController, animated: true) { () -> Void in
             self.scrollViewToDefault()

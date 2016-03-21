@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
+		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
 		A37297D71C6BF5AF00625C7F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37297D61C6BF5AF00625C7F /* Message.swift */; };
 		A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896C81C60664A002017B9 /* AppDelegate.swift */; };
 		A38896CB1C60664A002017B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896CA1C60664A002017B9 /* ViewController.swift */; };
@@ -32,6 +33,7 @@
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
+		A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */; };
 		A3ECAE7E1C643063003F981C /* EmailValidateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE7D1C643063003F981C /* EmailValidateViewController.swift */; };
 		A3ECAE801C643076003F981C /* EmailValidateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE7F1C643076003F981C /* EmailValidateView.xib */; };
 		A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE811C66E730003F981C /* ChatViewController.swift */; };
@@ -72,6 +74,7 @@
 		30639877EA11B07B2D842129 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		A37297D61C6BF5AF00625C7F /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A38896C51C60664A002017B9 /* Cheddar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cheddar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38896C81C60664A002017B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		A3C59BD71C61BE07009B82EE /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsMenuController.swift; sourceTree = "<group>"; };
 		A3ECAE7D1C643063003F981C /* EmailValidateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailValidateViewController.swift; sourceTree = "<group>"; };
 		A3ECAE7F1C643076003F981C /* EmailValidateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmailValidateView.xib; sourceTree = "<group>"; };
 		A3ECAE811C66E730003F981C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				A3F9205E1C783EA0003E0BC3 /* Chat */,
 				A3F920611C7AA2D2003E0BC3 /* Objects */,
 				A38896C81C60664A002017B9 /* AppDelegate.swift */,
+				A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */,
+				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
 				A38896CA1C60664A002017B9 /* ViewController.swift */,
 				A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */,
 				A38896CC1C60664A002017B9 /* Main.storyboard */,
@@ -542,6 +548,7 @@
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
+				A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
 				A3ECAE7E1C643063003F981C /* EmailValidateViewController.swift in Sources */,
@@ -552,6 +559,7 @@
 				A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */,
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
+				A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */,
 				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,
 				A393D6251C63C9D200EBB94C /* IntroViewController.swift in Sources */,
 			);

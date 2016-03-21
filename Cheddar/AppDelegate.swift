@@ -115,6 +115,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
     }
     
+    func sendFeedback(text: String, alias: Alias) {
+        let urlString = "https://hooks.slack.com/services/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"
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "payload={\"text\": \"User \(alias.userId) in ChatRoom \(alias.chatRoomId): \(text)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            
+        }
+    }
+    
     func subscribeToPubNubChannel(channelId: String) {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
     }
