@@ -231,6 +231,7 @@
                                                     <constraint firstAttribute="width" constant="28" id="33X-WW-jey"/>
                                                 </constraints>
                                                 <state key="normal" image="BackArrow"/>
+                                                <state key="disabled" image="nil"/>
                                                 <state key="highlighted" image="BackArrow"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
@@ -258,6 +259,9 @@
                                                     <action selector="dotsPress" destination="Tzs-Z1-Lsf" eventType="touchUpInside" id="8qi-ia-rRA"/>
                                                 </connections>
                                             </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vsj-8J-8Ok">
+                                                <rect key="frame" x="12" y="12" width="20" height="20"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -266,12 +270,14 @@
                                             <constraint firstItem="YfW-7x-fjh" firstAttribute="width" secondItem="YfW-7x-fjh" secondAttribute="height" multiplier="1:1" id="Gac-O4-lG5"/>
                                             <constraint firstItem="iOk-2d-mw2" firstAttribute="leading" secondItem="q9f-04-fUe" secondAttribute="leading" id="HRA-aG-fC8"/>
                                             <constraint firstAttribute="bottom" secondItem="Vob-fK-exg" secondAttribute="bottom" constant="8" id="a9T-LA-yPb"/>
+                                            <constraint firstItem="Vsj-8J-8Ok" firstAttribute="centerX" secondItem="Vob-fK-exg" secondAttribute="centerX" id="aIz-Bq-9IT"/>
                                             <constraint firstAttribute="bottom" secondItem="iOk-2d-mw2" secondAttribute="bottom" id="atD-wv-hUg"/>
                                             <constraint firstItem="Vob-fK-exg" firstAttribute="leading" secondItem="q9f-04-fUe" secondAttribute="leading" constant="8" id="hbD-zR-xSj"/>
                                             <constraint firstItem="YfW-7x-fjh" firstAttribute="top" secondItem="q9f-04-fUe" secondAttribute="top" constant="8" id="kQf-at-Xjk"/>
                                             <constraint firstAttribute="bottom" secondItem="YfW-7x-fjh" secondAttribute="bottom" constant="8" id="mwb-9G-zDU"/>
                                             <constraint firstAttribute="trailing" secondItem="iOk-2d-mw2" secondAttribute="trailing" id="nV3-Y9-tPt"/>
                                             <constraint firstItem="Vob-fK-exg" firstAttribute="top" secondItem="q9f-04-fUe" secondAttribute="top" constant="8" id="osx-u4-DAx"/>
+                                            <constraint firstItem="Vsj-8J-8Ok" firstAttribute="centerY" secondItem="Vob-fK-exg" secondAttribute="centerY" id="pKs-gQ-cJf"/>
                                             <constraint firstItem="Vob-fK-exg" firstAttribute="width" secondItem="q9f-04-fUe" secondAttribute="height" multiplier="1:1" id="uXX-KK-bpF"/>
                                             <constraint firstAttribute="trailing" secondItem="YfW-7x-fjh" secondAttribute="trailing" constant="8" id="yqP-Vf-Xec"/>
                                         </constraints>
@@ -414,10 +420,13 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="Vob-fK-exg" id="xbN-iO-8Kz"/>
+                        <outlet property="backSpinner" destination="Vsj-8J-8Ok" id="f5O-cZ-qTP"/>
                         <outlet property="chatBar" destination="Mev-Ht-NUf" id="8ww-rE-vAJ"/>
                         <outlet property="chatBarBottomConstraint" destination="weW-6k-bNs" id="gHe-FD-iWf"/>
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
                         <outlet property="chatBarHeightConstraint" destination="GTK-eM-s73" id="HGE-6w-yU0"/>
+                        <outlet property="dotsButton" destination="YfW-7x-fjh" id="5m2-Qk-clU"/>
                         <outlet property="placeholderLabel" destination="h0k-fz-J26" id="mZS-E3-FMl"/>
                         <outlet property="sendButton" destination="H5I-hN-biP" id="Na4-Hr-yFh"/>
                         <outlet property="tableView" destination="Ql6-ns-pvM" id="9le-Bl-1Sb"/>
@@ -438,5 +447,6 @@
         <image name="SendEnabled" width="200" height="200"/>
         <image name="ThreeDots" width="200" height="200"/>
         <image name="cheese.png" width="736" height="736"/>
+        <image name="nil" width="736" height="736"/>
     </resources>
 </document>

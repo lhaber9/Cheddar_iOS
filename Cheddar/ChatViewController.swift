@@ -24,6 +24,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var chatBarDivider: UIView!
     @IBOutlet var chatBar: UIView!
     
+    @IBOutlet var backButton: UIButton!
+    @IBOutlet var dotsButton: UIButton!
+    
+    @IBOutlet var backSpinner: UIActivityIndicatorView!
+    
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
     
@@ -36,7 +41,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var allMessagesLoaded = false
     var loadMessageCallInFlight = false
-    var leaveChatRoomCalInFlight = false
     var currentStartToken: String! = nil
     
     var previousTextRect = CGRectZero
@@ -109,6 +113,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBarDivider.backgroundColor = ColorConstants.sendBorder
 
         sendEnabled = false
+        backSpinner.alpha = 0
     }
     
     func subscribe() {
@@ -139,15 +144,20 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func backTap() {
-        if (leaveChatRoomCalInFlight) {
-            return
+        UIView.animateWithDuration(0.15) { () -> Void in
+            self.backSpinner.alpha = 1
+            self.backSpinner.startAnimating()
+            self.backButton.enabled = false
         }
         
-        leaveChatRoomCalInFlight = true
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": myAlias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            self.leaveChatRoomCalInFlight = false
             
             if (error != nil) {
+                UIView.animateWithDuration(0.15) { () -> Void in
+                    self.backSpinner.alpha = 0
+                    self.backSpinner.stopAnimating()
+                    self.backButton.enabled = true
+                }
                 return
             }
             
