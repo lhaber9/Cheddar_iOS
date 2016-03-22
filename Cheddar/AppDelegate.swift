@@ -104,10 +104,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
+            if ((error) != nil) {
+                NSLog("%@",error!);
+                NSNotificationCenter.defaultCenter().postNotificationName("messageError", object: message)
+            }
+            
             self.messagesToSend.removeAtIndex(0)
             self.pushPubNubMessages()
         }
         
+    }
+    
+    func sendFeedback(text: String, alias: Alias) {
+        let urlString = "https://hooks.slack.com/services/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"
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(URL: url!)
+        request.HTTPMethod = "POST"
+        request.HTTPBody = "payload={\"text\": \"User \(alias.userId) in ChatRoom \(alias.chatRoomId): \(text)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            
+        }
     }
     
     func subscribeToPubNubChannel(channelId: String) {

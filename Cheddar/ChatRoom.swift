@@ -17,8 +17,6 @@ class ChatRoom: NSManagedObject {
     
     @NSManaged var myAlias: Alias!
     
-    var maxMessagesStored = 100
-    
     class func newChatRoom() -> ChatRoom {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         return ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
@@ -86,13 +84,18 @@ class ChatRoom: NSManagedObject {
             return nil
         }
     }
-    
+
 //    class func addMessagesToRoom(newMessages: [Message], chatRoomId:String) {
 //        let chatRoom = fetchById(chatRoomId)
 //        chatRoom.addMessages(newMessages)
 //    }
-//    
+//
 //    func addMessages(newMessages: [Message]) {
 //        messages.appendContentsOf(newMessages)
+//    }
+//    
+//    class func addPresenceEventsToRoom(newEvents: [Presence], chatRoomId:String) {
+//        let chatRoom = fetchById(chatRoomId)
+//        chatRoom.addPresenceEvents(newEvents)
 //    }
 }
