@@ -173,6 +173,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func sendPress() {
+        if (!sendEnabled) {
+            return
+        }
+        
         let text = textView.text!
         clearTextView()
         
