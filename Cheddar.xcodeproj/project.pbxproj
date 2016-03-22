@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
 		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
+		A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A81CA17FC600E956AB /* ChatRoomController.swift */; };
 		A37297D71C6BF5AF00625C7F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37297D61C6BF5AF00625C7F /* Message.swift */; };
 		A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896C81C60664A002017B9 /* AppDelegate.swift */; };
 		A38896CB1C60664A002017B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896CA1C60664A002017B9 /* ViewController.swift */; };
@@ -75,6 +76,7 @@
 		74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		A354E1A81CA17FC600E956AB /* ChatRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
 		A37297D61C6BF5AF00625C7F /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A38896C51C60664A002017B9 /* Cheddar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cheddar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38896C81C60664A002017B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
+				A354E1A81CA17FC600E956AB /* ChatRoomController.swift */,
 				A3ECAE951C67273C003F981C /* ChatCell.swift */,
 				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
 				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
@@ -540,6 +543,7 @@
 				A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */,
 				A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
+				A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */,
 				A393D61F1C63C58300EBB94C /* SelectionViewController.swift in Sources */,
 				A393D6231C63C80D00EBB94C /* FrontPageViewController.swift in Sources */,
 				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,

@@ -13,7 +13,7 @@ protocol ChatViewControllerDelegate: class {
     func closeChat()
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, ChatRoomDelegate, FeedbackViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, ChatRoomControllerDelegate, FeedbackViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -40,7 +40,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var chatBarHeightDefault:CGFloat = 50
     var previousTextRect = CGRectZero
     
-    var chatRoom:ChatRoom!
+    var chatRoomController:ChatRoomController!
     
     var numberInputTextLines = 1 {
         didSet {
@@ -82,13 +82,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         
         textView.delegate = self
-        chatRoom.delegate = self
+        chatRoomController.delegate = self
         
         initStyle()
         subscribe()
         
         setupObervers()
-        chatRoom.loadNextPageMessages()
+        chatRoomController.loadNextPageMessages()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -116,8 +116,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func subscribe() {
-        Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
-        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
+        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomController.chatRoomId)
+        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoomController.chatRoomId)
     }
     
     func setupObervers() {
@@ -127,19 +127,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.chatRoom.receiveMessage(notification.object as! Message)
+            self.chatRoomController.receiveMessage(notification.object as! Message)
             self.scrollToBottom(true)
         }
         NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.chatRoom.receivePresenceEvent(notification.object as! Presence)
+            self.chatRoomController.receivePresenceEvent(notification.object as! Presence)
             self.scrollToBottom(true)
         }
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.subscribe()
         }
         NSNotificationCenter.defaultCenter().addObserverForName("messageError", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            let messageIndex = self.chatRoom.findMyFirstSentMessageIndexMatchingText((notification.object as! Message).body)
-            (self.chatRoom.allActions[messageIndex] as! Message).status = MessageStatus.Error
+            let messageIndex = self.chatRoomController.findMyFirstSentMessageIndexMatchingText((notification.object as! Message).body)
+            (self.chatRoomController.allActions[messageIndex] as! Message).status = MessageStatus.Error
             self.tableView.reloadData()
         }
     }
@@ -166,8 +166,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
                 Utilities.appDelegate().saveContext()
             }
-            Utilities.appDelegate().unsubscribeFromPubNubChannel(self.chatRoom.objectId)
-            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.chatRoom.objectId)
+            Utilities.appDelegate().unsubscribeFromPubNubChannel(self.chatRoomController.chatRoomId)
+            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.chatRoomController.chatRoomId)
             self.delegate?.closeChat()
         }
     }
@@ -184,13 +184,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func myAlias() -> Alias {
-        return chatRoom.myAlias
+        return chatRoomController.myAlias
     }
     
     func sendText(text: String) {
         let message = Message.createMessage(text, alias: myAlias(), timestamp: nil, status:MessageStatus.Sent)
         sendMessage(message)
-        chatRoom.addMessage(message)
+        chatRoomController.addMessage(message)
     }
     
     func clearTextView() {
@@ -212,11 +212,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func scrollToBottom(animated: Bool) {
-        if (chatRoom.allActions.count == 0) {
+        if (chatRoomController.allActions.count == 0) {
             return;
         }
         
-        let indexPath = NSIndexPath(forRow: chatRoom.allActions.count - 1, inSection:0)
+        let indexPath = NSIndexPath(forRow: chatRoomController.allActions.count - 1, inSection:0)
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:animated)
     }
     
@@ -252,16 +252,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatRoom.allActions.count
+        return chatRoomController.allActions.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let event = chatRoom.allActions[indexPath.row]
+        let event = chatRoomController.allActions[indexPath.row]
         if let message = event as? Message {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body, alias: message.alias, isOutbound: chatRoom.isMyMessage(message), showAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row), status: message.status)
+            cell.setMessageText(message.body, alias: message.alias, isOutbound: chatRoomController.isMyMessage(message), showAliasLabel: chatRoomController.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoomController.shouldShowAliasIconForMessageIndex(indexPath.row), status: message.status)
             return cell
         }
         else if let presenceEvent = event as? Presence {
@@ -274,12 +274,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let action = chatRoom.allActions[indexPath.row]
+        let action = chatRoomController.allActions[indexPath.row]
         if let message = action as? Message {
             
-            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 4
+            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: chatRoomController.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 4
             
-            let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
+            let nextMessage = chatRoomController.findFirstMessageAfterIndex(indexPath.row)
             if (nextMessage?.alias.objectId != message.alias.objectId) {
                 cellHeight += messageVerticalBuffer
             }
@@ -293,12 +293,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (chatRoom.allMessagesLoaded || chatRoom.loadMessageCallInFlight) {
+        if (chatRoomController.allMessagesLoaded || chatRoomController.loadMessageCallInFlight) {
             return
         }
         
         if (tableView.contentOffset.y <= 50) {
-            chatRoom.loadNextPageMessages()
+            chatRoomController.loadNextPageMessages()
         }
     }
     
