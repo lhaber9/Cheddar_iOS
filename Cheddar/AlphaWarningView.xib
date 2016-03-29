@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+        </mutableArray>
+        <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+        </mutableArray>
+        <mutableArray key="GothamRounded-Bold.ttf">
+            <string>GothamRounded-Bold</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AlphaWarningView" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VqU-Mu-rhO">
+                    <rect key="frame" x="183" y="170" width="234.5" height="38"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9C-7V-gVT">
+                            <rect key="frame" x="0.0" y="0.0" width="158.5" height="38"/>
+                            <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="38"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="alpha" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Im0-rU-RXM">
+                            <rect key="frame" x="160.5" y="0.0" width="74" height="38"/>
+                            <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="32"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Z9C-7V-gVT" secondAttribute="bottom" id="5kb-pR-f3A"/>
+                        <constraint firstAttribute="bottom" secondItem="Im0-rU-RXM" secondAttribute="bottom" id="B62-w0-xBq"/>
+                        <constraint firstAttribute="trailing" secondItem="Im0-rU-RXM" secondAttribute="trailing" id="Ib7-W1-hPj"/>
+                        <constraint firstItem="Im0-rU-RXM" firstAttribute="leading" secondItem="Z9C-7V-gVT" secondAttribute="trailing" constant="2" id="pFo-to-ekb"/>
+                        <constraint firstItem="Z9C-7V-gVT" firstAttribute="top" secondItem="VqU-Mu-rhO" secondAttribute="top" id="qug-BM-UOk"/>
+                        <constraint firstItem="Im0-rU-RXM" firstAttribute="top" secondItem="VqU-Mu-rhO" secondAttribute="top" id="rk2-Xz-oyp"/>
+                        <constraint firstItem="Z9C-7V-gVT" firstAttribute="leading" secondItem="VqU-Mu-rhO" secondAttribute="leading" id="wke-s7-4LM"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="was-da-4BU">
+                    <rect key="frame" x="163" y="270" width="275" height="60.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="275" id="DDc-xe-LHj"/>
+                    </constraints>
+                    <string key="text">Thanks for testing cheddar
+Things might break but you knew that already ;)</string>
+                    <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warning!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wqM-4v-Wdd">
+                    <rect key="frame" x="261" y="240" width="79" height="24"/>
+                    <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="wqM-4v-Wdd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HjN-t8-pU0"/>
+                <constraint firstItem="wqM-4v-Wdd" firstAttribute="top" secondItem="VqU-Mu-rhO" secondAttribute="bottom" constant="32" id="Phq-y5-rzf"/>
+                <constraint firstItem="was-da-4BU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="QWV-Eg-AVo"/>
+                <constraint firstItem="was-da-4BU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gaA-xF-HEl"/>
+                <constraint firstItem="VqU-Mu-rhO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gw1-f0-ygD"/>
+                <constraint firstItem="was-da-4BU" firstAttribute="top" secondItem="wqM-4v-Wdd" secondAttribute="bottom" constant="6" id="vyR-IJ-v9X"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+        </view>
+        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jVb-pS-qYS">
+            <rect key="frame" x="0.0" y="0.0" width="64" height="21"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+            <nil key="highlightedColor"/>
+        </label>
+    </objects>
+</document>
