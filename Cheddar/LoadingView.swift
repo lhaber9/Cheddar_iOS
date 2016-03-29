@@ -9,10 +9,14 @@
 import Foundation
 
 class LoadingView: UIView {
-//    override func awakeFromNib() {
-//        
-//    }
-//    
+    
+    @IBOutlet var loadingImageView: UIImageView!
+    @IBOutlet var loadingTextLabel: UILabel!
+    
+    override func awakeFromNib() {
+        loadingImageView.image = UIImage.animatedImageNamed("LoadingImage-", duration: 2.0)
+    }
+    
     class func instanceFromNib() -> LoadingView {
         return UINib(nibName: "LoadingView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! LoadingView
     }
