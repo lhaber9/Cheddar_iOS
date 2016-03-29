@@ -90,7 +90,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         subscribe()
         
         setupObervers()
-        chatRoomController.loadNextPageMessages()
+        
+//        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": chatRoomController.myAlias.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
+//            
+//            if ((error) != nil) {
+//                NSLog("%@",error!);
+//                self.leaveChatRoomCallback()
+//                return;
+//            }
+//            
+//            self.chatRoomController.loadNextPageMessages()
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -164,14 +174,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
             
-            if let chatRoom = ChatRoom.fetchSingleRoom() {
-                Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
-                Utilities.appDelegate().saveContext()
-            }
-            Utilities.appDelegate().unsubscribeFromPubNubChannel(self.chatRoomController.chatRoomId)
-            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.chatRoomController.chatRoomId)
-            self.delegate?.closeChat()
+            self.leaveChatRoomCallback()
         }
+    }
+    
+    func leaveChatRoomCallback() {
+        if let chatRoom = ChatRoom.fetchSingleRoom() {
+            Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+            Utilities.appDelegate().saveContext()
+        }
+        Utilities.appDelegate().unsubscribeFromPubNubChannel(self.chatRoomController.chatRoomId)
+        Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.chatRoomController.chatRoomId)
+        self.delegate?.closeChat()
     }
     
     @IBAction func sendPress() {
