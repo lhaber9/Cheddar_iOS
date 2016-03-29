@@ -11,7 +11,7 @@ import Parse
 import Crashlytics
 
 class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate, ChatViewControllerDelegate {
-
+    
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet var page0: UIView!
@@ -28,6 +28,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     var currentPage: Int = 0
     var pages: [UIView]!
     
+    @IBOutlet var loadingView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
@@ -38,6 +40,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         
         backgroundCheeseInitalLeftConstraint = backgroundCheeseLeftConstraint.constant
         backgroundCheeseInitalRightConstraint = backgroundCheeseRightConstraint.constant
+        
+        let loadOverlay = LoadingView.instanceFromNib()
+        loadingView.addSubview(loadOverlay)
+        loadOverlay.autoPinEdgesToSuperviewEdges()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -171,13 +177,19 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         chatViewController.chatRoomController = ChatRoomController.newControllerWithChatRoom(chatRoom)
         NSLog("Joining ChatRoom: " + chatRoom.objectId)
         self.presentViewController(chatViewController, animated: true) { () -> Void in
+            self.loadingView.alpha = 0
         }
     }
     
     func performJoinChatAnimation(callback: () -> Void) {
+        UIView.animateWithDuration(0.33) { () -> Void in
+            self.loadingView.alpha = 1
+        }
         
-        callback()
-        
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            callback()
+        }
     }
     
     

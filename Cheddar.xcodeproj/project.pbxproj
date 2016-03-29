@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
+		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
+		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
 		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
 		A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A81CA17FC600E956AB /* ChatRoomController.swift */; };
 		A37297D71C6BF5AF00625C7F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37297D61C6BF5AF00625C7F /* Message.swift */; };
@@ -77,6 +79,8 @@
 		30639877EA11B07B2D842129 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		A354E1A81CA17FC600E956AB /* ChatRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
 		A37297D61C6BF5AF00625C7F /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
@@ -172,6 +176,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A300583C1CAB202300725FC3 /* Reuse */ = {
+			isa = PBXGroup;
+			children = (
+				A300583F1CAB203B00725FC3 /* LoadingView.swift */,
+				A300583D1CAB203200725FC3 /* LoadingView.xib */,
+			);
+			name = Reuse;
+			sourceTree = "<group>";
+		};
 		A38896BC1C60664A002017B9 = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +213,7 @@
 		A38896C71C60664A002017B9 /* Cheddar */ = {
 			isa = PBXGroup;
 			children = (
+				A300583C1CAB202300725FC3 /* Reuse */,
 				A3F9205D1C783E77003E0BC3 /* Constants */,
 				A393D6171C63C2BF00EBB94C /* Front Pages */,
 				A3F9205E1C783EA0003E0BC3 /* Chat */,
@@ -460,6 +474,7 @@
 				A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */,
 				A393D6111C63BB5400EBB94C /* group_selected.png in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
+				A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */,
 				A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
 			);
@@ -552,6 +567,7 @@
 				A3E05CB91CA989C3005B9764 /* GroupView.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
 				A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */,
+				A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */,
 				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,

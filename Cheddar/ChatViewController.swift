@@ -17,6 +17,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     weak var delegate: ChatViewControllerDelegate?
     
+    @IBOutlet var loadingView: UIView!
+    
     @IBOutlet var textView: UITextView!
     @IBOutlet var placeholderLabel: UILabel!
     @IBOutlet var numActiveLabel: UILabel!
@@ -27,8 +29,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var backButton: UIButton!
     @IBOutlet var dotsButton: UIButton!
-    
-    @IBOutlet var backSpinner: UIActivityIndicatorView!
     
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
@@ -91,16 +91,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         setupObervers()
         
-//        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": chatRoomController.myAlias.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
-//            
-//            if ((error) != nil) {
-//                NSLog("%@",error!);
-//                self.leaveChatRoomCallback()
-//                return;
-//            }
-//            
-//            self.chatRoomController.loadNextPageMessages()
-//        }
+        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": chatRoomController.myAlias.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            if ((error) != nil) {
+                NSLog("%@",error!);
+                self.leaveChatRoomCallback()
+                return;
+            }
+            
+            self.chatRoomController.loadNextPageMessages()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -124,7 +124,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatBarDivider.backgroundColor = ColorConstants.sendBorder
 
         sendEnabled = false
-        backSpinner.alpha = 0
+        
+        let loadOverlay = LoadingView.instanceFromNib()
+        loadingView.addSubview(loadOverlay)
+        loadOverlay.autoPinEdgesToSuperviewEdges()
     }
     
     func subscribe() {
@@ -157,19 +160,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func backTap() {
-        UIView.animateWithDuration(0.15) { () -> Void in
-            self.backSpinner.alpha = 1
-            self.backSpinner.startAnimating()
-            self.backButton.enabled = false
+        
+        UIView.animateWithDuration(0.33) { () -> Void in
+            self.loadingView.alpha = 1
         }
         
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": myAlias().objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if (error != nil) {
-                UIView.animateWithDuration(0.15) { () -> Void in
-                    self.backSpinner.alpha = 0
-                    self.backSpinner.stopAnimating()
-                    self.backButton.enabled = true
+                UIView.animateWithDuration(0.33) { () -> Void in
+                    self.loadingView.alpha = 0
                 }
                 return
             }
