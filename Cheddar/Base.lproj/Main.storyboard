@@ -9,6 +9,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -141,7 +142,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zKL-Cf-vP1">
-                                                <rect key="frame" x="277" y="12" width="46.5" height="20.5"/>
+                                                <rect key="frame" x="277" y="7.5" width="46.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -198,14 +199,22 @@
                                                     <constraint firstAttribute="height" constant="1" id="YeU-lK-HTC"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v0E-WD-FUl">
+                                                <rect key="frame" x="296" y="28" width="8.5" height="13"/>
+                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="11"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="zKL-Cf-vP1" firstAttribute="centerY" secondItem="q9f-04-fUe" secondAttribute="centerY" id="5YI-BN-Mgb"/>
+                                            <constraint firstItem="v0E-WD-FUl" firstAttribute="top" secondItem="zKL-Cf-vP1" secondAttribute="bottom" id="18w-qv-Knm"/>
                                             <constraint firstItem="zKL-Cf-vP1" firstAttribute="centerX" secondItem="q9f-04-fUe" secondAttribute="centerX" id="D1z-84-OzS"/>
                                             <constraint firstItem="YfW-7x-fjh" firstAttribute="width" secondItem="YfW-7x-fjh" secondAttribute="height" multiplier="1:1" id="Gac-O4-lG5"/>
                                             <constraint firstItem="iOk-2d-mw2" firstAttribute="leading" secondItem="q9f-04-fUe" secondAttribute="leading" id="HRA-aG-fC8"/>
                                             <constraint firstItem="7Qy-YP-67C" firstAttribute="centerX" secondItem="YfW-7x-fjh" secondAttribute="centerX" id="JhS-wf-HsV"/>
+                                            <constraint firstItem="v0E-WD-FUl" firstAttribute="centerX" secondItem="q9f-04-fUe" secondAttribute="centerX" id="K2j-Km-9be"/>
+                                            <constraint firstAttribute="bottom" secondItem="v0E-WD-FUl" secondAttribute="bottom" constant="3" id="XLr-OD-5rl"/>
                                             <constraint firstAttribute="bottom" secondItem="Vob-fK-exg" secondAttribute="bottom" constant="8" id="a9T-LA-yPb"/>
                                             <constraint firstItem="Vsj-8J-8Ok" firstAttribute="centerX" secondItem="Vob-fK-exg" secondAttribute="centerX" id="aIz-Bq-9IT"/>
                                             <constraint firstAttribute="bottom" secondItem="iOk-2d-mw2" secondAttribute="bottom" id="atD-wv-hUg"/>
@@ -377,6 +386,7 @@
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
                         <outlet property="chatBarHeightConstraint" destination="GTK-eM-s73" id="HGE-6w-yU0"/>
                         <outlet property="dotsButton" destination="YfW-7x-fjh" id="5m2-Qk-clU"/>
+                        <outlet property="numActiveLabel" destination="v0E-WD-FUl" id="p03-hP-TtX"/>
                         <outlet property="placeholderLabel" destination="h0k-fz-J26" id="mZS-E3-FMl"/>
                         <outlet property="sendButton" destination="H5I-hN-biP" id="n5P-fz-9x0"/>
                         <outlet property="tableView" destination="Ql6-ns-pvM" id="9le-Bl-1Sb"/>
@@ -415,7 +425,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4d-Cg-1AD">
                                 <rect key="frame" x="41" y="7" width="68" height="30"/>
-                                <state key="normal" title="Feedback"/>
+                                <state key="normal" title="Feedback">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="tappedFeedback" destination="XBW-n4-asp" eventType="touchUpInside" id="inh-Zf-o6P"/>
                                 </connections>
@@ -445,30 +457,33 @@
                         <viewControllerLayoutGuide type="bottom" id="9eb-Hq-8Ul"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="YRw-aM-lgN">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="285" height="235"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NBH-NT-izM">
-                                <rect key="frame" x="107" y="162" width="36" height="30"/>
-                                <state key="normal" title="Send"/>
+                                <rect key="frame" x="124" y="197" width="36" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="sendFeedback" destination="Qvb-wQ-BU2" eventType="touchUpInside" id="vwq-XX-vIJ"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQS-Bf-Fcj">
-                                <rect key="frame" x="16" y="8" width="119" height="21"/>
+                                <rect key="frame" x="16" y="8" width="119" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your feedback will be used to make Cheddar even better!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nj-fV-jH8">
-                                <rect key="frame" x="16" y="37" width="218" height="27"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nj-fV-jH8">
+                                <rect key="frame" x="16" y="36" width="253" height="53"/>
+                                <string key="text">Your feedback will be used to make Cheddar even better! (please identify yourself, in the alpha version we would like to follow up on all feedback)</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bwD-dS-Fho">
-                                <rect key="frame" x="15" y="71" width="220" height="83"/>
+                                <rect key="frame" x="15" y="97" width="255" height="92"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="esV-CK-oFt"/>
@@ -497,11 +512,11 @@
                             <constraint firstItem="4nj-fV-jH8" firstAttribute="leading" secondItem="YRw-aM-lgN" secondAttribute="leadingMargin" id="v7F-8f-QMb"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="250" height="200"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="285" height="235"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="250" height="200"/>
+                    <size key="freeformSize" width="285" height="235"/>
                     <connections>
                         <outlet property="textView" destination="bwD-dS-Fho" id="lac-1d-cIv"/>
                         <outlet property="view" destination="YRw-aM-lgN" id="1jx-bE-q8b"/>

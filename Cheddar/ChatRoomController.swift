@@ -11,6 +11,7 @@ import Parse
 
 protocol ChatRoomControllerDelegate: class {
     func didUpdateEvents()
+    func didUpdateActiveAliases(aliases:[Alias])
     func didAddEvents(events:[AnyObject], reloaded:Bool, firstLoad: Bool)
 }
 
@@ -26,6 +27,8 @@ class ChatRoomController {
     
     var chatRoomId: String!
     var myAlias: Alias!
+    
+    var activeAliases: [Alias]!
     
     class func newControllerWithChatRoom(chatRoom: ChatRoom) -> ChatRoomController {
         let newController = ChatRoomController()
@@ -50,8 +53,27 @@ class ChatRoomController {
         //            return;
         //        }
         
+        reloadActiveAlaises()
         addPresenceEvent(presenceEvent)
         self.delegate?.didAddEvents([presenceEvent], reloaded: false, firstLoad: false)
+    }
+    
+    func reloadActiveAlaises() {
+        PFCloud.callFunctionInBackground("getActiveAliases", withParameters: ["chatRoomId":myAlias.chatRoomId]) { (objects: AnyObject?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                NSLog("error: %@", error!)
+                return
+            }
+            
+            self.activeAliases = []
+            
+            for alias in objects as! [PFObject] {
+                self.activeAliases.append(Alias.createAliasFromParseObject(alias, isTemporary: true))
+            }
+            
+            self.delegate?.didUpdateActiveAliases(self.activeAliases)
+        }
     }
     
     func isMyMessage(message: Message) -> Bool {

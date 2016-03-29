@@ -19,6 +19,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var textView: UITextView!
     @IBOutlet var placeholderLabel: UILabel!
+    @IBOutlet var numActiveLabel: UILabel!
     @IBOutlet var topBar: UIView!
     @IBOutlet var topBarDivider: UIView!
     @IBOutlet var chatBarDivider: UIView!
@@ -83,6 +84,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         textView.delegate = self
         chatRoomController.delegate = self
+        chatRoomController.reloadActiveAlaises()
         
         initStyle()
         subscribe()
@@ -356,6 +358,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func didUpdateEvents() {
         reloadTable()
+    }
+    
+    func didUpdateActiveAliases(aliases:[Alias]) {
+        if (aliases.count == 0) {
+            numActiveLabel.text = "Waiting for others..."
+        }
+        else {
+            numActiveLabel.text = "I have \(aliases.count) members"
+        }
     }
     
     func didAddEvents(events:[AnyObject], reloaded:Bool, firstLoad: Bool) {

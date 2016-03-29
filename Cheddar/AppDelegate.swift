@@ -120,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
-        request.HTTPBody = "payload={\"text\": \"User \(alias.userId) in ChatRoom \(alias.chatRoomId): \(text)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "payload={\"text\": \"User (\(alias.userId)) in ChatRoom (\(alias.chatRoomId)): \(text)\"}".dataUsingEncoding(NSUTF8StringEncoding)
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
             
