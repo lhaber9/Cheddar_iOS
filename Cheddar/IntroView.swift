@@ -21,7 +21,7 @@ class IntroView: FrontPageView {
         bottomTextLabel.attributedText = attributedText
     }
     
-    class func instanceFromNib() -> UIView {
+    class func instanceFromNib() -> IntroView {
         return UINib(nibName: "IntroView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! IntroView
     }
 }

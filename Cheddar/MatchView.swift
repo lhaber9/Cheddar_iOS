@@ -21,7 +21,7 @@ class MatchView: FrontPageView {
         bottomTextLabel.attributedText = attributedText
     }
     
-    class func instanceFromNib() -> UIView {
+    class func instanceFromNib() -> MatchView {
         return UINib(nibName: "MatchView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! MatchView
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 class GroupView: FrontPageView {
-    class func instanceFromNib() -> UIView {
+    class func instanceFromNib() -> GroupView {
         return UINib(nibName: "GroupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! GroupView
     }
 }

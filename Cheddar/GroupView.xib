@@ -61,6 +61,6 @@
         </view>
     </objects>
     <resources>
-        <image name="OnboardGroup" width="473" height="880"/>
+        <image name="OnboardGroup" width="76" height="140"/>
     </resources>
 </document>
