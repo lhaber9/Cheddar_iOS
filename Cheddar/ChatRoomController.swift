@@ -137,7 +137,9 @@ class ChatRoomController {
     // Returns number of messages loaded
     func loadNextPageMessages() {
         
-        var params: [NSObject:AnyObject] = ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
+        let count = 25
+        
+        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }
@@ -153,7 +155,7 @@ class ChatRoomController {
             
             if let events = object?["events"] as? [[NSObject:AnyObject]] {
                 
-                if (events.count < 25) {
+                if (events.count < count) {
                     self.allMessagesLoaded = true
                 }
                 
