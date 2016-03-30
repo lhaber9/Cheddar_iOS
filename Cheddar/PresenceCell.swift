@@ -17,7 +17,7 @@ class PresenceCell: UITableViewCell {
     func setAlias(alias: Alias, andAction action: String, isMine:Bool) {
         self.alias = alias
         self.action = action
-        var text = alias.name + " " + getActionString(action)
+        var text = alias.name.uppercaseString + " HAS " + getActionString(action)
         
         if (isMine && action == "join") {
             let dayTimePeriodFormatter = NSDateFormatter()
@@ -34,10 +34,10 @@ class PresenceCell: UITableViewCell {
     
     func getActionString(action: String!) -> String! {
         if (action == "join") {
-            return "Joined"
+            return "JOINED"
         }
         else if (action == "leave") {
-            return "Left"
+            return "LEFT"
         }
         else {
             return nil

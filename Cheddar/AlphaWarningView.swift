@@ -10,7 +10,7 @@ import Foundation
 
 class AlphaWarningView: FrontPageView {
     
-    @IBOutlet var joinButton: UIButton!
+    @IBOutlet var joinButton: CheddarButton!
     @IBOutlet var joinButtonView: UIView!
     
     class func instanceFromNib() -> AlphaWarningView {

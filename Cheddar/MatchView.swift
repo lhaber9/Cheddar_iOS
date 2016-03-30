@@ -10,7 +10,7 @@ import Foundation
 
 class MatchView: FrontPageView {
     
-    @IBOutlet var bottomTextLabel: UILabel!
+    @IBOutlet var bottomTextLabel: CheddarLabel!
     
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()

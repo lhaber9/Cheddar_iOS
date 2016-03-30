@@ -11,7 +11,7 @@ import Foundation
 
 class ChatCell: UITableViewCell {
     
-    @IBOutlet var messageLabel: UILabel!
+    @IBOutlet var messageLabel: CheddarLabel!
     @IBOutlet var messageBackground: UIView!
     
     @IBOutlet var leftSideMessageConstraint: NSLayoutConstraint!
@@ -68,7 +68,6 @@ class ChatCell: UITableViewCell {
             rightSideMessageConstraint.priority = 900;
             leftSideLabelConstraint.priority = 200;
             rightSideLabelConstraint.priority = 900;
-            messageBackground.backgroundColor = ColorConstants.outboundChatBubble
             messageLabel.textColor = ColorConstants.outboundMessageText
             rightIcon.hidden = false;
             leftIcon.hidden = true;
@@ -80,8 +79,8 @@ class ChatCell: UITableViewCell {
             rightSideMessageConstraint.priority = 200;
             leftSideLabelConstraint.priority = 900;
             rightSideLabelConstraint.priority = 200;
+            messageLabel.textColor = ColorConstants.textPrimary
             messageBackground.backgroundColor = ColorConstants.inboundChatBubble
-            messageLabel.textColor = ColorConstants.inboundMessageText
             rightIcon.hidden = true;
             leftIcon.hidden = false;
         }
@@ -89,15 +88,18 @@ class ChatCell: UITableViewCell {
     
     func setStatus(status:MessageStatus) {
         if (status == MessageStatus.Success) {
+            messageBackground.backgroundColor = ColorConstants.outboundChatBubble
             messageBackground.alpha = 1
             errorLabel.hidden = true
         }
         else if (status == MessageStatus.Sent) {
-            messageBackground.alpha = 0.65
+            messageBackground.backgroundColor = ColorConstants.outboundChatBubbleSending
+            messageBackground.alpha = 0.62
             errorLabel.hidden = true
         }
         else if (status == MessageStatus.Error) {
-            messageBackground.alpha = 0.65
+            messageBackground.backgroundColor = ColorConstants.outboundChatBubbleFail
+            messageBackground.alpha = 1
             errorLabel.hidden = false
         }
     }
@@ -114,12 +116,14 @@ class ChatCell: UITableViewCell {
         
         leftIconLabel.text = alias.initials()
         rightIconLabel.text = alias.initials()
-        aliasLabel.text = alias.name
+        aliasLabel.text = alias.name.lowercaseString
         aliasLabel.textColor = ColorConstants.aliasLabelText
         
         setShowAliasLabel(showAliasLabel)
         setIsOutbound(isOutbound)
-        setStatus(status)
+        if (isOutbound) {
+            setStatus(status)
+        }
         
         if (!showAliasIcon){
             rightIcon.hidden = true;

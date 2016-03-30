@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+        </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
-            <string>Effra-Regular</string>
-            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
         </mutableArray>
@@ -26,10 +28,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="376" height="33.5"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aoB-dj-1gj">
-                                <rect key="frame" x="0.0" y="0.0" width="376" height="18"/>
+                                <rect key="frame" x="0.0" y="0.0" width="376" height="15"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLw-Dz-RJj">
-                                        <rect key="frame" x="56" y="2" width="28.5" height="14.5"/>
+                                        <rect key="frame" x="56" y="0.0" width="28.5" height="14.5"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -38,18 +40,24 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="JLw-Dz-RJj" firstAttribute="centerY" secondItem="aoB-dj-1gj" secondAttribute="centerY" id="J9D-gN-PEC"/>
-                                    <constraint firstAttribute="height" constant="18" id="ns7-Ya-MBC"/>
+                                    <constraint firstItem="JLw-Dz-RJj" firstAttribute="top" secondItem="aoB-dj-1gj" secondAttribute="top" id="KwM-RZ-mhR"/>
+                                    <constraint firstAttribute="height" constant="15" id="ns7-Ya-MBC"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="J9D-gN-PEC"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsk-tc-l14">
-                                <rect key="frame" x="46" y="2" width="53" height="29.5"/>
+                                <rect key="frame" x="46" y="2" width="57.5" height="29.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vww-by-hlC">
-                                        <rect key="frame" x="10" y="3" width="33" height="23.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vww-by-hlC" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="3" width="37.5" height="23.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="13.5" id="u3h-dK-MvP"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
@@ -76,7 +84,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-0k-fGA">
                                         <rect key="frame" x="2" y="2" width="26" height="26"/>
-                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -96,7 +104,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjL-ul-4Yc">
                                         <rect key="frame" x="2" y="2" width="26" height="26"/>
-                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -112,7 +120,7 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
-                                <rect key="frame" x="107" y="9" width="138.5" height="14.5"/>
+                                <rect key="frame" x="111" y="9" width="138.5" height="14.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>

@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Effra-Regular.ttf">
-            <string>Effra-Regular</string>
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
         </mutableArray>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PresenceCell" rowHeight="62" id="GMK-7a-35H" customClass="PresenceCell" customModule="Cheddar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
+            <rect key="frame" x="0.0" y="0.0" width="381" height="36"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GMK-7a-35H" id="y5W-fa-Gg1">
-                <rect key="frame" x="0.0" y="0.0" width="381" height="32.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="381" height="35.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iID-WJ-CDg">
-                        <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
+                        <rect key="frame" x="0.0" y="0.0" width="381" height="36"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyb-R8-Ebh">
-                                <rect key="frame" x="0.0" y="0.0" width="381" height="33"/>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="15"/>
+                                <rect key="frame" x="0.0" y="0.0" width="381" height="36"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="11"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -34,7 +34,7 @@
                             <constraint firstAttribute="bottom" secondItem="Iyb-R8-Ebh" secondAttribute="bottom" id="24W-rG-aHH"/>
                             <constraint firstItem="Iyb-R8-Ebh" firstAttribute="top" secondItem="iID-WJ-CDg" secondAttribute="top" id="5iw-Oo-8F8"/>
                             <constraint firstAttribute="trailing" secondItem="Iyb-R8-Ebh" secondAttribute="trailing" id="dlR-Ub-dO0"/>
-                            <constraint firstAttribute="height" constant="33" id="iWd-ty-Rw3"/>
+                            <constraint firstAttribute="height" constant="36" id="iWd-ty-Rw3"/>
                             <constraint firstItem="Iyb-R8-Ebh" firstAttribute="leading" secondItem="iID-WJ-CDg" secondAttribute="leading" id="ulY-jx-Ot4"/>
                         </constraints>
                     </view>

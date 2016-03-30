@@ -38,7 +38,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var tableView: UITableView!
     
     var messageVerticalBuffer:CGFloat = 15
-    var chatBarHeightDefault:CGFloat = 50
+    var chatBarHeightDefault:CGFloat = 65
     var previousTextRect = CGRectZero
     
     var chatRoomController:ChatRoomController!
@@ -118,11 +118,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func initStyle() {
-        topBar.backgroundColor = ColorConstants.headerBackground
-        chatBar.backgroundColor = ColorConstants.sendBackground
-        topBarDivider.backgroundColor = ColorConstants.headerBorder
-        chatBarDivider.backgroundColor = ColorConstants.sendBorder
-
+        topBar.backgroundColor = ColorConstants.chatNavBackground
+        chatBar.backgroundColor = ColorConstants.chatNavBackground
+        topBarDivider.backgroundColor = ColorConstants.chatNavBorder
+        chatBarDivider.backgroundColor = ColorConstants.chatNavBorder
+        numActiveLabel.textColor = ColorConstants.textSecondary
+        
         sendEnabled = false
         
         let loadOverlay = LoadingView.instanceFromNib()
@@ -297,7 +298,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let action = chatRoomController.allActions[indexPath.row]
         if let message = action as? Message {
             
-            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: chatRoomController.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 4
+            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: chatRoomController.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
             
             let nextMessage = chatRoomController.findFirstMessageAfterIndex(indexPath.row)
             if (nextMessage?.alias.objectId != message.alias.objectId) {
@@ -307,7 +308,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return cellHeight
         }
         else if let _ = action as? Presence {
-            return 33
+            return 36
         }
         return 0
     }
@@ -379,7 +380,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             numActiveLabel.text = "Waiting for others..."
         }
         else {
-            numActiveLabel.text = "I have \(aliases.count) members"
+            numActiveLabel.text = "\(aliases.count) members"
         }
     }
     

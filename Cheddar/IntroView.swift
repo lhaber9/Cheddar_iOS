@@ -10,7 +10,7 @@ import Foundation
 
 class IntroView: FrontPageView {
     
-    @IBOutlet var bottomTextLabel: UILabel!
+    @IBOutlet var bottomTextLabel: CheddarLabel!
     
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()

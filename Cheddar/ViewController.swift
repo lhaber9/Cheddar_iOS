@@ -12,6 +12,8 @@ import Crashlytics
 
 class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate, ChatViewControllerDelegate {
     
+    @IBOutlet var loadingView: UIView!
+    
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet var page0: UIView!
@@ -28,7 +30,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     var currentPage: Int = 0
     var pages: [UIView]!
     
-    @IBOutlet var loadingView: UIView!
+    var isAnimatingPages = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,14 +104,17 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     }
     
     @IBAction func goToNextPage() {
+        if (isAnimatingPages) { return }
         scrollToPage(currentPage + 1, animated: true)
     }
     
     @IBAction func goToPrevPage() {
+        if (isAnimatingPages) { return }
         scrollToPage(currentPage - 1, animated: true)
     }
     
     func scrollToPage(pageIdx: Int, animated: Bool) {
+        isAnimatingPages = true
         if (pageIdx < 0 || pageIdx >= pages.count) {
             return
         }
@@ -178,12 +183,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         NSLog("Joining ChatRoom: " + chatRoom.objectId)
         self.presentViewController(chatViewController, animated: true) { () -> Void in
             self.loadingView.alpha = 0
+            self.loadingView.hidden = true
         }
     }
     
     func performJoinChatAnimation(callback: () -> Void) {
         UIView.animateWithDuration(0.33) { () -> Void in
             self.loadingView.alpha = 1
+            self.loadingView.hidden = false
         }
         
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(5 * Double(NSEC_PER_SEC)))
@@ -226,6 +233,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     }
     
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        isAnimatingPages = false
         currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
         displayArrows()
     }
