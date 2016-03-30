@@ -163,6 +163,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
+            Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }

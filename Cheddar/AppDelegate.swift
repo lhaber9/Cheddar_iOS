@@ -106,6 +106,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             
             if ((error) != nil) {
                 NSLog("%@",error!);
+                Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 NSNotificationCenter.defaultCenter().postNotificationName("messageError", object: message)
             }
             

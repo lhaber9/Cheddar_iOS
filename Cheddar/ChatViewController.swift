@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
     func closeChat()
@@ -170,7 +171,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": myAlias().objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if (error != nil) {
-                UIView.animateWithDuration(0.33) { () -> Void in
+                UIView.animateWithDuration(0.333) { () -> Void in
                     self.loadingView.alpha = 0
                 }
                 return
@@ -182,6 +183,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func leaveChatRoomCallback() {
         if let chatRoom = ChatRoom.fetchSingleRoom() {
+            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": chatRoom.objectId, "lengthOfStay":chatRoom.myAlias.joinedAt.timeIntervalSinceNow * 1000])
             Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
             Utilities.appDelegate().saveContext()
         }
@@ -213,6 +215,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let message = Message.createMessage(text, alias: myAlias(), timestamp: nil, status:MessageStatus.Sent)
         sendMessage(message)
         chatRoomController.addMessage(message)
+        Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": chatRoomController.chatRoomId, "lifeCycle":"SENT"])
     }
     
     func clearTextView() {

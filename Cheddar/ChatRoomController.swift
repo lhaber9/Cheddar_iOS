@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import Crashlytics
 
 protocol ChatRoomControllerDelegate: class {
     func didUpdateEvents()
@@ -39,6 +40,7 @@ class ChatRoomController {
     
     func receiveMessage(message: Message) {
         if (isMyMessage(message)) {
+            Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId":chatRoomId, "lifeCycle":"DELIVERED"])
             let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
             (allActions[messageIndex] as! Message).status = MessageStatus.Success
             self.delegate?.didUpdateEvents()
