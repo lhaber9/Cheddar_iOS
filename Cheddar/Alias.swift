@@ -16,10 +16,10 @@ class Alias: NSManagedObject {
     @NSManaged var userId: String!
     @NSManaged var chatRoomId: String!
     @NSManaged var name: String!
+    @NSManaged var joinedAt: NSDate!
     
     var leftAt: NSDate!
-    var joinedAt: NSDate!
-
+    
     class func newAlias(isTemporary: Bool) -> Alias {
         let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         

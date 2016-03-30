@@ -183,7 +183,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func leaveChatRoomCallback() {
         if let chatRoom = ChatRoom.fetchSingleRoom() {
-            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": chatRoom.objectId, "lengthOfStay":chatRoom.myAlias.joinedAt.timeIntervalSinceNow * 1000])
+            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": chatRoom.objectId, "lengthOfStay":chatRoom.myAlias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
             Utilities.appDelegate().saveContext()
         }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
     <entity name="Alias" representedClassName=".Alias" syncable="YES">
         <attribute name="chatRoomId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="joinedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
@@ -14,7 +15,7 @@
         <relationship name="myAlias" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alias" inverseName="chatRoom" inverseEntity="Alias" syncable="YES"/>
     </entity>
     <elements>
+        <element name="Alias" positionX="-54" positionY="27" width="128" height="135"/>
         <element name="ChatRoom" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Alias" positionX="-54" positionY="27" width="128" height="120"/>
     </elements>
 </model>
