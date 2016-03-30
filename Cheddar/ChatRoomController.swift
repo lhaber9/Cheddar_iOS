@@ -112,7 +112,7 @@ class ChatRoomController {
         
         var message = allActions[position]
         while (!message.isKindOfClass(Message)) {
-            position--
+            position -= 1
             if (position < 0) { return nil }
             message = allActions[position]
         }
@@ -127,7 +127,7 @@ class ChatRoomController {
         
         var message = allActions[position]
         while (!message.isKindOfClass(Message)) {
-            position++
+            position += 1
             if (position >= allActions.count) { return nil }
             message = allActions[position]
         }
@@ -150,7 +150,7 @@ class ChatRoomController {
                 }
             }
             
-            position++
+            position += 1
         }
         return retunIndex
     }
