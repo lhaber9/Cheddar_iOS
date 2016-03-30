@@ -39,7 +39,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var tableView: UITableView!
     
     var messageVerticalBuffer:CGFloat = 15
-    var chatBarHeightDefault:CGFloat = 65
+    var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
     
     var chatRoomController:ChatRoomController!
