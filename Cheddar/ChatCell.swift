@@ -134,9 +134,9 @@ class ChatCell: UITableViewCell {
     }
     
     class func labelHeightForText(text: String) -> CGFloat {
-        return round(text.boundingRectWithSize(CGSizeMake(192, 9999),
+        return round(text.boundingRectWithSize(CGSizeMake(180, 9999),
                                                         options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-                                                        attributes: [NSFontAttributeName: UIFont.systemFontOfSize(14)],
+                                                        attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
                                                         context: nil).height) + verticalTextBuffer
     }
     
