@@ -17,16 +17,16 @@ class PresenceCell: UITableViewCell {
     func setAlias(alias: Alias, andAction action: String, isMine:Bool) {
         self.alias = alias
         self.action = action
-        var text = alias.name.uppercaseString + " HAS " + getActionString(action)
+        let text = alias.name.uppercaseString + " HAS " + getActionString(action)
         
-        if (isMine && action == "join") {
-            let dayTimePeriodFormatter = NSDateFormatter()
-            dayTimePeriodFormatter.dateFormat = "dd/MM"
-            
-            let dateString = dayTimePeriodFormatter.stringFromDate(alias.joinedAt)
-            
-            text += " " + dateString
-        }
+//        if (isMine && action == "join") {
+//            let dayTimePeriodFormatter = NSDateFormatter()
+//            dayTimePeriodFormatter.dateFormat = "LLL dd"
+//            
+//            let dateString = dayTimePeriodFormatter.stringFromDate(alias.joinedAt).uppercaseString
+//            
+//            text += " on " + dateString
+//        }
         
         aliasLabel.text = text
         aliasLabel.textColor = ColorConstants.presenceText

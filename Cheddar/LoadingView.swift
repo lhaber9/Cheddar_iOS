@@ -13,7 +13,7 @@ class LoadingView: UIView {
     @IBOutlet var loadingImageView: UIImageView!
     @IBOutlet var loadingTextLabel: UILabel!
     
-    override func awakeFromNib() {
+    override func willMoveToSuperview(newSuperview: UIView?) {
         loadingImageView.image = UIImage.animatedImageNamed("LoadingImage-", duration: 2.0)
     }
     

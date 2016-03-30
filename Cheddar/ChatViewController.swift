@@ -127,6 +127,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         sendEnabled = false
         
         let loadOverlay = LoadingView.instanceFromNib()
+        loadOverlay.loadingTextLabel.text = "Leaving chat..."
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
     }

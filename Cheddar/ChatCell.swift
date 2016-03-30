@@ -89,17 +89,13 @@ class ChatCell: UITableViewCell {
     func setStatus(status:MessageStatus) {
         if (status == MessageStatus.Success) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubble
-            messageBackground.alpha = 1
-            errorLabel.hidden = true
         }
         else if (status == MessageStatus.Sent) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleSending
             messageBackground.alpha = 0.62
-            errorLabel.hidden = true
         }
         else if (status == MessageStatus.Error) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleFail
-            messageBackground.alpha = 1
             errorLabel.hidden = false
         }
     }
@@ -118,6 +114,9 @@ class ChatCell: UITableViewCell {
         rightIconLabel.text = alias.initials()
         aliasLabel.text = alias.name.lowercaseString
         aliasLabel.textColor = ColorConstants.aliasLabelText
+        
+        errorLabel.hidden = true
+        messageBackground.alpha = 1
         
         setShowAliasLabel(showAliasLabel)
         setIsOutbound(isOutbound)
