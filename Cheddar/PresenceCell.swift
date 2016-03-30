@@ -14,10 +14,21 @@ class PresenceCell: UITableViewCell {
     var alias: Alias!
     var action: String!
     
-    func setAlias(alias: Alias, andAction action: String) {
+    func setAlias(alias: Alias, andAction action: String, isMine:Bool) {
         self.alias = alias
         self.action = action
-        aliasLabel.text = alias.name + " " + getActionString(action)
+        var text = alias.name + " " + getActionString(action)
+        
+        if (isMine && action == "join") {
+            let dayTimePeriodFormatter = NSDateFormatter()
+            dayTimePeriodFormatter.dateFormat = "dd/MM"
+            
+            let dateString = dayTimePeriodFormatter.stringFromDate(alias.joinedAt)
+            
+            text += " " + dateString
+        }
+        
+        aliasLabel.text = text
         aliasLabel.textColor = ColorConstants.presenceText
     }
     

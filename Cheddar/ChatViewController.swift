@@ -286,7 +286,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         else if let presenceEvent = event as? Presence {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action)
+            cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action, isMine: chatRoomController.isMyPresenceEvent(presenceEvent))
             return cell
         }
         
