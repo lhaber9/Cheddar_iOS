@@ -397,6 +397,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
+        if (isNearBottom(5)) {
+            isUnreadMessages = false
+        }
         
         if (chatRoomController.allMessagesLoaded || chatRoomController.loadMessageCallInFlight) {
             return
@@ -404,9 +407,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if (tableView.contentOffset.y <= 50) {
             chatRoomController.loadNextPageMessages()
-        }
-        if (isNearBottom(5)) {
-            isUnreadMessages = false
         }
     }
     
