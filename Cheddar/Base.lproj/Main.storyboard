@@ -11,6 +11,7 @@
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -389,6 +390,30 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNC-UK-Utg">
+                                <rect key="frame" x="225" y="507" width="150" height="22"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Messages!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o7h-rT-TFY">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="22"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="o7h-rT-TFY" secondAttribute="trailing" id="3vr-au-vzS"/>
+                                    <constraint firstAttribute="bottom" secondItem="o7h-rT-TFY" secondAttribute="bottom" id="509-Mr-xs6"/>
+                                    <constraint firstAttribute="width" constant="150" id="Tgq-Hq-TC1"/>
+                                    <constraint firstItem="o7h-rT-TFY" firstAttribute="leading" secondItem="qNC-UK-Utg" secondAttribute="leading" id="VCn-MF-sxg"/>
+                                    <constraint firstAttribute="height" constant="22" id="XfU-iv-340"/>
+                                    <constraint firstItem="o7h-rT-TFY" firstAttribute="top" secondItem="qNC-UK-Utg" secondAttribute="top" id="pZr-Fi-zbS"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ZHp-0I-gux" appends="YES" id="aw7-4d-BKE"/>
+                                </connections>
+                            </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Xl-Io-Xte">
                                 <rect key="frame" x="0.0" y="-2" width="600" height="602"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -405,6 +430,8 @@
                             <constraint firstItem="MDl-FB-rsy" firstAttribute="top" secondItem="1Xl-Io-Xte" secondAttribute="bottom" id="LPv-uy-wt4"/>
                             <constraint firstItem="uVs-pQ-oZS" firstAttribute="top" secondItem="xqb-KO-8jF" secondAttribute="bottom" id="aId-Vg-JZK"/>
                             <constraint firstAttribute="trailing" secondItem="uVs-pQ-oZS" secondAttribute="trailing" id="bm9-yL-hJs"/>
+                            <constraint firstItem="qNC-UK-Utg" firstAttribute="centerX" secondItem="Mev-Ht-NUf" secondAttribute="centerX" id="cn3-cp-HQZ"/>
+                            <constraint firstItem="Mev-Ht-NUf" firstAttribute="top" secondItem="qNC-UK-Utg" secondAttribute="bottom" constant="15" id="czF-Yy-Stc"/>
                             <constraint firstItem="YL3-Pb-2NT" firstAttribute="top" secondItem="xqb-KO-8jF" secondAttribute="bottom" constant="-22" id="ez2-Bf-C79"/>
                             <constraint firstItem="YL3-Pb-2NT" firstAttribute="leading" secondItem="6Tz-SO-OJZ" secondAttribute="leading" id="gdN-81-KZO"/>
                             <constraint firstItem="1Xl-Io-Xte" firstAttribute="top" secondItem="xqb-KO-8jF" secondAttribute="bottom" constant="-22" id="ngz-xq-bJg"/>
@@ -436,6 +463,7 @@
                         <outlet property="textView" destination="z76-Cf-cga" id="N57-81-YSe"/>
                         <outlet property="topBar" destination="YL3-Pb-2NT" id="HMV-UT-roJ"/>
                         <outlet property="topBarDivider" destination="iOk-2d-mw2" id="vYX-yt-xlI"/>
+                        <outlet property="unreadMessagesView" destination="qNC-UK-Utg" id="Doa-8Q-uxw"/>
                         <outlet property="view" destination="6Tz-SO-OJZ" id="7vL-ZW-3Kk"/>
                         <segue destination="XBW-n4-asp" kind="popoverPresentation" identifier="popoverMenuSegue" popoverAnchorView="7Qy-YP-67C" id="8sf-UD-9nz">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
@@ -449,6 +477,11 @@
                 <tapGestureRecognizer id="A8S-s1-cG0">
                     <connections>
                         <action selector="sendPress" destination="Tzs-Z1-Lsf" id="0qk-9h-hbp"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="ZHp-0I-gux">
+                    <connections>
+                        <action selector="scrollToBottom" destination="Tzs-Z1-Lsf" id="ZCH-we-a3Q"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

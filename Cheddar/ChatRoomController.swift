@@ -13,7 +13,9 @@ import Crashlytics
 protocol ChatRoomControllerDelegate: class {
     func didUpdateEvents()
     func didUpdateActiveAliases(aliases:[Alias])
-    func didAddEvents(events:[AnyObject], reloaded:Bool, firstLoad: Bool)
+    func didReloadEvents(events:[AnyObject], firstLoad: Bool)
+    func didAddMessage(message: Message)
+    func didAddPresence(presence: Presence)
 }
 
 class ChatRoomController {
@@ -57,7 +59,7 @@ class ChatRoomController {
         
         reloadActiveAlaises()
         addPresenceEvent(presenceEvent)
-        self.delegate?.didAddEvents([presenceEvent], reloaded: false, firstLoad: false)
+        self.delegate?.didAddPresence(presenceEvent)
     }
     
     func reloadActiveAlaises() {
@@ -88,23 +90,23 @@ class ChatRoomController {
     
     func addMessage(message: Message) {
         allActions.append(message)
-        self.delegate?.didAddEvents([message], reloaded: false, firstLoad: false)
+        self.delegate?.didAddMessage(message)
     }
     
     func addPresenceEvent(newEvent: Presence) {
         allActions.append(newEvent)
-        self.delegate?.didAddEvents([newEvent], reloaded: false, firstLoad: false)
+        self.delegate?.didAddPresence(newEvent)
     }
     
-    func addMessages(newMessages: [Message]) {
-        allActions.appendContentsOf(newMessages as [AnyObject])
-        self.delegate?.didAddEvents(newMessages, reloaded: false, firstLoad: false)
-    }
-    
-    func addPresenceEvents(newEvents: [Presence]) {
-        allActions.appendContentsOf(newEvents  as [AnyObject])
-        self.delegate?.didAddEvents(newEvents, reloaded: false, firstLoad: false)
-    }
+//    func addMessages(newMessages: [Message]) {
+//        allActions.appendContentsOf(newMessages as [AnyObject])
+//        self.delegate?.didAddEvents(newMessages, reloaded: false, firstLoad: false)
+//    }
+//    
+//    func addPresenceEvents(newEvents: [Presence]) {
+//        allActions.appendContentsOf(newEvents  as [AnyObject])
+//        self.delegate?.didAddEvents(newEvents, reloaded: false, firstLoad: false)
+//    }
     
     func findFirstMessageBeforeIndex(index: Int) -> Message! {
         var position = index - 1
@@ -199,10 +201,10 @@ class ChatRoomController {
                 self.allActions = replayEvents + self.allActions
                 self.delegate?.didUpdateEvents()
                 if (replayEvents.count == self.allActions.count) {
-                    self.delegate?.didAddEvents(replayEvents, reloaded: true, firstLoad: true)
+                    self.delegate?.didReloadEvents(replayEvents, firstLoad: true)
                 }
                 else {
-                    self.delegate?.didAddEvents(replayEvents, reloaded: true, firstLoad: false)
+                    self.delegate?.didReloadEvents(replayEvents, firstLoad: false)
                 }
             }
             

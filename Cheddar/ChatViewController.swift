@@ -27,6 +27,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var topBarDivider: UIView!
     @IBOutlet var chatBarDivider: UIView!
     @IBOutlet var chatBar: UIView!
+    @IBOutlet var unreadMessagesView: UIView!
     
     @IBOutlet var backButton: UIButton!
     @IBOutlet var dotsButton: UIButton!
@@ -44,6 +45,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
     var dragPosition: CGFloat!
+    var isUnreadMessages = false {
+        didSet {
+            UIView.animateWithDuration(0.333) {
+                if ( self.isUnreadMessages ) {
+                    self.unreadMessagesView.alpha = 1
+                }
+                else {
+                    self.unreadMessagesView.alpha = 0
+                }
+            }
+        }
+    }
     
     var chatRoomController:ChatRoomController!
     
@@ -148,6 +161,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         loadOverlay.autoPinEdgesToSuperviewEdges()
     }
     
+    func isNearBottom(distance: CGFloat) -> Bool {
+        let scrollViewHeight = tableView.frame.size.height;
+        let scrollContentSizeHeight = tableView.contentSize.height;
+        let scrollOffset = tableView.contentOffset.y;
+        
+        if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight - distance) {
+            return true
+        }
+        
+        return false
+    }
+    
     func subscribe() {
         Utilities.appDelegate().subscribeToPubNubChannel(chatRoomController.chatRoomId)
         Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoomController.chatRoomId)
@@ -161,11 +186,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.chatRoomController.receiveMessage(notification.object as! Message)
-            self.scrollToBottom(true)
         }
         NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.chatRoomController.receivePresenceEvent(notification.object as! Presence)
-            self.scrollToBottom(true)
         }
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
             self.subscribe()
@@ -216,6 +239,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         clearTextView()
         
         sendText(text)
+        scrollToBottom(true)
     }
     
     @IBAction func dotsPress() {
@@ -249,6 +273,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func sendMessage(message: Message) {
         Utilities.appDelegate().sendMessage(message)
+    }
+    
+    @IBAction func scrollToBottom() {
+        scrollToBottom(true)
     }
     
     func scrollToBottom(animated: Bool) {
@@ -365,6 +393,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if (tableView.contentOffset.y <= 50) {
             chatRoomController.loadNextPageMessages()
         }
+        if (isNearBottom(5)) {
+            isUnreadMessages = false
+        }
     }
     
     func textViewDidChange(textView: UITextView) {
@@ -428,10 +459,22 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func didAddEvents(events:[AnyObject], reloaded:Bool, firstLoad: Bool) {
+    func didReloadEvents(events:[AnyObject], firstLoad: Bool) {
         reloadTable()
-        if (!reloaded || firstLoad) { scrollToBottom(true) }
-        if (reloaded && !firstLoad) { scrollToEventIndex(events.count, animated: false) }
+        if (firstLoad) { scrollToBottom(true) }
+        else { scrollToEventIndex(events.count, animated: false) }
+    }
+    
+    func didAddMessage(message: Message) {
+        reloadTable()
+        if (isNearBottom(ChatCell.singleRowHeight * 3)) { scrollToBottom(true) }
+        else if(!chatRoomController.isMyMessage(message)) { isUnreadMessages = true }
+    }
+    
+    func didAddPresence(presence: Presence) {
+        reloadTable()
+        if (isNearBottom(ChatCell.singleRowHeight * 3)) { scrollToBottom(true) }
+        else if(!chatRoomController.isMyPresenceEvent(presence)) { isUnreadMessages = true }
     }
     
     func shouldClose() {
