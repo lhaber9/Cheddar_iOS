@@ -34,6 +34,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet var chatBarTextTopConstraint: NSLayoutConstraint!
+    @IBOutlet var chatBarTextBottomConstraint: NSLayoutConstraint!
+    
     @IBOutlet var sendButton: UIButton!
     
     @IBOutlet var tableView: UITableView!
@@ -59,6 +62,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             UIView.animateWithDuration(0.333) { () -> Void in
+                if (self.numberInputTextLines > 1) {
+                    self.chatBarTextTopConstraint.constant = 6
+                    self.chatBarTextBottomConstraint.constant = 6
+                }
+                else {
+                    self.chatBarTextTopConstraint.constant = 12
+                    self.chatBarTextBottomConstraint.constant = 12
+                }
+                
                 self.chatBarHeightConstraint.constant = self.chatBarHeightDefault + offsetFromDefault
                 self.view.layoutIfNeeded()
                 if (self.numberInputTextLines <= 4) {
@@ -128,6 +140,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         numActiveLabel.textColor = ColorConstants.textSecondary
         
         sendEnabled = false
+        
+        textView.textColor = ColorConstants.textPrimary
         
         let loadOverlay = LoadingView.instanceFromNib()
         loadOverlay.loadingTextLabel.text = "Leaving chat..."

@@ -11,7 +11,7 @@ import Foundation
 
 class ChatCell: UITableViewCell {
     
-    @IBOutlet var messageLabel: CheddarLabel!
+    @IBOutlet var messageLabel: CheddarTextView!
     @IBOutlet var messageBackground: UIView!
     
     @IBOutlet var leftSideMessageConstraint: NSLayoutConstraint!
@@ -37,14 +37,19 @@ class ChatCell: UITableViewCell {
     
     static var verticalTextBuffer:CGFloat = 13;
     static var aliasLabelHeight:CGFloat = 18;
+    static var singleRowHeight:CGFloat = 32;
+    
     
     override func willMoveToSuperview(newSuperview: UIView?) {
-        messageBackground.layer.cornerRadius = 15;
-        leftIcon.layer.cornerRadius = 15;
-        rightIcon.layer.cornerRadius = 15;
+        messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
+        leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
+        rightIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
         
         leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
         rightIcon.backgroundColor = ColorConstants.outboundChatBubble
+        
+        messageLabel.textContainer.lineFragmentPadding = 0;
+        messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
     }
     
     func setShowAliasLabel(showAliasLabel: Bool) {
@@ -101,8 +106,13 @@ class ChatCell: UITableViewCell {
     }
 
     func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:MessageStatus) {
+        
+//        messageLabel.attributedText = ChatCell.attributedStringForText(text)
+        
         messageLabel.text = text
-        messageHeightConstraint.constant = ChatCell.labelHeightForText(text)
+        let height = ChatCell.labelHeightForText( messageLabel.text )
+        messageHeightConstraint.constant = height
+        
         if (text.characters.count == 1) {
             messageLabel.textAlignment = NSTextAlignment.Center
         }
@@ -134,17 +144,25 @@ class ChatCell: UITableViewCell {
     }
     
     class func labelHeightForText(text: String) -> CGFloat {
-        return round(text.boundingRectWithSize(CGSizeMake(180, 9999),
-                                                        options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-                                                        attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
-                                                        context: nil).height) + verticalTextBuffer
+        
+        var height = round(text.boundingRectWithSize(CGSizeMake(180, CGFloat(FLT_MAX)),
+            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+            attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
+            context: nil).height) + verticalTextBuffer
+        
+        if (height > ChatCell.singleRowHeight) {
+            height += 4
+        }
+       
+        
+        return height
     }
     
     class func rowHeightForText(text: String, withAliasLabel: Bool) -> CGFloat {
         var height = labelHeightForText(text)
         if (withAliasLabel) {
             height += aliasLabelHeight
-        }
+        } 
         return height
     }
     

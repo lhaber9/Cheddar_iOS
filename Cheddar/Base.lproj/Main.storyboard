@@ -10,6 +10,7 @@
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -310,7 +311,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="33" id="Ajz-Dw-Dbc"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -424,6 +425,8 @@
                         <outlet property="chatBarBottomConstraint" destination="weW-6k-bNs" id="gHe-FD-iWf"/>
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
                         <outlet property="chatBarHeightConstraint" destination="GTK-eM-s73" id="HGE-6w-yU0"/>
+                        <outlet property="chatBarTextBottomConstraint" destination="BAB-tJ-Eag" id="ZpB-1E-aaY"/>
+                        <outlet property="chatBarTextTopConstraint" destination="ohJ-5e-w1P" id="ps1-9q-T6t"/>
                         <outlet property="dotsButton" destination="YfW-7x-fjh" id="5m2-Qk-clU"/>
                         <outlet property="loadingView" destination="1Xl-Io-Xte" id="ncV-7B-RFV"/>
                         <outlet property="numActiveLabel" destination="v0E-WD-FUl" id="p03-hP-TtX"/>

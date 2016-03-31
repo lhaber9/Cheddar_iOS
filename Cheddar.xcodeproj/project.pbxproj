@@ -32,6 +32,7 @@
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
+		A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C785501CACD32300AA1673 /* CheddarTextView.swift */; };
 		A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */; };
 		A3E05CAD1CA9887A005B9764 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CAC1CA9887A005B9764 /* IntroView.swift */; };
 		A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CB01CA988C4005B9764 /* FrontView.swift */; };
@@ -119,6 +120,7 @@
 		A3C59BD71C61BE07009B82EE /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		A3C785501CACD32300AA1673 /* CheddarTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextView.swift; sourceTree = "<group>"; };
 		A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsMenuController.swift; sourceTree = "<group>"; };
 		A3E05CAC1CA9887A005B9764 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		A3E05CB01CA988C4005B9764 /* FrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontView.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		A300583C1CAB202300725FC3 /* Reuse */ = {
 			isa = PBXGroup;
 			children = (
+				A3C785501CACD32300AA1673 /* CheddarTextView.swift */,
 				A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */,
 				A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */,
 				A300583F1CAB203B00725FC3 /* LoadingView.swift */,
@@ -585,6 +588,7 @@
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
+				A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
 				A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */,
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
