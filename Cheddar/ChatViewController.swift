@@ -14,7 +14,7 @@ protocol ChatViewControllerDelegate: class {
     func closeChat()
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, ChatRoomControllerDelegate, FeedbackViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, ChatRoomControllerDelegate, FeedbackViewDelegate, UIAlertViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -41,14 +41,20 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var tableView: UITableView!
     
+    var confirmLeaveAlertView = UIAlertView()
+    
     var messageVerticalBuffer:CGFloat = 15
     var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
     var dragPosition: CGFloat!
     var isUnreadMessages = false {
         didSet {
+            if (self.unreadMessagesView == nil) {
+                return
+            }
+            
             UIView.animateWithDuration(0.333) {
-                if ( self.isUnreadMessages ) {
+                if (self.isUnreadMessages) {
                     self.unreadMessagesView.alpha = 1
                 }
                 else {
@@ -59,7 +65,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     var chatRoomController:ChatRoomController!
-    
     
     var numberInputTextLines = 1 {
         didSet {
@@ -108,6 +113,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
+        
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
         
         textView.delegate = self
         chatRoomController.delegate = self
@@ -202,6 +209,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func backTap() {
         
+        confirmLeaveAlertView.show()
+        
+    }
+    
+    func leaveChat() {
         UIView.animateWithDuration(0.33) { () -> Void in
             self.loadingView.alpha = 1
         }
@@ -479,5 +491,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func shouldClose() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
+            leaveChat()
+        }
     }
 }
