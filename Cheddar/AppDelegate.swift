@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
+    var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
     var messagesToSend: [Message] = []
@@ -42,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         Fabric.with([Crashlytics.self])
         
         initializeUser()
+        checkUpdate()
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -83,6 +85,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             User.theUser.objectId = user.objectId
             defaults.setValue(user.objectId, forKey: self.userIdFieldName)
             defaults.synchronize()
+        }
+    }
+    
+    func checkUpdate() {
+        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+        var isUpdated = false
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let appVersion = defaults.stringForKey(appVersionFieldName) {
+            if (appVersion != build) {
+                isUpdated = true
+                defaults.setValue(build, forKey: appVersionFieldName)
+                defaults.synchronize()
+            }
+        }
+        else {
+            isUpdated = true
+            defaults.setValue(build, forKey: appVersionFieldName)
+            defaults.synchronize()
+        }
+        
+        if (isUpdated) {
+            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
         }
     }
     
