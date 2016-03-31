@@ -286,6 +286,7 @@
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Ql6-ns-pvM" firstAttribute="top" secondItem="uVs-pQ-oZS" secondAttribute="top" id="NpJ-qR-Ea8"/>
                                     <constraint firstAttribute="trailing" secondItem="Ql6-ns-pvM" secondAttribute="trailing" id="VO5-p1-ush"/>

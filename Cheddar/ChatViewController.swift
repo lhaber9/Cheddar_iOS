@@ -41,8 +41,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var messageVerticalBuffer:CGFloat = 15
     var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
+    var dragPosition: CGFloat!
     
     var chatRoomController:ChatRoomController!
+    
     
     var numberInputTextLines = 1 {
         didSet {
@@ -317,7 +319,25 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 0
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        dragPosition = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        dragPosition = nil
+    }
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (dragPosition != nil) {
+            if (scrollView.contentOffset.y < dragPosition - 15) {
+                deselectTextView()
+            }
+            else {
+                dragPosition = scrollView.contentOffset.y
+            }
+        }
+        
+        
         if (chatRoomController.allMessagesLoaded || chatRoomController.loadMessageCallInFlight) {
             return
         }
