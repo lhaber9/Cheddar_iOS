@@ -380,6 +380,7 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="BAB-tJ-Eag"/>
                                         <exclude reference="3sg-AE-pgF"/>
                                         <exclude reference="996-kX-lou"/>
                                         <exclude reference="XAe-OF-3np"/>
@@ -425,7 +426,6 @@
                         <outlet property="chatBarBottomConstraint" destination="weW-6k-bNs" id="gHe-FD-iWf"/>
                         <outlet property="chatBarDivider" destination="4Vz-zW-sEj" id="w9V-r3-4pY"/>
                         <outlet property="chatBarHeightConstraint" destination="GTK-eM-s73" id="HGE-6w-yU0"/>
-                        <outlet property="chatBarTextBottomConstraint" destination="BAB-tJ-Eag" id="ZpB-1E-aaY"/>
                         <outlet property="chatBarTextTopConstraint" destination="ohJ-5e-w1P" id="ps1-9q-T6t"/>
                         <outlet property="dotsButton" destination="YfW-7x-fjh" id="5m2-Qk-clU"/>
                         <outlet property="loadingView" destination="1Xl-Io-Xte" id="ncV-7B-RFV"/>

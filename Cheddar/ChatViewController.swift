@@ -35,7 +35,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet var chatBarTextTopConstraint: NSLayoutConstraint!
-    @IBOutlet var chatBarTextBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var sendButton: UIButton!
     
@@ -63,12 +62,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             UIView.animateWithDuration(0.333) { () -> Void in
                 if (self.numberInputTextLines > 1) {
+                    self.textView.textContainerInset.top = 4
                     self.chatBarTextTopConstraint.constant = 6
-                    self.chatBarTextBottomConstraint.constant = 6
                 }
                 else {
+                    self.textView.textContainerInset.top = 8
                     self.chatBarTextTopConstraint.constant = 12
-                    self.chatBarTextBottomConstraint.constant = 12
                 }
                 
                 self.chatBarHeightConstraint.constant = self.chatBarHeightDefault + offsetFromDefault
@@ -333,6 +332,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 0
     }
     
+    
+    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         dragPosition = scrollView.contentOffset.y
     }
@@ -342,6 +343,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (scrollView.isEqual(textView) && numberInputTextLines <= 4) {
+            textView.contentOffset.y = 0
+            return
+        }
+        
         if (dragPosition != nil) {
             if (scrollView.contentOffset.y < dragPosition - 15) {
                 deselectTextView()
