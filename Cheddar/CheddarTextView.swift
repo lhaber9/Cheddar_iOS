@@ -13,9 +13,12 @@ class CheddarTextView: UITextView {
         textColor = ColorConstants.textPrimary
     }
     
-    override var contentSize: CGSize {
-        didSet {
-//            textContainerInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-        }
+    override func canBecomeFirstResponder() -> Bool {
+        return false
+    }
+    
+    override func shouldChangeTextInRange(range: UITextRange, replacementText text: String) -> Bool {
+        resignFirstResponder()
+        return false
     }
 }

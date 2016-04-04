@@ -8,8 +8,7 @@
 
 import Foundation
 
-
-class ChatCell: UITableViewCell {
+class ChatCell: UITableViewCell, UITextViewDelegate {
     
     @IBOutlet var messageLabel: CheddarTextView!
     @IBOutlet var messageBackground: UIView!
@@ -39,6 +38,7 @@ class ChatCell: UITableViewCell {
     static var aliasLabelHeight:CGFloat = 18;
     static var singleRowHeight:CGFloat = 32;
     
+    static var textFont: UIFont = UIFont(name: "Effra", size: 16)!
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
@@ -50,6 +50,10 @@ class ChatCell: UITableViewCell {
         
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+        messageLabel.selectable = false
+        messageLabel.delegate = self
+        
+        messageBackground.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell)))
     }
     
     func setShowAliasLabel(showAliasLabel: Bool) {
@@ -107,9 +111,13 @@ class ChatCell: UITableViewCell {
 
     func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:MessageStatus) {
         
-//        messageLabel.attributedText = ChatCell.attributedStringForText(text)
+        let attrText = NSMutableAttributedString(string: text, attributes: [NSFontAttributeName: ChatCell.textFont])
+        for match in links(text) {
+            attrText.addAttribute(NSLinkAttributeName, value: "http://www.google.com", range: match.range)
+        }
         
-        messageLabel.text = text
+        messageLabel.attributedText = attrText
+        
         let height = ChatCell.labelHeightForText( messageLabel.text )
         messageHeightConstraint.constant = height
         
@@ -143,11 +151,77 @@ class ChatCell: UITableViewCell {
         layoutIfNeeded()
     }
     
+    func links(text: String) -> [NSTextCheckingResult] {
+        let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+        guard let detect = detector else {
+            return []
+        }
+        return detect.matchesInString(text, options: .ReportCompletion, range: NSMakeRange(0, text.characters.count))
+    }
+    
+    func didTapCell() {
+        messageLabel.userInteractionEnabled = false
+        becomeFirstResponder()
+        let theMenu = UIMenuController.sharedMenuController()
+        
+        var menuItems = [UIMenuItem(title:"Copy", action:#selector(ChatCell.copyCell))]
+        if (links(messageLabel.attributedText.string).count > 0) {
+            menuItems.append(UIMenuItem(title:"Go To Link", action:#selector(ChatCell.showLink)))
+        }
+        
+        theMenu.menuItems = menuItems
+        theMenu.setTargetRect(messageBackground.frame, inView:self)
+        theMenu.setMenuVisible(true, animated:true)
+    }
+    
+    func showLink() {
+        
+    }
+    
+    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+        if action == #selector(ChatCell.copyCell) || action == #selector(ChatCell.showLink) {
+            return true
+        }
+        return false
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        messageBackground.alpha = 0.8
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIResponder.resignFirstResponder), name: UIMenuControllerDidHideMenuNotification, object: nil)
+        return super.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        messageBackground.alpha = 1
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIMenuControllerDidHideMenuNotification, object: nil)
+        return super.resignFirstResponder()
+    }
+    
+    func copyCell() {
+        let board = UIPasteboard.generalPasteboard()
+        board.string = messageLabel.text
+        let menu = UIMenuController.sharedMenuController()
+        menu.setMenuVisible(false, animated: true)
+        messageBackground.alpha = 1
+    }
+    
+    override func copy(sender: AnyObject?) {
+        let board = UIPasteboard.generalPasteboard()
+        board.string = messageLabel.text
+        let menu = UIMenuController.sharedMenuController()
+        menu.setMenuVisible(false, animated: true)
+        messageBackground.alpha = 1
+    }
+    
     class func labelHeightForText(text: String) -> CGFloat {
         
         var height = round(text.boundingRectWithSize(CGSizeMake(180, CGFloat(FLT_MAX)),
             options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
+            attributes: [NSFontAttributeName: textFont],
             context: nil).height) + verticalTextBuffer
         
         if (height > ChatCell.singleRowHeight) {
