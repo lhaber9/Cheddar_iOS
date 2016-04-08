@@ -37,6 +37,8 @@
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
 		A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C785501CACD32300AA1673 /* CheddarTextView.swift */; };
 		A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */; };
+		A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F11CB86EFE0075B314 /* ChatListCell.swift */; };
+		A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D822F31CB86F120075B314 /* ChatListCell.xib */; };
 		A3E05CAD1CA9887A005B9764 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CAC1CA9887A005B9764 /* IntroView.swift */; };
 		A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CB01CA988C4005B9764 /* FrontView.swift */; };
 		A3E05CB31CA988E0005B9764 /* IntroView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3E05CB21CA988E0005B9764 /* IntroView.xib */; };
@@ -128,6 +130,8 @@
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
 		A3C785501CACD32300AA1673 /* CheddarTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextView.swift; sourceTree = "<group>"; };
 		A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsMenuController.swift; sourceTree = "<group>"; };
+		A3D822F11CB86EFE0075B314 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
+		A3D822F31CB86F120075B314 /* ChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
 		A3E05CAC1CA9887A005B9764 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		A3E05CB01CA988C4005B9764 /* FrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontView.swift; sourceTree = "<group>"; };
 		A3E05CB21CA988E0005B9764 /* IntroView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroView.xib; sourceTree = "<group>"; };
@@ -334,6 +338,8 @@
 				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
 				A354E1A81CA17FC600E956AB /* ChatRoomController.swift */,
+				A3D822F11CB86EFE0075B314 /* ChatListCell.swift */,
+				A3D822F31CB86F120075B314 /* ChatListCell.xib */,
 				A3ECAE951C67273C003F981C /* ChatCell.swift */,
 				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
 				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
@@ -497,6 +503,7 @@
 				A36F3E0F1CAB91C800F533FF /* loading.gif in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
 				A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */,
+				A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */,
 				A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */,
 				A395D7041CB57B78004D340E /* Chat.storyboard in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
@@ -616,6 +623,7 @@
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
 				A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */,
+				A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */,
 				A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */,
 				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,
 			);

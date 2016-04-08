@@ -543,10 +543,10 @@
                                     <mask key="constraints">
                                         <exclude reference="Oe7-Us-U4S"/>
                                         <exclude reference="NQy-la-qLD"/>
-                                        <exclude reference="ueM-Tl-pgv"/>
                                         <exclude reference="Wkv-ww-I6y"/>
-                                        <exclude reference="qRF-DX-StK"/>
                                         <exclude reference="o4Y-Kx-ClE"/>
+                                        <exclude reference="qRF-DX-StK"/>
+                                        <exclude reference="ueM-Tl-pgv"/>
                                     </mask>
                                 </variation>
                             </view>

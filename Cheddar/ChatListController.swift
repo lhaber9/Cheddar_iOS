@@ -23,6 +23,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     var chatRooms: [ChatRoom]!
 
     override func viewDidLoad() {
+        tableView.registerNib(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
         reloadRooms()
     }
     
@@ -41,9 +42,13 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = chatRooms[indexPath.row].objectId
+        let cell = tableView.dequeueReusableCellWithIdentifier("ChatListCell", forIndexPath: indexPath) as! ChatListCell
+        cell.chatNameLabel.text = chatRooms[indexPath.row].objectId
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
     
     func closeChat() {
