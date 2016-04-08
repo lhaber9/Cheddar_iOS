@@ -132,7 +132,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             if ((error) != nil) {
                 NSLog("%@",error!);
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
-                NSNotificationCenter.defaultCenter().postNotificationName("messageError", object: message)
+                let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
+                chatRoom.messageError(message)
             }
             
             self.messagesToSend.removeAtIndex(0)
@@ -205,11 +206,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let objectDict = jsonMessage["object"] as! [NSObject:AnyObject]
         
         if (objectType == "messageEvent") {
-            NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(objectDict))
+            let message = Message.createMessage(objectDict)
+            if let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId) {
+                chatRoom.receiveMessage(message)
+            }
         }
         else if (objectType == "presenceEvent") {
-             NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(objectDict))
+            let presenceEvent = Presence.createPresenceEvent(objectDict)
+            if let chatRoom = ChatRoom.fetchById(presenceEvent.alias.chatRoomId) {
+                chatRoom.receivePresenceEvent(presenceEvent)
+            }
         }
+        
+        saveContext()
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {

@@ -48,6 +48,6 @@ class AlphaWarningView: FrontPageView {
     }
     
     func joinChat() {
-        delegate?.joinChat(false)
+        delegate?.showChat()
     }
 }

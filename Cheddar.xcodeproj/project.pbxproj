@@ -10,6 +10,8 @@
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
 		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
 		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
+		A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */; };
+		A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A333B9D61CB6E39700E5DC25 /* ChatController.swift */; };
 		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
 		A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A81CA17FC600E956AB /* ChatRoomController.swift */; };
 		A36F3E0B1CAB857700F533FF /* CheddarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */; };
@@ -28,6 +30,7 @@
 		A393D6121C63BB5400EBB94C /* single.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60E1C63BB5400EBB94C /* single.png */; };
 		A393D6131C63BB5400EBB94C /* single_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60F1C63BB5400EBB94C /* single_selected.png */; };
 		A393D6161C63C1C400EBB94C /* cheese.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D6151C63C1C400EBB94C /* cheese.png */; };
+		A395D7041CB57B78004D340E /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A395D7031CB57B78004D340E /* Chat.storyboard */; };
 		A3B12D491C6FC83900B75645 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B12D481C6FC83900B75645 /* User.swift */; };
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
@@ -85,6 +88,8 @@
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
+		A333B9D61CB6E39700E5DC25 /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		A354E1A81CA17FC600E956AB /* ChatRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
 		A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarLabel.swift; sourceTree = "<group>"; };
@@ -109,6 +114,7 @@
 		A393D60E1C63BB5400EBB94C /* single.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single.png; sourceTree = "<group>"; };
 		A393D60F1C63BB5400EBB94C /* single_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single_selected.png; sourceTree = "<group>"; };
 		A393D6151C63C1C400EBB94C /* cheese.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cheese.png; sourceTree = "<group>"; };
+		A395D7031CB57B78004D340E /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		A3B12D481C6FC83900B75645 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		A3C59BD01C61BE07009B82EE /* Cheddar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cheddar-Bridging-Header.h"; sourceTree = "<group>"; };
 		A3C59BD11C61BE07009B82EE /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
@@ -323,6 +329,9 @@
 		A3F9205E1C783EA0003E0BC3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A395D7031CB57B78004D340E /* Chat.storyboard */,
+				A333B9D61CB6E39700E5DC25 /* ChatController.swift */,
+				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
 				A354E1A81CA17FC600E956AB /* ChatRoomController.swift */,
 				A3ECAE951C67273C003F981C /* ChatCell.swift */,
@@ -489,6 +498,7 @@
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
 				A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */,
 				A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */,
+				A395D7041CB57B78004D340E /* Chat.storyboard in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -586,6 +596,7 @@
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
+				A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
 				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
 				A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */,
@@ -594,6 +605,7 @@
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
+				A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */,
 				A37297D71C6BF5AF00625C7F /* Message.swift in Sources */,

@@ -10,13 +10,15 @@ import UIKit
 import Parse
 import Crashlytics
 
-class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate, ChatViewControllerDelegate {
+class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate {
     
     @IBOutlet var loadingView: UIView!
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet var page0: UIView!
+    
+    @IBOutlet var chatContainer: UIView!
     
     @IBOutlet var leftArrow: UIImageView!
     @IBOutlet var rightArrow: UIImageView!
@@ -46,10 +48,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         let loadOverlay = LoadingView.instanceFromNib()
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
+        
+        checkInChatRoom()
     }
     
     override func viewDidAppear(animated: Bool) {
-        checkInChatRoom()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,9 +101,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     }
     
     func checkInChatRoom() {
-        let chatRoom = ChatRoom.fetchSingleRoom()
-        if (chatRoom != nil) {
-            self.showChatRoom(chatRoom)
+        let chatRoom = ChatRoom.fetchAll()
+        if (chatRoom.count > 0) {
+            self.showChat()
         }
     }
     
@@ -152,79 +156,16 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         pageContents.autoPinEdgesToSuperviewEdges()
     }
     
-    func joinNextAndAnimate() {
-        
-        var chatRoom: ChatRoom!
-        var animationComplete = false
-        
-        PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
-            chatRoom = ChatRoom.createWithMyAlias(alias)
-            Utilities.appDelegate().saveContext()
-            Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
-            Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
-            Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
-            if (animationComplete) {
-                self.showChatRoom(chatRoom)
-            }
-        }
-        
-        performJoinChatAnimation { () -> Void in
-            animationComplete = true
-            if (chatRoom != nil) {
-                self.showChatRoom(chatRoom)
-            }
-        }
-    }
-    
-    func showChatRoom(chatRoom: ChatRoom) {
-        let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        chatViewController.delegate = self
-        chatViewController.chatRoomController = ChatRoomController.newControllerWithChatRoom(chatRoom)
-        NSLog("Joining ChatRoom: " + chatRoom.objectId)
-        self.presentViewController(chatViewController, animated: true) { () -> Void in
-            self.loadingView.alpha = 0
-            self.loadingView.hidden = true
-        }
-    }
-    
-    func performJoinChatAnimation(callback: () -> Void) {
-        UIView.animateWithDuration(0.33) { () -> Void in
-            self.loadingView.alpha = 1
-            self.loadingView.hidden = false
-        }
-        
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            callback()
-        }
-    }
-    
-    
     // FrontPageViewDelegate
     
-    func joinChat(inOneOnOne: Bool) {
-        if (inOneOnOne) {
-            Answers.logCustomEventWithName("Selected On on One Chat", customAttributes: nil)
-            UIAlertView(title: "Oops", message: "One on One Chat Not Available Yet", delegate: self, cancelButtonTitle: "ok").show()
-        }
-        else {
-            let chatRoom = ChatRoom.fetchSingleRoom()
-            if (chatRoom == nil) {
-                joinNextAndAnimate()
-            }
-            else {
-                self.showChatRoom(chatRoom)
-            }
-        }
-    }
-    
-    // ChatViewContollerDelegate
-    
-    func closeChat() {
-        self.scrollToPage(self.currentPage, animated: false)
-        isAnimatingPages = false
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func showChat() {
+        let chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
+
+        addChildViewController(chatController)
+        chatContainer.addSubview(chatController.view)
+        chatController.view.autoPinEdgesToSuperviewEdges()
+        
+        chatContainer.hidden = false
     }
     
     // UIScrollViewDelegate

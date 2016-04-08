@@ -11,7 +11,7 @@ import Foundation
 protocol FrontPageViewDelegate: class {
 //    func goToNextPage()
 //    func goToPrevPage()
-    func joinChat(isOneOnOne: Bool)
+    func showChat()
     //    func animateScrollViewToRaised()
     //    func animateScrollViewToDefault()
 }

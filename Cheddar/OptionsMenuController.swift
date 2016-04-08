@@ -10,7 +10,7 @@ import Foundation
 
 protocol OptionsMenuControllerDelegate: class {
     func selectedFeedback()
-    func backTap()
+    func topLeftButtonTap()
     func shouldClose()
 }
 
@@ -25,6 +25,6 @@ class OptionsMenuController: UIViewController {
     
     @IBAction func closeChat() {
         delegate?.shouldClose()
-        delegate?.backTap()
+        delegate?.topLeftButtonTap()
     }
 }
