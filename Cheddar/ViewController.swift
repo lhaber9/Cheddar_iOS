@@ -10,9 +10,10 @@ import UIKit
 import Parse
 import Crashlytics
 
-class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate {
+class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate, ChatDelegate {
     
     @IBOutlet var loadingView: UIView!
+    var loadOverlay: LoadingView!
     
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
@@ -45,7 +46,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         backgroundCheeseInitalLeftConstraint = backgroundCheeseLeftConstraint.constant
         backgroundCheeseInitalRightConstraint = backgroundCheeseRightConstraint.constant
         
-        let loadOverlay = LoadingView.instanceFromNib()
+        loadOverlay = LoadingView.instanceFromNib()
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
         
@@ -161,6 +162,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     func showChat() {
         let chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
 
+        chatController.delegate = self
         addChildViewController(chatController)
         chatContainer.addSubview(chatController.view)
         chatController.view.autoPinEdgesToSuperviewEdges()
@@ -188,6 +190,23 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         backgroundCheeseRightConstraint.constant = backgroundCheeseInitalRightConstraint + paralaxOffset
         
         view.layoutIfNeeded()
+    }
+    
+    // MARK: ChatDelegate
+    
+    func showLoadingViewWithText(text: String) {
+        loadOverlay.loadingTextLabel.text = text
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.loadingView.alpha = 1
+            self.loadingView.hidden = false
+        }
+    }
+    
+    func hideLoadingView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.loadingView.alpha = 0
+            self.loadingView.hidden = true
+        }
     }
 }
 

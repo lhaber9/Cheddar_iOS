@@ -10,7 +10,7 @@ import Foundation
 
 protocol OptionsMenuControllerDelegate: class {
     func selectedFeedback()
-    func topLeftButtonTap()
+    func tryLeaveChatRoom()
     func shouldClose()
 }
 
@@ -23,8 +23,8 @@ class OptionsMenuController: UIViewController {
         delegate!.selectedFeedback()
     }
     
-    @IBAction func closeChat() {
+    @IBAction func leaveChat() {
         delegate?.shouldClose()
-        delegate?.topLeftButtonTap()
+        delegate?.tryLeaveChatRoom()
     }
 }

@@ -89,7 +89,7 @@
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URW-sS-0ok" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                                <rect key="frame" x="277" y="0.0" width="46.5" height="44"/>
+                                                <rect key="frame" x="277" y="0.0" width="47" height="44"/>
                                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -107,9 +107,8 @@
                                                     <constraint firstAttribute="width" secondItem="hgq-aB-n7D" secondAttribute="height" multiplier="1:1" id="Alg-Sj-4kd"/>
                                                     <constraint firstAttribute="width" constant="28" id="OTD-zP-A3P"/>
                                                 </constraints>
-                                                <state key="normal" image="BackArrow"/>
+                                                <state key="normal" image="Hamburger"/>
                                                 <state key="disabled" image="nil"/>
-                                                <state key="highlighted" image="BackArrow"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="OTD-zP-A3P"/>
@@ -125,7 +124,7 @@
                                                     <constraint firstAttribute="width" secondItem="xMd-nh-B8S" secondAttribute="height" multiplier="1:1" id="YmG-64-VJO"/>
                                                     <constraint firstAttribute="width" constant="28" id="hrC-mh-ps5"/>
                                                 </constraints>
-                                                <state key="normal" image="ThreeDots"/>
+                                                <state key="normal" image="NewChat"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
                                                         <exclude reference="hrC-mh-ps5"/>
@@ -144,16 +143,16 @@
                                                 </constraints>
                                             </view>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
-                                                <rect key="frame" x="242" y="24.5" width="116.5" height="14.5"/>
+                                                <rect key="frame" x="242" y="25" width="116" height="14"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="RKD-M3-7k4">
-                                                        <rect key="frame" x="102" y="0.0" width="14.5" height="14.5"/>
+                                                        <rect key="frame" x="102" y="0.0" width="14" height="14"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="RKD-M3-7k4" secondAttribute="height" multiplier="1:1" id="PZ7-1C-wAx"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="102" height="14.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="102" height="14"/>
                                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
@@ -247,10 +246,8 @@
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
-                        <outlet property="backButton" destination="hgq-aB-n7D" id="1Ug-Qv-kNM"/>
                         <outlet property="chatContainer" destination="2f5-Ph-ovY" id="PWR-Ij-agP"/>
                         <outlet property="chatContainerFocusConstraint" destination="dFQ-eE-ReG" id="fgL-fb-XnV"/>
-                        <outlet property="dotsButton" destination="xMd-nh-B8S" id="Ssb-R4-11Y"/>
                         <outlet property="listContainer" destination="gEP-7m-Aee" id="eY9-zC-ITm"/>
                         <outlet property="listContainerFocusConstraint" destination="wMk-zW-7SS" id="yz1-er-7Kb"/>
                         <outlet property="numActiveLabel" destination="sgo-9N-mFA" id="4xB-KX-3Wj"/>
@@ -259,6 +256,8 @@
                         <outlet property="sublabelView" destination="Tpy-Q0-pOI" id="0dH-2g-2CL"/>
                         <outlet property="topBar" destination="S0n-QJ-7hi" id="OAq-Bk-GTK"/>
                         <outlet property="topBarDivider" destination="jR5-QC-Y9S" id="hMo-Rr-R8t"/>
+                        <outlet property="topLeftButton" destination="hgq-aB-n7D" id="G82-IS-qta"/>
+                        <outlet property="topRightButton" destination="xMd-nh-B8S" id="zW5-2h-xK8"/>
                         <outlet property="view" destination="OfZ-78-o3c" id="i6o-2N-FVm"/>
                         <segue destination="TEa-lr-2I2" kind="popoverPresentation" identifier="popoverMenuSegue" popoverAnchorView="3V6-B7-nbv" id="aUd-gP-HUT">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
@@ -292,7 +291,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="closeChat" destination="TEa-lr-2I2" eventType="touchUpInside" id="Jgw-Q7-zYw"/>
+                                    <action selector="leaveChat" destination="TEa-lr-2I2" eventType="touchUpInside" id="Xsu-ez-AAP"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Clj-Gk-LJs" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
@@ -359,14 +358,14 @@
                                     <action selector="sendFeedback" destination="Oi3-lK-e2A" eventType="touchUpInside" id="01T-bb-jEZ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwW-cO-8D1" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwW-cO-8D1" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="36" width="253" height="53"/>
                                 <string key="text">Your feedback will be used to make Cheddar even better! (please identify yourself, in the alpha version we would like to follow up on all feedback)</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nwX-me-1Gd">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nwX-me-1Gd">
                                 <rect key="frame" x="15" y="97" width="255" height="92"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -381,7 +380,7 @@
                                 </variation>
                             </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a1-Gb-2ew" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="8" width="119" height="20.5"/>
+                                <rect key="frame" x="16" y="8" width="119" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -511,7 +510,7 @@
                                         </connections>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Say cheese!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OsZ-Nd-tzJ">
-                                        <rect key="frame" x="17" y="18.5" width="88" height="19.5"/>
+                                        <rect key="frame" x="17" y="19" width="88" height="19"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -630,11 +629,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackArrow" width="200" height="200"/>
+        <image name="Hamburger" width="200" height="200"/>
+        <image name="NewChat" width="200" height="200"/>
         <image name="RightArrow" width="200" height="200"/>
         <image name="SendDisabled" width="200" height="200"/>
         <image name="SendEnabled" width="200" height="200"/>
-        <image name="ThreeDots" width="200" height="200"/>
         <image name="nil" width="540" height="960"/>
     </resources>
 </document>

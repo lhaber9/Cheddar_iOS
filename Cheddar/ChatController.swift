@@ -10,7 +10,14 @@ import Foundation
 import Parse
 import Crashlytics
 
+protocol ChatDelegate: class {
+    func showLoadingViewWithText(text:String)
+    func hideLoadingView()
+}
+
 class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate {
+    
+    weak var delegate: ChatDelegate!
     
     @IBOutlet var listContainer: UIView!
     @IBOutlet var chatContainer: UIView!
@@ -23,14 +30,17 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     @IBOutlet var topBar: UIView!
     @IBOutlet var topBarDivider: UIView!
-    @IBOutlet var backButton: UIButton!
-    @IBOutlet var dotsButton: UIButton!
+    
+    @IBOutlet var topLeftButton: UIButton!
+    @IBOutlet var topRightButton: UIButton!
+    
     @IBOutlet var sublabelView: UIView!
     @IBOutlet var numActiveLabel: UILabel!
     
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
     
+    var confirmLeaveAlertView = UIAlertView()
     var chatAdded = false
     
     override func viewDidLoad() {
@@ -46,6 +56,8 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         
         chatViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
+        
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
     }
     
     func isShowingList() -> Bool {
@@ -82,25 +94,13 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     }
     
     func performJoinChatAnimation(callback: () -> Void) {
-//        UIView.animateWithDuration(0.333) { () -> Void in
-//            self.loadingView.alpha = 1
-//            self.loadingView.hidden = false
-//        }
+        delegate.showLoadingViewWithText("Joining Chat...")
         
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             callback()
         }
     }
-    
-//    func clearChatView() {
-//        if (chatViewController != nil) {
-//            chatViewController.view.removeFromSuperview()
-//            chatViewController.removeFromParentViewController()
-//            chatViewController.chatRoomController = nil
-//            chatViewController = nil
-//        }
-//    }
     
     // MARK: Button Actions
     
@@ -124,41 +124,45 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     // MARK: ChatViewControllerDelegate
     
     func showList() {
-        UIView.animateWithDuration(0.333) { 
+        UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
             self.listContainerFocusConstraint.priority = 900
             self.sublabelShowingConstraint.priority = 200
             self.sublabelHiddenConstraint.priority = 900
             self.sublabelView.alpha = 0
-            self.view.layoutIfNeeded()
-            
             if let selectedRow = self.chatListController.tableView.indexPathForSelectedRow {
                 self.chatListController.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
             }
-            
             self.chatViewController.deselectTextView()
+            self.topLeftButton.imageView?.image = UIImage(named: "Hamburger")
+            self.topRightButton.imageView?.image = UIImage(named: "NewChat")
+            self.view.layoutIfNeeded()
+        }) { (error: Bool) in
+            self.chatListController.reloadRooms()
         }
     }
     
+    func tryLeaveChatRoom(alias: Alias) {
+        confirmLeaveAlertView.show()
+    }
+    
     func leaveChatRoom(alias: Alias) {
-        //        UIView.animateWithDuration(0.33) { () -> Void in
-        //            self.loadingView.alpha = 1
-        //        }
+        
+        delegate.showLoadingViewWithText("Leaving Chat...")
         
         PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if (error != nil) {
-                //                UIView.animateWithDuration(0.333) { () -> Void in
-                //                    self.loadingView.alpha = 0
-                //                }
+                self.delegate.hideLoadingView()
                 return
             }
             
-            self.leaveChatRoomCallback(alias)
+            self.forceLeaveChatRoom(alias)
         }
     }
+
     
-    func leaveChatRoomCallback(alias: Alias) {
+    func forceLeaveChatRoom(alias: Alias) {
         if let chatRoom = ChatRoom.fetchById(alias.chatRoomId) {
             Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": chatRoom.objectId, "lengthOfStay":chatRoom.myAlias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
@@ -166,6 +170,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         }
         Utilities.appDelegate().unsubscribeFromPubNubChannel(alias.chatRoomId)
         Utilities.appDelegate().unsubscribeFromPubNubPushChannel(alias.chatRoomId)
+        delegate.hideLoadingView()
         showList()
     }
     
@@ -193,13 +198,17 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             chatAdded = true
         }
         
-        UIView.animateWithDuration(0.333) {
+        UIView.animateWithDuration(0.333, animations:{
             self.chatContainerFocusConstraint.priority = 900
             self.listContainerFocusConstraint.priority = 200
             self.sublabelShowingConstraint.priority = 900
             self.sublabelHiddenConstraint.priority = 200
             self.sublabelView.alpha = 1
+            self.topLeftButton.imageView?.image = UIImage(named: "BackArrow")
+            self.topRightButton.imageView?.image = UIImage(named: "ThreeDots")
             self.view.layoutIfNeeded()
+        }) { (error: Bool) in
+            self.delegate.hideLoadingView()
         }
     }
     
@@ -212,6 +221,10 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     func shouldClose() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func tryLeaveChatRoom() {
+        tryLeaveChatRoom(currentAlias())
     }
     
     // MARK: FeedbackViewDelegate
@@ -236,5 +249,19 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             popoverViewController.popoverPresentationController!.delegate = self
         }
         
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        // Force popover style
+        return UIModalPresentationStyle.None
+    }
+    
+    // MARK: UIAlertViewDelegate
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
+            leaveChatRoom(currentAlias())
+        }
     }
 }

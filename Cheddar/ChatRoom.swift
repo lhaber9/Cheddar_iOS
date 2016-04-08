@@ -283,7 +283,8 @@ class ChatRoom: NSManagedObject {
                 if (events.count < count) {
                     self.allMessagesLoaded = true
                 }
-                else if (events.count == 1 && self.allActions.count == 1) {
+                
+                if (events.count == 1 && self.allActions.count == 1) {
                     return
                 }
                 

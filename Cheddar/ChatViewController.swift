@@ -13,11 +13,12 @@ import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
     func didUpdateActiveAliases(aliases:[Alias])
-    func leaveChatRoom(alias: Alias)
+    func forceLeaveChatRoom(alias: Alias)
+    func tryLeaveChatRoom(alias: Alias)
     func showList()
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, ChatRoomDelegate, UIAlertViewDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, ChatRoomDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -35,8 +36,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet var sendButton: UIButton!
     
     @IBOutlet var tableView: UITableView!
-    
-//    var confirmLeaveAlertView = UIAlertView()
     
     var messageVerticalBuffer:CGFloat = 15
     var chatBarHeightDefault:CGFloat = 56
@@ -120,8 +119,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         textView.delegate = self
         
-//        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
-        
         initStyle()
         
         setupObervers()
@@ -133,11 +130,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         chatRoom.delegate = self
         chatRoom.reloadActiveAlaises()
         
-        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": chatRoom.myAlias.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
+        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": myAlias().objectId]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if ((error) != nil) {
                 NSLog("%@",error!);
-                //                self.leaveChatRoomCallback()
+                    self.delegate?.forceLeaveChatRoom(self.myAlias())
                 return;
             }
             
@@ -378,11 +375,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: - UIPopoverPresentationControllerDelegate method
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        
-        // Force popover style
-        return UIModalPresentationStyle.None
-    }
+    
 
     func didUpdateEvents() {
         reloadTable()
@@ -408,11 +401,5 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         reloadTable()
         if (isNearBottom(ChatCell.singleRowHeight * 3)) { scrollToBottom(true) }
         else if(!isMine) { isUnreadMessages = true }
-    }
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-//        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
-//            delegate?.leaveChatRoom(chatRoomController.myAlias)
-//        }
     }
 }
