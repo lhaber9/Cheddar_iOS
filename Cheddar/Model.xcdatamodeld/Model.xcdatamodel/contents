@@ -22,6 +22,8 @@
         <relationship name="chatRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ChatRoom" inverseName="chatEvents" inverseEntity="ChatRoom" syncable="YES"/>
     </entity>
     <entity name="ChatRoom" representedClassName=".ChatRoom" syncable="YES">
+        <attribute name="allMessagesLoaded" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="currentStartToken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="maxOccupants" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="numOccupants" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,6 +34,6 @@
     <elements>
         <element name="Alias" positionX="-54" positionY="27" width="128" height="165"/>
         <element name="ChatEvent" positionX="-54" positionY="63" width="128" height="180"/>
-        <element name="ChatRoom" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="ChatRoom" positionX="-63" positionY="-18" width="128" height="165"/>
     </elements>
 </model>

@@ -13,6 +13,7 @@ import Crashlytics
 
 protocol ChatRoomDelegate: class {
     func didUpdateEvents()
+    func didAddEvent(isMine: Bool)
     func didUpdateActiveAliases(aliases:NSSet)
     func didReloadEvents(events:NSOrderedSet, firstLoad: Bool)
 }
@@ -40,16 +41,17 @@ class ChatRoom: NSManagedObject {
     @NSManaged func addActiveAliases(value:Set<Alias>)
     @NSManaged func removeActiveAliases(value:Set<Alias>)
     
-//    var allActions: [AnyObject] = []
-//    var activeAliases: [Alias]!
-    
-    var currentStartToken: String! = nil
+    @NSManaged var currentStartToken: String!
+    @NSManaged var allMessagesLoaded: NSNumber!
+
     var loadMessageCallInFlight = false
-    var allMessagesLoaded = false
     
     class func newChatRoom() -> ChatRoom {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
-        return ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
+        let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
+        chatRoom.currentStartToken = nil
+        chatRoom.allMessagesLoaded = false
+        return chatRoom
     }
     
     class func createChatRoom(jsonMessage: [NSObject: AnyObject]) -> ChatRoom {
@@ -118,20 +120,6 @@ class ChatRoom: NSManagedObject {
             return nil
         }
     }
-
-//    class func addMessagesToRoom(newMessages: [Message], chatRoomId:String) {
-//        let chatRoom = fetchById(chatRoomId)
-//        chatRoom.addMessages(newMessages)
-//    }
-//
-//    func addMessages(newMessages: [Message]) {
-//        messages.appendContentsOf(newMessages)
-//    }
-//    
-//    class func addPresenceEventsToRoom(newEvents: [Presence], chatRoomId:String) {
-//        let chatRoom = fetchById(chatRoomId)
-//        chatRoom.addPresenceEvents(newEvents)
-//    }
     
     func reload() {
         reloadActiveAlaises()
@@ -141,37 +129,6 @@ class ChatRoom: NSManagedObject {
     func allChatEvents() -> [ChatEvent] {
         return chatEvents.array as! [ChatEvent]
     }
-    
-//    func messageError(message: ChatEvent) {
-//        if (isMyMessage(message)) {
-//            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
-//            (allActions[messageIndex] as! Message).status = MessageStatus.Error
-//            Utilities.appDelegate().saveContext()
-//            self.delegate?.didUpdateEvents()
-//        }
-//    }
-    
-//    func receiveMessage(message: Message) {
-//        if (isMyMessage(message)) {
-//            Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId":objectId, "lifeCycle":"DELIVERED"])
-//            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
-//            (allActions[messageIndex] as! Message).status = MessageStatus.Success
-//            Utilities.appDelegate().saveContext()
-//            self.delegate?.didUpdateEvents()
-//            return;
-//        }
-//        
-//        addMessage(message)
-//    }
-//    
-//    func receivePresenceEvent(presenceEvent: Presence) {
-//        //        if (isMyPresenceEvent(presenceEvent)) {
-//        //            return;
-//        //        }
-//        
-//        reloadActiveAlaises()
-//        addPresenceEvent(presenceEvent)
-//    }
     
     func reloadActiveAlaises() {
         PFCloud.callFunctionInBackground("getActiveAliases", withParameters: ["chatRoomId":myAlias.chatRoomId]) { (objects: AnyObject?, error: NSError?) -> Void in
@@ -190,7 +147,7 @@ class ChatRoom: NSManagedObject {
             self.activeAliases = activeAliases
             Utilities.appDelegate().saveContext()
             
-            self.delegate?.didUpdateActiveAliases(self.activeAliases)
+            self.delegate?.didUpdateActiveAliases(activeAliases)
         }
     }
     
@@ -207,30 +164,8 @@ class ChatRoom: NSManagedObject {
         let events = chatEvents as! NSMutableOrderedSet
         events.addObject(event)
         Utilities.appDelegate().saveContext()
-        self.delegate?.didUpdateEvents()
+        self.delegate?.didAddEvent(isMyChatEvent(event))
     }
-    
-//    func addMessage(message: ChatEvent) {
-//        allActions.append(message)
-//        Utilities.appDelegate().saveContext()
-//        self.delegate?.didAddMessage(isMyMessage(message))
-//    }
-//    
-//    func addPresenceEvent(newEvent: Presence) {
-//        allActions.append(newEvent)
-//        Utilities.appDelegate().saveContext()
-//        self.delegate?.didAddPresence(isMyPresenceEvent(newEvent))
-//    }
-    
-    //    func addMessages(newMessages: [Message]) {
-    //        allActions.appendContentsOf(newMessages as [AnyObject])
-    //        self.delegate?.didAddEvents(newMessages, reloaded: false, firstLoad: false)
-    //    }
-    //
-    //    func addPresenceEvents(newEvents: [Presence]) {
-    //        allActions.appendContentsOf(newEvents  as [AnyObject])
-    //        self.delegate?.didAddEvents(newEvents, reloaded: false, firstLoad: false)
-    //    }
     
     func findFirstMessageBeforeIndex(index: Int) -> ChatEvent! {
         var position = index - 1
@@ -261,26 +196,6 @@ class ChatRoom: NSManagedObject {
         }
         return message as! ChatEvent
     }
-//
-//    func findMyFirstSentMessageIndexMatchingText(text: String) -> Int! {
-//        if (allActions.count == 0) {
-//            return nil
-//        }
-//        
-//        var position = 0
-//        
-//        while (position < allActions.count) {
-//            
-//            if let thisMessage = allActions[position] as? Message {
-//                if (isMyMessage(thisMessage) && thisMessage.body == text && thisMessage.status == MessageStatus.Sent) {
-//                    return position
-//                }
-//            }
-//            
-//            position += 1
-//        }
-//        return nil
-//    }
     
     func reloadMessages() {
         if (currentStartToken == nil || loadMessageCallInFlight) {
@@ -321,7 +236,7 @@ class ChatRoom: NSManagedObject {
     
     func loadNextPageMessages() {
         
-        if (allMessagesLoaded || loadMessageCallInFlight) {
+        if (allMessagesLoaded.boolValue || loadMessageCallInFlight) {
             return
         }
         

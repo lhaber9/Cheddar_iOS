@@ -384,6 +384,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         reloadTable()
     }
     
+    func didAddEvent(isMine: Bool) {
+        didUpdateEvents()
+        let lastCellHeight = tableView(tableView, heightForRowAtIndexPath: NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection: 0))
+        
+        if (isNearBottom(lastCellHeight + 55)) {
+            scrollToBottom(true)
+        }
+        else if (!isMine) {
+            isUnreadMessages = true
+        }
+    }
+    
     func didUpdateActiveAliases(aliases:NSSet) {
         delegate?.didUpdateActiveAliases(aliases)
     }
