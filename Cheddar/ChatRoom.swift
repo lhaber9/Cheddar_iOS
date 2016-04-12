@@ -15,7 +15,7 @@ protocol ChatRoomDelegate: class {
     func didUpdateEvents()
     func didAddEvent(isMine: Bool)
     func didUpdateActiveAliases(aliases:NSSet)
-    func didReloadEvents(events:NSOrderedSet, firstLoad: Bool)
+    func didReloadEvents(eventCount:Int, firstLoad: Bool)
 }
 
 class ChatRoom: NSManagedObject {
@@ -27,9 +27,9 @@ class ChatRoom: NSManagedObject {
     @NSManaged var numOccupants: Int
     
     @NSManaged var myAlias: Alias!
-    @NSManaged var activeAliases: NSSet!
+    @NSManaged var activeAliases: Set<Alias>!
     
-    @NSManaged var chatEvents: NSOrderedSet!
+    @NSManaged var chatEvents: Set<ChatEvent>!
     
     @NSManaged func addChatEventsObject(value:ChatEvent)
     @NSManaged func removeChatEventsObject(value:ChatEvent)
@@ -126,8 +126,13 @@ class ChatRoom: NSManagedObject {
         reloadMessages()
     }
     
-    func allChatEvents() -> [ChatEvent] {
-        return chatEvents.array as! [ChatEvent]
+    func sortedChatEvents() -> [ChatEvent] {
+        return chatEvents.sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
+            if (event1.createdAt.compare(event2.createdAt) == NSComparisonResult.OrderedAscending){
+                return true
+            }
+            return false
+        })
     }
     
     func reloadActiveAlaises() {
@@ -138,13 +143,15 @@ class ChatRoom: NSManagedObject {
                 return
             }
             
-            let activeAliases = NSMutableSet()
+            var activeAliases = Set<Alias>()
             
             for alias in objects as! [PFObject] {
-                activeAliases.addObject(Alias.createOrUpdateAliasFromParseObject(alias, isTemporary: false))
+                activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias, isTemporary: false))
             }
             
-            self.activeAliases = activeAliases
+            self.removeActiveAliases(self.activeAliases)
+            self.addActiveAliases(activeAliases)
+            
             Utilities.appDelegate().saveContext()
             
             self.delegate?.didUpdateActiveAliases(activeAliases)
@@ -161,8 +168,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func addChatEvent(event: ChatEvent) {
-        let events = chatEvents as! NSMutableOrderedSet
-        events.addObject(event)
+        chatEvents.insert(event)
         Utilities.appDelegate().saveContext()
         self.delegate?.didAddEvent(isMyChatEvent(event))
     }
@@ -173,13 +179,13 @@ class ChatRoom: NSManagedObject {
             return nil
         }
         
-        var message = chatEvents.array[position]
+        var message = sortedChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position -= 1
             if (position < 0) { return nil }
-            message = chatEvents.array[position]
+            message = sortedChatEvents()[position]
         }
-        return message as! ChatEvent
+        return message
     }
 
     func findFirstMessageAfterIndex(index: Int) -> ChatEvent! {
@@ -188,13 +194,13 @@ class ChatRoom: NSManagedObject {
             return nil
         }
         
-        var message = chatEvents.array[position]
+        var message = sortedChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= chatEvents.count) { return nil }
-            message = chatEvents.array[position]
+            message = sortedChatEvents()[position]
         }
-        return message as! ChatEvent
+        return message
     }
     
     func reloadMessages() {
@@ -210,7 +216,7 @@ class ChatRoom: NSManagedObject {
         
         PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
 
-            let replayEvents = NSMutableOrderedSet()
+            var replayEvents = Set<ChatEvent>()
             
             if let events = object?["events"] as? [[NSObject:AnyObject]] {
 
@@ -220,11 +226,13 @@ class ChatRoom: NSManagedObject {
                     let objectDict = eventDict["object"] as! [NSObject:AnyObject]
                     
                     if (objectType == "ChatEvent") {
-                        replayEvents.addObject(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
                     }
                 }
 
-                self.chatEvents = replayEvents
+                self.removeChatEvents(self.chatEvents)
+                self.addChatEvents(replayEvents)
+                
                 Utilities.appDelegate().saveContext()
                 
                 self.delegate?.didUpdateEvents()
@@ -250,8 +258,6 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
             
-            let replayEvents = NSMutableOrderedSet()
-            
             if let startToken = object?["startTimeToken"] as? String {
                 self.currentStartToken = startToken
             }
@@ -273,7 +279,7 @@ class ChatRoom: NSManagedObject {
                     let objectDict = eventDict["object"] as! [NSObject:AnyObject]
                     
                     if (objectType == "ChatEvent") {
-                        replayEvents.addObject(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
                     }
                 }
                 
@@ -282,11 +288,9 @@ class ChatRoom: NSManagedObject {
                     isFirstLoad = true
                 }
                 
-                replayEvents.addObjectsFromArray(self.chatEvents.array)
-                self.chatEvents = replayEvents
                 Utilities.appDelegate().saveContext()
                 
-                self.delegate?.didReloadEvents(replayEvents, firstLoad: isFirstLoad)
+                self.delegate?.didReloadEvents(events.count, firstLoad: isFirstLoad)
             }
             
             self.loadMessageCallInFlight = false
@@ -294,7 +298,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
-        let event = allChatEvents()[messageIdx]
+        let event = sortedChatEvents()[messageIdx]
         if (event.type == "MESSAGE") {
             let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             if (messageBefore != nil) {
@@ -309,7 +313,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
-        let event = allChatEvents()[messageIdx]
+        let event = sortedChatEvents()[messageIdx]
         if (event.type == "MESSAGE") {
             let messageAfter = findFirstMessageAfterIndex(messageIdx)
             if (messageAfter != nil) {

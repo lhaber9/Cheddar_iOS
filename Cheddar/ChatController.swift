@@ -209,6 +209,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             self.view.layoutIfNeeded()
         }) { (error: Bool) in
             self.delegate.hideLoadingView()
+            self.chatViewController.scrollToBottom(true)
         }
     }
     

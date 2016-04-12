@@ -292,7 +292,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let event = chatRoom.allChatEvents()[indexPath.row]
+        let event = chatRoom.sortedChatEvents()[indexPath.row]
         if (event.type == "MESSAGE") {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
             cell.setMessageText(event.body, alias: event.alias, isOutbound: chatRoom.isMyChatEvent(event), showAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row), status: ChatEventStatus(rawValue:event.status)!)
@@ -308,7 +308,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let event = chatRoom.allChatEvents()[indexPath.row]
+        let event = chatRoom.sortedChatEvents()[indexPath.row]
         if (event.type == "MESSAGE") {
             
             var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
@@ -400,10 +400,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         delegate?.didUpdateActiveAliases(aliases)
     }
     
-    func didReloadEvents(events:NSOrderedSet, firstLoad: Bool) {
+    func didReloadEvents(eventCount:Int, firstLoad: Bool) {
         reloadTable()
         if (firstLoad) { scrollToBottom(true) }
-        else { scrollToEventIndex(events.count, animated: false) }
+        else { scrollToEventIndex(eventCount, animated: false) }
     }
     
 }

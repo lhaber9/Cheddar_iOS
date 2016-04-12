@@ -28,7 +28,7 @@
         <attribute name="numOccupants" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="activeAliases" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Alias" inverseName="chatRoom" inverseEntity="Alias" syncable="YES"/>
-        <relationship name="chatEvents" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ChatEvent" inverseName="chatRoom" inverseEntity="ChatEvent" syncable="YES"/>
+        <relationship name="chatEvents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ChatEvent" inverseName="chatRoom" inverseEntity="ChatEvent" syncable="YES"/>
         <relationship name="myAlias" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Alias" inverseName="chatRoom2" inverseEntity="Alias" syncable="YES"/>
     </entity>
     <elements>
