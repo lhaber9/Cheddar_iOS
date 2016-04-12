@@ -91,21 +91,21 @@ class ChatCell: UITableViewCell {
         }
     }
     
-    func setStatus(status:MessageStatus) {
-        if (status == MessageStatus.Success) {
+    func setStatus(status:ChatEventStatus) {
+        if (status == ChatEventStatus.Success) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubble
         }
-        else if (status == MessageStatus.Sent) {
+        else if (status == ChatEventStatus.Sent) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleSending
             messageBackground.alpha = 0.62
         }
-        else if (status == MessageStatus.Error) {
+        else if (status == ChatEventStatus.Error) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleFail
             errorLabel.hidden = false
         }
     }
 
-    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:MessageStatus) {
+    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:ChatEventStatus) {
         
 //        messageLabel.attributedText = ChatCell.attributedStringForText(text)
         

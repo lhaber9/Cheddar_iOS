@@ -34,10 +34,10 @@ class Message {
         }
         
         if let aliasDict = jsonMessage["alias"] as? [NSObject:AnyObject] {
-            newMessage.alias = Alias.createAliasFromJson(aliasDict, isTemporary: true)
+            newMessage.alias = Alias.createOrUpdateAliasFromJson(aliasDict, isTemporary: true)
         }
         else if let aliasObject = jsonMessage["alias"] as? PFObject {
-            newMessage.alias = Alias.createAliasFromParseObject(aliasObject, isTemporary: true)
+            newMessage.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject, isTemporary: true)
         }
         
         newMessage.status = MessageStatus.Success

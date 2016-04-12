@@ -73,7 +73,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         var animationComplete = false
         
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 5, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
+            let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject, isTemporary: false)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
@@ -174,7 +174,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         showList()
     }
     
-    func didUpdateActiveAliases(aliases:[Alias]) {
+    func didUpdateActiveAliases(aliases:NSSet) {
         if (aliases.count == 0) {
             numActiveLabel.text = "Waiting for others..."
         }

@@ -22,7 +22,7 @@ class Presence {
             newPresenceEvent.timestamp = timestamp
         }
         if let aliasDict = jsonEvent["alias"] as? [NSObject:AnyObject] {
-            newPresenceEvent.alias = Alias.createAliasFromJson(aliasDict, isTemporary: true)
+            newPresenceEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict, isTemporary: true)
         }
         if let action = jsonEvent["action"] as? String {
             newPresenceEvent.action = action
@@ -36,7 +36,7 @@ class Presence {
         
         newPresenceEvent.timestamp = timestamp
         newPresenceEvent.action = action
-        newPresenceEvent.alias = Alias.createAliasFromJson(aliasDict, isTemporary: true)
+        newPresenceEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict, isTemporary: true)
         
         return newPresenceEvent
     }

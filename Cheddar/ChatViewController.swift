@@ -12,7 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
-    func didUpdateActiveAliases(aliases:[Alias])
+    func didUpdateActiveAliases(aliases:NSSet)
     func forceLeaveChatRoom(alias: Alias)
     func tryLeaveChatRoom(alias: Alias)
     func showList()
@@ -138,7 +138,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return;
             }
             
-            self.chatRoom.loadNextPageMessages()
+            if (self.chatRoom.chatEvents.count == 0) {
+                self.chatRoom.loadNextPageMessages()
+            }
+            else {
+                self.chatRoom.reloadMessages()
+            }
+            
             self.subscribe()
         }
     }
@@ -216,7 +222,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func sendText(text: String) {
-        let message = Message.createMessage(text, alias: myAlias(), timestamp: nil, status:MessageStatus.Sent)
+        let message = ChatEvent.createEvent(text, alias: myAlias(), createdAt: NSDate(), type: "MESSAGE", status: ChatEventStatus.Sent)
         chatRoom.sendMessage(message)
         Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": chatRoom.objectId, "lifeCycle":"SENT"])
     }
@@ -240,11 +246,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func scrollToBottom(animated: Bool) {
-        if (chatRoom.allActions.count == 0) {
+        if (chatRoom.chatEvents.count == 0) {
             return;
         }
         
-        let indexPath = NSIndexPath(forRow: chatRoom.allActions.count - 1, inSection:0)
+        let indexPath = NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection:0)
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:animated)
     }
     
@@ -280,21 +286,21 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatRoom.allActions.count
+        return chatRoom.chatEvents.count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let event = chatRoom.allActions[indexPath.row]
-        if let message = event as? Message {
+        let event = chatRoom.allChatEvents()[indexPath.row]
+        if (event.type == "MESSAGE") {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body, alias: message.alias, isOutbound: chatRoom.isMyMessage(message), showAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row), status: message.status)
+            cell.setMessageText(event.body, alias: event.alias, isOutbound: chatRoom.isMyChatEvent(event), showAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row), status: ChatEventStatus(rawValue:event.status)!)
             return cell
         }
-        else if let presenceEvent = event as? Presence {
+        else if (event.type == "PRESENCE") {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action, isMine: chatRoom.isMyPresenceEvent(presenceEvent))
+            cell.setAlias(event.alias, andAction: event.body, isMine: chatRoom.isMyChatEvent(event))
             return cell
         }
         
@@ -302,25 +308,23 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let action = chatRoom.allActions[indexPath.row]
-        if let message = action as? Message {
+        let event = chatRoom.allChatEvents()[indexPath.row]
+        if (event.type == "MESSAGE") {
             
-            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
+            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
             
             let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
-            if (nextMessage?.alias.objectId != message.alias.objectId) {
+            if (nextMessage?.alias.objectId != event.alias.objectId) {
                 cellHeight += messageVerticalBuffer
             }
             
             return cellHeight
         }
-        else if let _ = action as? Presence {
+        else if (event.type == "PRESENCE") {
             return 36
         }
         return 0
     }
-    
-    
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         dragPosition = scrollView.contentOffset.y
@@ -373,33 +377,21 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true;
     }
     
-    // MARK: - UIPopoverPresentationControllerDelegate method
-    
+    // MARK: - UIPopoverPresentation
     
 
     func didUpdateEvents() {
         reloadTable()
     }
     
-    func didUpdateActiveAliases(aliases:[Alias]) {
+    func didUpdateActiveAliases(aliases:NSSet) {
         delegate?.didUpdateActiveAliases(aliases)
     }
     
-    func didReloadEvents(events:[AnyObject], firstLoad: Bool) {
+    func didReloadEvents(events:NSOrderedSet, firstLoad: Bool) {
         reloadTable()
         if (firstLoad) { scrollToBottom(true) }
         else { scrollToEventIndex(events.count, animated: false) }
     }
     
-    func didAddMessage(isMine: Bool) {
-        reloadTable()
-        if (isNearBottom(ChatCell.singleRowHeight * 3)) { scrollToBottom(true) }
-        else if(!isMine) { isUnreadMessages = true }
-    }
-    
-    func didAddPresence(isMine: Bool) {
-        reloadTable()
-        if (isNearBottom(ChatCell.singleRowHeight * 3)) { scrollToBottom(true) }
-        else if(!isMine) { isUnreadMessages = true }
-    }
 }

@@ -13,10 +13,8 @@ import Crashlytics
 
 protocol ChatRoomDelegate: class {
     func didUpdateEvents()
-    func didAddPresence(isMine: Bool)
-    func didAddMessage(isMine: Bool)
-    func didUpdateActiveAliases(aliases:[Alias])
-    func didReloadEvents(events:[AnyObject], firstLoad: Bool)
+    func didUpdateActiveAliases(aliases:NSSet)
+    func didReloadEvents(events:NSOrderedSet, firstLoad: Bool)
 }
 
 class ChatRoom: NSManagedObject {
@@ -28,9 +26,22 @@ class ChatRoom: NSManagedObject {
     @NSManaged var numOccupants: Int
     
     @NSManaged var myAlias: Alias!
+    @NSManaged var activeAliases: NSSet!
     
-    var allActions: [AnyObject] = []
-    var activeAliases: [Alias]!
+    @NSManaged var chatEvents: NSOrderedSet!
+    
+    @NSManaged func addChatEventsObject(value:ChatEvent)
+    @NSManaged func removeChatEventsObject(value:ChatEvent)
+    @NSManaged func addChatEvents(value:Set<ChatEvent>)
+    @NSManaged func removeChatEvents(value:Set<ChatEvent>)
+    
+    @NSManaged func addActiveAliasesObject(value:Alias)
+    @NSManaged func removeActiveAliasesObject(value:Alias)
+    @NSManaged func addActiveAliases(value:Set<Alias>)
+    @NSManaged func removeActiveAliases(value:Set<Alias>)
+    
+//    var allActions: [AnyObject] = []
+//    var activeAliases: [Alias]!
     
     var currentStartToken: String! = nil
     var loadMessageCallInFlight = false
@@ -98,7 +109,11 @@ class ChatRoom: NSManagedObject {
         dataFetch.predicate = NSPredicate(format: "objectId == %@", chatRoomId)
         
         do {
-            return (try moc.executeFetchRequest(dataFetch) as! [ChatRoom])[0]
+            let results = (try moc.executeFetchRequest(dataFetch) as! [ChatRoom])
+            if (results.count > 0) {
+                return results[0]
+            }
+            return nil
         } catch {
             return nil
         }
@@ -118,36 +133,45 @@ class ChatRoom: NSManagedObject {
 //        chatRoom.addPresenceEvents(newEvents)
 //    }
     
-    func messageError(message: Message) {
-        if (isMyMessage(message)) {
-            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
-            (allActions[messageIndex] as! Message).status = MessageStatus.Error
-            Utilities.appDelegate().saveContext()
-            self.delegate?.didUpdateEvents()
-        }
-    }
-    
-    func receiveMessage(message: Message) {
-        if (isMyMessage(message)) {
-            Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId":objectId, "lifeCycle":"DELIVERED"])
-            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
-            (allActions[messageIndex] as! Message).status = MessageStatus.Success
-            Utilities.appDelegate().saveContext()
-            self.delegate?.didUpdateEvents()
-            return;
-        }
-        
-        addMessage(message)
-    }
-    
-    func receivePresenceEvent(presenceEvent: Presence) {
-        //        if (isMyPresenceEvent(presenceEvent)) {
-        //            return;
-        //        }
-        
+    func reload() {
         reloadActiveAlaises()
-        addPresenceEvent(presenceEvent)
+        reloadMessages()
     }
+    
+    func allChatEvents() -> [ChatEvent] {
+        return chatEvents.array as! [ChatEvent]
+    }
+    
+//    func messageError(message: ChatEvent) {
+//        if (isMyMessage(message)) {
+//            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
+//            (allActions[messageIndex] as! Message).status = MessageStatus.Error
+//            Utilities.appDelegate().saveContext()
+//            self.delegate?.didUpdateEvents()
+//        }
+//    }
+    
+//    func receiveMessage(message: Message) {
+//        if (isMyMessage(message)) {
+//            Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId":objectId, "lifeCycle":"DELIVERED"])
+//            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
+//            (allActions[messageIndex] as! Message).status = MessageStatus.Success
+//            Utilities.appDelegate().saveContext()
+//            self.delegate?.didUpdateEvents()
+//            return;
+//        }
+//        
+//        addMessage(message)
+//    }
+//    
+//    func receivePresenceEvent(presenceEvent: Presence) {
+//        //        if (isMyPresenceEvent(presenceEvent)) {
+//        //            return;
+//        //        }
+//        
+//        reloadActiveAlaises()
+//        addPresenceEvent(presenceEvent)
+//    }
     
     func reloadActiveAlaises() {
         PFCloud.callFunctionInBackground("getActiveAliases", withParameters: ["chatRoomId":myAlias.chatRoomId]) { (objects: AnyObject?, error: NSError?) -> Void in
@@ -157,42 +181,46 @@ class ChatRoom: NSManagedObject {
                 return
             }
             
-            self.activeAliases = []
+            let activeAliases = NSMutableSet()
             
             for alias in objects as! [PFObject] {
-                self.activeAliases.append(Alias.createAliasFromParseObject(alias, isTemporary: true))
+                activeAliases.addObject(Alias.createOrUpdateAliasFromParseObject(alias, isTemporary: false))
             }
             
+            self.activeAliases = activeAliases
             Utilities.appDelegate().saveContext()
             
             self.delegate?.didUpdateActiveAliases(self.activeAliases)
         }
     }
     
-    func isMyMessage(message: Message) -> Bool {
-        return (message.alias.objectId == myAlias.objectId)
+    func isMyChatEvent(event: ChatEvent) -> Bool {
+        return (event.alias.objectId == myAlias.objectId)
     }
     
-    func isMyPresenceEvent(presenceEvent: Presence) -> Bool {
-        return (presenceEvent.alias.objectId == myAlias.objectId)
-    }
-    
-    func sendMessage(message: Message) {
-        addMessage(message)
+    func sendMessage(message: ChatEvent) {
+        addChatEvent(message)
         Utilities.appDelegate().sendMessage(message)
     }
     
-    func addMessage(message: Message) {
-        allActions.append(message)
+    func addChatEvent(event: ChatEvent) {
+        let events = chatEvents as! NSMutableOrderedSet
+        events.addObject(event)
         Utilities.appDelegate().saveContext()
-        self.delegate?.didAddMessage(isMyMessage(message))
+        self.delegate?.didUpdateEvents()
     }
     
-    func addPresenceEvent(newEvent: Presence) {
-        allActions.append(newEvent)
-        Utilities.appDelegate().saveContext()
-        self.delegate?.didAddPresence(isMyPresenceEvent(newEvent))
-    }
+//    func addMessage(message: ChatEvent) {
+//        allActions.append(message)
+//        Utilities.appDelegate().saveContext()
+//        self.delegate?.didAddMessage(isMyMessage(message))
+//    }
+//    
+//    func addPresenceEvent(newEvent: Presence) {
+//        allActions.append(newEvent)
+//        Utilities.appDelegate().saveContext()
+//        self.delegate?.didAddPresence(isMyPresenceEvent(newEvent))
+//    }
     
     //    func addMessages(newMessages: [Message]) {
     //        allActions.appendContentsOf(newMessages as [AnyObject])
@@ -204,58 +232,93 @@ class ChatRoom: NSManagedObject {
     //        self.delegate?.didAddEvents(newEvents, reloaded: false, firstLoad: false)
     //    }
     
-    func findFirstMessageBeforeIndex(index: Int) -> Message! {
+    func findFirstMessageBeforeIndex(index: Int) -> ChatEvent! {
         var position = index - 1
         if (position < 0) {
             return nil
         }
         
-        var message = allActions[position]
-        while (!message.isKindOfClass(Message)) {
+        var message = chatEvents.array[position]
+        while (message.type != ChatEventType.Message.rawValue) {
             position -= 1
             if (position < 0) { return nil }
-            message = allActions[position]
+            message = chatEvents.array[position]
         }
-        return message as! Message
+        return message as! ChatEvent
     }
-    
-    func findFirstMessageAfterIndex(index: Int) -> Message! {
+
+    func findFirstMessageAfterIndex(index: Int) -> ChatEvent! {
         var position = index + 1
-        if (position >= allActions.count) {
+        if (position >= chatEvents.count) {
             return nil
         }
         
-        var message = allActions[position]
-        while (!message.isKindOfClass(Message)) {
+        var message = chatEvents.array[position]
+        while (message.type != ChatEventType.Message.rawValue) {
             position += 1
-            if (position >= allActions.count) { return nil }
-            message = allActions[position]
+            if (position >= chatEvents.count) { return nil }
+            message = chatEvents.array[position]
         }
-        return message as! Message
+        return message as! ChatEvent
     }
+//
+//    func findMyFirstSentMessageIndexMatchingText(text: String) -> Int! {
+//        if (allActions.count == 0) {
+//            return nil
+//        }
+//        
+//        var position = 0
+//        
+//        while (position < allActions.count) {
+//            
+//            if let thisMessage = allActions[position] as? Message {
+//                if (isMyMessage(thisMessage) && thisMessage.body == text && thisMessage.status == MessageStatus.Sent) {
+//                    return position
+//                }
+//            }
+//            
+//            position += 1
+//        }
+//        return nil
+//    }
     
-    func findMyFirstSentMessageIndexMatchingText(text: String) -> Int! {
-        if (allActions.count == 0) {
-            return nil
+    func reloadMessages() {
+        if (currentStartToken == nil || loadMessageCallInFlight) {
+            return
         }
         
-        var position = 0
+        loadMessageCallInFlight = true
         
-        while (position < allActions.count) {
+        let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
+                                            "subkey":EnvironmentConstants.pubNubSubscribeKey,
+                                            "endTimeToken" : currentStartToken]
+        
+        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
+
+            let replayEvents = NSMutableOrderedSet()
             
-            if let thisMessage = allActions[position] as? Message {
-                if (isMyMessage(thisMessage) && thisMessage.body == text && thisMessage.status == MessageStatus.Sent) {
-                    return position
+            if let events = object?["events"] as? [[NSObject:AnyObject]] {
+
+                for eventDict in events {
+                    
+                    let objectType = eventDict["objectType"] as! String
+                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                    
+                    if (objectType == "ChatEvent") {
+                        replayEvents.addObject(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                    }
                 }
+
+                self.chatEvents = replayEvents
+                Utilities.appDelegate().saveContext()
+                
+                self.delegate?.didUpdateEvents()
             }
             
-            position += 1
+            self.loadMessageCallInFlight = false
         }
-        return nil
     }
     
-    
-    // Returns number of messages loaded
     func loadNextPageMessages() {
         
         if (allMessagesLoaded || loadMessageCallInFlight) {
@@ -272,7 +335,7 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
             
-            var replayEvents = [AnyObject]()
+            let replayEvents = NSMutableOrderedSet()
             
             if let startToken = object?["startTimeToken"] as? String {
                 self.currentStartToken = startToken
@@ -284,7 +347,8 @@ class ChatRoom: NSManagedObject {
                     self.allMessagesLoaded = true
                 }
                 
-                if (events.count == 1 && self.allActions.count == 1) {
+                if (events.count == 1 && self.chatEvents.count == 1) {
+                    self.loadMessageCallInFlight = false
                     return
                 }
                 
@@ -293,20 +357,18 @@ class ChatRoom: NSManagedObject {
                     let objectType = eventDict["objectType"] as! String
                     let objectDict = eventDict["object"] as! [NSObject:AnyObject]
                     
-                    if (objectType == "messageEvent") {
-                        replayEvents.append(Message.createMessage(objectDict))
-                    }
-                    else if (objectType == "presenceEvent") {
-                        replayEvents.append(Presence.createPresenceEvent(objectDict))
+                    if (objectType == "ChatEvent") {
+                        replayEvents.addObject(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
                     }
                 }
                 
                 var isFirstLoad = false
-                if (self.allActions.count == 0) {
+                if (self.chatEvents.count == 0) {
                     isFirstLoad = true
                 }
                 
-                self.allActions = replayEvents + self.allActions
+                replayEvents.addObjectsFromArray(self.chatEvents.array)
+                self.chatEvents = replayEvents
                 Utilities.appDelegate().saveContext()
                 
                 self.delegate?.didReloadEvents(replayEvents, firstLoad: isFirstLoad)
@@ -317,33 +379,33 @@ class ChatRoom: NSManagedObject {
     }
     
     func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
-        if let thisMessage = allActions[messageIdx] as? Message {
+        let event = allChatEvents()[messageIdx]
+        if (event.type == "MESSAGE") {
             let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             if (messageBefore != nil) {
-                return messageBefore.alias.objectId != thisMessage.alias.objectId
+                return messageBefore.alias.objectId != event.alias.objectId
             }
             else {
                 return true
             }
         }
-        else {
-            return false
-        }
+        
+        return false
     }
     
     func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
-        if let thisMessage = allActions[messageIdx] as? Message {
+        let event = allChatEvents()[messageIdx]
+        if (event.type == "MESSAGE") {
             let messageAfter = findFirstMessageAfterIndex(messageIdx)
             if (messageAfter != nil) {
-                return messageAfter.alias.objectId != thisMessage.alias.objectId
+                return messageAfter.alias.objectId != event.alias.objectId
             }
             else {
                 return true
             }
         }
-        else {
-            return false
-        }
+        
+        return false
     }
     
 }

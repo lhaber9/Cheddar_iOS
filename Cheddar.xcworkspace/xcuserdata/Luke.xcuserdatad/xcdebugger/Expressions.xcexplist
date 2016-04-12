@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "ChatRoom.loadNextPageMessages() -&gt; ():ChatRoom.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "loadMessageCallInFlight">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "AppDelegate.client(PubNub!, didReceiveMessage : PNMessageResult!) -&gt; ():AppDelegate.swift">
          <PersistentStrings>
             <PersistentString

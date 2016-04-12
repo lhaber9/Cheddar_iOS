@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
-    var messagesToSend: [Message] = []
+    var messagesToSend: [ChatEvent] = []
     var sendingMessages: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -43,7 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         Fabric.with([Crashlytics.self])
         
         initializeUser()
-        checkUpdate()
+        if ( isUpdate() ) {
+            //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
+        }
+       
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -88,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         }
     }
     
-    func checkUpdate() {
+    func isUpdate() -> Bool {
         let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
         var isUpdated = false
         
@@ -106,12 +109,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             defaults.synchronize()
         }
         
-        if (isUpdated) {
-            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
-        }
+        return isUpdated
     }
     
-    func sendMessage(message: Message) {
+    func sendMessage(message: ChatEvent) {
         messagesToSend.append(message)
         if (!sendingMessages) {
             sendingMessages = true
@@ -127,15 +128,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         let message = messagesToSend.first!
         
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey,"messageId":message.messageId]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if ((error) != nil) {
                 NSLog("%@",error!);
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
-                let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
-                chatRoom.messageError(message)
+                message.status = ChatEventStatus.Error.rawValue
+            }
+            else {
+                message.objectId = object!.objectId
             }
             
+            self.saveContext()
             self.messagesToSend.removeAtIndex(0)
             self.pushPubNubMessages()
         }
@@ -203,18 +207,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
         let objectType = jsonMessage["objectType"] as! String
-        let objectDict = jsonMessage["object"] as! [NSObject:AnyObject]
+        let objectDict = jsonMessage["object"] as! [String:AnyObject]
         
-        if (objectType == "messageEvent") {
-            let message = Message.createMessage(objectDict)
-            if let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId) {
-                chatRoom.receiveMessage(message)
+        if (objectType == "ChatEvent") {
+            var isNew = true
+            
+            if (objectDict["type"] as! String == ChatEventType.Message.rawValue) {
+                if (ChatEvent.fetchByChatEventId(objectDict["messageId"] as! String) != nil) {
+                    isNew = false
+                }
             }
-        }
-        else if (objectType == "presenceEvent") {
-            let presenceEvent = Presence.createPresenceEvent(objectDict)
-            if let chatRoom = ChatRoom.fetchById(presenceEvent.alias.chatRoomId) {
-                chatRoom.receivePresenceEvent(presenceEvent)
+            
+            let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict)
+            chatEvent.status = ChatEventStatus.Success.rawValue
+            
+            if let chatRoom = ChatRoom.fetchById(chatEvent.alias.chatRoomId) {
+                if (isNew) {
+                    chatRoom.addChatEvent(chatEvent)
+                }
+                if (chatEvent.type == "PRESENCE") {
+                    chatRoom.reloadActiveAlaises()
+                }
+                chatRoom.delegate?.didUpdateEvents()
             }
         }
         
@@ -271,7 +285,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Model.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
+                            NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: mOptions)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

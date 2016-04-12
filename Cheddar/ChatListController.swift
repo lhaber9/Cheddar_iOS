@@ -28,6 +28,11 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func reloadRooms() {
+        // reload from server set here
+        refreshRooms() // on callback
+    }
+    
+    func refreshRooms() {
         chatRooms = ChatRoom.fetchAll()
         tableView.reloadData()
     }
@@ -48,7 +53,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
+        return 100
     }
     
     func closeChat() {
