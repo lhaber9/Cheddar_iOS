@@ -58,6 +58,8 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         chatViewController.delegate = self
         
         confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        
+        Utilities.appDelegate().setUserOnboarded()
     }
     
     func isShowingList() -> Bool {

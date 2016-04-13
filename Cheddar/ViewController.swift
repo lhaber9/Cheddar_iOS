@@ -50,7 +50,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
         
-        checkInChatRoom()
+        if (Utilities.appDelegate().userDidOnboard()) {
+            showChat()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -98,13 +100,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
                 self.leftArrow.alpha = 0
                 self.rightArrow.alpha = 0
             }
-        }
-    }
-    
-    func checkInChatRoom() {
-        let chatRoom = ChatRoom.fetchAll()
-        if (chatRoom.count > 0) {
-            self.showChat()
         }
     }
     

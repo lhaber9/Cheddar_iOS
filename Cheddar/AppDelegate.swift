@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
+    var userDidOnboardFieldName = "cheddarUserHasOnboarded"
     var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
@@ -46,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         if ( isUpdate() ) {
             //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
         }
-       
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -76,6 +76,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         return true
     }
     
+    func userDidOnboard() -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let didOnboard = defaults.boolForKey(userDidOnboardFieldName)
+        if (didOnboard) {
+            return true
+        }
+        return false
+    }
+    
+    func setUserOnboarded() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue(true, forKey: self.userDidOnboardFieldName)
+        defaults.synchronize()
+    }
+    
     func initializeUser() {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let userId = defaults.stringForKey(userIdFieldName) {
@@ -87,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             let user = object as! PFUser
             User.theUser.objectId = user.objectId
             defaults.setValue(user.objectId, forKey: self.userIdFieldName)
+            defaults.setValue(false, forKey: self.userDidOnboardFieldName)
             defaults.synchronize()
         }
     }
