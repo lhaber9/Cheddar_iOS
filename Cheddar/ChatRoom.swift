@@ -149,7 +149,9 @@ class ChatRoom: NSManagedObject {
                 activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias, isTemporary: false))
             }
             
-            self.removeActiveAliases(self.activeAliases)
+            if (self.activeAliases != nil) {
+                 self.removeActiveAliases(self.activeAliases)
+            }
             self.addActiveAliases(activeAliases)
             
             Utilities.appDelegate().saveContext()
@@ -230,7 +232,9 @@ class ChatRoom: NSManagedObject {
                     }
                 }
 
-                self.removeChatEvents(self.chatEvents)
+                if (self.chatEvents != nil) {
+                    self.removeChatEvents(self.chatEvents)
+                }
                 self.addChatEvents(replayEvents)
                 
                 Utilities.appDelegate().saveContext()
