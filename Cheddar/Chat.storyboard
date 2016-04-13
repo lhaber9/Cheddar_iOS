@@ -88,7 +88,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C5W-TQ-141">
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URW-sS-0ok" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="URW-sS-0ok" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                                 <rect key="frame" x="277" y="0.0" width="47" height="44"/>
                                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -142,16 +142,16 @@
                                                     <constraint firstAttribute="height" constant="1" id="ddo-Io-21x"/>
                                                 </constraints>
                                             </view>
-                                            <view alpha="0.0" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
+                                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
                                                 <rect key="frame" x="242" y="25" width="116" height="14"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="RKD-M3-7k4">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="RKD-M3-7k4">
                                                         <rect key="frame" x="102" y="0.0" width="14" height="14"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="RKD-M3-7k4" secondAttribute="height" multiplier="1:1" id="PZ7-1C-wAx"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
                                                         <rect key="frame" x="0.0" y="0.0" width="102" height="14"/>
                                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -219,19 +219,31 @@
                                 <rect key="frame" x="600" y="66" width="600" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WT0-J8-dY6">
+                                <rect key="frame" x="0.0" y="-75" width="600" height="75"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="cd3-XI-F8J"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="S0n-QJ-7hi" secondAttribute="trailing" id="6JT-ag-JWz"/>
+                            <constraint firstItem="WT0-J8-dY6" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" id="88B-JP-T9s"/>
                             <constraint firstAttribute="trailing" secondItem="gEP-7m-Aee" secondAttribute="trailing" id="ABc-5a-vGt"/>
+                            <constraint firstAttribute="trailing" secondItem="WT0-J8-dY6" secondAttribute="trailing" id="JqU-kl-tlh"/>
                             <constraint firstItem="EQh-wX-F12" firstAttribute="centerY" secondItem="OfZ-78-o3c" secondAttribute="centerY" id="LMU-xs-JZb"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="top" secondItem="gEP-7m-Aee" secondAttribute="top" id="TE2-FY-bF6"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="bottom" secondItem="gEP-7m-Aee" secondAttribute="bottom" id="TsD-Ri-VUQ"/>
                             <constraint firstItem="EQh-wX-F12" firstAttribute="centerX" secondItem="OfZ-78-o3c" secondAttribute="centerX" id="amW-6M-p9E"/>
+                            <constraint firstItem="WT0-J8-dY6" firstAttribute="top" secondItem="BQi-Ac-iBP" secondAttribute="bottom" priority="200" id="b4K-9j-GqL"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" priority="200" id="dFQ-eE-ReG"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="width" secondItem="gEP-7m-Aee" secondAttribute="width" id="lO3-4e-l81"/>
                             <constraint firstItem="gEP-7m-Aee" firstAttribute="top" secondItem="S0n-QJ-7hi" secondAttribute="bottom" id="n3L-vd-S2g"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="leading" secondItem="gEP-7m-Aee" secondAttribute="trailing" id="sSs-6J-Ps0"/>
+                            <constraint firstItem="WT0-J8-dY6" firstAttribute="bottom" secondItem="BQi-Ac-iBP" secondAttribute="bottom" priority="900" id="uoc-h7-9Db"/>
                             <constraint firstItem="S0n-QJ-7hi" firstAttribute="top" secondItem="BQi-Ac-iBP" secondAttribute="bottom" id="vWz-YV-htH"/>
                             <constraint firstItem="gEP-7m-Aee" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" priority="900" id="wMk-zW-7SS"/>
                             <constraint firstItem="bIS-hB-keh" firstAttribute="top" secondItem="gEP-7m-Aee" secondAttribute="bottom" id="wb0-sc-ktG"/>
@@ -250,9 +262,12 @@
                         <outlet property="chatContainerFocusConstraint" destination="dFQ-eE-ReG" id="fgL-fb-XnV"/>
                         <outlet property="listContainer" destination="gEP-7m-Aee" id="eY9-zC-ITm"/>
                         <outlet property="listContainerFocusConstraint" destination="wMk-zW-7SS" id="yz1-er-7Kb"/>
+                        <outlet property="notificationContainer" destination="WT0-J8-dY6" id="D6S-OF-GLW"/>
+                        <outlet property="notificationHiddenConstraint" destination="uoc-h7-9Db" id="cXm-wm-Fib"/>
+                        <outlet property="notificationShowingConstraint" destination="b4K-9j-GqL" id="E9e-oN-C6B"/>
                         <outlet property="numActiveLabel" destination="sgo-9N-mFA" id="4xB-KX-3Wj"/>
                         <outlet property="sublabelHiddenConstraint" destination="jsc-iB-2JO" id="G6w-UC-HX9"/>
-                        <outlet property="sublabelShowingConstraint" destination="0CH-e8-eQ4" id="aUf-6N-PkK"/>
+                        <outlet property="sublabelShowingConstraint" destination="0CH-e8-eQ4" id="48W-7w-6RT"/>
                         <outlet property="sublabelView" destination="Tpy-Q0-pOI" id="0dH-2g-2CL"/>
                         <outlet property="topBar" destination="S0n-QJ-7hi" id="OAq-Bk-GTK"/>
                         <outlet property="topBarDivider" destination="jR5-QC-Y9S" id="hMo-Rr-R8t"/>
@@ -268,8 +283,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OP5-dN-gWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="quK-G3-Bsb"/>
-                <tapGestureRecognizer id="gLK-Je-xFF"/>
             </objects>
             <point key="canvasLocation" x="309" y="1375"/>
         </scene>
@@ -626,6 +639,56 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-131" y="2699"/>
+        </scene>
+        <!--Chat Alert Controller-->
+        <scene sceneID="tVH-HU-6Br">
+            <objects>
+                <viewController storyboardIdentifier="ChatAlertController" id="tJd-UZ-AH0" customClass="ChatAlertController" customModule="Cheddar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V3k-bo-9Vf"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dqo-ES-y50"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rkg-nX-ma4">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="70"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFQ-HJ-CsM">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="70"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="VFQ-HJ-CsM" secondAttribute="trailing" id="Eyc-WA-4Jw"/>
+                            <constraint firstItem="VFQ-HJ-CsM" firstAttribute="top" secondItem="V3k-bo-9Vf" secondAttribute="bottom" id="g45-rg-KeC"/>
+                            <constraint firstItem="Dqo-ES-y50" firstAttribute="top" secondItem="VFQ-HJ-CsM" secondAttribute="bottom" id="lIB-P5-JRE"/>
+                            <constraint firstItem="VFQ-HJ-CsM" firstAttribute="leading" secondItem="Rkg-nX-ma4" secondAttribute="leading" id="sjv-Jd-AYK"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Rld-Jl-vfw" appends="YES" id="xIx-KJ-CYn"/>
+                        </connections>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="70"/>
+                    <connections>
+                        <outlet property="label" destination="VFQ-HJ-CsM" id="UlG-2i-u7f"/>
+                        <outlet property="view" destination="Rkg-nX-ma4" id="umR-NB-H7V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vNi-yB-El7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Rld-Jl-vfw">
+                    <connections>
+                        <action selector="tapped" destination="tJd-UZ-AH0" id="13Z-k4-TOR"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="309" y="760"/>
         </scene>
     </scenes>
     <resources>

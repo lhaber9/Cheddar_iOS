@@ -16,6 +16,7 @@
 		A36F3E0B1CAB857700F533FF /* CheddarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */; };
 		A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */; };
 		A36F3E0F1CAB91C800F533FF /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = A36F3E0E1CAB91C800F533FF /* loading.gif */; };
+		A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A376797D1CBE7F0D00744899 /* ChatAlertController.swift */; };
 		A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896C81C60664A002017B9 /* AppDelegate.swift */; };
 		A38896CB1C60664A002017B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896CA1C60664A002017B9 /* ViewController.swift */; };
 		A38896CE1C60664A002017B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A38896CC1C60664A002017B9 /* Main.storyboard */; };
@@ -95,6 +96,7 @@
 		A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarButton.swift; sourceTree = "<group>"; };
 		A36F3E0E1CAB91C800F533FF /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		A376797A1CBDF6E600744899 /* ModelBeta1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelBeta1.xcdatamodel; sourceTree = "<group>"; };
+		A376797D1CBE7F0D00744899 /* ChatAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAlertController.swift; sourceTree = "<group>"; };
 		A38896C51C60664A002017B9 /* Cheddar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cheddar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38896C81C60664A002017B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A38896CA1C60664A002017B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -299,6 +301,19 @@
 			name = "Front Pages";
 			sourceTree = "<group>";
 		};
+		A3A84C3D1CBE84FA00D75E5A /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				A3D822F11CB86EFE0075B314 /* ChatListCell.swift */,
+				A3D822F31CB86F120075B314 /* ChatListCell.xib */,
+				A3ECAE951C67273C003F981C /* ChatCell.swift */,
+				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
+				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
+				A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */,
+			);
+			name = TableCells;
+			sourceTree = "<group>";
+		};
 		A3C59BDD1C61BE12009B82EE /* Pure Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,12 +349,8 @@
 				A333B9D61CB6E39700E5DC25 /* ChatController.swift */,
 				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
-				A3D822F11CB86EFE0075B314 /* ChatListCell.swift */,
-				A3D822F31CB86F120075B314 /* ChatListCell.xib */,
-				A3ECAE951C67273C003F981C /* ChatCell.swift */,
-				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
-				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
-				A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */,
+				A376797D1CBE7F0D00744899 /* ChatAlertController.swift */,
+				A3A84C3D1CBE84FA00D75E5A /* TableCells */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -596,6 +607,7 @@
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
+				A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,

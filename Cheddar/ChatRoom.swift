@@ -13,7 +13,7 @@ import Crashlytics
 
 protocol ChatRoomDelegate: class {
     func didUpdateEvents(chatRoom:ChatRoom)
-    func didAddEvent(chatRoom:ChatRoom, isMine: Bool)
+    func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
 }
@@ -172,7 +172,7 @@ class ChatRoom: NSManagedObject {
     func addChatEvent(event: ChatEvent) {
         chatEvents.insert(event)
         Utilities.appDelegate().saveContext()
-        self.delegate?.didAddEvent(self, isMine: isMyChatEvent(event))
+        self.delegate?.didAddEvent(self, chatEvent: event, isMine: isMyChatEvent(event))
     }
     
     func findFirstMessageBeforeIndex(index: Int) -> ChatEvent! {

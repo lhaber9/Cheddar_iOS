@@ -15,7 +15,7 @@ protocol ChatDelegate: class {
     func hideLoadingView()
 }
 
-class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate {
+class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate, ChatAlertDelegate {
     
     weak var delegate: ChatDelegate!
     
@@ -28,6 +28,10 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     @IBOutlet var sublabelShowingConstraint: NSLayoutConstraint!
     @IBOutlet var sublabelHiddenConstraint: NSLayoutConstraint!
     
+    @IBOutlet var notificationShowingConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationHiddenConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationContainer: UIView!
+    
     @IBOutlet var topBar: UIView!
     @IBOutlet var topBarDivider: UIView!
     
@@ -39,6 +43,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
+    var chatAlertController: ChatAlertController!
     
     var confirmLeaveAlertView = UIAlertView()
     var chatAdded = false
@@ -58,6 +63,12 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         chatViewController.delegate = self
         
         confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        
+        chatAlertController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatAlertController") as! ChatAlertController
+        chatAlertController.delegate = self
+        addChildViewController(chatAlertController)
+        notificationContainer.addSubview(chatAlertController.view)
+        chatAlertController.view.autoPinEdgesToSuperviewEdges()
         
         Utilities.appDelegate().setUserOnboarded()
     }
@@ -101,6 +112,26 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             callback()
+        }
+    }
+    
+    func showNewMessageAlert(chatRoom:ChatRoom, chatEvent:ChatEvent) {
+        
+        chatAlertController.chatRoom = chatRoom
+        chatAlertController.label.text = "New Mess in ChatRoom \(chatRoom.objectId)"
+        
+        UIView.animateWithDuration(0.333) { 
+            self.notificationHiddenConstraint.priority = 200
+            self.notificationShowingConstraint.priority = 900
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideNewMessageAlert() {
+        UIView.animateWithDuration(0.333) {
+            self.notificationHiddenConstraint.priority = 900
+            self.notificationShowingConstraint.priority = 200
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -205,6 +236,8 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
+        hideNewMessageAlert()
+        
         if (!chatAdded) {
             dispatch_async(dispatch_get_main_queue(), {
                 self.addChildViewController(self.chatViewController)
@@ -292,10 +325,9 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         chatViewController.reloadTable()
     }
     
-    func didAddEvent(chatRoom:ChatRoom, isMine: Bool) {
+    func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool) {
         if (!isCurrentChatRoom(chatRoom)) {
-            NSLog("New Message")
-            
+            showNewMessageAlert(chatRoom, chatEvent: chatEvent)
             return
         }
         
