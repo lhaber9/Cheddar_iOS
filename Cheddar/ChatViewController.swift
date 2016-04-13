@@ -16,9 +16,10 @@ protocol ChatViewControllerDelegate: class {
     func forceLeaveChatRoom(alias: Alias)
     func tryLeaveChatRoom(alias: Alias)
     func showList()
+    func subscribe(chatRoom:ChatRoom)
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, ChatRoomDelegate {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -127,7 +128,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func setupChatroom() {
-        chatRoom.delegate = self
         chatRoom.reloadActiveAlaises()
         
         PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": myAlias().objectId]) { (object: AnyObject?, error: NSError?) -> Void in
@@ -145,7 +145,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.chatRoom.reloadMessages()
             }
             
-            self.subscribe()
+            self.delegate?.subscribe(self.chatRoom)
         }
     }
     
@@ -189,20 +189,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return false
     }
     
-    func subscribe() {
-        Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
-        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
-    }
-    
     func setupObervers() {
         tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.deselectTextView)))
         chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.selectTextView)))
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.subscribe()
-        }
     }
     
     @IBAction func sendPress() {
@@ -378,32 +370,5 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     // MARK: - UIPopoverPresentation
-    
-
-    func didUpdateEvents() {
-        reloadTable()
-    }
-    
-    func didAddEvent(isMine: Bool) {
-        didUpdateEvents()
-        let lastCellHeight = tableView(tableView, heightForRowAtIndexPath: NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection: 0))
-        
-        if (isNearBottom(lastCellHeight + 55)) {
-            scrollToBottom(true)
-        }
-        else if (!isMine) {
-            isUnreadMessages = true
-        }
-    }
-    
-    func didUpdateActiveAliases(aliases:NSSet) {
-        delegate?.didUpdateActiveAliases(aliases)
-    }
-    
-    func didReloadEvents(eventCount:Int, firstLoad: Bool) {
-        reloadTable()
-        if (firstLoad) { scrollToBottom(true) }
-        else { scrollToEventIndex(eventCount, animated: false) }
-    }
     
 }

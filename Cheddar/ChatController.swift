@@ -15,7 +15,7 @@ protocol ChatDelegate: class {
     func hideLoadingView()
 }
 
-class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate {
+class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate {
     
     weak var delegate: ChatDelegate!
     
@@ -123,6 +123,12 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     // MARK: ChatViewControllerDelegate
     
+    func subscribe(chatRoom:ChatRoom) {
+        Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
+        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
+        chatRoom.delegate = self
+    }
+    
     func showList() {
         UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
@@ -183,10 +189,18 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         }
     }
     
+    func isCurrentChatRoom(chatRoom: ChatRoom) -> Bool {
+        if (chatRoom.objectId == currentAlias()?.chatRoomId &&
+            !isShowingList()) {
+            return true
+        }
+        return false
+    }
+    
     // MARK: ChatListControllerDelegate
     
     func showChatRoom(chatRoom: ChatRoom) {
-        chatViewController?.chatRoom?.delegate = nil
+        chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
         if (!chatAdded) {
@@ -230,8 +244,8 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     // MARK: FeedbackViewDelegate
     
-    func currentAlias() -> Alias {
-        return chatViewController.chatRoom.myAlias
+    func currentAlias() -> Alias! {
+        return chatViewController?.chatRoom?.myAlias
     }
     
     // MARK: UIPopoverPresentationControllerDelegate
@@ -264,5 +278,51 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
             leaveChatRoom(currentAlias())
         }
+    }
+    
+    // MARK: ChatRoomDelegate
+    
+    func didUpdateEvents(chatRoom:ChatRoom) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            return
+        }
+        
+        chatViewController.reloadTable()
+    }
+    
+    func didAddEvent(chatRoom:ChatRoom, isMine: Bool) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            NSLog("New Message")
+            
+            return
+        }
+        
+        didUpdateEvents(chatRoom)
+        let lastCellHeight = chatViewController.tableView(chatViewController.tableView, heightForRowAtIndexPath: NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection: 0))
+        
+        if (chatViewController.isNearBottom(lastCellHeight + 55)) {
+            chatViewController.scrollToBottom(true)
+        }
+        else if (!isMine) {
+            chatViewController.isUnreadMessages = true
+        }
+    }
+    
+    func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            return
+        }
+        
+        didUpdateActiveAliases(aliases)
+    }
+    
+    func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            return
+        }
+        
+        chatViewController.reloadTable()
+        if (firstLoad) { chatViewController.scrollToBottom(true) }
+        else { chatViewController.scrollToEventIndex(eventCount, animated: false) }
     }
 }

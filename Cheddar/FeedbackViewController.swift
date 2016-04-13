@@ -9,7 +9,7 @@
 import Foundation
 
 protocol FeedbackViewDelegate: class {
-    func currentAlias() -> Alias
+    func currentAlias() -> Alias!
     func shouldClose()
 }
 

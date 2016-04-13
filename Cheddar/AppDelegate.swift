@@ -228,7 +228,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                 if (chatEvent.type == "PRESENCE") {
                     chatRoom.reloadActiveAlaises()
                 }
-                chatRoom.delegate?.didUpdateEvents()
+                chatRoom.delegate?.didUpdateEvents(chatRoom)
             }
         }
         

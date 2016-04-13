@@ -12,10 +12,10 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
-    func didUpdateEvents()
-    func didAddEvent(isMine: Bool)
-    func didUpdateActiveAliases(aliases:NSSet)
-    func didReloadEvents(eventCount:Int, firstLoad: Bool)
+    func didUpdateEvents(chatRoom:ChatRoom)
+    func didAddEvent(chatRoom:ChatRoom, isMine: Bool)
+    func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
+    func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
 }
 
 class ChatRoom: NSManagedObject {
@@ -154,7 +154,7 @@ class ChatRoom: NSManagedObject {
             
             Utilities.appDelegate().saveContext()
             
-            self.delegate?.didUpdateActiveAliases(activeAliases)
+            self.delegate?.didUpdateActiveAliases(self, aliases: activeAliases)
         }
     }
     
@@ -170,7 +170,7 @@ class ChatRoom: NSManagedObject {
     func addChatEvent(event: ChatEvent) {
         chatEvents.insert(event)
         Utilities.appDelegate().saveContext()
-        self.delegate?.didAddEvent(isMyChatEvent(event))
+        self.delegate?.didAddEvent(self, isMine: isMyChatEvent(event))
     }
     
     func findFirstMessageBeforeIndex(index: Int) -> ChatEvent! {
@@ -235,7 +235,7 @@ class ChatRoom: NSManagedObject {
                 
                 Utilities.appDelegate().saveContext()
                 
-                self.delegate?.didUpdateEvents()
+                self.delegate?.didUpdateEvents(self)
             }
             
             self.loadMessageCallInFlight = false
@@ -290,7 +290,7 @@ class ChatRoom: NSManagedObject {
                 
                 Utilities.appDelegate().saveContext()
                 
-                self.delegate?.didReloadEvents(events.count, firstLoad: isFirstLoad)
+                self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
             }
             
             self.loadMessageCallInFlight = false

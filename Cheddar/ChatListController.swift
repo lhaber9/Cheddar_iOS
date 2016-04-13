@@ -12,6 +12,7 @@ import Crashlytics
 
 protocol ChatListControllerDelegate: class {
     func showChatRoom(chatRoom: ChatRoom)
+    func subscribe(chatRoom:ChatRoom)
 }
 
 class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -34,6 +35,9 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     
     func refreshRooms() {
         chatRooms = ChatRoom.fetchAll()
+        for chatRoom in chatRooms {
+            delegate.subscribe(chatRoom)
+        }
         tableView.reloadData()
     }
     
