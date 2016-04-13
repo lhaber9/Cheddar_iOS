@@ -20,11 +20,9 @@ class FeedbackViewController: UIViewController {
     @IBOutlet var textView: UITextView!
     
     override func viewDidLoad() {
-        
         textView.layer.cornerRadius = 5;
         textView.layer.borderWidth = 1;
         textView.layer.borderColor = UIColor.grayColor().CGColor
-        
     }
     
     @IBAction func sendFeedback() {

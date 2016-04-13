@@ -135,9 +135,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 message.status = ChatEventStatus.Error.rawValue
             }
-            else {
-                message.objectId = object!.objectId
-            }
             
             self.saveContext()
             self.messagesToSend.removeAtIndex(0)
@@ -225,7 +222,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                 if (isNew) {
                     chatRoom.addChatEvent(chatEvent)
                 }
-                if (chatEvent.type == "PRESENCE") {
+                if (chatEvent.type == ChatEventType.Presence.rawValue) {
                     chatRoom.reloadActiveAlaises()
                 }
                 chatRoom.delegate?.didUpdateEvents(chatRoom)

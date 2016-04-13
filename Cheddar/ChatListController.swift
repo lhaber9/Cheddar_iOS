@@ -29,7 +29,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func reloadRooms() {
-        // reload from server set here
+        // TODO reload from server set here
         refreshRooms() // on callback
     }
     
@@ -40,6 +40,8 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         }
         tableView.reloadData()
     }
+    
+    // MARK: UITableViewDelegate
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatRooms.count
@@ -58,13 +60,5 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
-    }
-    
-    func closeChat() {
-        dismissViewControllerAnimated(true) {
-            if let selectedRow = self.tableView.indexPathForSelectedRow {
-                self.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
-            }
-        }
     }
 }

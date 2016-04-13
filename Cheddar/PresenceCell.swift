@@ -30,17 +30,4 @@ class PresenceCell: UITableViewCell {
         aliasLabel.text = body
         aliasLabel.textColor = ColorConstants.presenceText
     }
-    
-    func getActionString(action: String!) -> String! {
-        if (action == "join") {
-            return "JOINED"
-        }
-        else if (action == "leave") {
-            return "LEFT"
-        }
-        else {
-            return nil
-        }
-    }
-    
 }

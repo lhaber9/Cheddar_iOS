@@ -299,7 +299,7 @@ class ChatRoom: NSManagedObject {
     
     func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
         let event = sortedChatEvents()[messageIdx]
-        if (event.type == "MESSAGE") {
+        if (event.type == ChatEventType.Message.rawValue) {
             let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             if (messageBefore != nil) {
                 return messageBefore.alias.objectId != event.alias.objectId
@@ -314,7 +314,7 @@ class ChatRoom: NSManagedObject {
     
     func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
         let event = sortedChatEvents()[messageIdx]
-        if (event.type == "MESSAGE") {
+        if (event.type == ChatEventType.Message.rawValue) {
             let messageAfter = findFirstMessageAfterIndex(messageIdx)
             if (messageAfter != nil) {
                 return messageAfter.alias.objectId != event.alias.objectId

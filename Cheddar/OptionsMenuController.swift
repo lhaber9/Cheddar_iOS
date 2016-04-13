@@ -14,7 +14,6 @@ protocol OptionsMenuControllerDelegate: class {
     func shouldClose()
 }
 
-
 class OptionsMenuController: UIViewController {
     
     weak var delegate: OptionsMenuControllerDelegate?

@@ -31,11 +31,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet var chatBarTextTopConstraint: NSLayoutConstraint!
     
     @IBOutlet var sendButton: UIButton!
-    
     @IBOutlet var tableView: UITableView!
     
     var messageVerticalBuffer:CGFloat = 15
@@ -59,8 +57,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-//    var chatRoomController:ChatRoomController!
-    
     var chatRoom: ChatRoom! {
         didSet {
             reloadTable()
@@ -68,12 +64,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-//    var myAlias: Alias!
-//    var chatRoomId: String!
-    
     var numberInputTextLines = 1 {
         didSet {
-            
             var offsetFromDefault:CGFloat = 0
             
             if (numberInputTextLines == 3){
@@ -177,6 +169,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         textView.textColor = ColorConstants.textPrimary
     }
     
+    func setupObervers() {
+        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.deselectTextView)))
+        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.selectTextView)))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
     func isNearBottom(distance: CGFloat) -> Bool {
         let scrollViewHeight = tableView.frame.size.height;
         let scrollContentSizeHeight = tableView.contentSize.height;
@@ -189,13 +189,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return false
     }
     
-    func setupObervers() {
-        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.deselectTextView)))
-        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.selectTextView)))
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    func myAlias() -> Alias {
+        return chatRoom.myAlias
     }
+    
+    // MARK: Button Action
     
     @IBAction func sendPress() {
         if (!sendEnabled) {
@@ -209,12 +207,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         scrollToBottom(true)
     }
     
-    func myAlias() -> Alias {
-        return chatRoom.myAlias
+    @IBAction func scrollToBottom() {
+        scrollToBottom(true)
     }
     
+    // MARK: Actions
+    
     func sendText(text: String) {
-        let message = ChatEvent.createEvent(text, alias: myAlias(), createdAt: NSDate(), type: "MESSAGE", status: ChatEventStatus.Sent)
+        let message = ChatEvent.createEvent(text, alias: myAlias(), createdAt: NSDate(), type: ChatEventType.Message.rawValue, status: ChatEventStatus.Sent)
         chatRoom.sendMessage(message)
         Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": chatRoom.objectId, "lifeCycle":"SENT"])
     }
@@ -233,10 +233,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         textView.becomeFirstResponder()
     }
     
-    @IBAction func scrollToBottom() {
-        scrollToBottom(true)
-    }
-    
     func scrollToBottom(animated: Bool) {
         if (chatRoom.chatEvents.count == 0) {
             return;
@@ -251,7 +247,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
     }
     
-    // Keyboard Delegate Methods
+    // MARK: Keyboard Delegate Methods
     
     func keyboardWillShow(notification: NSNotification) {
         
@@ -275,7 +271,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    // TableView Delegate Methods
+    // MARK: TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatRoom.chatEvents.count
@@ -285,12 +281,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let event = chatRoom.sortedChatEvents()[indexPath.row]
-        if (event.type == "MESSAGE") {
+        if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(event.body, alias: event.alias, isOutbound: chatRoom.isMyChatEvent(event), showAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row), status: ChatEventStatus(rawValue:event.status)!)
+            let options: [String:AnyObject] = ["text": event.body,
+                                               "alias": event.alias,
+                                               "isOutbound": chatRoom.isMyChatEvent(event),
+                                               "showAliasLabel": chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
+                                               "showAliasIcon": chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
+                                               "status": event.status]
+            cell.setMessageOptions(options)
             return cell
         }
-        else if (event.type == "PRESENCE") {
+        else if (event.type == ChatEventType.Presence.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
             cell.setAlias(event.alias, andAction: event.body, isMine: chatRoom.isMyChatEvent(event))
             return cell
@@ -301,7 +303,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let event = chatRoom.sortedChatEvents()[indexPath.row]
-        if (event.type == "MESSAGE") {
+        if (event.type == ChatEventType.Message.rawValue) {
             
             var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
             
@@ -312,11 +314,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             return cellHeight
         }
-        else if (event.type == "PRESENCE") {
+        else if (event.type == ChatEventType.Presence.rawValue) {
             return 36
         }
         return 0
     }
+    
+    // MARK: Scroll View Delegate Methods
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         dragPosition = scrollView.contentOffset.y
@@ -350,6 +354,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    // MARK: TextViewDelegate
+    
     func textViewDidChange(textView: UITextView) {
         sendEnabled = (textView.text != "")
         
@@ -368,7 +374,5 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         return true;
     }
-    
-    // MARK: - UIPopoverPresentation
     
 }
