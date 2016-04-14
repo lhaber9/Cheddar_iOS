@@ -7,6 +7,11 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+        </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -227,16 +232,24 @@
                                     <constraint firstAttribute="height" constant="75" id="cd3-XI-F8J"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="max-gG-YvG">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="max-gG-YvG" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" id="2VE-SD-8s5"/>
                             <constraint firstAttribute="trailing" secondItem="S0n-QJ-7hi" secondAttribute="trailing" id="6JT-ag-JWz"/>
                             <constraint firstItem="WT0-J8-dY6" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" id="88B-JP-T9s"/>
                             <constraint firstAttribute="trailing" secondItem="gEP-7m-Aee" secondAttribute="trailing" id="ABc-5a-vGt"/>
+                            <constraint firstItem="bIS-hB-keh" firstAttribute="top" secondItem="max-gG-YvG" secondAttribute="bottom" id="GQw-gt-QdS"/>
                             <constraint firstAttribute="trailing" secondItem="WT0-J8-dY6" secondAttribute="trailing" id="JqU-kl-tlh"/>
                             <constraint firstItem="EQh-wX-F12" firstAttribute="centerY" secondItem="OfZ-78-o3c" secondAttribute="centerY" id="LMU-xs-JZb"/>
+                            <constraint firstAttribute="trailing" secondItem="max-gG-YvG" secondAttribute="trailing" id="OD2-go-5P1"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="top" secondItem="gEP-7m-Aee" secondAttribute="top" id="TE2-FY-bF6"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="bottom" secondItem="gEP-7m-Aee" secondAttribute="bottom" id="TsD-Ri-VUQ"/>
+                            <constraint firstItem="max-gG-YvG" firstAttribute="top" secondItem="BQi-Ac-iBP" secondAttribute="bottom" id="aGs-XE-6rX"/>
                             <constraint firstItem="EQh-wX-F12" firstAttribute="centerX" secondItem="OfZ-78-o3c" secondAttribute="centerX" id="amW-6M-p9E"/>
                             <constraint firstItem="WT0-J8-dY6" firstAttribute="top" secondItem="BQi-Ac-iBP" secondAttribute="bottom" priority="200" id="b4K-9j-GqL"/>
                             <constraint firstItem="2f5-Ph-ovY" firstAttribute="leading" secondItem="OfZ-78-o3c" secondAttribute="leading" priority="200" id="dFQ-eE-ReG"/>
@@ -266,6 +279,7 @@
                         <outlet property="notificationHiddenConstraint" destination="uoc-h7-9Db" id="cXm-wm-Fib"/>
                         <outlet property="notificationShowingConstraint" destination="b4K-9j-GqL" id="E9e-oN-C6B"/>
                         <outlet property="numActiveLabel" destination="sgo-9N-mFA" id="4xB-KX-3Wj"/>
+                        <outlet property="optionsOverlayContainer" destination="max-gG-YvG" id="X52-1l-kuO"/>
                         <outlet property="sublabelHiddenConstraint" destination="jsc-iB-2JO" id="G6w-UC-HX9"/>
                         <outlet property="sublabelShowingConstraint" destination="0CH-e8-eQ4" id="48W-7w-6RT"/>
                         <outlet property="sublabelView" destination="Tpy-Q0-pOI" id="0dH-2g-2CL"/>
@@ -274,9 +288,6 @@
                         <outlet property="topLeftButton" destination="hgq-aB-n7D" id="G82-IS-qta"/>
                         <outlet property="topRightButton" destination="xMd-nh-B8S" id="zW5-2h-xK8"/>
                         <outlet property="view" destination="OfZ-78-o3c" id="i6o-2N-FVm"/>
-                        <segue destination="TEa-lr-2I2" kind="popoverPresentation" identifier="popoverMenuSegue" popoverAnchorView="3V6-B7-nbv" id="aUd-gP-HUT">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES"/>
-                        </segue>
                         <segue destination="Oi3-lK-e2A" kind="popoverPresentation" identifier="popoverFeedbackSegue" popoverAnchorView="EQh-wX-F12" id="AJf-KI-AZI">
                             <popoverArrowDirection key="popoverArrowDirection"/>
                         </segue>
@@ -286,69 +297,151 @@
             </objects>
             <point key="canvasLocation" x="309" y="1375"/>
         </scene>
-        <!--Options Menu Controller-->
-        <scene sceneID="GsZ-rz-XW8">
+        <!--Options Overlay View Controller-->
+        <scene sceneID="XyB-2X-Cg9">
             <objects>
-                <viewController id="TEa-lr-2I2" customClass="OptionsMenuController" customModule="Cheddar" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OptionsOverlayViewController" id="A00-MC-8rP" customClass="OptionsOverlayViewController" customModule="Cheddar" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0Me-Gg-TNw"/>
-                        <viewControllerLayoutGuide type="bottom" id="FvF-Oo-nIH"/>
+                        <viewControllerLayoutGuide type="top" id="SvO-ad-Nfl"/>
+                        <viewControllerLayoutGuide type="bottom" id="G42-ZL-oXm"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5Xd-T8-Ox4">
-                        <rect key="frame" x="0.0" y="0.0" width="150" height="88"/>
+                    <view key="view" contentMode="scaleToFill" id="lfq-UC-aP5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Edp-WO-7E0" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="150" height="44"/>
-                                <state key="normal" title="Leave Chat">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="leaveChat" destination="TEa-lr-2I2" eventType="touchUpInside" id="Xsu-ez-AAP"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Clj-Gk-LJs" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="150" height="44"/>
+                            <view alpha="0.33000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KzI-4N-vst">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJq-kg-HXl">
+                                <rect key="frame" x="35" y="530" width="530" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSG-9U-KJH">
+                                        <rect key="frame" x="224.5" y="12.5" width="81" height="25"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="3WQ-YA-PR7"/>
+                                    <constraint firstAttribute="height" constant="50" id="A1s-MX-xN7"/>
+                                    <constraint firstItem="BSG-9U-KJH" firstAttribute="centerY" secondItem="FJq-kg-HXl" secondAttribute="centerY" id="H4P-k4-xUx"/>
+                                    <constraint firstItem="BSG-9U-KJH" firstAttribute="centerX" secondItem="FJq-kg-HXl" secondAttribute="centerX" id="Pib-5c-Mp9"/>
                                 </constraints>
-                                <state key="normal" title="Feedback">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                                 <connections>
-                                    <action selector="tappedFeedback" destination="TEa-lr-2I2" eventType="touchUpInside" id="Ro7-68-rsu"/>
+                                    <outletCollection property="gestureRecognizers" destination="ejC-oX-7Da" appends="YES" id="hVc-h9-rub"/>
                                 </connections>
-                            </button>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qxu-IQ-Snv">
+                                <rect key="frame" x="35" y="458" width="530" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEAVE GROUP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x68-DM-RgO">
+                                        <rect key="frame" x="197" y="12.5" width="136" height="25"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="x68-DM-RgO" firstAttribute="centerX" secondItem="Qxu-IQ-Snv" secondAttribute="centerX" id="jRZ-fE-vKw"/>
+                                    <constraint firstItem="x68-DM-RgO" firstAttribute="centerY" secondItem="Qxu-IQ-Snv" secondAttribute="centerY" id="tIp-zu-H8H"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="1HK-Oi-Z7X" appends="YES" id="Jpa-4d-45I"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJz-Tj-q8z">
+                                <rect key="frame" x="35" y="406" width="530" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND FEEDBACK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blh-U9-vJl">
+                                        <rect key="frame" x="183.5" y="12.5" width="163" height="25"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="blh-U9-vJl" firstAttribute="centerY" secondItem="OJz-Tj-q8z" secondAttribute="centerY" id="n1d-eH-Um9"/>
+                                    <constraint firstItem="blh-U9-vJl" firstAttribute="centerX" secondItem="OJz-Tj-q8z" secondAttribute="centerX" id="yBX-2O-Q0W"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="4pQ-7T-Crm" appends="YES" id="nLI-lg-RpR"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VIK-hF-tT4">
+                                <rect key="frame" x="0.0" y="20" width="600" height="374"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Fyt-b3-yeI" appends="YES" id="9PP-wV-abZ"/>
+                                </connections>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Clj-Gk-LJs" secondAttribute="trailing" id="1Rt-To-56U"/>
-                            <constraint firstItem="Edp-WO-7E0" firstAttribute="leading" secondItem="5Xd-T8-Ox4" secondAttribute="leading" id="7Vd-qS-59S"/>
-                            <constraint firstAttribute="trailing" secondItem="Edp-WO-7E0" secondAttribute="trailing" id="BLb-PL-VB2"/>
-                            <constraint firstItem="Edp-WO-7E0" firstAttribute="top" secondItem="Clj-Gk-LJs" secondAttribute="bottom" id="Xtd-1C-kef"/>
-                            <constraint firstItem="Edp-WO-7E0" firstAttribute="top" secondItem="0Me-Gg-TNw" secondAttribute="bottom" id="Y5f-dc-d9o"/>
-                            <constraint firstItem="Clj-Gk-LJs" firstAttribute="top" secondItem="0Me-Gg-TNw" secondAttribute="bottom" id="ifI-pb-Uh5"/>
-                            <constraint firstItem="FvF-Oo-nIH" firstAttribute="top" secondItem="Edp-WO-7E0" secondAttribute="bottom" id="lJD-Mf-1gt"/>
-                            <constraint firstItem="Clj-Gk-LJs" firstAttribute="leading" secondItem="5Xd-T8-Ox4" secondAttribute="leading" id="xjS-S0-29n"/>
+                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="top" secondItem="VIK-hF-tT4" secondAttribute="bottom" constant="12" id="1xt-Oh-gd8"/>
+                            <constraint firstItem="VIK-hF-tT4" firstAttribute="top" secondItem="SvO-ad-Nfl" secondAttribute="bottom" id="8Tu-Se-bJ7"/>
+                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" id="9xn-Q4-TD3"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="height" secondItem="FJq-kg-HXl" secondAttribute="height" id="F3i-AM-jaa"/>
+                            <constraint firstItem="KzI-4N-vst" firstAttribute="top" secondItem="SvO-ad-Nfl" secondAttribute="bottom" id="F9B-dh-051"/>
+                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="Gbn-Ir-Lat"/>
+                            <constraint firstItem="FJq-kg-HXl" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leadingMargin" constant="15" id="GgF-Pw-x8O"/>
+                            <constraint firstItem="FJq-kg-HXl" firstAttribute="top" secondItem="Qxu-IQ-Snv" secondAttribute="bottom" constant="22" id="GoE-ae-QE9"/>
+                            <constraint firstItem="VIK-hF-tT4" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="HSB-WI-SRE"/>
+                            <constraint firstAttribute="trailing" secondItem="VIK-hF-tT4" secondAttribute="trailing" id="IZA-ck-1Vu"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="VQ8-5N-jeA"/>
+                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="height" secondItem="Qxu-IQ-Snv" secondAttribute="height" id="XUt-pk-Opi"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="c8A-4d-fG8"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="bottom" constant="2" id="cIA-sS-90V"/>
+                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="FJq-kg-HXl" secondAttribute="bottom" priority="900" constant="20" id="ffG-Cu-vvq"/>
+                            <constraint firstItem="KzI-4N-vst" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="flK-XG-JM9"/>
+                            <constraint firstAttribute="trailing" secondItem="KzI-4N-vst" secondAttribute="trailing" id="jaP-Lr-er4"/>
+                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="top" priority="200" id="lt1-sC-65n"/>
+                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="rIA-IM-GaH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="FJq-kg-HXl" secondAttribute="trailing" constant="15" id="yHp-RI-8oD"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Y5f-dc-d9o"/>
-                            </mask>
-                        </variation>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="150" height="88"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="150" height="88"/>
                     <connections>
-                        <outlet property="view" destination="5Xd-T8-Ox4" id="wTh-9d-WQx"/>
+                        <outlet property="cancelLabel" destination="BSG-9U-KJH" id="oti-2x-kMj"/>
+                        <outlet property="cancelView" destination="FJq-kg-HXl" id="mAN-rj-ALn"/>
+                        <outlet property="hiddenButtonsConstraint" destination="lt1-sC-65n" id="HcJ-3H-eo5"/>
+                        <outlet property="leaveChatLabel" destination="x68-DM-RgO" id="Xjb-yx-tvr"/>
+                        <outlet property="leaveChatView" destination="Qxu-IQ-Snv" id="lHo-De-eRa"/>
+                        <outlet property="sendFeedbackLabel" destination="blh-U9-vJl" id="8qD-mn-LVa"/>
+                        <outlet property="sendFeedbackView" destination="OJz-Tj-q8z" id="Zsn-ak-Qaq"/>
+                        <outlet property="showingButtonsConstraint" destination="ffG-Cu-vvq" id="mCE-nx-bwv"/>
+                        <outlet property="view" destination="lfq-UC-aP5" id="SxV-Wl-dfC"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ldn-eP-lF8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xYx-Zz-5MJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ejC-oX-7Da">
+                    <connections>
+                        <action selector="cancelTap" destination="A00-MC-8rP" id="DJU-dP-Nu7"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="1HK-Oi-Z7X">
+                    <connections>
+                        <action selector="leaveChatTap" destination="A00-MC-8rP" id="OsG-Tt-yvu"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="4pQ-7T-Crm">
+                    <connections>
+                        <action selector="sendFeedbackTap" destination="A00-MC-8rP" id="3Nm-81-Mge"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="Fyt-b3-yeI">
+                    <connections>
+                        <action selector="shouldClose" destination="A00-MC-8rP" id="njJ-XY-1Bd"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="150" y="2020"/>
+            <point key="canvasLocation" x="1233" y="1460"/>
         </scene>
         <!--Feedback View Controller-->
         <scene sceneID="ZAT-vd-QQN">

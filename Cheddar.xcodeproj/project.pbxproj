@@ -35,7 +35,6 @@
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
 		A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C785501CACD32300AA1673 /* CheddarTextView.swift */; };
-		A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */; };
 		A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F11CB86EFE0075B314 /* ChatListCell.swift */; };
 		A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D822F31CB86F120075B314 /* ChatListCell.xib */; };
 		A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F51CBBD7A60075B314 /* ChatEvent.swift */; };
@@ -53,6 +52,8 @@
 		A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE811C66E730003F981C /* ChatViewController.swift */; };
 		A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE951C67273C003F981C /* ChatCell.swift */; };
 		A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE971C673B8C003F981C /* ChatCell.xib */; };
+		A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */; };
+		A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3701B1CC0357500BF1977 /* CheddarView.swift */; };
 		A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920571C77ECBA003E0BC3 /* StringConstants.swift */; };
 		A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920591C783BE8003E0BC3 /* ColorConstants.swift */; };
 		A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */; };
@@ -128,7 +129,6 @@
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
 		A3C785501CACD32300AA1673 /* CheddarTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextView.swift; sourceTree = "<group>"; };
-		A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsMenuController.swift; sourceTree = "<group>"; };
 		A3D822F11CB86EFE0075B314 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		A3D822F31CB86F120075B314 /* ChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
 		A3D822F51CBBD7A60075B314 /* ChatEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEvent.swift; sourceTree = "<group>"; };
@@ -146,6 +146,8 @@
 		A3ECAE811C66E730003F981C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A3ECAE951C67273C003F981C /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		A3ECAE971C673B8C003F981C /* ChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
+		A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsOverlayViewController.swift; sourceTree = "<group>"; };
+		A3F3701B1CC0357500BF1977 /* CheddarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarView.swift; sourceTree = "<group>"; };
 		A3F920571C77ECBA003E0BC3 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		A3F920591C783BE8003E0BC3 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayConstants.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				A3C785501CACD32300AA1673 /* CheddarTextView.swift */,
 				A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */,
 				A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */,
+				A3F3701B1CC0357500BF1977 /* CheddarView.swift */,
 				A300583F1CAB203B00725FC3 /* LoadingView.swift */,
 				A300583D1CAB203200725FC3 /* LoadingView.xib */,
 			);
@@ -239,7 +242,6 @@
 				A3F9205E1C783EA0003E0BC3 /* Chat */,
 				A3F920611C7AA2D2003E0BC3 /* Objects */,
 				A38896C81C60664A002017B9 /* AppDelegate.swift */,
-				A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */,
 				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
 				A38896CA1C60664A002017B9 /* ViewController.swift */,
 				A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */,
@@ -347,6 +349,7 @@
 			children = (
 				A395D7031CB57B78004D340E /* Chat.storyboard */,
 				A333B9D61CB6E39700E5DC25 /* ChatController.swift */,
+				A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */,
 				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
 				A376797D1CBE7F0D00744899 /* ChatAlertController.swift */,
@@ -605,6 +608,7 @@
 				A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */,
 				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
+				A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */,
 				A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
 				A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */,
@@ -614,10 +618,10 @@
 				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
 				A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
-				A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */,
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
+				A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */,
 				A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */,

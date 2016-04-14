@@ -15,12 +15,13 @@ protocol ChatDelegate: class {
     func hideLoadingView()
 }
 
-class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsMenuControllerDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate, ChatAlertDelegate {
+class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsOverlayViewDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate, ChatAlertDelegate {
     
     weak var delegate: ChatDelegate!
     
     @IBOutlet var listContainer: UIView!
     @IBOutlet var chatContainer: UIView!
+    @IBOutlet var optionsOverlayContainer: UIView!
     
     @IBOutlet var listContainerFocusConstraint: NSLayoutConstraint!
     @IBOutlet var chatContainerFocusConstraint: NSLayoutConstraint!
@@ -44,6 +45,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
     var chatAlertController: ChatAlertController!
+    var optionOverlayController: OptionsOverlayViewController!
     
     var confirmLeaveAlertView = UIAlertView()
     var chatAdded = false
@@ -53,22 +55,10 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         topBarDivider.backgroundColor = ColorConstants.chatNavBorder
         numActiveLabel.textColor = ColorConstants.textSecondary
         
-        chatListController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatListController") as! ChatListController
-        chatListController.delegate = self
-        addChildViewController(chatListController)
-        listContainer.addSubview(chatListController.view)
-        chatListController.view.autoPinEdgesToSuperviewEdges()
-        
-        chatViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        chatViewController.delegate = self
-        
-        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
-        
-        chatAlertController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatAlertController") as! ChatAlertController
-        chatAlertController.delegate = self
-        addChildViewController(chatAlertController)
-        notificationContainer.addSubview(chatAlertController.view)
-        chatAlertController.view.autoPinEdgesToSuperviewEdges()
+        initChatListVC()
+        initChatAlertVC()
+        initChatViewVC()
+        initOptionsOverlayVC()
         
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) in
             self.chatListController.refreshRooms()
@@ -79,6 +69,40 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     override func viewWillDisappear(animated: Bool) {
          NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+    }
+    
+    func initChatListVC() {
+        chatListController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatListController") as! ChatListController
+        chatListController.delegate = self
+        addChildViewController(chatListController)
+        listContainer.addSubview(chatListController.view)
+        chatListController.view.autoPinEdgesToSuperviewEdges()
+    }
+    
+    func initChatAlertVC() {
+        chatAlertController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatAlertController") as! ChatAlertController
+        chatAlertController.delegate = self
+        addChildViewController(chatAlertController)
+        notificationContainer.addSubview(chatAlertController.view)
+        chatAlertController.view.autoPinEdgesToSuperviewEdges()
+    }
+    
+    func initChatViewVC() {
+        chatViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+        chatViewController.delegate = self
+        
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+    }
+    
+    func initOptionsOverlayVC() {
+        optionsOverlayContainer.hidden = true
+        optionsOverlayContainer.alpha = 0
+        
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        addChildViewController(optionOverlayController)
+        optionsOverlayContainer.addSubview(optionOverlayController.view)
+        optionOverlayController.view.autoPinEdgesToSuperviewEdges()
     }
     
     func isShowingList() -> Bool {
@@ -150,7 +174,11 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
            joinNextAndAnimate()
         }
         else {
-            self.performSegueWithIdentifier("popoverMenuSegue", sender: self)
+            UIView.animateWithDuration(0.33, animations: {
+                self.optionsOverlayContainer.hidden = false
+                self.optionsOverlayContainer.alpha = 1
+                self.optionOverlayController.willShow()
+            })
         }
     }
     
@@ -270,11 +298,20 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         }
     }
     
-    // MARK: OptionsMenuControllerDelegate
+    // MARK: OptionsOverlayViewDelegate
     
     func selectedFeedback() {
         self.dismissViewControllerAnimated(true, completion: nil)
         self.performSegueWithIdentifier("popoverFeedbackSegue", sender: self)
+    }
+    
+    func shouldCloseOptions() {
+        UIView.animateWithDuration(0.33, animations: {
+            self.optionOverlayController.willHide()
+            self.optionsOverlayContainer.alpha = 0
+        }) { (completed: Bool) in
+            self.optionsOverlayContainer.hidden = true
+        }
     }
     
     func shouldClose() {
@@ -294,11 +331,9 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     // MARK: UIPopoverPresentationControllerDelegate
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "popoverMenuSegue" {
-            let popoverViewController = segue.destinationViewController as! OptionsMenuController
-            popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-            popoverViewController.popoverPresentationController!.delegate = self
+        if segue.identifier == "showOptionsView" {
+            let optionsViewController = segue.destinationViewController as! OptionsOverlayViewController
+            optionsViewController.delegate = self
         }
         if segue.identifier == "popoverFeedbackSegue" {
             let popoverViewController = segue.destinationViewController as! FeedbackViewController
