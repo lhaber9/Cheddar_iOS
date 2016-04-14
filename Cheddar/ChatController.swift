@@ -70,7 +70,15 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         notificationContainer.addSubview(chatAlertController.view)
         chatAlertController.view.autoPinEdgesToSuperviewEdges()
         
+        NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) in
+            self.chatListController.refreshRooms()
+        }
+        
         Utilities.appDelegate().setUserOnboarded()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+         NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
     }
     
     func isShowingList() -> Bool {
