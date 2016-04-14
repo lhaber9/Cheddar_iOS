@@ -20,10 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
+    var userDidOnboardFieldName = "cheddarUserHasOnboarded"
     var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
-    var messagesToSend: [Message] = []
+    var messagesToSend: [ChatEvent] = []
     var sendingMessages: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -43,7 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         Fabric.with([Crashlytics.self])
         
         initializeUser()
-        checkUpdate()
+        if ( isUpdate() ) {
+            //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
+        }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -73,6 +76,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         return true
     }
     
+    func userDidOnboard() -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let didOnboard = defaults.boolForKey(userDidOnboardFieldName)
+        if (didOnboard) {
+            return true
+        }
+        return false
+    }
+    
+    func setUserOnboarded() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue(true, forKey: self.userDidOnboardFieldName)
+        defaults.synchronize()
+    }
+    
     func initializeUser() {
         let defaults = NSUserDefaults.standardUserDefaults()
         if let userId = defaults.stringForKey(userIdFieldName) {
@@ -84,11 +102,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             let user = object as! PFUser
             User.theUser.objectId = user.objectId
             defaults.setValue(user.objectId, forKey: self.userIdFieldName)
+            defaults.setValue(false, forKey: self.userDidOnboardFieldName)
             defaults.synchronize()
         }
     }
     
-    func checkUpdate() {
+    func isUpdate() -> Bool {
         let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
         var isUpdated = false
         
@@ -106,12 +125,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             defaults.synchronize()
         }
         
-        if (isUpdated) {
-            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
-        }
+        return isUpdated
     }
     
-    func sendMessage(message: Message) {
+    func sendMessage(message: ChatEvent) {
         messagesToSend.append(message)
         if (!sendingMessages) {
             sendingMessages = true
@@ -127,14 +144,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         let message = messagesToSend.first!
         
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey,"messageId":message.messageId]) { (object: AnyObject?, error: NSError?) -> Void in
             
             if ((error) != nil) {
                 NSLog("%@",error!);
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
-                NSNotificationCenter.defaultCenter().postNotificationName("messageError", object: message)
+                message.status = ChatEventStatus.Error.rawValue
             }
             
+            self.saveContext()
             self.messagesToSend.removeAtIndex(0)
             self.pushPubNubMessages()
         }
@@ -202,14 +220,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
         let objectType = jsonMessage["objectType"] as! String
-        let objectDict = jsonMessage["object"] as! [NSObject:AnyObject]
+        let objectDict = jsonMessage["object"] as! [String:AnyObject]
         
-        if (objectType == "messageEvent") {
-            NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(objectDict))
+        if (objectType == "ChatEvent") {
+            var isNew = true
+            
+            if (objectDict["type"] as! String == ChatEventType.Message.rawValue) {
+                if (ChatEvent.fetchByChatEventId(objectDict["messageId"] as! String) != nil) {
+                    isNew = false
+                }
+            }
+            
+            let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict)
+            chatEvent.status = ChatEventStatus.Success.rawValue
+            
+            if let chatRoom = ChatRoom.fetchById(chatEvent.alias.chatRoomId) {
+                if (isNew) {
+                    chatRoom.addChatEvent(chatEvent)
+                }
+                if (chatEvent.type == ChatEventType.Presence.rawValue) {
+                    chatRoom.reloadActiveAlaises()
+                }
+                chatRoom.delegate?.didUpdateEvents(chatRoom)
+            }
         }
-        else if (objectType == "presenceEvent") {
-             NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(objectDict))
-        }
+        
+        saveContext()
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
@@ -262,7 +298,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Model.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
+                            NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: mOptions)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()

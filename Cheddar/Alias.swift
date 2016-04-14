@@ -31,17 +31,25 @@ class Alias: NSManagedObject {
         return Alias(entity: ent, insertIntoManagedObjectContext: context)
     }
     
+    class func createOrRetrieve(objectId:String, isTemporary: Bool) -> Alias! {
+        let alias = fetchById(objectId)
+        if (alias == nil) {
+            return newAlias(isTemporary)
+        }
+        return alias
+    }
+    
     class func newTempAlias() -> Alias {
         let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         return Alias(entity: ent, insertIntoManagedObjectContext: nil)
     }
     
-    class func createAliasFromJson(jsonMessage: [NSObject: AnyObject], isTemporary:Bool) -> Alias {
-        let newAlias = Alias.newAlias(isTemporary)
+    class func createOrUpdateAliasFromJson(jsonMessage: [NSObject: AnyObject], isTemporary:Bool) -> Alias {
+        let objectId = jsonMessage["objectId"] as? String
         
-        if let objectId = jsonMessage["objectId"] as? String {
-            newAlias.objectId = objectId
-        }
+        let newAlias = Alias.createOrRetrieve(objectId!, isTemporary: isTemporary)
+        newAlias.objectId = objectId
+        
         if let chatRoomId = jsonMessage["chatRoomId"] as? String {
             newAlias.chatRoomId = chatRoomId
         }
@@ -65,8 +73,8 @@ class Alias: NSManagedObject {
         return newAlias
     }
     
-    class func createAliasFromParseObject(pfObject: PFObject, isTemporary:Bool) -> Alias {
-        let newAlias = Alias.newAlias(isTemporary)
+    class func createOrUpdateAliasFromParseObject(pfObject: PFObject, isTemporary:Bool) -> Alias {
+        let newAlias = Alias.createOrRetrieve(pfObject.objectId!, isTemporary: isTemporary)
         newAlias.objectId = pfObject.objectId!
         
         if let chatRoomId = pfObject.objectForKey("chatRoomId") as? String {
@@ -85,6 +93,21 @@ class Alias: NSManagedObject {
         newAlias.joinedAt = pfObject.createdAt
         
         return newAlias
+    }
+    
+    class func fetchById(aliasId:String) -> Alias! {
+        let moc = Utilities.appDelegate().managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "Alias")
+        dataFetch.predicate = NSPredicate(format: "objectId == %@", aliasId)
+        do {
+            let results = (try moc.executeFetchRequest(dataFetch) as! [Alias])
+            if (results.count > 0) {
+                return results[0]
+            }
+            return nil
+        } catch {
+            return nil
+        }
     }
     
 //    func toJsonDict() -> [NSObject:AnyObject] {

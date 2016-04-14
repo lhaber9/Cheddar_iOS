@@ -39,7 +39,6 @@ class ChatCell: UITableViewCell {
     static var aliasLabelHeight:CGFloat = 18;
     static var singleRowHeight:CGFloat = 32;
     
-    
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
         leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
@@ -50,6 +49,27 @@ class ChatCell: UITableViewCell {
         
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
+    }
+    
+    class func labelHeightForText(text: String) -> CGFloat {
+        
+        var height = round(text.boundingRectWithSize(CGSizeMake(180, CGFloat(FLT_MAX)),
+            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
+            attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
+            context: nil).height) + verticalTextBuffer
+        
+        if (height > ChatCell.singleRowHeight) {
+            height += 4
+        }
+        return height
+    }
+    
+    class func rowHeightForText(text: String, withAliasLabel: Bool) -> CGFloat {
+        var height = labelHeightForText(text)
+        if (withAliasLabel) {
+            height += aliasLabelHeight
+        }
+        return height
     }
     
     func setShowAliasLabel(showAliasLabel: Bool) {
@@ -91,35 +111,35 @@ class ChatCell: UITableViewCell {
         }
     }
     
-    func setStatus(status:MessageStatus) {
-        if (status == MessageStatus.Success) {
+    func setStatus(status:ChatEventStatus) {
+        if (status == ChatEventStatus.Success) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubble
         }
-        else if (status == MessageStatus.Sent) {
+        else if (status == ChatEventStatus.Sent) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleSending
             messageBackground.alpha = 0.62
         }
-        else if (status == MessageStatus.Error) {
+        else if (status == ChatEventStatus.Error) {
             messageBackground.backgroundColor = ColorConstants.outboundChatBubbleFail
             errorLabel.hidden = false
         }
     }
-
-    func setMessageText(text: String, alias: Alias, isOutbound: Bool, showAliasLabel:Bool, showAliasIcon:Bool, status:MessageStatus) {
+    
+    // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
+    func setMessageOptions(options: [String:AnyObject]) {
         
-//        messageLabel.attributedText = ChatCell.attributedStringForText(text)
-        
-        messageLabel.text = text
+        messageLabel.text = options["text"] as! String
         let height = ChatCell.labelHeightForText( messageLabel.text )
         messageHeightConstraint.constant = height
         
-        if (text.characters.count == 1) {
+        if (messageLabel.text.characters.count == 1) {
             messageLabel.textAlignment = NSTextAlignment.Center
         }
         else {
             messageLabel.textAlignment = NSTextAlignment.Left
         }
         
+        let alias = options["alias"] as! Alias
         leftIconLabel.text = alias.initials()
         rightIconLabel.text = alias.initials()
         aliasLabel.text = alias.name.lowercaseString
@@ -128,13 +148,13 @@ class ChatCell: UITableViewCell {
         errorLabel.hidden = true
         messageBackground.alpha = 1
         
-        setShowAliasLabel(showAliasLabel)
-        setIsOutbound(isOutbound)
-        if (isOutbound) {
-            setStatus(status)
+        setShowAliasLabel(options["showAliasLabel"] as! Bool)
+        setIsOutbound(options["isOutbound"] as! Bool)
+        if (options["isOutbound"] as! Bool) {
+            setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
         }
         
-        if (!showAliasIcon){
+        if (!(options["showAliasIcon"] as! Bool)){
             rightIcon.hidden = true;
             leftIcon.hidden = true;
         }
@@ -142,28 +162,4 @@ class ChatCell: UITableViewCell {
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
-    class func labelHeightForText(text: String) -> CGFloat {
-        
-        var height = round(text.boundingRectWithSize(CGSizeMake(180, CGFloat(FLT_MAX)),
-            options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
-            context: nil).height) + verticalTextBuffer
-        
-        if (height > ChatCell.singleRowHeight) {
-            height += 4
-        }
-       
-        
-        return height
-    }
-    
-    class func rowHeightForText(text: String, withAliasLabel: Bool) -> CGFloat {
-        var height = labelHeightForText(text)
-        if (withAliasLabel) {
-            height += aliasLabelHeight
-        } 
-        return height
-    }
-    
 }

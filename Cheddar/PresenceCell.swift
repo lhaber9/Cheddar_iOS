@@ -12,12 +12,11 @@ class PresenceCell: UITableViewCell {
 
     @IBOutlet var aliasLabel: UILabel!
     var alias: Alias!
-    var action: String!
+    var body: String!
     
-    func setAlias(alias: Alias, andAction action: String, isMine:Bool) {
+    func setAlias(alias: Alias, andAction body: String, isMine:Bool) {
         self.alias = alias
-        self.action = action
-        let text = alias.name.uppercaseString + " HAS " + getActionString(action)
+        self.body = body
         
 //        if (isMine && action == "join") {
 //            let dayTimePeriodFormatter = NSDateFormatter()
@@ -28,20 +27,7 @@ class PresenceCell: UITableViewCell {
 //            text += " on " + dateString
 //        }
         
-        aliasLabel.text = text
+        aliasLabel.text = body
         aliasLabel.textColor = ColorConstants.presenceText
     }
-    
-    func getActionString(action: String!) -> String! {
-        if (action == "join") {
-            return "JOINED"
-        }
-        else if (action == "leave") {
-            return "LEFT"
-        }
-        else {
-            return nil
-        }
-    }
-    
 }
