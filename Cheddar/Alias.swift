@@ -17,6 +17,7 @@ class Alias: NSManagedObject {
     @NSManaged var chatRoomId: String!
     @NSManaged var name: String!
     @NSManaged var joinedAt: NSDate!
+    @NSManaged var colorId: Int
     
     var leftAt: NSDate!
     
@@ -59,6 +60,9 @@ class Alias: NSManagedObject {
         if let userId = jsonMessage["userId"] as? String {
             newAlias.userId = userId
         }
+        if let colorId = jsonMessage["colorId"] as? Int {
+            newAlias.colorId = colorId
+        }
         
         let dateFor: NSDateFormatter = NSDateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -88,6 +92,9 @@ class Alias: NSManagedObject {
         }
         if let leftAt = pfObject.objectForKey("leftAt") as? NSDate {
             newAlias.leftAt = leftAt
+        }
+        if let colorId = pfObject.objectForKey("colorId") as? Int {
+            newAlias.colorId = colorId
         }
         
         newAlias.joinedAt = pfObject.createdAt

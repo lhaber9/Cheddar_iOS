@@ -16,7 +16,6 @@ class PresenceCell: UITableViewCell {
     
     func setAlias(alias: Alias, andAction body: String, isMine:Bool) {
         self.alias = alias
-        self.body = body
         
 //        if (isMine && action == "join") {
 //            let dayTimePeriodFormatter = NSDateFormatter()

@@ -144,6 +144,7 @@ class ChatCell: UITableViewCell {
         rightIconLabel.text = alias.initials()
         aliasLabel.text = alias.name.lowercaseString
         aliasLabel.textColor = ColorConstants.aliasLabelText
+        leftIcon.backgroundColor = ColorConstants.inboundIcons[alias.colorId]
         
         errorLabel.hidden = true
         messageBackground.alpha = 1

@@ -317,8 +317,8 @@
                                 <rect key="frame" x="35" y="530" width="530" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSG-9U-KJH">
-                                        <rect key="frame" x="224.5" y="12.5" width="81" height="25"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <rect key="frame" x="226" y="12.5" width="77" height="24"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -338,8 +338,8 @@
                                 <rect key="frame" x="35" y="458" width="530" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEAVE GROUP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x68-DM-RgO">
-                                        <rect key="frame" x="197" y="12.5" width="136" height="25"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <rect key="frame" x="200" y="13" width="129.5" height="24"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -355,11 +355,11 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJz-Tj-q8z">
-                                <rect key="frame" x="35" y="406" width="530" height="50"/>
+                                <rect key="frame" x="35" y="404" width="530" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND FEEDBACK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blh-U9-vJl">
-                                        <rect key="frame" x="183.5" y="12.5" width="163" height="25"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="21"/>
+                                        <rect key="frame" x="188" y="13" width="154.5" height="24"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -375,7 +375,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VIK-hF-tT4">
-                                <rect key="frame" x="0.0" y="20" width="600" height="374"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="372"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -392,30 +392,42 @@
                             <constraint firstItem="KzI-4N-vst" firstAttribute="top" secondItem="SvO-ad-Nfl" secondAttribute="bottom" id="F9B-dh-051"/>
                             <constraint firstItem="OJz-Tj-q8z" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="Gbn-Ir-Lat"/>
                             <constraint firstItem="FJq-kg-HXl" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leadingMargin" constant="15" id="GgF-Pw-x8O"/>
-                            <constraint firstItem="FJq-kg-HXl" firstAttribute="top" secondItem="Qxu-IQ-Snv" secondAttribute="bottom" constant="22" id="GoE-ae-QE9"/>
                             <constraint firstItem="VIK-hF-tT4" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="HSB-WI-SRE"/>
                             <constraint firstAttribute="trailing" secondItem="VIK-hF-tT4" secondAttribute="trailing" id="IZA-ck-1Vu"/>
                             <constraint firstItem="Qxu-IQ-Snv" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="VQ8-5N-jeA"/>
                             <constraint firstItem="OJz-Tj-q8z" firstAttribute="height" secondItem="Qxu-IQ-Snv" secondAttribute="height" id="XUt-pk-Opi"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="100" constant="54" id="bP4-IE-8P0"/>
                             <constraint firstItem="Qxu-IQ-Snv" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="c8A-4d-fG8"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="bottom" constant="2" id="cIA-sS-90V"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="bottom" constant="4" id="cIA-sS-90V"/>
+                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="bottom" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="900" constant="-92" id="cZ1-lL-67K"/>
                             <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="FJq-kg-HXl" secondAttribute="bottom" priority="900" constant="20" id="ffG-Cu-vvq"/>
                             <constraint firstItem="KzI-4N-vst" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="flK-XG-JM9"/>
                             <constraint firstAttribute="trailing" secondItem="KzI-4N-vst" secondAttribute="trailing" id="jaP-Lr-er4"/>
+                            <constraint firstItem="FJq-kg-HXl" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="200" constant="135" id="k60-ED-LIj"/>
                             <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="top" priority="200" id="lt1-sC-65n"/>
+                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="bottom" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="900" constant="-146" id="nX4-St-iBZ"/>
                             <constraint firstItem="OJz-Tj-q8z" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="rIA-IM-GaH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FJq-kg-HXl" secondAttribute="trailing" constant="15" id="yHp-RI-8oD"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="cIA-sS-90V"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="cancelLabel" destination="BSG-9U-KJH" id="oti-2x-kMj"/>
                         <outlet property="cancelView" destination="FJq-kg-HXl" id="mAN-rj-ALn"/>
-                        <outlet property="hiddenButtonsConstraint" destination="lt1-sC-65n" id="HcJ-3H-eo5"/>
+                        <outlet property="hiddenCancelButtonConstraint" destination="k60-ED-LIj" id="Z5u-sa-ZRe"/>
+                        <outlet property="hiddenFeedbackButtonConstraint" destination="lt1-sC-65n" id="pXE-pT-78w"/>
+                        <outlet property="hiddenLeaveButtonConstraint" destination="bP4-IE-8P0" id="yuB-Vl-vTM"/>
                         <outlet property="leaveChatLabel" destination="x68-DM-RgO" id="Xjb-yx-tvr"/>
                         <outlet property="leaveChatView" destination="Qxu-IQ-Snv" id="lHo-De-eRa"/>
                         <outlet property="sendFeedbackLabel" destination="blh-U9-vJl" id="8qD-mn-LVa"/>
                         <outlet property="sendFeedbackView" destination="OJz-Tj-q8z" id="Zsn-ak-Qaq"/>
-                        <outlet property="showingButtonsConstraint" destination="ffG-Cu-vvq" id="mCE-nx-bwv"/>
+                        <outlet property="showingCancelButtonConstraint" destination="ffG-Cu-vvq" id="eWz-ga-ZPS"/>
+                        <outlet property="showingFeedbackButtonConstraint" destination="nX4-St-iBZ" id="sVR-US-rmE"/>
+                        <outlet property="showingLeaveButtonConstraint" destination="cZ1-lL-67K" id="rwO-oB-8oi"/>
                         <outlet property="view" destination="lfq-UC-aP5" id="SxV-Wl-dfC"/>
                     </connections>
                 </viewController>
