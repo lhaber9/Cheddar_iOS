@@ -242,7 +242,6 @@
 				A3F9205E1C783EA0003E0BC3 /* Chat */,
 				A3F920611C7AA2D2003E0BC3 /* Objects */,
 				A38896C81C60664A002017B9 /* AppDelegate.swift */,
-				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
 				A38896CA1C60664A002017B9 /* ViewController.swift */,
 				A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */,
 				A38896CC1C60664A002017B9 /* Main.storyboard */,
@@ -349,10 +348,11 @@
 			children = (
 				A395D7031CB57B78004D340E /* Chat.storyboard */,
 				A333B9D61CB6E39700E5DC25 /* ChatController.swift */,
-				A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */,
 				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
 				A376797D1CBE7F0D00744899 /* ChatAlertController.swift */,
+				A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */,
+				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
 				A3A84C3D1CBE84FA00D75E5A /* TableCells */,
 			);
 			name = Chat;
@@ -788,6 +788,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -805,6 +806,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

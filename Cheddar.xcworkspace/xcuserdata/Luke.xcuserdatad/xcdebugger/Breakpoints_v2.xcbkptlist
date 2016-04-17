@@ -1132,11 +1132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "addPage(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1148,11 +1148,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "goToNextPage()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1164,11 +1164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
             landmarkName = "scrollToPage(_:animated:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1180,11 +1180,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "goToPrevPage()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1196,11 +1196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "scrollViewDidScroll(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1260,11 +1260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "goToNextPage()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1276,11 +1276,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "goToPrevPage()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1292,11 +1292,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "scrollViewDidEndScrollingAnimation(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1308,11 +1308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "scrollToPage(_:animated:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1722,7 +1722,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatListController.swift"
-            timestampString = "482209459.80253"
+            timestampString = "482599758.742874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "26"
@@ -1738,11 +1738,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "481843058.385381"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1770,11 +1770,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1786,11 +1786,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ViewController.swift"
-            timestampString = "482212340.560012"
+            timestampString = "482598849.864417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "viewDidAppear(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1834,11 +1834,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatListController.swift"
-            timestampString = "482210669.786911"
+            timestampString = "482599671.665987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2138,11 +2138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482357764.276709"
+            timestampString = "482515235.364271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "leaveChatRoom(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2154,11 +2154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatListController.swift"
-            timestampString = "482209459.80253"
+            timestampString = "482599671.665987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2234,11 +2234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482357350.27414"
+            timestampString = "482514641.240973"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "isShowingList()"
             landmarkType = "5">
          </BreakpointContent>
@@ -2554,11 +2554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatListController.swift"
-            timestampString = "482210669.786911"
+            timestampString = "482599671.665987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2570,11 +2570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatListController.swift"
-            timestampString = "482210669.786911"
+            timestampString = "482599671.665987"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -2746,11 +2746,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482357764.276709"
+            timestampString = "482515235.364271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "232"
+            endingLineNumber = "232"
             landmarkName = "leaveChatRoom(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -3066,13 +3066,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482358396.842381"
+            timestampString = "482600027.367393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
-            landmarkName = "prepareForSegue(_:sender:)"
-            landmarkType = "5">
+            startingLineNumber = "358"
+            endingLineNumber = "358"
+            landmarkName = "ChatController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3098,11 +3098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482358396.842381"
+            timestampString = "482600027.367393"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "346"
-            endingLineNumber = "346"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "ChatController"
             landmarkType = "3">
          </BreakpointContent>
@@ -3226,12 +3226,236 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Cheddar/ChatController.swift"
-            timestampString = "482356683.978965"
+            timestampString = "482514641.240973"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
             landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/OptionsOverlayViewController.swift"
+            timestampString = "482514813.579387"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "willHide()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cheddar.OptionsOverlayViewController.willHide () -&gt; ()"
+                  moduleName = "Cheddar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Luke/Documents/Projects/Cheddar/Cheddar/OptionsOverlayViewController.swift"
+                  timestampString = "482514853.900448"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cheddar.OptionsOverlayViewController.(willHide () -&gt; ()).(closure #1)"
+                  moduleName = "Cheddar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Luke/Documents/Projects/Cheddar/Cheddar/OptionsOverlayViewController.swift"
+                  timestampString = "482514853.900673"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "94"
+                  endingLineNumber = "94"
+                  offsetFromSymbolStart = "21">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/OptionsOverlayViewController.swift"
+            timestampString = "482514898.523674"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "willShow()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cheddar.OptionsOverlayViewController.willShow () -&gt; ()"
+                  moduleName = "Cheddar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Luke/Documents/Projects/Cheddar/Cheddar/OptionsOverlayViewController.swift"
+                  timestampString = "482514907.050246"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Cheddar.OptionsOverlayViewController.(willShow () -&gt; ()).(closure #1)"
+                  moduleName = "Cheddar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Luke/Documents/Projects/Cheddar/Cheddar/OptionsOverlayViewController.swift"
+                  timestampString = "482514907.050456"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482514993.681273"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "topRightButtonTap()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482600027.367393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "324"
+            endingLineNumber = "324"
+            landmarkName = "shouldClose()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482600027.367393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "shouldClose()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482600027.367393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
+            landmarkName = "prepareForSegue(_:sender:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482600027.367393"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
+            landmarkName = "popoverPresentationControllerWillDismissPopover(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatListController.swift"
+            timestampString = "482599758.742874"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482599793.494113"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "showChatRoom(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Cheddar/ChatController.swift"
+            timestampString = "482599802.321587"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "showList()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

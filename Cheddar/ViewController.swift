@@ -30,6 +30,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     var backgroundCheeseInitalRightConstraint: CGFloat!
     var paralaxScaleFactor: CGFloat = 20
     
+    var chatController: ChatController!
+    
     var currentPage: Int = 0
     var pages: [UIView]!
     
@@ -62,6 +64,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func shouldAutorotate() -> Bool {
+        return chatController != nil
     }
     
     func setupPages() {
@@ -155,7 +161,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     // FrontPageViewDelegate
     
     func showChat() {
-        let chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
+        chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
 
         chatController.delegate = self
         addChildViewController(chatController)

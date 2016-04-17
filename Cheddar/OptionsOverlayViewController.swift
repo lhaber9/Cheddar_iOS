@@ -12,6 +12,7 @@ protocol OptionsOverlayViewDelegate: class {
     func selectedFeedback()
     func tryLeaveChatRoom()
     func shouldCloseOptions()
+    func shouldClose()
 }
 
 class OptionsOverlayViewController: UIViewController {
@@ -66,21 +67,21 @@ class OptionsOverlayViewController: UIViewController {
     
     func willShow() {
         dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.55, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.showingFeedbackButtonConstraint.priority = 900
                 self.hiddenFeedbackButtonConstraint.priority = 200
                 self.view.layoutIfNeeded()
             }, completion: nil)
         })
         dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.6, delay: 0.05, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.55, delay: 0.05, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.showingLeaveButtonConstraint.priority = 900
                 self.hiddenLeaveButtonConstraint.priority = 200
                 self.view.layoutIfNeeded()
             }, completion: nil)
         })
         dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.6, delay: 0.1, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(0.55, delay: 0.1, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.showingCancelButtonConstraint.priority = 900
                 self.hiddenCancelButtonConstraint.priority = 200
                 self.view.layoutIfNeeded()
@@ -105,11 +106,11 @@ class OptionsOverlayViewController: UIViewController {
     }
     
     @IBAction func sendFeedbackTap() {
-        shouldClose()
+        delegate.shouldCloseOptions()
         delegate.selectedFeedback()
     }
     
     @IBAction func shouldClose() {
-        delegate.shouldCloseOptions()
+        delegate.shouldClose()
     }
 }

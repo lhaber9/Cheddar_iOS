@@ -21,7 +21,6 @@ class ColorConstants {
     
     static var headerBorder = UIColor(hex: 0xe1e1e1)
     
-    
     static var presenceText = UIColor(hex: 0xa0a0a0)
     static var aliasLabelText = UIColor(hex: 0xa0a0a0)
     
@@ -35,6 +34,7 @@ class ColorConstants {
     static var inboundIcons = [UIColor(hex: 0xffd127),
                                UIColor(hex: 0xffba27),
                                UIColor(hex: 0xff8d27),
+                               UIColor(hex: 0xff7327),
                                UIColor(hex: 0xff7327)]
     
     

@@ -18,11 +18,18 @@ class FeedbackViewController: UIViewController {
     weak var delegate: FeedbackViewDelegate?
     
     @IBOutlet var textView: UITextView!
+    @IBOutlet var buttonView: UIView!
+    @IBOutlet var sendLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
     
     override func viewDidLoad() {
-        textView.layer.cornerRadius = 5;
-        textView.layer.borderWidth = 1;
+        textView.layer.cornerRadius = 5
+        textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.grayColor().CGColor
+        buttonView.layer.cornerRadius = 5
+        buttonView.backgroundColor = ColorConstants.chatNavBackground
+        sendLabel.textColor = ColorConstants.textPrimary
+        titleLabel.textColor = ColorConstants.colorAccent
     }
     
     @IBAction func sendFeedback() {

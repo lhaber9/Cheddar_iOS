@@ -24,8 +24,9 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     var chatRooms: [ChatRoom]!
 
     override func viewDidLoad() {
-        tableView.registerNib(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
         reloadRooms()
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        tableView.registerNib(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
     }
     
     func reloadRooms() {

@@ -21,6 +21,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     @IBOutlet var listContainer: UIView!
     @IBOutlet var chatContainer: UIView!
+    @IBOutlet var overlayContainer: UIView!
     @IBOutlet var optionsOverlayContainer: UIView!
     
     @IBOutlet var listContainerFocusConstraint: NSLayoutConstraint!
@@ -95,8 +96,8 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     }
     
     func initOptionsOverlayVC() {
-        optionsOverlayContainer.hidden = true
-        optionsOverlayContainer.alpha = 0
+        overlayContainer.hidden = true
+        overlayContainer.alpha = 0
         
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
@@ -175,9 +176,12 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         }
         else {
             UIView.animateWithDuration(0.33, animations: {
+                self.overlayContainer.hidden = false
+                self.overlayContainer.alpha = 1
                 self.optionsOverlayContainer.hidden = false
                 self.optionsOverlayContainer.alpha = 1
                 self.optionOverlayController.willShow()
+                self.view.layoutIfNeeded()
             })
         }
     }
@@ -316,6 +320,14 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     
     func shouldClose() {
         self.dismissViewControllerAnimated(true, completion: nil)
+        UIView.animateWithDuration(0.33, animations: {
+            self.optionOverlayController.willHide()
+            self.optionsOverlayContainer.alpha = 0
+            self.overlayContainer.alpha = 0
+        }) { (completed: Bool) in
+            self.overlayContainer.hidden = true
+            self.optionsOverlayContainer.hidden = true
+        }
     }
     
     func tryLeaveChatRoom() {
@@ -342,6 +354,10 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             popoverViewController.popoverPresentationController!.delegate = self
         }
         
+    }
+    
+    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+        shouldClose()
     }
     
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
