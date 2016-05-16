@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -111,7 +111,8 @@ Things might break but you knew that already ;)</string>
                 <constraint firstItem="wqM-4v-Wdd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="HjN-t8-pU0"/>
                 <constraint firstItem="wqM-4v-Wdd" firstAttribute="top" secondItem="VqU-Mu-rhO" secondAttribute="bottom" constant="32" id="Phq-y5-rzf"/>
                 <constraint firstItem="was-da-4BU" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="20" id="QWV-Eg-AVo"/>
-                <constraint firstItem="na5-Ig-Ybm" firstAttribute="top" secondItem="was-da-4BU" secondAttribute="bottom" constant="150" id="ZfD-Yv-aWt"/>
+                <constraint firstItem="na5-Ig-Ybm" firstAttribute="top" secondItem="was-da-4BU" secondAttribute="bottom" priority="200" constant="125" id="Ugw-Ac-6ZH"/>
+                <constraint firstItem="na5-Ig-Ybm" firstAttribute="top" secondItem="was-da-4BU" secondAttribute="bottom" priority="900" constant="150" id="ZfD-Yv-aWt"/>
                 <constraint firstItem="was-da-4BU" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gaA-xF-HEl"/>
                 <constraint firstItem="VqU-Mu-rhO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gw1-f0-ygD"/>
                 <constraint firstItem="na5-Ig-Ybm" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="nii-rJ-NYi"/>
@@ -122,6 +123,7 @@ Things might break but you knew that already ;)</string>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <connections>
+                <outlet property="buttonOffsetSmallConstraint" destination="Ugw-Ac-6ZH" id="Kn8-c1-TwG"/>
                 <outlet property="joinButton" destination="QvK-Dm-aVo" id="IEq-eV-aGx"/>
                 <outlet property="joinButtonView" destination="na5-Ig-Ybm" id="6Lf-0O-bwK"/>
             </connections>

@@ -13,6 +13,8 @@ class AlphaWarningView: FrontPageView {
     @IBOutlet var joinButton: CheddarButton!
     @IBOutlet var joinButtonView: UIView!
     
+    @IBOutlet var buttonOffsetSmallConstraint: NSLayoutConstraint!
+    
     class func instanceFromNib() -> AlphaWarningView {
         return UINib(nibName: "AlphaWarningView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! AlphaWarningView
     }
@@ -20,6 +22,10 @@ class AlphaWarningView: FrontPageView {
     override func awakeFromNib() {
         joinButtonView.layer.masksToBounds = false;
         setStandardShadow()
+        
+        if (Utilities.IS_IPHONE_4_OR_LESS()) {
+            buttonOffsetSmallConstraint.priority = 950
+        }
     }
     
     func setStandardShadow() {

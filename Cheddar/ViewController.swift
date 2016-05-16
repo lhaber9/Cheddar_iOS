@@ -89,7 +89,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     }
     
     func useSmallerViews() -> Bool {
-        return Utilities.IS_IPHONE_5() || Utilities.IS_IPHONE_4_OR_LESS()
+        return Utilities.IS_IPHONE_4_OR_LESS()
     }
     
     func displayArrows() {
