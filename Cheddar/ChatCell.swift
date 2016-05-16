@@ -127,40 +127,37 @@ class ChatCell: UITableViewCell {
     
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
     func setMessageOptions(options: [String:AnyObject]) {
+//        dispatch_async(dispatch_get_main_queue(), {
+                    self.messageLabel.text = options["text"] as! String
+        let height = ChatCell.labelHeightForText( self.messageLabel.text )
+        self.messageHeightConstraint.constant = height
         
-        messageLabel.text = options["text"] as! String
-        let height = ChatCell.labelHeightForText( messageLabel.text )
-        messageHeightConstraint.constant = height
-        
-        if (messageLabel.text.characters.count == 1) {
-            messageLabel.textAlignment = NSTextAlignment.Center
+        if (self.messageLabel.text.characters.count == 1) {
+            self.messageLabel.textAlignment = NSTextAlignment.Center
         }
         else {
-            messageLabel.textAlignment = NSTextAlignment.Left
+            self.messageLabel.textAlignment = NSTextAlignment.Left
         }
         
         let alias = options["alias"] as! Alias
-        leftIconLabel.text = alias.initials()
-        rightIconLabel.text = alias.initials()
-        aliasLabel.text = alias.name.lowercaseString
-        aliasLabel.textColor = ColorConstants.aliasLabelText
-        leftIcon.backgroundColor = ColorConstants.inboundIcons[alias.colorId]
+        self.leftIconLabel.text = alias.initials()
+        self.rightIconLabel.text = alias.initials()
+        self.aliasLabel.text = alias.name.lowercaseString
+        self.aliasLabel.textColor = ColorConstants.aliasLabelText
+        self.leftIcon.backgroundColor = ColorConstants.inboundIcons[Int(alias.colorId)]
         
-        errorLabel.hidden = true
-        messageBackground.alpha = 1
+        self.errorLabel.hidden = true
+        self.messageBackground.alpha = 1
         
-        setShowAliasLabel(options["showAliasLabel"] as! Bool)
-        setIsOutbound(options["isOutbound"] as! Bool)
+        self.setShowAliasLabel(options["showAliasLabel"] as! Bool)
+        self.setIsOutbound(options["isOutbound"] as! Bool)
         if (options["isOutbound"] as! Bool) {
-            setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
+            self.setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
         }
         
         if (!(options["showAliasIcon"] as! Bool)){
-            rightIcon.hidden = true;
-            leftIcon.hidden = true;
+            self.rightIcon.hidden = true;
+            self.leftIcon.hidden = true;
         }
-        
-        setNeedsLayout()
-        layoutIfNeeded()
     }
 }

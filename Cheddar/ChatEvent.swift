@@ -19,6 +19,7 @@ enum ChatEventStatus:String {
 enum ChatEventType:String {
     case Message = "MESSAGE"
     case Presence = "PRESENCE"
+    case NameChange = "CHANGE_ROOM_NAME"
 }
 
 class ChatEvent: NSManagedObject {
@@ -31,6 +32,7 @@ class ChatEvent: NSManagedObject {
     @NSManaged var createdAt: NSDate!
     @NSManaged var updatedAt: NSDate!
     @NSManaged var status: String!
+    @NSManaged var roomName: String!
     
     class func newChatEvent() -> ChatEvent {
         let ent =  NSEntityDescription.entityForName("ChatEvent", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
@@ -42,12 +44,7 @@ class ChatEvent: NSManagedObject {
     class func createOrRetrieve(objectId:String, type:ChatEventType) -> ChatEvent! {
         
         var chatEvent: ChatEvent!
-        if (type == ChatEventType.Message) {
-            chatEvent = fetchByChatEventId(objectId)
-        }
-        else if (type == ChatEventType.Presence) {
-            chatEvent = fetchById(objectId)
-        }
+        chatEvent = fetchById(objectId)
         
         if (chatEvent == nil) {
             return newChatEvent()
@@ -55,51 +52,98 @@ class ChatEvent: NSManagedObject {
         return chatEvent
     }
     
-    class func createOrUpdateEventFromServerJSON(jsonMessage: [String: AnyObject]) -> ChatEvent! {
+    class func createOrUpdateEventFromParseObject(object: PFObject) -> ChatEvent! {
         
-        var id = jsonMessage["objectId"] as! String
-        var newChatEvent: ChatEvent
+        let objectId = object.objectId
+        var chatEvent: ChatEvent!
         
-        if let type = jsonMessage["type"] as? String {
+        if let type = object.objectForKey("type") as? String {
             if (type == ChatEventType.Message.rawValue) {
-                if let messageId = jsonMessage["messageId"] as? String {
-                    id = messageId
+                if let messageId = object.objectForKey("messageId") as? String {
+                    chatEvent = ChatEvent.fetchByMessageId(messageId)
                 }
             }
-            newChatEvent = ChatEvent.createOrRetrieve(id, type: ChatEventType(rawValue:type)!)
+            
+            if (chatEvent == nil) {
+                chatEvent = ChatEvent.createOrRetrieve(objectId!, type: ChatEventType(rawValue:type)!)
+            }
         }
         else {
             return nil
         }
         
-        for (key, value) in jsonMessage {
-            if (key == "alias") {
-                if let aliasDict = value as? [String: AnyObject] {
-                    newChatEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict, isTemporary: false)
-                }
-                else if let aliasObject = value as? PFObject {
-                    newChatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject, isTemporary: false)
-                }
-            }
-            else if (key == "updatedAt" || key == "createdAt") {
-                let dateFormatter = NSDateFormatter()
-                
-                //Specify Format of String to Parse
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-                
-                //Parse into NSDate
-                let dateFromString : NSDate = dateFormatter.dateFromString(value as! String)!
-                
-                newChatEvent.setValue(dateFromString, forKey: key)
-            }
-            else {
-                newChatEvent.setValue(value, forKey: key)
-            }
+        chatEvent.objectId = object.objectForKey("objectId") as? String
+        chatEvent.messageId = object.objectForKey("messageId") as? String
+        chatEvent.body = object.objectForKey("body") as? String
+        chatEvent.type = object.objectForKey("type") as? String
+        chatEvent.roomName = object.objectForKey("roomName") as? String
+        
+        chatEvent.createdAt = object.createdAt
+        chatEvent.updatedAt = object.updatedAt
+        
+        if let aliasObject = object.objectForKey("alias") as? PFObject {
+            chatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject)
         }
         
-        newChatEvent.status = ChatEventStatus.Success.rawValue
+        chatEvent.status = ChatEventStatus.Success.rawValue
         
-        return newChatEvent
+        return chatEvent
+    }
+    
+    class func createOrUpdateEventFromServerJSON(jsonMessage: [NSObject: AnyObject]) -> ChatEvent! {
+        
+        let objectId = jsonMessage["objectId"] as! String
+        var chatEvent: ChatEvent!
+        
+        if let type = jsonMessage["type"] as? String {
+            if (type == ChatEventType.Message.rawValue) {
+                if let messageId = jsonMessage["messageId"] as? String {
+                    chatEvent = ChatEvent.fetchByMessageId(messageId)
+                }
+            }
+        
+            if (chatEvent == nil) {
+                chatEvent = ChatEvent.createOrRetrieve(objectId, type: ChatEventType(rawValue:type)!)
+            }
+        }
+        else {
+            return nil
+        }
+        
+        chatEvent.objectId = jsonMessage["objectId"] as? String
+        chatEvent.messageId = jsonMessage["messageId"] as? String
+        chatEvent.body = jsonMessage["body"] as? String
+        chatEvent.type = jsonMessage["type"] as? String
+        chatEvent.roomName = jsonMessage["roomName"] as? String
+        
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        
+        if let updatedAt = jsonMessage["updatedAt"] as? String {
+            chatEvent.updatedAt = dateFor.dateFromString(updatedAt)
+        }
+        if let createdAt = jsonMessage["createdAt"] as? String {
+            chatEvent.createdAt = dateFor.dateFromString(createdAt)
+        }
+        
+        if let aliasDict = jsonMessage["alias"] as? [String: AnyObject] {
+            chatEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict)
+        }
+        else if let aliasObject = jsonMessage["alias"] as? PFObject {
+            chatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject)
+        }
+        
+        chatEvent.status = ChatEventStatus.Success.rawValue
+        return chatEvent
+    }
+    
+    class func isNewEvent(objectId:String, messageId:String) -> Bool {
+        if (ChatEvent.fetchByMessageId(messageId) == nil &&
+            ChatEvent.fetchById(objectId) == nil) {
+            return true
+        }
+        
+        return false
     }
     
     class func fetchById(eventId:String) -> ChatEvent! {
@@ -117,10 +161,10 @@ class ChatEvent: NSManagedObject {
         }
     }
     
-    class func fetchByChatEventId(eventId:String) -> ChatEvent! {
+    class func fetchByMessageId(messageId:String) -> ChatEvent! {
         let moc = Utilities.appDelegate().managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatEvent")
-        dataFetch.predicate = NSPredicate(format: "messageId == %@", eventId)
+        dataFetch.predicate = NSPredicate(format: "messageId == %@", messageId)
         do {
             let results = (try moc.executeFetchRequest(dataFetch) as! [ChatEvent])
             if (results.count > 0) {
@@ -131,35 +175,6 @@ class ChatEvent: NSManagedObject {
             return nil
         }
     }
-    
-//    class func createEventFromParseObject(eventObject: PFObject) -> ChatEvent {
-//        let newChatEvent = ChatEvent.createOrRetrieve(eventObject.objectId!)
-//        
-//        for (key, value) in jsonMessage {
-//            if (key == "alias") {
-//                newChatEvent.alias = Alias.createAliasFromJson(value as! [NSObject : AnyObject], isTemporary: false)
-//            }
-//            else if (key == "updatedAt" || key == "createdAt") {
-//                let dateFormatter = NSDateFormatter()
-//                
-//                //Specify Format of String to Parse
-//                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-//                
-//                //Parse into NSDate
-//                let dateFromString : NSDate = dateFormatter.dateFromString(value as! String)!
-//                
-//                newChatEvent.setValue(dateFromString, forKey: key)
-//            }
-//            else {
-//                newChatEvent.setValue(value, forKey: key)
-//            }
-//        }
-//        
-//        newChatEvent.status = ChatEventStatus.Success.rawValue
-//        
-//        return newChatEvent
-//    }
-
     
     class func createEvent(body: String, alias: Alias, createdAt: NSDate!, type:String, status:ChatEventStatus!) -> ChatEvent {
         let newChatEvent = ChatEvent.newChatEvent()

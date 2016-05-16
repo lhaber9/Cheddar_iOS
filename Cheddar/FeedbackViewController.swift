@@ -9,8 +9,8 @@
 import Foundation
 
 protocol FeedbackViewDelegate: class {
-    func currentAlias() -> Alias!
-    func shouldClose()
+    func myAlias() -> Alias!
+    func shouldCloseAll()
 }
 
 class FeedbackViewController: UIViewController {
@@ -33,7 +33,7 @@ class FeedbackViewController: UIViewController {
     }
     
     @IBAction func sendFeedback() {
-        Utilities.appDelegate().sendFeedback(textView.text, alias: (delegate?.currentAlias())!)
-        delegate?.shouldClose()
+        Utilities.appDelegate().sendFeedback(textView.text, alias: (delegate?.myAlias())!)
+        delegate?.shouldCloseAll()
     }
 }

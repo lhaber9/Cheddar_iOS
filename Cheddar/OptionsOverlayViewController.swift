@@ -11,8 +11,10 @@ import Foundation
 protocol OptionsOverlayViewDelegate: class {
     func selectedFeedback()
     func tryLeaveChatRoom()
-    func shouldCloseOptions()
-    func shouldClose()
+    func willCloseOptions()
+    func shouldClosePopover()
+    func shouldCloseOverlayContents()
+    func shouldCloseOverlay()
 }
 
 class OptionsOverlayViewController: UIViewController {
@@ -106,11 +108,14 @@ class OptionsOverlayViewController: UIViewController {
     }
     
     @IBAction func sendFeedbackTap() {
-        delegate.shouldCloseOptions()
+        delegate.willCloseOptions()
+        delegate.shouldCloseOverlayContents()
         delegate.selectedFeedback()
     }
     
     @IBAction func shouldClose() {
-        delegate.shouldClose()
+        delegate.willCloseOptions()
+        delegate.shouldCloseOverlayContents()
+        delegate.shouldCloseOverlay()
     }
 }

@@ -26,7 +26,7 @@ class PresenceCell: UITableViewCell {
 //            text += " on " + dateString
 //        }
         
-        aliasLabel.text = body
+        aliasLabel.text = body.uppercaseString
         aliasLabel.textColor = ColorConstants.presenceText
     }
 }

@@ -223,25 +223,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let objectDict = jsonMessage["object"] as! [String:AnyObject]
         
         if (objectType == "ChatEvent") {
-            var isNew = true
-            
-            if (objectDict["type"] as! String == ChatEventType.Message.rawValue) {
-                if (ChatEvent.fetchByChatEventId(objectDict["messageId"] as! String) != nil) {
-                    isNew = false
-                }
-            }
-            
             let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict)
             chatEvent.status = ChatEventStatus.Success.rawValue
             
             if let chatRoom = ChatRoom.fetchById(chatEvent.alias.chatRoomId) {
-                if (isNew) {
-                    chatRoom.addChatEvent(chatEvent)
-                }
+                chatRoom.addChatEvent(chatEvent)
+                
                 if (chatEvent.type == ChatEventType.Presence.rawValue) {
                     chatRoom.reloadActiveAlaises()
                 }
-                chatRoom.delegate?.didUpdateEvents(chatRoom)
             }
         }
         

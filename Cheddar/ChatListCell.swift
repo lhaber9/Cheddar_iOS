@@ -11,5 +11,6 @@ import Foundation
 class ChatListCell: UITableViewCell {
 
     @IBOutlet var chatNameLabel: UILabel!
+    @IBOutlet var lastMessageLabel: UILabel!
     
 }
