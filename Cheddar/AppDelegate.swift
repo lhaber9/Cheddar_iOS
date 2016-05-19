@@ -14,7 +14,7 @@ import Fabric
 import Crashlytics
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
+class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UIAlertViewDelegate {
 
     var window: UIWindow?
     var pnClient: PubNub!
@@ -73,6 +73,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
+//        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+//        PFCloud.callFunctionInBackground("validateVersion", withParameters: ["version":build]) { (object: AnyObject?, error: NSError?) -> Void in
+//            
+//            if (error != nil) {
+//                return
+//            }
+//            
+//            if (object!["isValid"] == false) {
+//                 UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: nil, cancelButtonTitle: "OK").show()
+//            }
+//        }
+        
         return true
     }
     
@@ -105,6 +117,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             defaults.setValue(false, forKey: self.userDidOnboardFieldName)
             defaults.synchronize()
         }
+    }
+    
+    func reinitalizeUser() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        User.theUser.objectId = nil
+        defaults.setValue(nil, forKey: self.userIdFieldName)
+        defaults.setValue(false, forKey: self.userDidOnboardFieldName)
+        defaults.synchronize()
+        initializeUser()
     }
     
     func isUpdate() -> Bool {
@@ -150,13 +171,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
                 NSLog("%@",error!);
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 message.status = ChatEventStatus.Error.rawValue
+                self.saveContext()
+                let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
+                chatRoom.delegate?.didUpdateEvents(chatRoom)
             }
             
-            self.saveContext()
             self.messagesToSend.removeAtIndex(0)
             self.pushPubNubMessages()
         }
-        
     }
     
     func sendFeedback(text: String, alias: Alias) {
@@ -364,6 +386,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         }
         
         completionHandler()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
     }
 
 }

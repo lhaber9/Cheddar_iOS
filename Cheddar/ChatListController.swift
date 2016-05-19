@@ -11,6 +11,7 @@ import Parse
 import Crashlytics
 
 protocol ChatListControllerDelegate: class {
+    func forceCloseChat()
     func showChatRoom(chatRoom: ChatRoom)
     func subscribe(chatRoom:ChatRoom)
 }
@@ -37,7 +38,7 @@ class ChatListController : UIViewController {
             if ((error) != nil) {
                 NSLog("%@",error!)
                 //devalidate user
-                
+                self.delegate.forceCloseChat()
                 return
             }
             
@@ -105,15 +106,12 @@ class ChatListController : UIViewController {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let chatRoom = chatRooms[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("ChatListCell", forIndexPath: indexPath) as! ChatListCell
-        cell.chatNameLabel.text = chatRooms[indexPath.row].name
-        let mostRecentChat = chatRooms[indexPath.row].mostRecentChat()
-        if (mostRecentChat != nil) {
-            cell.lastMessageLabel.text = mostRecentChat.alias.name + ": " + mostRecentChat.body
-        }
-        else {
-            cell.lastMessageLabel.text = "No Activity"
-        }
+        cell.chatNameLabel.text = chatRoom.name
+        cell.setMostRecentChatEvent(chatRoom.mostRecentChat(), chatRoom: chatRoom)
+        cell.showUnreadIndicator(chatRoom.areUnreadMessages.boolValue)
+        
         return cell
     }
     

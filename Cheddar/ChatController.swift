@@ -11,6 +11,7 @@ import Parse
 import Crashlytics
 
 protocol ChatDelegate: class {
+    func removeChat()
     func showLoadingViewWithText(text:String)
     func hideLoadingView()
 }
@@ -110,13 +111,21 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         var animationComplete = false
         
         PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 5, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                self.chatListController.reloadRooms()
+                self.delegate.hideLoadingView()
+                return
+            }
+            
             let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
             Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
-            self.chatListController.refreshRooms()
+            self.chatListController.reloadRooms()
+            chatRoom.loadNextPageMessages()
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
@@ -140,9 +149,13 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showNewMessageAlert(chatRoom:ChatRoom, chatEvent:ChatEvent) {
+        if (chatEvent.alias.objectId == chatRoom.myAlias.objectId){
+            return
+        }
         
         chatAlertController.chatRoom = chatRoom
-        chatAlertController.label.text = "New Mess in ChatRoom \(chatRoom.objectId)"
+        chatAlertController.chatEvent = chatEvent
+        chatAlertController.refreshView()
         
         UIView.animateWithDuration(0.333) { 
             self.notificationHiddenConstraint.priority = 200
@@ -309,20 +322,27 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     // MARK: ChatListControllerDelegate
     
+    func forceCloseChat() {
+        Utilities.appDelegate().reinitalizeUser()
+        delegate.removeChat()
+    }
+    
     func showChatRoom(chatRoom: ChatRoom) {
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
+        chatViewController.reloadTable()
         
         hideNewMessageAlert()
         
-        if (!chatAdded) {
-            dispatch_async(dispatch_get_main_queue(), {
-                self.addChildViewController(self.chatViewController)
-                self.chatContainer.addSubview(self.chatViewController.view)
-                self.chatViewController.view.autoPinEdgesToSuperviewEdges()
-            });
+        if (true) {
+            self.addChildViewController(self.chatViewController)
+            self.chatContainer.addSubview(self.chatViewController.view)
+            self.chatViewController.view.autoPinEdgesToSuperviewEdges()
             chatAdded = true
         }
+        
+        view.layoutIfNeeded()
+        
         dispatch_async(dispatch_get_main_queue(), {
             UIView.animateWithDuration(0.333, animations:{
                 self.chatContainerFocusConstraint.priority = 900
@@ -344,13 +364,29 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
                 self.delegate.hideLoadingView()
                 self.chatViewController.scrollToBottom(true)
             }
-        });
+        })
     }
     
     // MARK: ChatRoomDelegate
     
+    func didUpdateUnreadMessages(areUnreadMessages: Bool) {
+        if (chatViewController == nil) {
+            return
+        }
+        
+        UIView.animateWithDuration(0.333) {
+            if (self.chatViewController.isUnreadMessages) {
+                self.chatViewController.unreadMessagesView.alpha = 1
+            }
+            else {
+                self.chatViewController.unreadMessagesView.alpha = 0
+            }
+        }
+    }
+    
     func didUpdateName(chatRoom:ChatRoom) {
         if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
             return
         }
         
@@ -359,6 +395,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func didUpdateEvents(chatRoom:ChatRoom) {
         if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
             return
         }
         
@@ -368,7 +405,10 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool) {
         if (!isCurrentChatRoom(chatRoom)) {
-            showNewMessageAlert(chatRoom, chatEvent: chatEvent)
+            if (!isShowingList()) {
+                showNewMessageAlert(chatRoom, chatEvent: chatEvent)
+            }
+            chatListController.refreshRooms()
             return
         }
         
@@ -383,7 +423,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             chatViewController.scrollToBottom(true)
         }
         else if (!isMine) {
-            chatViewController.isUnreadMessages = true
+            chatRoom.areUnreadMessages = true
         }
     }
     

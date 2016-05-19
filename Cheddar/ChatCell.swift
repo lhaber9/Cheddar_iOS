@@ -35,17 +35,20 @@ class ChatCell: UITableViewCell {
     @IBOutlet var leftIcon: UIView!
     @IBOutlet var leftIconLabel: UILabel!
     
+    var rightAliasIcon: AliasCircleView!
+    var leftAliasIcon: AliasCircleView!
+    
     static var verticalTextBuffer:CGFloat = 13;
     static var aliasLabelHeight:CGFloat = 18;
     static var singleRowHeight:CGFloat = 32;
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        rightIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
+//        leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
+//        rightIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
         
-        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
-        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
+//        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
+//        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
         
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
@@ -127,10 +130,12 @@ class ChatCell: UITableViewCell {
     
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
     func setMessageOptions(options: [String:AnyObject]) {
-//        dispatch_async(dispatch_get_main_queue(), {
-                    self.messageLabel.text = options["text"] as! String
+        
+        self.messageLabel.text = options["text"] as! String
         let height = ChatCell.labelHeightForText( self.messageLabel.text )
         self.messageHeightConstraint.constant = height
+        self.errorLabel.hidden = true
+        self.messageBackground.alpha = 1
         
         if (self.messageLabel.text.characters.count == 1) {
             self.messageLabel.textAlignment = NSTextAlignment.Center
@@ -139,20 +144,35 @@ class ChatCell: UITableViewCell {
             self.messageLabel.textAlignment = NSTextAlignment.Left
         }
         
+        
         let alias = options["alias"] as! Alias
-        self.leftIconLabel.text = alias.initials()
-        self.rightIconLabel.text = alias.initials()
         self.aliasLabel.text = alias.name.lowercaseString
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
-        self.leftIcon.backgroundColor = ColorConstants.inboundIcons[Int(alias.colorId)]
-        
-        self.errorLabel.hidden = true
-        self.messageBackground.alpha = 1
-        
         self.setShowAliasLabel(options["showAliasLabel"] as! Bool)
-        self.setIsOutbound(options["isOutbound"] as! Bool)
-        if (options["isOutbound"] as! Bool) {
+        
+        let isOutbound = options["isOutbound"] as! Bool
+        self.setIsOutbound(isOutbound)
+        if (isOutbound) {
             self.setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
+            
+            if (rightAliasIcon == nil) {
+                rightAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.outboundChatBubble, sizeFactor: 0.7)
+                self.rightIcon.addSubview(rightAliasIcon)
+                rightAliasIcon.autoPinEdgesToSuperviewEdges()
+            }
+            
+            rightAliasIcon.setCellAlias(alias, color: ColorConstants.outboundChatBubble)
+            rightAliasIcon.setTextSize(15)
+        }
+        else {
+            if (leftAliasIcon == nil) {
+                leftAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.inboundIcons[Int(alias.colorId)], sizeFactor: 0.7)
+                self.leftIcon.addSubview(leftAliasIcon)
+                leftAliasIcon.autoPinEdgesToSuperviewEdges()
+            }
+            
+            leftAliasIcon.setCellAlias(alias, color: ColorConstants.inboundIcons[Int(alias.colorId)])
+            leftAliasIcon.setTextSize(15)
         }
         
         if (!(options["showAliasIcon"] as! Bool)){

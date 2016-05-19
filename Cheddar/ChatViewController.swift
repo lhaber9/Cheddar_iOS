@@ -391,7 +391,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         
         if (isNearBottom(5)) {
-            isUnreadMessages = false
+            chatRoom.areUnreadMessages = false
         }
         
         if (tableView.contentOffset.y <= 50) {

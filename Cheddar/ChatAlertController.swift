@@ -16,8 +16,45 @@ class ChatAlertController: UIViewController {
     
     weak var delegate: ChatAlertDelegate!
     
-    @IBOutlet var label: UILabel!
+    @IBOutlet var alertView: UIView!
+    @IBOutlet var aliasIconContainer: UIView!
+    @IBOutlet var mainLabel: UILabel!
+    @IBOutlet var subLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
     var chatRoom: ChatRoom!
+    var chatEvent: ChatEvent!
+    
+    var aliasIcon: AliasCircleView!
+    
+    override func viewDidLoad() {
+        alertView.layer.shadowOffset = CGSizeMake(-2, 0);
+        alertView.layer.shadowRadius = 2;
+        alertView.layer.shadowOpacity = 0.45;
+        alertView.layer.shadowColor = UIColor.blackColor().CGColor
+    }
+    
+    func refreshView() {
+        var color: UIColor
+        if (chatEvent.alias.objectId != chatRoom.myAlias.objectId) {
+            color = ColorConstants.inboundIcons[Int(chatEvent.alias.colorId)]
+        }
+        else {
+            color = ColorConstants.outboundChatBubble
+        }
+        
+        aliasIcon = AliasCircleView.instanceFromNibWithAlias(chatEvent.alias, color: color, sizeFactor: 0.6)
+        aliasIconContainer.addSubview(aliasIcon)
+        aliasIcon.autoPinEdgesToSuperviewEdges()
+        
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        dateFor.dateFormat = "h:mm a"
+        
+        dateLabel.text = dateFor.stringFromDate(chatEvent.createdAt)
+        mainLabel.text = chatEvent.alias.name
+        subLabel.text = chatEvent.body
+        
+        view.layoutIfNeeded()
+    }
     
     @IBAction func tapped() {
         delegate.showChatRoom(chatRoom)

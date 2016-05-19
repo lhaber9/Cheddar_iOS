@@ -12,5 +12,24 @@ class ActiveMemberCell: UITableViewCell {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var joinedAtLabel: UILabel!
+    @IBOutlet var aliasIconContainer: UIView!
     
+    var aliasIcon: AliasCircleView!
+    
+    func setAlias(alias: Alias, chatRoom: ChatRoom) {
+        if (aliasIcon == nil) {
+            var color: UIColor
+            if (alias.objectId != chatRoom.myAlias.objectId) {
+                color = ColorConstants.inboundIcons[Int(alias.colorId)]
+            }
+            else {
+                color = ColorConstants.outboundChatBubble
+            }
+            
+            aliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: color, sizeFactor: 0.6)
+            aliasIconContainer.addSubview(aliasIcon)
+            aliasIcon.autoPinEdgesToSuperviewEdges()
+            layoutIfNeeded()
+        }
+    }
 }

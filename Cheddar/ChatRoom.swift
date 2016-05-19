@@ -12,6 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
+    func didUpdateUnreadMessages(areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
@@ -45,6 +46,7 @@ class ChatRoom: NSManagedObject {
     
     @NSManaged var currentStartToken: String!
     @NSManaged var allMessagesLoaded: NSNumber!
+    @NSManaged var areUnreadMessages: NSNumber!
 
     var loadMessageCallInFlight = false
     
@@ -53,6 +55,7 @@ class ChatRoom: NSManagedObject {
         let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
         chatRoom.currentStartToken = nil
         chatRoom.allMessagesLoaded = false
+        chatRoom.areUnreadMessages = false
         chatRoom.name = "Unnamed"
         return chatRoom
     }
@@ -157,6 +160,11 @@ class ChatRoom: NSManagedObject {
         } catch {
             return nil
         }
+    }
+    
+    func setUnreadMessages(areUnreadMessages: Bool) {
+        self.areUnreadMessages = areUnreadMessages
+        delegate?.didUpdateUnreadMessages(areUnreadMessages)
     }
     
     func reload() {
@@ -346,6 +354,8 @@ class ChatRoom: NSManagedObject {
                     return
                 }
                 
+                let originalMessageCount = self.chatEvents.count
+                
                 for eventDict in events {
                     
                     let objectType = eventDict["objectType"] as! String
@@ -357,7 +367,7 @@ class ChatRoom: NSManagedObject {
                 }
                 
                 var isFirstLoad = false
-                if (self.chatEvents.count == 0) {
+                if (originalMessageCount <= 1) {
                     isFirstLoad = true
                 }
                 

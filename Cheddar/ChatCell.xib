@@ -5,10 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Effra-Medium.ttf">
-            <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
-        </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -77,44 +73,20 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rR7-Sb-RzQ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rR7-Sb-RzQ" customClass="AliasCircleView" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="8" y="2" width="32" height="32"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-0k-fGA">
-                                        <rect key="frame" x="2" y="2" width="28" height="28"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.92254325000000004" blue="0.20825473150000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Ekh-0k-fGA" secondAttribute="bottom" constant="2" id="9WZ-o6-fm9"/>
-                                    <constraint firstItem="Ekh-0k-fGA" firstAttribute="leading" secondItem="rR7-Sb-RzQ" secondAttribute="leading" constant="2" id="BMY-uZ-ZiZ"/>
-                                    <constraint firstItem="Ekh-0k-fGA" firstAttribute="top" secondItem="rR7-Sb-RzQ" secondAttribute="top" constant="2" id="JKc-zz-5oA"/>
                                     <constraint firstAttribute="height" constant="32" id="Qna-YS-Ung"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ekh-0k-fGA" secondAttribute="trailing" constant="2" id="ui0-Wn-Bn3"/>
                                     <constraint firstAttribute="width" constant="32" id="zAE-Eu-At0"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pt8-I5-5ej">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pt8-I5-5ej" customClass="AliasCircleView" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="336" y="2" width="32" height="32"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjL-ul-4Yc">
-                                        <rect key="frame" x="2" y="2" width="28" height="28"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="fjL-ul-4Yc" secondAttribute="bottom" constant="2" id="OzX-mw-2RC"/>
-                                    <constraint firstAttribute="trailing" secondItem="fjL-ul-4Yc" secondAttribute="trailing" constant="2" id="bno-cs-KVT"/>
                                     <constraint firstAttribute="width" constant="32" id="gGC-ZN-RKO"/>
                                     <constraint firstAttribute="height" constant="32" id="h53-OU-ejY"/>
-                                    <constraint firstItem="fjL-ul-4Yc" firstAttribute="leading" secondItem="pt8-I5-5ej" secondAttribute="leading" constant="2" id="jiO-pN-79a"/>
-                                    <constraint firstItem="fjL-ul-4Yc" firstAttribute="top" secondItem="pt8-I5-5ej" secondAttribute="top" constant="2" id="k02-UD-mq6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
@@ -185,7 +157,6 @@
                 <outlet property="errorLeftConstraint" destination="HsY-hQ-he1" id="ipd-P3-1Qu"/>
                 <outlet property="errorRightConstraint" destination="QSI-0p-oaT" id="krn-Pg-11q"/>
                 <outlet property="leftIcon" destination="rR7-Sb-RzQ" id="ReD-t2-8ML"/>
-                <outlet property="leftIconLabel" destination="Ekh-0k-fGA" id="me6-Jx-Tsu"/>
                 <outlet property="leftSideLabelConstraint" destination="aLM-VQ-QiD" id="R6H-Z2-Iu3"/>
                 <outlet property="leftSideMessageConstraint" destination="cl2-gh-dXb" id="rhk-O0-gvQ"/>
                 <outlet property="messageBackground" destination="gsk-tc-l14" id="znN-8q-NRu"/>
@@ -194,7 +165,6 @@
                 <outlet property="messageTopConstraint" destination="ae1-Ki-oDg" id="MwZ-Oa-TFG"/>
                 <outlet property="messageTopConstraintAlias" destination="u0R-wH-xFC" id="rUm-Sj-eTp"/>
                 <outlet property="rightIcon" destination="pt8-I5-5ej" id="7WU-14-zuK"/>
-                <outlet property="rightIconLabel" destination="fjL-ul-4Yc" id="6bE-lX-9Ra"/>
                 <outlet property="rightSideLabelConstraint" destination="bcu-ax-cuZ" id="zig-4Z-573"/>
                 <outlet property="rightSideMessageConstraint" destination="Xfk-Hw-sTP" id="sx8-aq-gfH"/>
             </connections>

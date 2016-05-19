@@ -161,6 +161,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
     // FrontPageViewDelegate
     
     func showChat() {
+        if (User.theUser.objectId == nil) {
+            return
+        }
+        
         chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
 
         chatController.delegate = self
@@ -169,6 +173,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         chatController.view.autoPinEdgesToSuperviewEdges()
         
         chatContainer.hidden = false
+    }
+    
+    func removeChat() {
+        chatController.view.removeFromSuperview()
+        chatController.removeFromParentViewController()
+        chatController = nil
+        
+        chatContainer.hidden = true
     }
     
     // UIScrollViewDelegate

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AliasCircleView" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="190" height="176"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNz-3P-pq9" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="190" height="176"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byF-iq-0Yu">
+                            <rect key="frame" x="76" y="68" width="38.5" height="38.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="38.5" id="Gm8-Kq-o2j"/>
+                                <constraint firstAttribute="width" secondItem="byF-iq-0Yu" secondAttribute="height" multiplier="1:1" id="Y1K-vn-77C"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="24"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="byF-iq-0Yu" firstAttribute="centerX" secondItem="QNz-3P-pq9" secondAttribute="centerX" id="7qX-07-JZ1"/>
+                        <constraint firstItem="byF-iq-0Yu" firstAttribute="centerY" secondItem="QNz-3P-pq9" secondAttribute="centerY" id="kvF-GS-B0U"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLw-Er-ynw" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
+                    <rect key="frame" x="25" y="25" width="22" height="22"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-Zm-hK2" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
+                            <rect key="frame" x="1" y="1" width="20" height="20"/>
+                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="22" id="LVg-Dn-TBn"/>
+                        <constraint firstAttribute="trailing" secondItem="l7y-Zm-hK2" secondAttribute="trailing" constant="1" id="Zlx-00-1cc"/>
+                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="leading" secondItem="fLw-Er-ynw" secondAttribute="leading" constant="1" id="giv-3q-CsY"/>
+                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="top" secondItem="fLw-Er-ynw" secondAttribute="top" constant="1" id="ldY-eA-7uD"/>
+                        <constraint firstAttribute="bottom" secondItem="l7y-Zm-hK2" secondAttribute="bottom" constant="1" id="t04-cw-xpR"/>
+                        <constraint firstAttribute="width" secondItem="fLw-Er-ynw" secondAttribute="height" multiplier="1:1" id="zxp-MD-gwo"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="QNz-3P-pq9" secondAttribute="bottom" id="BE2-sO-SIS"/>
+                <constraint firstItem="QNz-3P-pq9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gqr-UW-QJs"/>
+                <constraint firstItem="QNz-3P-pq9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QQJ-RP-gq0"/>
+                <constraint firstItem="fLw-Er-ynw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="YCg-O2-tvm"/>
+                <constraint firstItem="fLw-Er-ynw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="Zw0-JS-Fug"/>
+                <constraint firstAttribute="trailing" secondItem="QNz-3P-pq9" secondAttribute="trailing" id="dSP-dv-5ph"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="circleView" destination="QNz-3P-pq9" id="c5K-A7-18w"/>
+                <outlet property="indicatorLeftConstraint" destination="YCg-O2-tvm" id="cVW-5a-ada"/>
+                <outlet property="indicatorStrokeView" destination="fLw-Er-ynw" id="gD8-DD-2xL"/>
+                <outlet property="indicatorTopConstraint" destination="Zw0-JS-Fug" id="oVe-Rq-Sjv"/>
+                <outlet property="indicatorView" destination="l7y-Zm-hK2" id="kwf-xL-hdX"/>
+                <outlet property="initalsLabel" destination="byF-iq-0Yu" id="PQF-bA-PNJ"/>
+                <outlet property="initialsWidthConstraint" destination="Gm8-Kq-o2j" id="rLm-Ls-uF3"/>
+            </connections>
+            <point key="canvasLocation" x="64" y="-6"/>
+        </view>
+    </objects>
+</document>
