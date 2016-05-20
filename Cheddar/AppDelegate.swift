@@ -182,11 +182,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     }
     
     func sendFeedback(text: String, alias: Alias) {
+        
+        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+        let userId = alias.userId
+        let chatRoomId = alias.chatRoomId
+        let aliasName = alias.name
+        
+        var sendBody = "Version: " + version + "\n"
+        sendBody += "Build: " + build + "\n"
+        sendBody += "UserId: " + userId + "\n"
+        sendBody += "ChatRoomId: " + chatRoomId + "\n"
+        sendBody += "AliasName: " + aliasName + "\n"
+        sendBody += text + "\n"
+        sendBody += "-----------------------"
+        
         let urlString = "https://hooks.slack.com/services/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"
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
-        request.HTTPBody = "payload={\"text\": \"User (\(alias.userId)) in ChatRoom (\(alias.chatRoomId)): \(text)\"}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "payload={\"text\": \"\(sendBody)\"}".dataUsingEncoding(NSUTF8StringEncoding)
         
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
             
