@@ -34,8 +34,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     @IBOutlet var sublabelShowingConstraint: NSLayoutConstraint!
     @IBOutlet var sublabelHiddenConstraint: NSLayoutConstraint!
     
-    @IBOutlet var notificationShowingConstraint: NSLayoutConstraint!
-    @IBOutlet var notificationHiddenConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationConstraint: NSLayoutConstraint!
     @IBOutlet var notificationContainer: UIView!
     
     @IBOutlet var topBar: UIView!
@@ -55,6 +54,8 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     var chatAlertController: ChatAlertController!
     
     var chatAdded = false
+    var isDraggingChatAlert = false
+    var alertTimerId: String!
     
     override func viewDidLoad() {
         topBar.backgroundColor = ColorConstants.chatNavBackground
@@ -90,6 +91,9 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         addChildViewController(chatAlertController)
         notificationContainer.addSubview(chatAlertController.view)
         chatAlertController.view.autoPinEdgesToSuperviewEdges()
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action:#selector(self.dragMessageAlert))
+        notificationContainer.addGestureRecognizer(panGestureRecognizer)
     }
     
     func initChatViewVC() {
@@ -157,18 +161,50 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         chatAlertController.chatEvent = chatEvent
         chatAlertController.refreshView()
         
-        UIView.animateWithDuration(0.333) { 
-            self.notificationHiddenConstraint.priority = 200
-            self.notificationShowingConstraint.priority = 900
+        showNewMessageAlert()
+    }
+    
+    func showNewMessageAlert() {
+        UIView.animateWithDuration(0.125) {
+            self.notificationConstraint.constant = 70
             self.view.layoutIfNeeded()
+        }
+        
+        let thisAlertTimerId = NSUUID.init().UUIDString
+        alertTimerId = thisAlertTimerId
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            
+            if (!self.isDraggingChatAlert && thisAlertTimerId == self.alertTimerId) {
+                self.hideNewMessageAlert()
+            }
         }
     }
     
     func hideNewMessageAlert() {
-        UIView.animateWithDuration(0.333) {
-            self.notificationHiddenConstraint.priority = 900
-            self.notificationShowingConstraint.priority = 200
+        UIView.animateWithDuration(0.125) {
+            self.notificationConstraint.constant = 0
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    func dragMessageAlert(panGestureRecognizer: UIPanGestureRecognizer) {
+        isDraggingChatAlert = true
+        let touchLocation = panGestureRecognizer.locationInView(self.view)
+        self.notificationConstraint.constant = touchLocation.y
+        
+        if (touchLocation.y > 90) {
+            self.notificationConstraint.constant = 90
+        }
+        
+        if (panGestureRecognizer.state == UIGestureRecognizerState.Ended) {
+            isDraggingChatAlert = false
+            if (touchLocation.y < (self.notificationContainer.frame.height / 2)) {
+                hideNewMessageAlert()
+            }
+            else {
+                showNewMessageAlert()
+            }
         }
     }
     
@@ -219,6 +255,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showList() {
+        self.chatListController.reloadRooms()
         UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
             self.listContainerFocusConstraint.priority = 900
@@ -239,9 +276,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             self.optionsButton.alpha = 0
             self.titleLabel.text = "Groups"
             self.view.layoutIfNeeded()
-        }) { (error: Bool) in
-            self.chatListController.reloadRooms()
-        }
+        })
     }
     
     func leaveChatRoom(alias: Alias) {
