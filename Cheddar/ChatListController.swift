@@ -33,48 +33,51 @@ class ChatListController : UIViewController {
     }
     
     func reloadRooms() {
-        PFCloud.callFunctionInBackground("findUser", withParameters: ["userId":User.theUser.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
+        
+        let userId = CheddarRequest.currentUserId()!
+        
+        CheddarRequest.findUser(userId,
+            successCallback: { (object) in
             
-            if ((error) != nil) {
-                NSLog("%@",error!)
+                CheddarRequest.getChatRooms(userId,
+                    successCallback: { (object) in
+                    
+                        let currentChatRoomIds: [String] = ChatRoom.fetchAll().map({ (chatRoom: ChatRoom) -> String in
+                            return chatRoom.objectId
+                        })
+                        
+                        let serverChatRooms = object as! [[String:AnyObject]]
+                        let serverChatRoomIds: [String] = serverChatRooms.map({ (chatRoomDict: [String:AnyObject]) -> String in
+                            let chatRoom = chatRoomDict["chatRoom"] as! PFObject
+                            return chatRoom.objectId!
+                        })
+                        
+                        let toDelete = Array(Set(currentChatRoomIds).subtract(Set(serverChatRoomIds)))
+                        
+                        for chatRoomId in toDelete {
+                            ChatRoom.removeChatRoom(chatRoomId)
+                        }
+                        
+                        for chatRoomDict in serverChatRooms {
+                            let alias = Alias.createOrUpdateAliasFromParseObject(chatRoomDict["alias"] as! PFObject)
+                            ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict["chatRoom"] as! PFObject, alias: alias)
+                            ChatEvent.createOrUpdateEventFromParseObject(chatRoomDict["chatEvent"] as! PFObject)
+                        }
+                        
+                        Utilities.appDelegate().saveContext()
+                        
+                        self.refreshRooms()
+                        
+                    }, errorCallback: { (error) in
+                        NSLog("Error getting chatrooms: %@",error)
+                })
+            
+            }) { (error) in
+            
+                NSLog("%@",error)
                 //devalidate user
                 self.delegate.forceCloseChat()
                 return
-            }
-            
-            PFCloud.callFunctionInBackground("getChatRooms", withParameters: ["userId":User.theUser.objectId]) { (object: AnyObject?, error: NSError?) -> Void in
-                
-                if ((error) != nil) {
-                    NSLog("%@",error!)
-                    return
-                }
-                
-                let currentChatRoomIds: [String] = ChatRoom.fetchAll().map({ (chatRoom: ChatRoom) -> String in
-                    return chatRoom.objectId
-                })
-                
-                let serverChatRooms = object as! [[String:AnyObject]]
-                let serverChatRoomIds: [String] = serverChatRooms.map({ (chatRoomDict: [String:AnyObject]) -> String in
-                    let chatRoom = chatRoomDict["chatRoom"] as! PFObject
-                    return chatRoom.objectId!
-                })
-                
-                let toDelete = Array(Set(currentChatRoomIds).subtract(Set(serverChatRoomIds)))
-                
-                for chatRoomId in toDelete {
-                    ChatRoom.removeChatRoom(chatRoomId)
-                }
-                
-                for chatRoomDict in serverChatRooms {
-                    let alias = Alias.createOrUpdateAliasFromParseObject(chatRoomDict["alias"] as! PFObject)
-                    ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict["chatRoom"] as! PFObject, alias: alias)
-                    ChatEvent.createOrUpdateEventFromParseObject(chatRoomDict["chatEvent"] as! PFObject)
-                }
-                
-                Utilities.appDelegate().saveContext()
-                
-                self.refreshRooms()
-            }
         }
     }
     

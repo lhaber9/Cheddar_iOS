@@ -166,12 +166,12 @@ class ChatCell: UITableViewCell {
         }
         else {
             if (leftAliasIcon == nil) {
-                leftAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.inboundIcons[Int(alias.colorId)], sizeFactor: 0.7)
+                leftAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.iconColors[Int(alias.colorId)], sizeFactor: 0.7)
                 self.leftIcon.addSubview(leftAliasIcon)
                 leftAliasIcon.autoPinEdgesToSuperviewEdges()
             }
             
-            leftAliasIcon.setCellAlias(alias, color: ColorConstants.inboundIcons[Int(alias.colorId)])
+            leftAliasIcon.setCellAlias(alias, color: ColorConstants.iconColors[Int(alias.colorId)])
             leftAliasIcon.setTextSize(15)
         }
         

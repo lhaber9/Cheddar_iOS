@@ -10,40 +10,32 @@ import UIKit
 import Parse
 import Crashlytics
 
-class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate, ChatDelegate {
+class ViewController: UIViewController, UIScrollViewDelegate, FullPageScrollDelegate, LoginDelegate, ChatDelegate {
     
     @IBOutlet var loadingView: UIView!
     var loadOverlay: LoadingView!
     
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
-    @IBOutlet var page0: UIView!
-    
-    @IBOutlet var chatContainer: UIView!
-    
-    @IBOutlet var leftArrow: UIImageView!
-    @IBOutlet var rightArrow: UIImageView!
-    
+    @IBOutlet var backgroundView: UIView!
     @IBOutlet var backgroundCheeseLeftConstraint: NSLayoutConstraint!
     @IBOutlet var backgroundCheeseRightConstraint: NSLayoutConstraint!
     var backgroundCheeseInitalLeftConstraint: CGFloat!
     var backgroundCheeseInitalRightConstraint: CGFloat!
     var paralaxScaleFactor: CGFloat = 20
     
+    @IBOutlet var chatContainer: UIView!
+    @IBOutlet var onboardingContainer: UIView!
+    @IBOutlet var loginContainer: UIView!
+    @IBOutlet var signupContainer: UIView!
+    @IBOutlet var showOnboardConstraint: NSLayoutConstraint!
+    @IBOutlet var showLoginConstraint: NSLayoutConstraint!
+    @IBOutlet var showSignupConstraint: NSLayoutConstraint!
     var chatController: ChatController!
-    
-    var currentPage: Int = 0
-    var pages: [UIView]!
-    
-    var isAnimatingPages = false
+    var onboardingController: OnboardingViewController!
+    var loginController: LoginViewController!
+    var signupController: SignupViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.delegate = self
-    
-        setupPages()
-        
-        leftArrow.alpha = 0
         
         backgroundCheeseInitalLeftConstraint = backgroundCheeseLeftConstraint.constant
         backgroundCheeseInitalRightConstraint = backgroundCheeseRightConstraint.constant
@@ -52,8 +44,33 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
         
-        if (Utilities.appDelegate().userDidOnboard()) {
-            showChat()
+        onboardingController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("OnboardingViewController") as! OnboardingViewController
+        
+        onboardingController.delegate = self
+        addChildViewController(onboardingController)
+        onboardingContainer.addSubview(onboardingController.view)
+        onboardingController.view.autoPinEdgesToSuperviewEdges()
+        
+        loginController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        
+        loginController.delegate = self
+        addChildViewController(loginController)
+        loginContainer.addSubview(loginController.view)
+        loginController.view.autoPinEdgesToSuperviewEdges()
+        
+        signupController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SignupViewController") as! SignupViewController
+        
+        signupController.delegate = self
+        addChildViewController(signupController)
+        signupContainer.addSubview(signupController.view)
+        signupController.view.autoPinEdgesToSuperviewEdges()
+
+        if (Utilities.appDelegate().deviceDidOnboard()) {
+            goToLogin()
+        }
+        
+        if (CheddarRequest.currentUser() != nil) {
+            didCompleteLogin()
         }
     }
     
@@ -70,139 +87,90 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
         return chatController != nil
     }
     
-    func setupPages() {
-        let introView = IntroView.instanceFromNib()
-        let matchView = MatchView.instanceFromNib()
-        let groupView = GroupView.instanceFromNib()
-        let alphaWarningView = AlphaWarningView.instanceFromNib()
-        
-        introView.delegate = self
-        matchView.delegate = self
-        groupView.delegate = self
-        alphaWarningView.delegate = self
-        
-        pages = [page0]
-        addContentsToLastPage(introView)
-        addPage(matchView)
-        addPage(groupView)
-        addPage(alphaWarningView)
-    }
-    
     func useSmallerViews() -> Bool {
         return Utilities.IS_IPHONE_4_OR_LESS()
     }
     
-    func displayArrows() {
-        UIView.animateWithDuration(0.1) { () -> Void in
-            if (self.currentPage == 0) {
-                self.leftArrow.alpha = 0
-                self.rightArrow.alpha = 1
+    func didCompleteLogin() {
+        CheddarRequest.currentUserIsVerified({ (isVerified) in
+            if (isVerified) {
+                self.showChat()
             }
-            else if (self.currentPage == 1 || self.currentPage == 2) {
-                self.leftArrow.alpha = 1
-                self.rightArrow.alpha = 1
+            else {
+                self.showSignupWithEmailVerifyScreen()
             }
-            else if (self.currentPage == 3) {
-                self.leftArrow.alpha = 0
-                self.rightArrow.alpha = 0
-            }
+            }, errorCallback: { (error) in
+        })
+    }
+    
+    func goToOnboard() {
+        self.showOnboardConstraint.priority = 900
+        self.showLoginConstraint.priority = 200
+        self.showSignupConstraint.priority = 200
+        self.view.layoutIfNeeded()
+    }
+    
+    func showOnboard() {
+        UIView.animateWithDuration(0.333) { 
+            self.goToOnboard()
         }
     }
     
-    @IBAction func goToNextPage() {
-        if (isAnimatingPages) { return }
-        scrollToPage(currentPage + 1, animated: true)
+    func goToLogin() {
+        self.showOnboardConstraint.priority = 200
+        self.showLoginConstraint.priority = 900
+        self.showSignupConstraint.priority = 200
+        self.changeBackgroundColor(ColorConstants.iconColors.last!)
+        self.view.layoutIfNeeded()
+        
+        Utilities.appDelegate().setDeviceOnboarded()
     }
     
-    @IBAction func goToPrevPage() {
-        if (isAnimatingPages) { return }
-        scrollToPage(currentPage - 1, animated: true)
+    func goToSignup() {
+        self.showOnboardConstraint.priority = 200
+        self.showLoginConstraint.priority = 200
+        self.showSignupConstraint.priority = 900
+        self.changeBackgroundColor(ColorConstants.iconColors.last!)
+        self.view.layoutIfNeeded()
     }
     
-    func scrollToPage(pageIdx: Int, animated: Bool) {
-        isAnimatingPages = true
-        if (pageIdx < 0 || pageIdx >= pages.count) {
-            return
+    func showSignupWithEmailVerifyScreen() {
+        signupController.goToLastPage()
+        showSignup()
+    }
+
+    // MARK: FullPageScrollDelegate
+    
+    func changeBackgroundColor(color: UIColor){
+        backgroundView.backgroundColor = color
+        view.layoutIfNeeded()
+    }
+    
+    func showLogin() {
+        UIView.animateWithDuration(0.333) {
+            self.goToLogin()
         }
-        
-        currentPage = pageIdx
-        scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(currentPage), 0.0), animated:animated)
     }
     
-    func addPage(pageContents: UIView) {
-        let lastPage = pages.last!
-        scrollView.removeConstraint(scrollViewWidthConstraint)
-        scrollViewWidthConstraint = nil
-        let pageView = UIView()
-        scrollView.addSubview(pageView)
-        
-        pageView.autoMatchDimension(ALDimension.Width, toDimension:ALDimension.Width, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: lastPage)
-        
-        scrollViewWidthConstraint = NSLayoutConstraint(item: pageView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
-        scrollViewWidthConstraint.priority = 900
-        
-        scrollView.addConstraint(scrollViewWidthConstraint)
-        
-        pageView.addSubview(pageContents)
-        pageContents.autoPinEdgesToSuperviewEdges()
-        
-        pages.append(pageView)
+    func showSignup() {
+        UIView.animateWithDuration(0.333) {
+            self.goToSignup()
+        }
     }
-    
-    func addContentsToLastPage(pageContents: UIView) {
-        let lastPage = pages.last!
-        lastPage.addSubview(pageContents)
-        pageContents.autoPinEdgesToSuperviewEdges()
-    }
-    
-    // FrontPageViewDelegate
     
     func showChat() {
-        if (User.theUser.objectId == nil) {
+        if (CheddarRequest.currentUser() == nil) {
             return
         }
         
         chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
-
+        
         chatController.delegate = self
         addChildViewController(chatController)
         chatContainer.addSubview(chatController.view)
         chatController.view.autoPinEdgesToSuperviewEdges()
         
         chatContainer.hidden = false
-    }
-    
-    func removeChat() {
-        chatController.view.removeFromSuperview()
-        chatController.removeFromParentViewController()
-        chatController = nil
-        
-        chatContainer.hidden = true
-    }
-    
-    // UIScrollViewDelegate
-    
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
-        displayArrows()
-    }
-    
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        isAnimatingPages = false
-        currentPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
-        displayArrows()
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let paralaxOffset = scrollView.contentOffset.x / paralaxScaleFactor;
-        
-        backgroundCheeseLeftConstraint.constant  = backgroundCheeseInitalLeftConstraint - paralaxOffset
-        backgroundCheeseRightConstraint.constant = backgroundCheeseInitalRightConstraint + paralaxOffset
-        
-        view.layoutIfNeeded()
     }
     
     // MARK: ChatDelegate
@@ -220,6 +188,14 @@ class ViewController: UIViewController, UIScrollViewDelegate, FrontPageViewDeleg
             self.loadingView.alpha = 0
             self.loadingView.hidden = true
         }
+    }
+    
+    func removeChat() {
+        chatController.view.removeFromSuperview()
+        chatController.removeFromParentViewController()
+        chatController = nil
+        
+        chatContainer.hidden = true
     }
 }
 

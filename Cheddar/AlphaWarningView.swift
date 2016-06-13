@@ -50,10 +50,10 @@ class AlphaWarningView: FrontPageView {
     
     @IBAction func tapUpButton() {
         setStandardShadow()
-        joinChat()
+        finishOnboard()
     }
     
-    func joinChat() {
-        delegate?.showChat()
+    func finishOnboard() {
+        delegate?.showLogin()
     }
 }

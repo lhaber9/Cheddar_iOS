@@ -20,7 +20,7 @@ class ActiveMemberCell: UITableViewCell {
         if (aliasIcon == nil) {
             var color: UIColor
             if (alias.objectId != chatRoom.myAlias.objectId) {
-                color = ColorConstants.inboundIcons[Int(alias.colorId)]
+                color = ColorConstants.iconColors[Int(alias.colorId)]
             }
             else {
                 color = ColorConstants.outboundChatBubble

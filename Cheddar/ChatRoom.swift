@@ -49,6 +49,7 @@ class ChatRoom: NSManagedObject {
     @NSManaged var areUnreadMessages: NSNumber!
 
     var loadMessageCallInFlight = false
+    var loadAliasCallInFlight = false
     
     class func newChatRoom() -> ChatRoom {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
@@ -212,27 +213,36 @@ class ChatRoom: NSManagedObject {
     }
     
     func reloadActiveAlaises() {
-        PFCloud.callFunctionInBackground("getActiveAliases", withParameters: ["chatRoomId":myAlias.chatRoomId]) { (objects: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                NSLog("error: %@", error!)
+        if (loadAliasCallInFlight) {
+            return
+        }
+        
+        loadAliasCallInFlight = true
+        
+        CheddarRequest.getActiveAliases(myAlias.chatRoomId,
+            successCallback: { (object) in
+                
+                self.loadAliasCallInFlight = false
+                
+                var activeAliases = Set<Alias>()
+                
+                for alias in object as! [PFObject] {
+                    activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias))
+                }
+                
+                if (self.activeAliases != nil) {
+                    self.removeActiveAliases(self.activeAliases)
+                }
+                self.addActiveAliases(activeAliases)
+                
+                Utilities.appDelegate().saveContext()
+                
+                self.delegate?.didUpdateActiveAliases(self, aliases: activeAliases)
+                
+            }) { (error) in
+                self.loadAliasCallInFlight = false
+                NSLog("error: %@", error)
                 return
-            }
-            
-            var activeAliases = Set<Alias>()
-            
-            for alias in objects as! [PFObject] {
-                activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias))
-            }
-            
-            if (self.activeAliases != nil) {
-                 self.removeActiveAliases(self.activeAliases)
-            }
-            self.addActiveAliases(activeAliases)
-            
-            Utilities.appDelegate().saveContext()
-            
-            self.delegate?.didUpdateActiveAliases(self, aliases: activeAliases)
         }
     }
     
@@ -290,36 +300,41 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         
         let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
-                                            "subkey":EnvironmentConstants.pubNubSubscribeKey,
                                             "endTimeToken" : currentStartToken]
         
-        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
-
-            var replayEvents = Set<ChatEvent>()
+        CheddarRequest.replayEvents(params,
+            successCallback: { (object) in
             
-            if let events = object?["events"] as? [[NSObject:AnyObject]] {
-
-                for eventDict in events {
+                var replayEvents = Set<ChatEvent>()
+                
+                let objectDict = object as! [NSObject:AnyObject]
+                if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    let objectType = eventDict["objectType"] as! String
-                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
-                    
-                    if (objectType == "ChatEvent") {
-                        replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                    for eventDict in events {
+                        
+                        let objectType = eventDict["objectType"] as! String
+                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        
+                        if (objectType == "ChatEvent") {
+                            replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        }
                     }
+                    
+                    if (self.chatEvents != nil) {
+                        self.removeChatEvents(self.chatEvents)
+                    }
+                    self.addChatEvents(replayEvents)
+                    
+                    Utilities.appDelegate().saveContext()
+                    
+                    self.delegate?.didUpdateEvents(self)
                 }
-
-                if (self.chatEvents != nil) {
-                    self.removeChatEvents(self.chatEvents)
-                }
-                self.addChatEvents(replayEvents)
                 
-                Utilities.appDelegate().saveContext()
+                self.loadMessageCallInFlight = false
                 
-                self.delegate?.didUpdateEvents(self)
-            }
-            
-            self.loadMessageCallInFlight = false
+            }) { (error) in
+                
+                self.loadMessageCallInFlight = false
         }
     }
     
@@ -337,46 +352,54 @@ class ChatRoom: NSManagedObject {
         }
         
         loadMessageCallInFlight = true
-        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if let startToken = object?["startTimeToken"] as? String {
-                self.currentStartToken = startToken
-            }
-            
-            if let events = object?["events"] as? [[NSObject:AnyObject]] {
+        
+        CheddarRequest.replayEvents(params,
+            successCallback: { (object) in
                 
-                if (events.count < count) {
-                    self.allMessagesLoaded = true
+                let objectDict = object as! [NSObject: AnyObject]
+                
+                if let startToken = objectDict["startTimeToken"] as? String {
+                    self.currentStartToken = startToken
                 }
                 
-                if (events.count == 1 && self.chatEvents.count == 1) {
-                    self.loadMessageCallInFlight = false
-                    return
-                }
-                
-                let originalMessageCount = self.chatEvents.count
-                
-                for eventDict in events {
+                if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    let objectType = eventDict["objectType"] as! String
-                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
-                    
-                    if (objectType == "ChatEvent") {
-                        self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                    if (events.count < count) {
+                        self.allMessagesLoaded = true
                     }
+                    
+                    if (events.count == 1 && self.chatEvents.count == 1) {
+                        self.loadMessageCallInFlight = false
+                        return
+                    }
+                    
+                    let originalMessageCount = self.chatEvents.count
+                    
+                    for eventDict in events {
+                        
+                        let objectType = eventDict["objectType"] as! String
+                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        
+                        if (objectType == "ChatEvent") {
+                            self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        }
+                    }
+                    
+                    var isFirstLoad = false
+                    if (originalMessageCount <= 1) {
+                        isFirstLoad = true
+                    }
+                    
+                    Utilities.appDelegate().saveContext()
+                    
+                    self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                 }
                 
-                var isFirstLoad = false
-                if (originalMessageCount <= 1) {
-                    isFirstLoad = true
-                }
+                self.loadMessageCallInFlight = false
                 
-                Utilities.appDelegate().saveContext()
+            }) { (error) in
                 
-                self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
-            }
-            
-            self.loadMessageCallInFlight = false
+                 self.loadMessageCallInFlight = false
         }
     }
     

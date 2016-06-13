@@ -69,8 +69,6 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) in
             self.chatListController.refreshRooms()
         }
-        
-        Utilities.appDelegate().setUserOnboarded()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -114,14 +112,10 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         var chatRoom: ChatRoom!
         var animationComplete = false
         
-        PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 5, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                self.chatListController.reloadRooms()
-                self.delegate.hideLoadingView()
-                return
-            }
-            
+        CheddarRequest.joinNextAvailableChatRoom(CheddarRequest.currentUserId()!,
+                                                 maxOccupancy: 5,
+        successCallback: { (object) in
+        
             let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
@@ -133,6 +127,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
+            
+        }) { (error) in
+            NSLog("Error Joining Room: %@", error)
+            self.chatListController.reloadRooms()
+            self.delegate.hideLoadingView()
+            return
         }
         
         performJoinChatAnimation { () -> Void in
@@ -255,6 +255,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showList() {
+        self.chatListController.refreshRooms()
         self.chatListController.reloadRooms()
         UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
@@ -283,16 +284,17 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         
         delegate.showLoadingViewWithText("Leaving Chat...")
         
-        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                self.delegate.hideLoadingView()
-                return
-            }
+        CheddarRequest.leaveChatroom(alias.objectId!,
+        successCallback: { (object) in
             
             Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": alias.chatRoomId, "lengthOfStay":alias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             
             self.forceLeaveChatRoom(alias)
+            
+        }) { (error) in
+            NSLog("Error leaving chatroom: %@", error)
+            self.delegate.hideLoadingView()
+            return
         }
     }
     
@@ -301,15 +303,6 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         Utilities.appDelegate().saveContext()
         delegate.hideLoadingView()
         showList()
-    }
-    
-    func didUpdateActiveAliases(aliases:NSSet) {
-        if (aliases.count == 0) {
-            numActiveLabel.text = "Waiting for others..."
-        }
-        else {
-            numActiveLabel.text = "\(aliases.count) members"
-        }
     }
     
     func showOverlay() {
@@ -358,7 +351,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     // MARK: ChatListControllerDelegate
     
     func forceCloseChat() {
-        Utilities.appDelegate().reinitalizeUser()
+//        Utilities.appDelegate().reinitalizeUser()
         delegate.removeChat()
     }
     
@@ -369,12 +362,14 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         
         hideNewMessageAlert()
         
-        if (true) {
+        if (!chatAdded) {
             self.addChildViewController(self.chatViewController)
             self.chatContainer.addSubview(self.chatViewController.view)
             self.chatViewController.view.autoPinEdgesToSuperviewEdges()
             chatAdded = true
         }
+        
+        self.chatViewController.scrollToBottom(false)
         
         view.layoutIfNeeded()
         
@@ -397,7 +392,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
                 self.view.layoutIfNeeded()
             }) { (error: Bool) in
                 self.delegate.hideLoadingView()
-                self.chatViewController.scrollToBottom(true)
+//                self.chatViewController.scrollToBottom(true)
             }
         })
     }
@@ -443,6 +438,9 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             if (!isShowingList()) {
                 showNewMessageAlert(chatRoom, chatEvent: chatEvent)
             }
+            if (!isMine) {
+                chatRoom.areUnreadMessages = true
+            }
             chatListController.refreshRooms()
             return
         }
@@ -467,7 +465,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             return
         }
         
-        didUpdateActiveAliases(aliases)
+        if (aliases.count == 0) {
+            numActiveLabel.text = "Waiting for others..."
+        }
+        else {
+            numActiveLabel.text = "\(aliases.count) members"
+        }
     }
     
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool) {

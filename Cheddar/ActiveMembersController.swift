@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ActiveMembersDelegate:class {
-    func activeAliases() -> [Alias]
+    func currentChatRoom() -> ChatRoom
 }
 
 class ActiveMembersController: UIViewController {
@@ -17,7 +17,7 @@ class ActiveMembersController: UIViewController {
     weak var delegate:ActiveMembersDelegate!
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate.activeAliases().count
+        return Array(delegate.currentChatRoom().activeAliases).count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -26,9 +26,10 @@ class ActiveMembersController: UIViewController {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActiveMemberCell", forIndexPath: indexPath) as! ActiveMemberCell
-        let alias = delegate.activeAliases()[indexPath.row]
+        let chatRoom = delegate.currentChatRoom()
+        let alias = Array(chatRoom.activeAliases)[indexPath.row]
         cell.nameLabel.text = alias.name
-        cell.setAlias(alias, chatRoom: ChatRoom.fetchById(alias.chatRoomId))
+        cell.setAlias(alias, chatRoom: chatRoom)
 //        cell.joinedAtLabel.text = delegate.activeAliases()[indexPath.row].joinedAt as String
         return cell
     }

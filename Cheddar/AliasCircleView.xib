@@ -38,20 +38,20 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLw-Er-ynw" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
-                    <rect key="frame" x="25" y="25" width="22" height="22"/>
+                    <rect key="frame" x="25" y="15" width="15" height="15"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-Zm-hK2" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
-                            <rect key="frame" x="1" y="1" width="20" height="20"/>
+                            <rect key="frame" x="2" y="2" width="11" height="11"/>
                             <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="22" id="LVg-Dn-TBn"/>
-                        <constraint firstAttribute="trailing" secondItem="l7y-Zm-hK2" secondAttribute="trailing" constant="1" id="Zlx-00-1cc"/>
-                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="leading" secondItem="fLw-Er-ynw" secondAttribute="leading" constant="1" id="giv-3q-CsY"/>
-                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="top" secondItem="fLw-Er-ynw" secondAttribute="top" constant="1" id="ldY-eA-7uD"/>
-                        <constraint firstAttribute="bottom" secondItem="l7y-Zm-hK2" secondAttribute="bottom" constant="1" id="t04-cw-xpR"/>
+                        <constraint firstAttribute="width" constant="15" id="LVg-Dn-TBn"/>
+                        <constraint firstAttribute="trailing" secondItem="l7y-Zm-hK2" secondAttribute="trailing" constant="2" id="Zlx-00-1cc"/>
+                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="leading" secondItem="fLw-Er-ynw" secondAttribute="leading" constant="2" id="giv-3q-CsY"/>
+                        <constraint firstItem="l7y-Zm-hK2" firstAttribute="top" secondItem="fLw-Er-ynw" secondAttribute="top" constant="2" id="ldY-eA-7uD"/>
+                        <constraint firstAttribute="bottom" secondItem="l7y-Zm-hK2" secondAttribute="bottom" constant="2" id="t04-cw-xpR"/>
                         <constraint firstAttribute="width" secondItem="fLw-Er-ynw" secondAttribute="height" multiplier="1:1" id="zxp-MD-gwo"/>
                     </constraints>
                 </view>
@@ -62,7 +62,7 @@
                 <constraint firstItem="QNz-3P-pq9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gqr-UW-QJs"/>
                 <constraint firstItem="QNz-3P-pq9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QQJ-RP-gq0"/>
                 <constraint firstItem="fLw-Er-ynw" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="25" id="YCg-O2-tvm"/>
-                <constraint firstItem="fLw-Er-ynw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="Zw0-JS-Fug"/>
+                <constraint firstItem="fLw-Er-ynw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="Zw0-JS-Fug"/>
                 <constraint firstAttribute="trailing" secondItem="QNz-3P-pq9" secondAttribute="trailing" id="dSP-dv-5ph"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

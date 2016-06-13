@@ -36,7 +36,7 @@ class ChatAlertController: UIViewController {
     func refreshView() {
         var color: UIColor
         if (chatEvent.alias.objectId != chatRoom.myAlias.objectId) {
-            color = ColorConstants.inboundIcons[Int(chatEvent.alias.colorId)]
+            color = ColorConstants.iconColors[Int(chatEvent.alias.colorId)]
         }
         else {
             color = ColorConstants.outboundChatBubble

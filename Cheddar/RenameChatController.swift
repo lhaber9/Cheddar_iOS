@@ -43,10 +43,16 @@ class RenameChatController: UIViewController {
             self.view.layoutIfNeeded()
         }
         
-        PFCloud.callFunctionInBackground("updateChatRoomName", withParameters: ["aliasId": delegate.myAlias().objectId,"name":chatRoomTitleText.text!,"pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            self.callInFlight = false
-            self.delegate.shouldCloseAll()
+        CheddarRequest.updateChatRoomName(delegate.myAlias().objectId,
+                                          name: chatRoomTitleText.text!,
+            successCallback: { (object) in
+                
+                self.callInFlight = false
+                self.delegate.shouldCloseAll()
+                
+            }) { (error) in
+                
+                self.callInFlight = false
         }
     }
 }

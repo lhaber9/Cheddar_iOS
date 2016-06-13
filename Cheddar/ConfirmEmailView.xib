@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ConfirmEmailView" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QJb-ZQ-WtQ">
+                    <rect key="frame" x="0.0" y="262" width="600" height="76"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Confirm Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qm2-5j-aCL">
+                            <rect key="frame" x="246.5" y="0.0" width="107" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWx-3v-G60">
+                            <rect key="frame" x="232" y="46" width="137" height="30"/>
+                            <state key="normal" title="Check Confirmation"/>
+                            <connections>
+                                <action selector="checkVerifyEmail" destination="iN0-l3-epB" eventType="touchUpInside" id="bKx-hH-Phq"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Qm2-5j-aCL" firstAttribute="top" secondItem="QJb-ZQ-WtQ" secondAttribute="top" id="1hd-ng-Rgg"/>
+                        <constraint firstItem="fWx-3v-G60" firstAttribute="centerX" secondItem="QJb-ZQ-WtQ" secondAttribute="centerX" id="M2U-ab-8bm"/>
+                        <constraint firstItem="Qm2-5j-aCL" firstAttribute="centerX" secondItem="QJb-ZQ-WtQ" secondAttribute="centerX" id="bte-cu-KsT"/>
+                        <constraint firstItem="fWx-3v-G60" firstAttribute="top" secondItem="Qm2-5j-aCL" secondAttribute="bottom" constant="25" id="o4J-ip-t4Z"/>
+                        <constraint firstAttribute="bottom" secondItem="fWx-3v-G60" secondAttribute="bottom" id="z1o-xE-yw8"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="QJb-ZQ-WtQ" secondAttribute="trailing" id="eVV-gB-Wms"/>
+                <constraint firstItem="QJb-ZQ-WtQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="qsp-vX-7Kb"/>
+                <constraint firstItem="QJb-ZQ-WtQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tAQ-sP-DSO"/>
+            </constraints>
+            <connections>
+                <outlet property="confirmedLabel" destination="Qm2-5j-aCL" id="HQm-a4-90M"/>
+            </connections>
+        </view>
+    </objects>
+</document>

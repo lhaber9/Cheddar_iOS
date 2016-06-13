@@ -72,8 +72,9 @@ class AliasCircleView: LockedBackgroundColorView {
     }
     
     func showUnreadIndicator(show: Bool) {
-        let radius = (height / 2)
-        let indicatorOffset = radius - (radius * 0.70710)
+        let radius = height / 2
+        let indicatorRadius = indicatorStrokeView.frame.height / 2
+        let indicatorOffset = radius - (radius * 0.70710) - indicatorRadius
         
         indicatorTopConstraint.constant = indicatorOffset
         indicatorLeftConstraint.constant = indicatorOffset

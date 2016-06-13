@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
-    var userDidOnboardFieldName = "cheddarUserHasOnboarded"
+    var deviceDidOnboardFieldName = "cheddarDeviceHasOnboarded"
     var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
@@ -28,10 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     var sendingMessages: Bool = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
-        
-//        [self.client publish: @"Hello from PubNub iOS!" toChannel: @"my_channel" storeInHistory:YES
-//        withCompletion:^(PNPublishStatus *status)
         
         let configuration = PNConfiguration(publishKey: EnvironmentConstants.pubNubPublishKey,
                                           subscribeKey: EnvironmentConstants.pubNubSubscribeKey)
@@ -43,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         Fabric.sharedSDK().debug = true
         Fabric.with([Crashlytics.self])
         
-        initializeUser()
+//        initializeUser()
         if ( isUpdate() ) {
             //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
         }
@@ -73,60 +69,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
-//        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
-//        PFCloud.callFunctionInBackground("validateVersion", withParameters: ["version":build]) { (object: AnyObject?, error: NSError?) -> Void in
-//            
-//            if (error != nil) {
-//                return
-//            }
-//            
-//            if (object!["isValid"] == false) {
-//                 UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: nil, cancelButtonTitle: "OK").show()
-//            }
-//        }
+        let buildNum = Int(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String)
+        
+        PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                return
+            }
+            
+            let minmumBuildNum = object as! Int
+            
+            if (minmumBuildNum > buildNum) {
+                UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: nil, cancelButtonTitle: "OK").show()
+            }
+        }
         
         return true
     }
     
-    func userDidOnboard() -> Bool {
+    func deviceDidOnboard() -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
-        let didOnboard = defaults.boolForKey(userDidOnboardFieldName)
+        let didOnboard = defaults.boolForKey(deviceDidOnboardFieldName)
         if (didOnboard) {
             return true
         }
         return false
     }
     
-    func setUserOnboarded() {
+    func setDeviceOnboarded() {
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setValue(true, forKey: self.userDidOnboardFieldName)
+        defaults.setValue(true, forKey: self.deviceDidOnboardFieldName)
         defaults.synchronize()
     }
     
-    func initializeUser() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let userId = defaults.stringForKey(userIdFieldName) {
-            User.theUser.objectId = userId
-            return
-        }
-        
-        PFCloud.callFunctionInBackground("registerNewUser", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
-            let user = object as! PFUser
-            User.theUser.objectId = user.objectId
-            defaults.setValue(user.objectId, forKey: self.userIdFieldName)
-            defaults.setValue(false, forKey: self.userDidOnboardFieldName)
-            defaults.synchronize()
-        }
-    }
+//    func initializeUser() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        if let userId = defaults.stringForKey(userIdFieldName) {
+//            User.theUser.objectId = userId
+//            return
+//        }
+//        
+//        PFCloud.callFunctionInBackground("registerNewUser", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
+//            let user = object as! PFUser
+//            User.theUser.objectId = user.objectId
+//            defaults.setValue(user.objectId, forKey: self.userIdFieldName)
+//            defaults.setValue(false, forKey: self.userDidOnboardFieldName)
+//            defaults.synchronize()
+//        }
+//    }
     
-    func reinitalizeUser() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        User.theUser.objectId = nil
-        defaults.setValue(nil, forKey: self.userIdFieldName)
-        defaults.setValue(false, forKey: self.userDidOnboardFieldName)
-        defaults.synchronize()
-        initializeUser()
-    }
+//    func reinitalizeUser() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        User.theUser.objectId = nil
+//        defaults.setValue(nil, forKey: self.userIdFieldName)
+//        defaults.setValue(false, forKey: self.userDidOnboardFieldName)
+//        defaults.synchronize()
+//        initializeUser()
+//    }
     
     func isUpdate() -> Bool {
         let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
@@ -165,19 +164,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         let message = messagesToSend.first!
         
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey,"messageId":message.messageId]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if ((error) != nil) {
-                NSLog("%@",error!);
+        CheddarRequest.sendMessage(message.messageId,
+                                   aliasId: message.alias.objectId!,
+                                   body: message.body,
+            successCallback: { (object) in
+                
+                self.messagesToSend.removeAtIndex(0)
+                self.pushPubNubMessages()
+                
+            }) { (error) in
+                
+                NSLog("%@",error);
                 Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 message.status = ChatEventStatus.Error.rawValue
                 self.saveContext()
                 let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
                 chatRoom.delegate?.didUpdateEvents(chatRoom)
-            }
-            
-            self.messagesToSend.removeAtIndex(0)
-            self.pushPubNubMessages()
         }
     }
     

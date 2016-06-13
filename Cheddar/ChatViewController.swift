@@ -13,17 +13,15 @@ import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
     func subscribe(chatRoom:ChatRoom)
-    func showList()
     func leaveChatRoom(alias: Alias)
     func forceLeaveChatRoom(alias: Alias)
-    func didUpdateActiveAliases(aliases:NSSet)
     func showOverlay()
     func hideOverlay()
     func showOverlayContents(viewController: UIViewController)
     func hideOverlayContents()
 }
 
-class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, UIAlertViewDelegate,  OptionsOverlayViewDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, UIAlertViewDelegate,  OptionsOverlayViewDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -140,24 +138,23 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     func setupChatroom() {
         chatRoom.reloadActiveAlaises()
         
-        PFCloud.callFunctionInBackground("findAlias", withParameters: ["aliasId": myAlias().objectId]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if ((error) != nil) {
-                NSLog("%@",error!)
+        CheddarRequest.findAlias(myAlias().objectId,
+            successCallback: { (object) in
+                
+                if (self.chatRoom.chatEvents.count == 0) {
+                    self.chatRoom.loadNextPageMessages()
+                }
+                else {
+                    self.chatRoom.reloadMessages()
+                }
+                
+                self.delegate?.subscribe(self.chatRoom)
+                
+            }) { (error) in
+                NSLog("%@",error)
                 let alias = self.myAlias()
                 self.chatRoom = nil
                 self.delegate?.forceLeaveChatRoom(alias)
-                return
-            }
-            
-            if (self.chatRoom.chatEvents.count == 0) {
-                self.chatRoom.loadNextPageMessages()
-            }
-            else {
-                self.chatRoom.reloadMessages()
-            }
-            
-            self.delegate?.subscribe(self.chatRoom)
         }
     }
     
@@ -270,8 +267,11 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func scrollToEventIndex(index: Int, animated: Bool) {
-        let indexPath = NSIndexPath(forRow: index, inSection:0)
-        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
+        dispatch_async(dispatch_get_main_queue(), {
+            let indexPath = NSIndexPath(forRow: index, inSection:0)
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
+        })
+        
     }
     
     // MARK: Keyboard Delegate Methods
@@ -471,8 +471,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     // MARK: ActiveMembersDelegate
     
-    func activeAliases() -> [Alias] {
-        return Array(chatRoom.activeAliases)
+    func currentChatRoom() -> ChatRoom {
+        return chatRoom
     }
     
     // MARK: UIPopoverPresentationControllerDelegate
