@@ -707,18 +707,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="205"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="8" width="95" height="19"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
                                 <rect key="frame" x="16" y="69" width="268" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
                                 <rect key="frame" x="16" y="107" width="268" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -735,7 +735,7 @@
                                     <action selector="sendTap" destination="aHJ-US-Sac" eventType="touchUpInside" id="Qm5-kq-gXV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Enter your school name and email to get notified when Chedar is available at your school!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuB-NY-lEB" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your school name and email to get notified when Chedar is available at your school!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuB-NY-lEB" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="35" width="268" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -758,7 +758,6 @@
                             <constraint firstItem="A8Y-j2-xcN" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="mxr-hg-vhY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wuB-NY-lEB" secondAttribute="trailing" id="r0q-hV-Auk"/>
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="vAF-dM-GG4"/>
-                            <constraint firstItem="fS8-rS-OzN" firstAttribute="top" secondItem="A8Y-j2-xcN" secondAttribute="bottom" constant="12" id="yKe-UY-6u7"/>
                         </constraints>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="205"/>
