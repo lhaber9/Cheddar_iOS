@@ -37,9 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         Parse.setApplicationId(EnvironmentConstants.parseApplicationId, clientKey:EnvironmentConstants.parseClientKey)
         
-        Fabric.sharedSDK().debug = true
-        Fabric.with([Crashlytics.self])
-        
 //        initializeUser()
         if ( isUpdate() ) {
             //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
@@ -69,6 +66,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+//        Fabric.sharedSDK().debug = true
+        Fabric.with([Crashlytics.self])
         
         return true
     }
