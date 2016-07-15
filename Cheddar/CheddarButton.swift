@@ -21,8 +21,7 @@ class CheddarButton: UIButton {
         layer.shadowOpacity = 0.35
         layer.shadowColor = UIColor.blackColor().CGColor
         
-        layer.shadowOffset = CGSizeMake(0.5, 0.5)
-        layer.shadowRadius = 0.5
+        setStandardShadow()
         
         adjustsImageWhenHighlighted = false
     }
@@ -48,43 +47,13 @@ class CheddarButton: UIButton {
     }
     
     func setStandardShadow() {
-//        
-//        let shadowOffset = CABasicAnimation.init(keyPath: "shadowOffset")
-//        shadowOffset.fromValue = NSValue(CGSize: CGSizeMake(0.5, 2.5))
-//        shadowOffset.toValue = NSValue(CGSize: CGSizeMake(0.5, 0.5))
-//        shadowOffset.duration = 1.0;
-//        
-//        
-//        let shadowRadius = CABasicAnimation.init(keyPath: "shadowRadius")
-//        shadowOffset.fromValue = 1.5
-//        shadowOffset.toValue = 0.5
-//        shadowOffset.duration = 0.1;
-//        
-//        layer.addAnimation(shadowRadius, forKey: "shadowRadius")
-//        layer.addAnimation(shadowOffset, forKey: "shadowOffset")
-        
-        layer.shadowOffset = CGSizeMake(0.5, 0.5);
-        layer.shadowRadius = 0.5;
+        layer.shadowOffset = CGSizeMake(1, 1);
+        layer.shadowRadius = 1;
     }
     
     func setActiveShadow() {
-        
-//        let shadowOffset = CABasicAnimation.init(keyPath: "shadowOffset")
-//        shadowOffset.fromValue = NSValue(CGSize: CGSizeMake(0.5, 0.5))
-//        shadowOffset.toValue = NSValue(CGSize: CGSizeMake(0.5, 2.5))
-//        shadowOffset.duration = 0.1;
-//        
-//        let shadowRadius = CABasicAnimation.init(keyPath: "shadowRadius")
-//        shadowOffset.fromValue = 0.5
-//        shadowOffset.toValue = 1.5
-//        shadowOffset.duration = 1.0;
-//        
-//        layer.addAnimation(shadowRadius, forKey: "shadowRadius")
-//        layer.addAnimation(shadowOffset, forKey: "shadowOffset")
-        
-        layer.shadowOffset = CGSizeMake(0.5, 2.5);
-        layer.shadowRadius = 1.5;
-
+        layer.shadowOffset = CGSizeMake(1, 2.5);
+        layer.shadowRadius = 2.5;
     }
     
     func setPrimaryButton() {

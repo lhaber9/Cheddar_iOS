@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import Crashlytics
 
-class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, ChatDelegate {
+class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, ChatDelegate, VerifyEmailDelegate {
     
     @IBOutlet var loadingView: UIView!
     var loadOverlay: LoadingView!
@@ -84,10 +84,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func didCompleteLogin() {
         goToLogin()
-        self.showChat()
         CheddarRequest.currentUserIsVerified({ (isVerified) in
             self.hideLoadingView()
-            if (!isVerified) {
+            if (isVerified) {
+                self.showChat()
+            } else {
                 self.showVerifyEmailScreen()
             }
             }, errorCallback: { (error) in
@@ -101,6 +102,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func goToLogin() {
         introController.goToLastPage()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showVerifyEmail" {
+            let popoverViewController = segue.destinationViewController as! VerifyEmailViewController
+            popoverViewController.delegate = self
+        }
     }
 
     // MARK: FullPageScrollDelegate
@@ -200,6 +208,18 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         chatController = nil
         
         chatContainer.hidden = true
+    }
+    
+    // MARK: VerifyEmailDelegate
+    
+    func didLogout() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func emailVerified() {
+        dismissViewControllerAnimated(true) { 
+            self.showChat()
+        }
     }
 }
 

@@ -257,6 +257,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
+         NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
+        
         PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
             
             if (error != nil) {

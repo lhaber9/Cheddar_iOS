@@ -106,6 +106,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate, ChangeSchoolD
             }) { (error) in
                 
                 self.delegate.hideLoadingView()
+                
+                let errorString = error?.userInfo["error"] as! String
+                if (errorString == "username " + self.emailField.text! + " already taken") {
+                    self.delegate.showErrorText("Email is already taken")
+                }
         }
     }
     
