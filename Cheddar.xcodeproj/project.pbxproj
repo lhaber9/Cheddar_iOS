@@ -11,6 +11,7 @@
 		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
 		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
 		A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */; };
+		A32E97FB1D2421B400800546 /* LoginSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */; };
 		A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A333B9D61CB6E39700E5DC25 /* ChatController.swift */; };
 		A3377ADA1D08D17200DD09FC /* CheddarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3377AD91D08D17200DD09FC /* CheddarRequest.swift */; };
 		A3377ADC1D0B10DE00DD09FC /* SignupFrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3377ADB1D0B10DE00DD09FC /* SignupFrontView.swift */; };
@@ -72,6 +73,10 @@
 		A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE811C66E730003F981C /* ChatViewController.swift */; };
 		A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE951C67273C003F981C /* ChatCell.swift */; };
 		A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE971C673B8C003F981C /* ChatCell.xib */; };
+		A3F0B5891D2478FD00D6E9DC /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */; };
+		A3F0B58B1D2594B700D6E9DC /* CheddarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */; };
+		A3F0B58D1D2CB46300D6E9DC /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */; };
+		A3F0B58F1D34175700D6E9DC /* ChangeSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */; };
 		A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */; };
 		A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3701B1CC0357500BF1977 /* CheddarView.swift */; };
 		A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920571C77ECBA003E0BC3 /* StringConstants.swift */; };
@@ -111,6 +116,7 @@
 		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
+		A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSignupViewController.swift; sourceTree = "<group>"; };
 		A333B9D61CB6E39700E5DC25 /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		A3377AD91D08D17200DD09FC /* CheddarRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarRequest.swift; sourceTree = "<group>"; };
 		A3377ADB1D0B10DE00DD09FC /* SignupFrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupFrontView.swift; sourceTree = "<group>"; };
@@ -186,6 +192,10 @@
 		A3ECAE811C66E730003F981C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A3ECAE951C67273C003F981C /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		A3ECAE971C673B8C003F981C /* ChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
+		A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextField.swift; sourceTree = "<group>"; };
+		A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeSchoolViewController.swift; sourceTree = "<group>"; };
 		A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsOverlayViewController.swift; sourceTree = "<group>"; };
 		A3F3701B1CC0357500BF1977 /* CheddarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarView.swift; sourceTree = "<group>"; };
 		A3F920571C77ECBA003E0BC3 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
@@ -239,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				A3C785501CACD32300AA1673 /* CheddarTextView.swift */,
+				A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */,
 				A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */,
 				A36173ED1CEE3E240095BE3A /* LockedBackgroundColorView.swift */,
 				A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */,
@@ -391,10 +402,14 @@
 			isa = PBXGroup;
 			children = (
 				A38896CA1C60664A002017B9 /* ViewController.swift */,
-				A3D3D4421D0644A800B9D83D /* LoginViewController.swift */,
 				A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */,
-				A3D3D43E1D04E1DB00B9D83D /* OnboardingViewController.swift */,
+				A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */,
+				A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */,
+				A3D3D4421D0644A800B9D83D /* LoginViewController.swift */,
 				A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */,
+				A3D3D43E1D04E1DB00B9D83D /* OnboardingViewController.swift */,
+				A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */,
+				A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */,
 			);
 			name = IntroViews;
 			sourceTree = "<group>";
@@ -696,6 +711,7 @@
 				A3E05CB91CA989C3005B9764 /* GroupView.swift in Sources */,
 				A3D3D4551D07682400B9D83D /* InfoEntryView.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
+				A3F0B58D1D2CB46300D6E9DC /* VerifyEmailViewController.swift in Sources */,
 				A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */,
 				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
@@ -714,6 +730,7 @@
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
+				A3F0B5891D2478FD00D6E9DC /* IntroViewController.swift in Sources */,
 				A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */,
 				A363E8281CEDED5300885AE3 /* AliasCircleView.swift in Sources */,
 				A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */,
@@ -722,6 +739,7 @@
 				A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */,
 				A3D3D43F1D04E1DB00B9D83D /* OnboardingViewController.swift in Sources */,
 				A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */,
+				A3F0B58B1D2594B700D6E9DC /* CheddarTextField.swift in Sources */,
 				A3E78C7E1CE6404900454BB2 /* RenameChatController.swift in Sources */,
 				A3E05CAD1CA9887A005B9764 /* IntroView.swift in Sources */,
 				A3CE46FD1CE94BA5009A23D7 /* ActiveMembersController.swift in Sources */,
@@ -731,6 +749,7 @@
 				A3D3D4431D0644A800B9D83D /* LoginViewController.swift in Sources */,
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
+				A3F0B58F1D34175700D6E9DC /* ChangeSchoolViewController.swift in Sources */,
 				A3D3D44B1D07510A00B9D83D /* ChooseSchoolView.swift in Sources */,
 				A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */,
 				A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */,
@@ -738,6 +757,7 @@
 				A3D3D4531D07681C00B9D83D /* ConfirmEmailView.swift in Sources */,
 				A3CE46FF1CE94F6C009A23D7 /* ActiveMemberCell.swift in Sources */,
 				A36173EE1CEE3E240095BE3A /* LockedBackgroundColorView.swift in Sources */,
+				A32E97FB1D2421B400800546 /* LoginSignupViewController.swift in Sources */,
 				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

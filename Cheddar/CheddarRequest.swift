@@ -104,7 +104,7 @@ class CheddarRequest: NSObject {
     
     static func leaveChatroom(aliasId: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
-        callFunction("leaveChatroom",
+        callFunction("leaveChatRoom",
                      params: ["aliasId": aliasId,
                               "pubkey" : EnvironmentConstants.pubNubPublishKey,
                               "subkey" : EnvironmentConstants.pubNubSubscribeKey],
@@ -170,6 +170,33 @@ class CheddarRequest: NSObject {
                               "name":name,
                               "pubkey":EnvironmentConstants.pubNubPublishKey,
                               "subkey":EnvironmentConstants.pubNubSubscribeKey],
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
+    }
+    
+    static func sendFeedback(feedbackBody: String, alias: Alias, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+        let userId = alias.userId
+        let chatRoomId = alias.chatRoomId
+        let aliasName = alias.name
+        
+        callFunction("sendFeedback",
+                     params: [  "version": version,
+                                "build": build,
+                                "userId": userId,
+                                "chatRoomId": chatRoomId,
+                                "aliasName": aliasName,
+                                "body": feedbackBody ],
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
+    }
+    
+    static func sendSchoolChangeRequest(schoolName: String, email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        callFunction("sendChangeSchoolRequest",
+                     params: [ "schoolName": schoolName,
+                               "email": email   ],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }

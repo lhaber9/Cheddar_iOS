@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  Cheddar
@@ -68,21 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
-        
-        let buildNum = Int(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String)
-        
-        PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                return
-            }
-            
-            let minmumBuildNum = object as! Int
-            
-            if (minmumBuildNum > buildNum) {
-                UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: nil, cancelButtonTitle: "OK").show()
-            }
-        }
         
         return true
     }
@@ -183,33 +169,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         }
     }
     
-    func sendFeedback(text: String, alias: Alias) {
-        
-        let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
-        let userId = alias.userId
-        let chatRoomId = alias.chatRoomId
-        let aliasName = alias.name
-        
-        var sendBody = "Version: " + version + "\n"
-        sendBody += "Build: " + build + "\n"
-        sendBody += "UserId: " + userId + "\n"
-        sendBody += "ChatRoomId: " + chatRoomId + "\n"
-        sendBody += "AliasName: " + aliasName + "\n"
-        sendBody += text + "\n"
-        sendBody += "-----------------------"
-        
-        let urlString = "https://hooks.slack.com/services/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"
-        let url = NSURL(string: urlString)
-        let request = NSMutableURLRequest(URL: url!)
-        request.HTTPMethod = "POST"
-        request.HTTPBody = "payload={\"text\": \"\(sendBody)\"}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            
-        }
-    }
-    
     func subscribeToPubNubChannel(channelId: String) {
         self.pnClient.subscribeToChannels([channelId], withPresence: true)
     }
@@ -242,12 +201,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             
             // Check whether request successfully completed or not.
             if (!status.error) {
-                
                 // Handle successful push notification enabling on passed channels.
             }
                 // Request processing failed.
             else {
-                
                 // Handle modification error. Check 'category' property to find out possible issue because
                 // of which request did fail.
                 //
@@ -299,6 +256,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
+            
+            if (error != nil) {
+                return
+            }
+            
+            let minmumBuildNum = object as! Int
+            
+            let currentBuildNum = Int(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String)
+            
+            if (minmumBuildNum > currentBuildNum) {
+                UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK").show()
+            }
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -406,7 +378,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        
+        let iTunesLink = "itms://itunes.apple.com/us/app/apple-store/id375380948?mt=8"
+        UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
     }
 
 }

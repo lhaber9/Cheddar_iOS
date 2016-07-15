@@ -20,40 +20,16 @@ class AlphaWarningView: FrontPageView {
     }
     
     override func awakeFromNib() {
-        joinButtonView.layer.masksToBounds = false;
-        setStandardShadow()
-        
         if (Utilities.IS_IPHONE_4_OR_LESS()) {
             buttonOffsetSmallConstraint.priority = 950
         }
     }
     
-    func setStandardShadow() {
-        joinButtonView.layer.shadowOffset = CGSizeMake(0, 1);
-        joinButtonView.layer.shadowRadius = 1;
-        joinButtonView.layer.shadowOpacity = 0.45;
-        joinButtonView.layer.shadowColor = UIColor.blackColor().CGColor
-        joinButtonView.layer.shadowPath = UIBezierPath(rect: joinButtonView.bounds).CGPath;
-    }
-    
-    func setActiveShadow() {
-        joinButtonView.layer.shadowOffset = CGSizeMake(0, 5);
-        joinButtonView.layer.shadowRadius = 2;
-        joinButtonView.layer.shadowOpacity = 0.55;
-        joinButtonView.layer.shadowColor = UIColor.blackColor().CGColor
-        joinButtonView.layer.shadowPath = UIBezierPath(rect: joinButtonView.bounds).CGPath;
-    }
-    
-    @IBAction func tapDownButton() {
-        setActiveShadow()
-    }
-    
     @IBAction func tapUpButton() {
-        setStandardShadow()
         finishOnboard()
     }
     
     func finishOnboard() {
-        delegate?.showLogin()
+//        delegate?.showLogin()
     }
 }

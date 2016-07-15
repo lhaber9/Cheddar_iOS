@@ -15,7 +15,6 @@ class IntroView: FrontPageView {
     @IBOutlet var cheddarTextSmallConstraint: NSLayoutConstraint!
     @IBOutlet var taglineTextSmallConstraint: NSLayoutConstraint!
     @IBOutlet var bottomTextSmallConstraint: NSLayoutConstraint!
-    @IBOutlet var bottomTextSmallWidthConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -29,7 +28,10 @@ class IntroView: FrontPageView {
             cheddarTextSmallConstraint.priority = 950
             taglineTextSmallConstraint.priority = 950
             bottomTextSmallConstraint.priority = 950
+            bottomTextLabel.font = UIFont(name: "Effra-Medium", size: 22)
         }
+        
+        layoutIfNeeded()
     }
     
     class func instanceFromNib() -> IntroView {

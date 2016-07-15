@@ -1,133 +1,86 @@
-//
-//  LoginViewController.swift
-//  Cheddar
-//
-//  Created by Lucas Haber on 6/6/16.
-//  Copyright © 2016 Lucas Haber. All rights reserved.
+////
+////  LoginViewController.swift
+////  Cheddar
+////
+////  Created by Lucas Haber on 6/6/16.
+////  Copyright © 2016 Lucas Haber. All rights reserved.
 //
 
 import Foundation
+import Crashlytics
 
 protocol LoginDelegate: class {
-    func showSignup()
     func didCompleteLogin()
-    func showChat()
-    func changeBackgroundColor(color:UIColor)
+    func showErrorText(text: String)
+    func showRegister()
+    func showLoadingViewWithText(text: String)
+    func hideLoadingView()
 }
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     weak var delegate: LoginDelegate!
     
-    @IBOutlet var loginEntryView:UIView!
-    @IBOutlet var emailField:UITextField!
-    @IBOutlet var passwordField:UITextField!
+    @IBOutlet var emailField:CheddarTextField!
+    @IBOutlet var passwordField:CheddarTextField!
     
-    @IBOutlet var singupButton:UIView!
-    @IBOutlet var loginButton:UIView!
-    @IBOutlet var cancelButton:UIView!
+    @IBOutlet var loginButton:CheddarButton!
+    @IBOutlet var registerButton:UIButton!
     
-    @IBOutlet var loginButtonFullSizeLeftConstraint: NSLayoutConstraint!
-    @IBOutlet var loginButtonHalfSizeLeftConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var cancelButtonFullSizeRightConstraint: NSLayoutConstraint!
-    @IBOutlet var cancelButtonHalfSizeRightConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var viewCenterYConstraint: NSLayoutConstraint!
-    
-    var isShowingLogin: Bool = false
+    @IBOutlet var keyboardShowingBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
-        emailField.setBottomBorder(ColorConstants.textPrimary)
-        passwordField.setBottomBorder(ColorConstants.textPrimary)
+        super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        let keyboardHeight: CGFloat = (notification.userInfo![UIKeyboardFrameEndUserInfoKey]?.CGRectValue.height)!
+        emailField.delegate = self
+        emailField.textColor = ColorConstants.textPrimary
+        passwordField.delegate = self
+        passwordField.textColor = ColorConstants.textPrimary
         
-        viewCenterYConstraint.constant = -1 * (keyboardHeight / 2)
-        self.view.layoutIfNeeded()
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
+        loginButton.setSecondaryButton()
         
-        viewCenterYConstraint.constant = 0
-        self.view.layoutIfNeeded()
+        registerButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
     }
     
-    @IBAction func showLoginFields() {
-        UIView.animateWithDuration(0.45, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.singupButton.alpha = 0
-            self.loginEntryView.alpha = 1
-            self.cancelButton.alpha = 1
-            
-            self.loginButtonFullSizeLeftConstraint.priority = 200
-            self.loginButtonHalfSizeLeftConstraint.priority = 900
-            
-            self.cancelButtonFullSizeRightConstraint.priority = 200
-            self.cancelButtonHalfSizeRightConstraint.priority = 900
-            
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        isShowingLogin = true
+    @IBAction func showRegister() {
+        delegate.showRegister()
     }
     
-    @IBAction func hideLoginFields() {
-        UIView.animateWithDuration(0.45, delay: 0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
-            self.singupButton.alpha = 1
-            self.loginEntryView.alpha = 0
-            self.cancelButton.alpha = 0
-            
-            self.loginButtonFullSizeLeftConstraint.priority = 900
-            self.loginButtonHalfSizeLeftConstraint.priority = 200
-            
-            self.cancelButtonFullSizeRightConstraint.priority = 900
-            self.cancelButtonHalfSizeRightConstraint.priority = 200
-            
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        isShowingLogin = false
-    }
-    
-    @IBAction func showSignup() {
-        delegate.showSignup()
-    }
-    
-    @IBAction func tapLogin() {
-        if (isShowingLogin) {
-            doLogin()
-        }
-        else {
-            showLoginFields()
-        }
-    }
-    
-    func doLogin() {
+    @IBAction func doLogin() {
+        delegate.showLoadingViewWithText("Logging in...")
         CheddarRequest.loginUser(emailField.text!,
                                  password: passwordField.text!,
             successCallback: { (user) in
                 
+                self.deselectTextFields()
                 self.delegate.didCompleteLogin()
                 
             }) { (error) in
+                
+                self.delegate.showErrorText("Invalid email/pass combo")
+                self.delegate.hideLoadingView()
         }
     }
-}
-
-extension UITextField {
-    func setBottomBorder(color:UIColor) {
-        self.borderStyle = UITextBorderStyle.None;
-        let border = CALayer()
-        let width = CGFloat(1.0)
-        border.borderColor = color.CGColor
-        border.frame = CGRect(x: 0, y: self.frame.size.height - width,   width:  self.frame.size.width, height: self.frame.size.height)
-        
-        border.borderWidth = width
-        self.layer.addSublayer(border)
-        self.layer.masksToBounds = false
+    
+    func keyboardWillShow() {
+        registerButton.alpha = 0
+        keyboardShowingBottomConstraint.priority = 950
     }
     
+    func keyboardWillHide() {
+        registerButton.alpha = 1
+        keyboardShowingBottomConstraint.priority = 200
+    }
+    
+    func deselectTextFields() {
+        emailField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
+    
+    // MARK: TextFieldDelegate
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        textField.resignFirstResponder()
+        textField.layoutIfNeeded()
+    }
 }

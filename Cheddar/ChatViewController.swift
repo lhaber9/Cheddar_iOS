@@ -49,22 +49,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
     var dragPosition: CGFloat!
-    var isUnreadMessages = false {
-        didSet {
-            if (self.unreadMessagesView == nil) {
-                return
-            }
-            
-            UIView.animateWithDuration(0.333) {
-                if (self.isUnreadMessages) {
-                    self.unreadMessagesView.alpha = 1
-                }
-                else {
-                    self.unreadMessagesView.alpha = 0
-                }
-            }
-        }
-    }
     
     var chatRoom: ChatRoom! {
         didSet {
@@ -135,6 +119,17 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
     }
     
+    func updateLayout() {
+        UIView.animateWithDuration(0.333) {
+            if (self.chatRoom.areUnreadMessages.boolValue) {
+                self.unreadMessagesView.alpha = 1
+            }
+            else {
+                self.unreadMessagesView.alpha = 0
+            }
+        }
+    }
+    
     func setupChatroom() {
         chatRoom.reloadActiveAlaises()
         
@@ -158,7 +153,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
@@ -391,7 +386,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         
         if (isNearBottom(5)) {
-            chatRoom.areUnreadMessages = false
+            chatRoom.setUnreadMessages(false)
         }
         
         if (tableView.contentOffset.y <= 50) {

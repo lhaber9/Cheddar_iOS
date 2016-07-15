@@ -8,20 +8,12 @@
 
 import Foundation
 
-protocol FullPageScrollDelegate: class {
-    func showChat()
-    func showLogin()
-    func changeBackgroundColor(color:UIColor)
-}
-
 class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewDelegate {
-    
-    weak var delegate: FullPageScrollDelegate!
     
     @IBOutlet var scrollView: UIScrollView!
     var scrollViewWidthConstraint: NSLayoutConstraint!
     
-    var pages: [FrontPageView]! = []
+    var pages: [UIView]! = []
     var currentPageIndex: Int = 0
     
     var isAnimatingPages = false
@@ -30,11 +22,11 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         scrollView.delegate = self
     }
     
-    func currentPage() -> FrontPageView {
+    func currentPage() -> UIView {
         return pages[currentPageIndex]
     }
     
-    func addPage(pageContents: FrontPageView) {
+    func addPage(pageContents: UIView) {
         if (scrollViewWidthConstraint != nil) {
             scrollView.removeConstraint(scrollViewWidthConstraint)
         }
@@ -64,7 +56,6 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         scrollView.addConstraint(scrollViewWidthConstraint)
         
         pages.append(pageContents)
-        
     }
     
     @IBAction func goToNextPage() {
@@ -82,6 +73,11 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         scrollToPage(pages.count - 1, animated: true)
     }
     
+    func goToFirstPage() {
+        if (isAnimatingPages) { return }
+        scrollToPage(0, animated: true)
+    }
+    
     func scrollToPage(pageIdx: Int, animated: Bool) {
         isAnimatingPages = true
         if (pageIdx < 0 || pageIdx >= pages.count) {
@@ -94,13 +90,13 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
     
     // MARK: FrontPageViewDelegate
     
-    func showChat() {
-        delegate.showLogin()
-    }
-
-    func showLogin() {
-        delegate.showLogin()
-    }
+//    func showChat() {
+//        delegate.showChat()
+//    }
+//
+//    func showLogin() {
+//        delegate.showLogin()
+//    }
   
     // MARK: UIScrollViewDelegate
 
@@ -113,6 +109,7 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         currentPageIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-    }
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        delegate.scrollViewDidScroll(scrollView)
+//    }
 }

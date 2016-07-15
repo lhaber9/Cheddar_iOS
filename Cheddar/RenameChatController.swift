@@ -20,14 +20,14 @@ class RenameChatController: UIViewController {
     weak var delegate:RenameChatDelegate!
     
     @IBOutlet var chatRoomTitleText: UITextField!
-    @IBOutlet var sendLabel: UILabel!
-    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet var sendButton: CheddarButton!
 
     var callInFlight = false
     
     override func viewDidLoad() {
         chatRoomTitleText.text = delegate.currentChatRoomName()
         chatRoomTitleText.becomeFirstResponder()
+        sendButton.setPrimaryButton()
     }
     
     @IBAction func sendTap() {
@@ -36,12 +36,11 @@ class RenameChatController: UIViewController {
         }
         
         callInFlight = true
-        activityIndicator.startAnimating()
-        UIView.animateWithDuration(0.33) { 
-            self.sendLabel.alpha = 0
-            self.activityIndicator.alpha = 1
-            self.view.layoutIfNeeded()
-        }
+//        UIView.animateWithDuration(0.33) { 
+//            self.sendLabel.alpha = 0
+//            self.activityIndicator.alpha = 1
+//            self.view.layoutIfNeeded()
+//        }
         
         CheddarRequest.updateChatRoomName(delegate.myAlias().objectId,
                                           name: chatRoomTitleText.text!,

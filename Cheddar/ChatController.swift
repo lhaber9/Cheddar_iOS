@@ -14,6 +14,10 @@ protocol ChatDelegate: class {
     func removeChat()
     func showLoadingViewWithText(text:String)
     func hideLoadingView()
+    func showOverlay()
+    func hideOverlay()
+    func showOverlayContents(viewController: UIViewController)
+    func hideOverlayContents()
 }
 
 class ChatController: UIViewController, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate {
@@ -24,9 +28,6 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     @IBOutlet var listContainer: UIView!
     @IBOutlet var chatContainer: UIView!
-    @IBOutlet var overlayContainer: UIView!
-    @IBOutlet var overlayContentsContainer: UIView!
-    var contentsController: UIViewController!
     
     @IBOutlet var listContainerFocusConstraint: NSLayoutConstraint!
     @IBOutlet var chatContainerFocusConstraint: NSLayoutConstraint!
@@ -306,46 +307,19 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showOverlay() {
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContainer.hidden = false
-            self.overlayContainer.alpha = 1
-            self.view.layoutIfNeeded()
-        })
+        delegate.showOverlay()
     }
     
     func hideOverlay() {
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContainer.alpha = 0
-            self.view.layoutIfNeeded()
-        }) { (completed: Bool) in
-            self.overlayContainer.hidden = true
-        }
+        delegate.hideOverlay()
     }
     
     func showOverlayContents(viewController: UIViewController) {
-        addChildViewController(viewController)
-        overlayContentsContainer.addSubview(viewController.view)
-        viewController.view.autoPinEdgesToSuperviewEdges()
-        contentsController = viewController
-        self.view.layoutIfNeeded()
-        
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContentsContainer.hidden = false
-            self.overlayContentsContainer.alpha = 1
-            self.view.layoutIfNeeded()
-        })
+        delegate.showOverlayContents(viewController)
     }
     
     func hideOverlayContents() {
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContentsContainer.alpha = 0
-            self.view.layoutIfNeeded()
-        }) { (completed: Bool) in
-            self.overlayContentsContainer.hidden = true
-            self.contentsController?.view.removeFromSuperview()
-            self.contentsController?.removeFromParentViewController()
-            self.contentsController = nil
-        }
+        delegate.hideOverlayContents()
     }
     
     // MARK: ChatListControllerDelegate
@@ -404,14 +378,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             return
         }
         
-        UIView.animateWithDuration(0.333) {
-            if (self.chatViewController.isUnreadMessages) {
-                self.chatViewController.unreadMessagesView.alpha = 1
-            }
-            else {
-                self.chatViewController.unreadMessagesView.alpha = 0
-            }
-        }
+        chatViewController.updateLayout()
     }
     
     func didUpdateName(chatRoom:ChatRoom) {
@@ -439,7 +406,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
                 showNewMessageAlert(chatRoom, chatEvent: chatEvent)
             }
             if (!isMine) {
-                chatRoom.areUnreadMessages = true
+                chatRoom.setUnreadMessages(true)
             }
             chatListController.refreshRooms()
             return
@@ -456,7 +423,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             chatViewController.scrollToBottom(true)
         }
         else if (!isMine) {
-            chatRoom.areUnreadMessages = true
+            chatRoom.setUnreadMessages(true)
         }
     }
     

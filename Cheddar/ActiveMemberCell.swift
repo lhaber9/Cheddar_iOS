@@ -27,6 +27,7 @@ class ActiveMemberCell: UITableViewCell {
             }
             
             aliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: color, sizeFactor: 0.6)
+            aliasIcon.setTextSize(18)
             aliasIconContainer.addSubview(aliasIcon)
             aliasIcon.autoPinEdgesToSuperviewEdges()
             layoutIfNeeded()

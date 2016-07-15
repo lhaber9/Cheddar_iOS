@@ -11,8 +11,8 @@ import Foundation
 protocol FrontPageViewDelegate: class {
     func goToNextPage()
     func goToPrevPage()
-    func showChat()
-    func showLogin()
+//    func showChat()
+//    func showLogin()
     //    func animateScrollViewToRaised()
     //    func animateScrollViewToDefault()
 }

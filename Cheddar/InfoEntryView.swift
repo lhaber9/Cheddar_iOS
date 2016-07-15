@@ -22,9 +22,6 @@ class InfoEntryView: SignupFrontView {
     @IBOutlet var passwordConfirmField: UITextField!
     
     override func awakeFromNib() {
-        emailField.setBottomBorder(ColorConstants.textPrimary)
-        passwordField.setBottomBorder(ColorConstants.textPrimary)
-        passwordConfirmField.setBottomBorder(ColorConstants.textPrimary)
     }
     
     override func rightButtonPress() {

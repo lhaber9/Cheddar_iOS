@@ -56,7 +56,7 @@ class ChatRoom: NSManagedObject {
         let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
         chatRoom.currentStartToken = nil
         chatRoom.allMessagesLoaded = false
-        chatRoom.areUnreadMessages = false
+        chatRoom.setUnreadMessages(false)
         chatRoom.name = "Unnamed"
         return chatRoom
     }
