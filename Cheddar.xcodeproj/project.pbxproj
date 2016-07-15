@@ -39,6 +39,7 @@
 		A393D6161C63C1C400EBB94C /* cheese.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D6151C63C1C400EBB94C /* cheese.png */; };
 		A395D7041CB57B78004D340E /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A395D7031CB57B78004D340E /* Chat.storyboard */; };
 		A3B12D491C6FC83900B75645 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B12D481C6FC83900B75645 /* User.swift */; };
+		A3BC4D9F1D399CCC0083A4BE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A3BC4D9E1D399CCC0083A4BE /* Reachability.m */; };
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
@@ -151,6 +152,8 @@
 		A393D6151C63C1C400EBB94C /* cheese.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cheese.png; sourceTree = "<group>"; };
 		A395D7031CB57B78004D340E /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		A3B12D481C6FC83900B75645 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A3BC4D9D1D399CCC0083A4BE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A3BC4D9E1D399CCC0083A4BE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		A3C59BD01C61BE07009B82EE /* Cheddar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cheddar-Bridging-Header.h"; sourceTree = "<group>"; };
 		A3C59BD11C61BE07009B82EE /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
 		A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 		A38896BC1C60664A002017B9 = {
 			isa = PBXGroup;
 			children = (
+				A3BC4D9D1D399CCC0083A4BE /* Reachability.h */,
+				A3BC4D9E1D399CCC0083A4BE /* Reachability.m */,
 				A393D6141C63BB5B00EBB94C /* Assets */,
 				A3C59BDD1C61BE12009B82EE /* Pure Layout */,
 				A38896C71C60664A002017B9 /* Cheddar */,
@@ -719,6 +724,7 @@
 				A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */,
 				A3377ADC1D0B10DE00DD09FC /* SignupFrontView.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
+				A3BC4D9F1D399CCC0083A4BE /* Reachability.m in Sources */,
 				A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */,
