@@ -99,6 +99,11 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         chatViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
         
+        chatContainer.layer.shadowOpacity = 0.5
+        chatContainer.layer.shadowColor = UIColor.blackColor().CGColor
+        
+        chatContainer.layer.shadowOffset = CGSizeMake(-1.5, 0)
+        chatContainer.layer.shadowRadius = 8
     }
     
     func isShowingList() -> Bool {
@@ -218,6 +223,35 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     // MARK: Button Actions
+    @IBAction func slideFromLeft(recognizer: UIPanGestureRecognizer) {
+
+        if (chatContainerFocusConstraint.priority == 200) {
+            return
+        }
+        
+        let point = recognizer.locationInView(view)
+        
+        if (recognizer.velocityInView(view).x > 1500) {
+            chatContainerFocusConstraint.constant = 0;
+            chatContainerFocusConstraint.priority = 200;
+            showList()
+            return
+        }
+        
+        if (recognizer.state == UIGestureRecognizerState.Ended) {
+            if (point.x > UIScreen.mainScreen().bounds.size.width / 2) {
+                chatContainerFocusConstraint.constant = 0;
+                chatContainerFocusConstraint.priority = 200;
+                showList()
+            } else {
+                showChatRoom(chatViewController.chatRoom)
+            }
+            return
+        }
+        
+        self.chatContainerFocusConstraint.constant = point.x;
+        view.layoutIfNeeded()
+    }
     
     @IBAction func hamburgerButtonTap() {
     }
@@ -349,6 +383,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         
         dispatch_async(dispatch_get_main_queue(), {
             UIView.animateWithDuration(0.333, animations:{
+                self.chatContainerFocusConstraint.constant = 0
                 self.chatContainerFocusConstraint.priority = 900
                 self.listContainerFocusConstraint.priority = 200
                 self.sublabelShowingConstraint.priority = 900
