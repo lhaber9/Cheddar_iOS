@@ -60,6 +60,10 @@ class CheddarRequest: NSObject {
         }
     }
     
+    static func logoutUser() {
+        PFUser.logOutInBackground()
+    }
+    
     static func currentUser() -> PFUser? {
         return PFUser.currentUser()
     }
