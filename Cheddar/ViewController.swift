@@ -84,16 +84,15 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func didCompleteLogin() {
         goToLogin()
-        CheddarRequest.currentUserIsVerified({ (isVerified) in
+        self.hideLoadingView()
+        if let isVerified = CheddarRequest.currentUser()?["emailVerified"] as? Bool {
             self.hideLoadingView()
             if (isVerified) {
                 self.showChat()
             } else {
                 self.showVerifyEmailScreen()
             }
-            }, errorCallback: { (error) in
-                self.hideLoadingView()
-        })
+        }
     }
     
     func didCompleteSignup(user: PFUser) {

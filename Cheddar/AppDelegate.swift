@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
 
     var window: UIWindow?
     var pnClient: PubNub!
-    var reachability:Reachability?
     
     var userIdFieldName = "cheddarUserId"
     var deviceDidOnboardFieldName = "cheddarDeviceHasOnboarded"
@@ -68,19 +67,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged), name: kReachabilityChangedNotification, object: nil)
-        
-        reachability = Reachability(hostName: "www.apple.com");
-        reachability!.startNotifier();
-        
 //        Fabric.sharedSDK().debug = true
         Fabric.with([Crashlytics.self])
         
         return true
-    }
-    
-    func reachabilityChanged(notification: NSNotification?) {
-        NSLog("HERE")
     }
     
     func deviceDidOnboard() -> Bool {

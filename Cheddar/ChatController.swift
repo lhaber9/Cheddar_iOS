@@ -24,6 +24,10 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     weak var delegate: ChatDelegate!
     
+    var reachability:Reachability?
+    @IBOutlet var networkErrorAlertView: UIView!
+    @IBOutlet var showingNetworkErrorAlertConstraint: NSLayoutConstraint!
+    
     @IBOutlet var titleLabel: UILabel!
     
     @IBOutlet var listContainer: UIView!
@@ -67,13 +71,41 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         initChatAlertVC()
         initChatViewVC()
         
+        networkErrorAlertView.backgroundColor = ColorConstants.colorAccent
+        
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) in
             self.chatListController.refreshRooms()
         }
+        
+        NSNotificationCenter.defaultCenter().addObserverForName("applicationDidBecomeActive", object: nil, queue: nil) { (notification: NSNotification) in
+            self.reachabilityChanged(nil)
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatController.reachabilityChanged), name: kReachabilityChangedNotification, object: nil)
+        
+        reachability = Reachability.reachabilityForInternetConnection()
+        reachability!.startNotifier();
     }
     
     override func viewWillDisappear(animated: Bool) {
-         NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: kReachabilityChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "applicationDidBecomeActive", object: nil)
+    }
+    
+    func reachabilityChanged(notification: NSNotification?) {
+        let remoteHostStatus = reachability!.currentReachabilityStatus()
+        if (remoteHostStatus == NotReachable) {
+            UIView.animateWithDuration(0.15, animations: { 
+                self.showingNetworkErrorAlertConstraint.priority = 950
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animateWithDuration(0.15, animations: {
+                self.showingNetworkErrorAlertConstraint.priority = 200
+                self.view.layoutIfNeeded()
+            })
+        }
     }
     
     func initChatListVC() {
