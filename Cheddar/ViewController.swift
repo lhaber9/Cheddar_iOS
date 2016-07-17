@@ -56,6 +56,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         else {
             if (Utilities.appDelegate().deviceDidOnboard()) {
                 goToLogin()
+                introController.scrollView.scrollEnabled = false
             }
         }
 
@@ -83,8 +84,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func didCompleteLogin() {
-        goToLogin()
-        self.hideLoadingView()
+        introController.loginSignupViewController.reset()
+        hideLoadingView()
         if let isVerified = CheddarRequest.currentUser()?["emailVerified"] as? Bool {
             self.hideLoadingView()
             if (isVerified) {
@@ -100,7 +101,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func goToLogin() {
-        introController.goToLastPage()
+        introController.goToLastPageNoAnimation()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -202,6 +203,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func removeChat() {
+        let value = UIInterfaceOrientation.Portrait.rawValue
+        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+        goToLogin()
+        introController.loginSignupViewController.reset()
+        
         chatController.view.removeFromSuperview()
         chatController.removeFromParentViewController()
         chatController = nil

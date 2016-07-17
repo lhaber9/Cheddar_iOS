@@ -31,8 +31,11 @@ class ChangeSchoolViewController: UIViewController {
         let email = emailField.text!
         
         CheddarRequest.sendSchoolChangeRequest(schoolName, email: email, successCallback: { (object) in
+            
                 self.delegate.hideChangeSchoolView()
+            
             }) { (error) in
+
         }
     }
 }

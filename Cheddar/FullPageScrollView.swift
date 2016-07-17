@@ -58,6 +58,10 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         pages.append(pageContents)
     }
     
+    func didScrollToPage(page: Int) {
+        // implemented by subclasses
+    }
+    
     @IBAction func goToNextPage() {
         if (isAnimatingPages) { return }
         scrollToPage(currentPageIndex + 1, animated: true)
@@ -69,20 +73,23 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
     }
     
     func goToLastPage() {
-        if (isAnimatingPages) { return }
         scrollToPage(pages.count - 1, animated: true)
     }
     
+    func goToLastPageNoAnimation() {
+        scrollToPage(pages.count - 1, animated: false)
+        didScrollToPage(pages.count - 1)
+    }
+    
     func goToFirstPage() {
-        if (isAnimatingPages) { return }
         scrollToPage(0, animated: true)
     }
     
     func scrollToPage(pageIdx: Int, animated: Bool) {
-        isAnimatingPages = true
         if (pageIdx < 0 || pageIdx >= pages.count) {
             return
         }
+        isAnimatingPages = true
         
         currentPageIndex = pageIdx
         scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(currentPageIndex), 0.0), animated:animated)

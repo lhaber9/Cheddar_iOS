@@ -55,7 +55,8 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
         addPage(groupView)
     }
     
-    func didScrollToPage(page: Int) {
+    override func didScrollToPage(page: Int) {
+        super.didScrollToPage(page)
         UIView.animateWithDuration(0.1) { () -> Void in
             if (page == 0) {
                 self.leftArrow.alpha = 0
@@ -81,13 +82,11 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         super.scrollViewDidEndDecelerating(scrollView);
         didScrollToPage(self.currentPageIndex)
-//        updateIfLoginPage()
     }
     
     override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView);
         didScrollToPage(self.currentPageIndex)
-//        updateIfLoginPage()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

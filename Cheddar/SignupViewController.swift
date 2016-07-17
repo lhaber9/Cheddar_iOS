@@ -90,6 +90,12 @@ class SignupViewController: UIViewController, UITextFieldDelegate, ChangeSchoolD
         confirmPasswordField.resignFirstResponder()
     }
     
+    func clearTextFields() {
+        emailField.text = ""
+        passwordField.text = ""
+        confirmPasswordField.text = ""
+    }
+    
     func showErrorText(text: String) {
         delegate.showErrorText(text)
     }

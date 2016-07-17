@@ -18,7 +18,7 @@ protocol LoginSignupDelegate: class {
     func hideOverlay()
 }
 
-class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, UIPopoverPresentationControllerDelegate {
+class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, UIPopoverPresentationControllerDelegate {
     
     weak var delegate:LoginSignupDelegate!
     
@@ -95,6 +95,20 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     func deselectTextFields() {
         loginController.deselectTextFields()
         registerController.deselectTextFields()
+    }
+    
+    func reset() {
+        showMain()
+        loginController.clearTextFields()
+        registerController.clearTextFields()
+    }
+    
+    func showMain() {
+        UIView.animateWithDuration(0.333) {
+            self.loginContainer.alpha = 0
+            self.registerContainer.alpha = 0
+            self.mainContainer.alpha = 1
+        }
     }
     
     @IBAction func showLogin() {
@@ -191,6 +205,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     func hideChangeSchoolView() {
+        delegate.hideOverlay()
         dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -199,6 +214,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showChangeSchoolSegue" {
             let popoverViewController = segue.destinationViewController as! ChangeSchoolViewController
+            popoverViewController.delegate = self
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
         }
