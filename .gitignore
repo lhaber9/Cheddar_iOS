@@ -1,4 +1,5 @@
 EnvironmentConstants.swift
 .DS_Store
 build
-xcuserdata/*
+Cheddar.xcworkspace/xcuserdata/*
+Cheddar/Keys.plist
