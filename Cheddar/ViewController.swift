@@ -49,7 +49,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         introController.view.autoPinEdgesToSuperviewEdges()
 
         view.layoutIfNeeded()
-        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if (CheddarRequest.currentUser() != nil) {
             didCompleteLogin()
         }
@@ -59,11 +62,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
                 introController.scrollView.scrollEnabled = false
             }
         }
-
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
     }
     
     override func didReceiveMemoryWarning() {

@@ -60,7 +60,7 @@ class RenameChatController: UIViewController {
             self.view.layoutIfNeeded()
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RenameChatController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {

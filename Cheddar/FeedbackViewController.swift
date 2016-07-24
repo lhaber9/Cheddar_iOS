@@ -49,7 +49,7 @@ class FeedbackViewController: UIViewController {
             self.view.layoutIfNeeded()
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(FeedbackViewController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {

@@ -11,8 +11,12 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -634,26 +638,35 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4rl-B2-rJS">
                                 <rect key="frame" x="200" y="272" width="200" height="156"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OiP-Wt-tmz" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="Dgi-XG-Vfz"/>
-                                        </constraints>
-                                        <state key="normal" title="Logout"/>
-                                        <connections>
-                                            <action selector="logout" destination="Kdw-KN-ieg" eventType="touchUpInside" id="u4W-Cl-cJG"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgA-qU-hyO" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgA-qU-hyO" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="112" width="200" height="44"/>
-                                        <state key="normal" title="Resend Email"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
+                                        <state key="normal" title="Resend Email">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="resendEmail" destination="Kdw-KN-ieg" eventType="touchUpInside" id="c5U-Lf-1Kb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdT-QN-xTg" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OiP-Wt-tmz" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Dgi-XG-Vfz"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
+                                        <state key="normal" title="Logout">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="logout" destination="Kdw-KN-ieg" eventType="touchUpInside" id="u4W-Cl-cJG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdT-QN-xTg" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="56" width="200" height="44"/>
-                                        <state key="normal" title="Check Verify"/>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
+                                        <state key="normal" title="Check Verify">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="checkVerification" destination="Kdw-KN-ieg" eventType="touchUpInside" id="oNn-S3-4s0"/>
                                         </connections>
@@ -702,17 +715,29 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TZ-XJ-xXb">
+                                <rect key="frame" x="225.5" y="239.5" width="150" height="14.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="XUp-xg-Th3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="OiP-Wt-tmz" firstAttribute="top" secondItem="0TZ-XJ-xXb" secondAttribute="bottom" constant="18" id="0Wq-EE-zc8"/>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerX" secondItem="XlZ-0Q-bg3" secondAttribute="centerX" id="0fF-35-zeH"/>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerY" secondItem="XlZ-0Q-bg3" secondAttribute="centerY" constant="50" id="2ic-Tx-pgp"/>
                             <constraint firstItem="Q0e-rU-wB0" firstAttribute="centerY" secondItem="XlZ-0Q-bg3" secondAttribute="centerY" constant="-135" id="IlE-Jm-1iQ"/>
                             <constraint firstItem="Q0e-rU-wB0" firstAttribute="centerX" secondItem="XlZ-0Q-bg3" secondAttribute="centerX" id="bF9-6O-N9D"/>
+                            <constraint firstItem="0TZ-XJ-xXb" firstAttribute="centerX" secondItem="Q0e-rU-wB0" secondAttribute="centerX" id="bgs-r6-WAp"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="checkVerificationButton" destination="jdT-QN-xTg" id="o2Y-fA-SHv"/>
+                        <outlet property="infoLabel" destination="0TZ-XJ-xXb" id="rFZ-5X-TDJ"/>
                         <outlet property="logoutButton" destination="OiP-Wt-tmz" id="3l8-Zk-mnV"/>
                         <outlet property="resendEmailButton" destination="xgA-qU-hyO" id="KId-Fh-yHL"/>
                         <outlet property="view" destination="XlZ-0Q-bg3" id="Yzi-Ey-IdL"/>
