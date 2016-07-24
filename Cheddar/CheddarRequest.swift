@@ -186,7 +186,8 @@ class CheddarRequest: NSObject {
         let aliasName = alias.name
         
         callFunction("sendFeedback",
-                     params: [  "version": version,
+                     params: [  "platform": "iOS",
+                                "version": version,
                                 "build": build,
                                 "userId": userId,
                                 "chatRoomId": chatRoomId,
@@ -199,7 +200,8 @@ class CheddarRequest: NSObject {
     static func sendSchoolChangeRequest(schoolName: String, email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("sendChangeSchoolRequest",
-                     params: [ "schoolName": schoolName,
+                     params: [ "platform": "iOS",
+                               "schoolName": schoolName,
                                "email": email   ],
                      successCallback: successCallback,
                      errorCallback: errorCallback)

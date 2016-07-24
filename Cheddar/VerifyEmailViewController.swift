@@ -17,14 +17,18 @@ class VerifyEmailViewController: UIViewController {
     
     weak var delegate:VerifyEmailDelegate!
     
-    @IBOutlet var logoutButton: UIButton!
-    @IBOutlet var checkVerificationButton: UIButton!
-    @IBOutlet var resendEmailButton: UIButton!
+    @IBOutlet var logoutButton: CheddarButton!
+    @IBOutlet var checkVerificationButton: CheddarButton!
+    @IBOutlet var resendEmailButton: CheddarButton!
     
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserverForName("applicationDidBecomeActive", object: nil, queue: nil) { (notification: NSNotification) in
             self.checkVerification()
         }
+        
+        logoutButton.setSecondaryButton()
+        checkVerificationButton.setSecondaryButton()
+        resendEmailButton.setSecondaryButton()
     }
     
     deinit {

@@ -9,6 +9,7 @@
     <customFonts key="customFonts">
         <mutableArray key="Effra-Medium.ttf">
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
@@ -122,7 +123,7 @@
                         <outlet property="overlayContainer" destination="EcC-Xr-8c1" id="Jlz-6q-63I"/>
                         <outlet property="overlayContentsContainer" destination="5Wv-tn-ZLf" id="iqA-BL-eaP"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="Eva-tq-74o"/>
-                        <segue destination="Kdw-KN-ieg" kind="presentation" identifier="showVerifyEmail" id="MxH-dO-iUv"/>
+                        <segue destination="Kdw-KN-ieg" kind="presentation" identifier="showVerifyEmail" modalPresentationStyle="overCurrentContext" id="MxH-dO-iUv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -629,54 +630,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0e-rU-wB0">
-                                <rect key="frame" x="255" y="154" width="90" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4rl-B2-rJS">
-                                <rect key="frame" x="161" y="327" width="278" height="45"/>
+                                <rect key="frame" x="200" y="272" width="200" height="156"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OiP-Wt-tmz">
-                                        <rect key="frame" x="0.0" y="0.0" width="48" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OiP-Wt-tmz" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Dgi-XG-Vfz"/>
+                                        </constraints>
                                         <state key="normal" title="Logout"/>
                                         <connections>
                                             <action selector="logout" destination="Kdw-KN-ieg" eventType="touchUpInside" id="u4W-Cl-cJG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgA-qU-hyO">
-                                        <rect key="frame" x="186" y="0.0" width="92" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgA-qU-hyO" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="112" width="200" height="44"/>
                                         <state key="normal" title="Resend Email"/>
                                         <connections>
                                             <action selector="resendEmail" destination="Kdw-KN-ieg" eventType="touchUpInside" id="c5U-Lf-1Kb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdT-QN-xTg">
-                                        <rect key="frame" x="73" y="0.0" width="88" height="45"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdT-QN-xTg" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="56" width="200" height="44"/>
                                         <state key="normal" title="Check Verify"/>
                                         <connections>
                                             <action selector="checkVerification" destination="Kdw-KN-ieg" eventType="touchUpInside" id="oNn-S3-4s0"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="OiP-Wt-tmz" secondAttribute="trailing" id="0ID-Ml-VL2"/>
+                                    <constraint firstAttribute="width" constant="200" id="49i-aR-LBa"/>
                                     <constraint firstAttribute="bottom" secondItem="jdT-QN-xTg" secondAttribute="bottom" id="5Df-me-VYS"/>
+                                    <constraint firstItem="jdT-QN-xTg" firstAttribute="leading" secondItem="4rl-B2-rJS" secondAttribute="leading" id="7he-xv-QXN"/>
                                     <constraint firstAttribute="bottom" secondItem="xgA-qU-hyO" secondAttribute="bottom" id="C07-zb-1RB"/>
                                     <constraint firstItem="jdT-QN-xTg" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="GFt-kj-E0k"/>
                                     <constraint firstItem="xgA-qU-hyO" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="GN7-97-4S8"/>
-                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="leading" secondItem="jdT-QN-xTg" secondAttribute="trailing" constant="25" id="Zgu-yh-jhm"/>
-                                    <constraint firstItem="jdT-QN-xTg" firstAttribute="leading" secondItem="OiP-Wt-tmz" secondAttribute="trailing" constant="25" id="bL5-rK-azJ"/>
+                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="height" secondItem="jdT-QN-xTg" secondAttribute="height" id="KBd-IO-H5x"/>
+                                    <constraint firstAttribute="trailing" secondItem="jdT-QN-xTg" secondAttribute="trailing" id="Web-IL-yM1"/>
+                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="leading" secondItem="4rl-B2-rJS" secondAttribute="leading" id="bcP-L8-TOX"/>
                                     <constraint firstAttribute="bottom" secondItem="OiP-Wt-tmz" secondAttribute="bottom" id="bz0-p5-Udz"/>
                                     <constraint firstItem="OiP-Wt-tmz" firstAttribute="leading" secondItem="4rl-B2-rJS" secondAttribute="leading" id="jVt-Xc-C77"/>
                                     <constraint firstAttribute="height" constant="45" id="nC0-ea-k1a"/>
+                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="top" secondItem="jdT-QN-xTg" secondAttribute="bottom" constant="12" id="nI5-cH-rhE"/>
+                                    <constraint firstAttribute="bottom" secondItem="xgA-qU-hyO" secondAttribute="bottom" id="pno-Ph-6vc"/>
+                                    <constraint firstItem="jdT-QN-xTg" firstAttribute="top" secondItem="OiP-Wt-tmz" secondAttribute="bottom" constant="12" id="r1c-me-0zs"/>
+                                    <constraint firstItem="OiP-Wt-tmz" firstAttribute="height" secondItem="xgA-qU-hyO" secondAttribute="height" id="szE-0t-ugG"/>
                                     <constraint firstAttribute="trailing" secondItem="xgA-qU-hyO" secondAttribute="trailing" id="uDX-wh-5mQ"/>
                                     <constraint firstItem="OiP-Wt-tmz" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="wNh-6u-g1y"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="nC0-ea-k1a"/>
+                                        <exclude reference="bz0-p5-Udz"/>
+                                        <exclude reference="5Df-me-VYS"/>
+                                        <exclude reference="GFt-kj-E0k"/>
+                                        <exclude reference="C07-zb-1RB"/>
+                                        <exclude reference="GN7-97-4S8"/>
+                                    </mask>
+                                </variation>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your email to verify your account." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0e-rU-wB0">
+                                <rect key="frame" x="208" y="144" width="185" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="185" id="PVR-0O-sMX"/>
+                                    <constraint firstAttribute="height" constant="42" id="yeN-Ml-rX9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerX" secondItem="XlZ-0Q-bg3" secondAttribute="centerX" id="0fF-35-zeH"/>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerY" secondItem="XlZ-0Q-bg3" secondAttribute="centerY" constant="50" id="2ic-Tx-pgp"/>

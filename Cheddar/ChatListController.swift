@@ -111,10 +111,11 @@ class ChatListController : UIViewController {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let chatRoom = chatRooms[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("ChatListCell", forIndexPath: indexPath) as! ChatListCell
-        cell.chatNameLabel.text = chatRoom.name
-        cell.setMostRecentChatEvent(chatRoom.mostRecentChat(), chatRoom: chatRoom)
-        cell.showUnreadIndicator(chatRoom.areUnreadMessages.boolValue)
-        
+        dispatch_async(dispatch_get_main_queue(), {
+            cell.chatNameLabel.text = chatRoom.name
+            cell.setMostRecentChatEvent(chatRoom.mostRecentChat(), chatRoom: chatRoom)
+            cell.showUnreadIndicator(chatRoom.areUnreadMessages.boolValue)
+        })
         return cell
     }
     
