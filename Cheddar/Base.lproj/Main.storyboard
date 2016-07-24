@@ -10,6 +10,7 @@
         <mutableArray key="Effra-Medium.ttf">
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
@@ -730,27 +731,28 @@
                         <viewControllerLayoutGuide type="bottom" id="fS8-rS-OzN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="h7S-Xm-NlQ">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="205"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="218"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="8" width="95" height="19"/>
+                                <rect key="frame" x="16" y="15" width="95" height="19"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
-                                <rect key="frame" x="16" y="69" width="268" height="30"/>
+                                <rect key="frame" x="16" y="76" width="268" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
-                                <rect key="frame" x="16" y="107" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-BC-osg">
+                                <rect key="frame" x="16" y="144" width="268" height="15"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="10"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-j2-xcN" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="149" width="268" height="44"/>
+                                <rect key="frame" x="16" y="159" width="268" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="dbk-AH-LoJ"/>
                                 </constraints>
@@ -762,22 +764,32 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your school name and email to get notified when Chedar is available at your school!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuB-NY-lEB" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="35" width="268" height="27"/>
+                                <rect key="frame" x="16" y="42" width="268" height="26.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
+                                <rect key="frame" x="16" y="114" width="268" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XLJ-8i-iwk" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="0KL-wn-3O5"/>
                             <constraint firstItem="wuB-NY-lEB" firstAttribute="top" secondItem="uc6-1T-lgn" secondAttribute="bottom" constant="8" id="0iC-T0-ReL"/>
+                            <constraint firstItem="A8Y-j2-xcN" firstAttribute="top" secondItem="Fko-BC-osg" secondAttribute="bottom" id="2cT-Tq-81b"/>
                             <constraint firstItem="XLJ-8i-iwk" firstAttribute="top" secondItem="uBD-8i-pPZ" secondAttribute="bottom" constant="8" id="47m-ke-4KV"/>
-                            <constraint firstItem="uc6-1T-lgn" firstAttribute="top" secondItem="iK1-NA-7eo" secondAttribute="bottom" constant="8" id="8Oe-Ir-iFa"/>
+                            <constraint firstItem="uc6-1T-lgn" firstAttribute="top" secondItem="iK1-NA-7eo" secondAttribute="bottom" constant="15" id="8Oe-Ir-iFa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uBD-8i-pPZ" secondAttribute="trailing" id="Ah9-eq-KJ9"/>
-                            <constraint firstItem="A8Y-j2-xcN" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" constant="12" id="PVH-w6-wal"/>
+                            <constraint firstItem="fS8-rS-OzN" firstAttribute="top" secondItem="A8Y-j2-xcN" secondAttribute="bottom" constant="15" id="Db9-7R-gqe"/>
+                            <constraint firstItem="Fko-BC-osg" firstAttribute="leading" secondItem="A8Y-j2-xcN" secondAttribute="leading" id="JZu-AW-JDp"/>
+                            <constraint firstItem="Fko-BC-osg" firstAttribute="trailing" secondItem="A8Y-j2-xcN" secondAttribute="trailing" id="NQJ-kL-VLl"/>
+                            <constraint firstItem="A8Y-j2-xcN" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" constant="15" id="PVH-w6-wal"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A8Y-j2-xcN" secondAttribute="trailing" id="RpG-xD-kZX"/>
                             <constraint firstItem="wuB-NY-lEB" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="TLZ-Iv-TLk"/>
+                            <constraint firstItem="Fko-BC-osg" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" id="b48-5m-ZKP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XLJ-8i-iwk" secondAttribute="trailing" id="eek-hh-4S0"/>
                             <constraint firstItem="uc6-1T-lgn" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="g9V-YP-v4z"/>
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="top" secondItem="wuB-NY-lEB" secondAttribute="bottom" constant="8" id="gE5-2H-O8c"/>
@@ -786,15 +798,17 @@
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="vAF-dM-GG4"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="205"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="218"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="205"/>
+                    <size key="freeformSize" width="300" height="218"/>
                     <connections>
                         <outlet property="emailField" destination="uBD-8i-pPZ" id="UvG-u9-utL"/>
+                        <outlet property="errorLabel" destination="Fko-BC-osg" id="y8V-SF-gdI"/>
                         <outlet property="schoolField" destination="XLJ-8i-iwk" id="pks-YB-e3g"/>
                         <outlet property="sendButton" destination="A8Y-j2-xcN" id="hxp-bx-Djg"/>
+                        <outlet property="titleLabel" destination="uc6-1T-lgn" id="bHj-sZ-ik3"/>
                         <outlet property="view" destination="h7S-Xm-NlQ" id="tN9-st-eqr"/>
                     </connections>
                 </viewController>

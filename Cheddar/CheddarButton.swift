@@ -11,6 +11,9 @@ import Foundation
 @IBDesignable
 class CheddarButton: UIButton {
     
+    var spinner: UIActivityIndicatorView!
+    var cheddarTextTitle: String!
+    
     override func awakeFromNib() {
         tintColor = ColorConstants.textPrimary
         titleLabel?.font = UIFont(name: "Effra-Regular", size: 17)
@@ -24,6 +27,11 @@ class CheddarButton: UIButton {
         setStandardShadow()
         
         adjustsImageWhenHighlighted = false
+        
+        spinner = UIActivityIndicatorView(forAutoLayout: ())
+        spinner.alpha = 0
+        addSubview(spinner)
+        spinner.autoCenterInSuperview()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -64,5 +72,26 @@ class CheddarButton: UIButton {
     func setSecondaryButton() {
         backgroundColor = ColorConstants.solidGray
         setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
+    }
+    
+    func displaySpinner() {
+        enabled = false
+        spinner.startAnimating()
+    
+        UIView.animateWithDuration(0.33) {
+            self.spinner.alpha = 1
+            self.titleLabel?.alpha = 0
+            self.layoutIfNeeded()
+        }
+    }
+    
+    func removeSpinner() {
+        enabled = true
+        UIView.animateWithDuration(0.33) {
+            self.spinner.alpha = 0
+            self.titleLabel?.alpha = 1
+            self.spinner.stopAnimating()
+            self.layoutIfNeeded()
+        }
     }
 }

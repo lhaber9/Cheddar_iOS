@@ -20,20 +20,42 @@ class FeedbackViewController: UIViewController {
     @IBOutlet var textView: UITextView!
     @IBOutlet var sendButton: CheddarButton!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var errorLabel: UILabel!
     
     override func viewDidLoad() {
         textView.layer.cornerRadius = 5
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.grayColor().CGColor
         sendButton.setPrimaryButton()
+        errorLabel.textColor = ColorConstants.colorAccent
         titleLabel.textColor = ColorConstants.colorAccent
     }
     
     @IBAction func sendFeedback() {
+        sendButton.displaySpinner()
+        
         CheddarRequest.sendFeedback(textView.text, alias: (delegate?.myAlias())!, successCallback: { (object) in
+                self.sendButton.removeSpinner()
+                self.delegate?.shouldCloseAll()
             }) { (error) in
+                self.sendButton.removeSpinner()
+                self.displayError()
+        }
+    }
+    
+    func displayError() {
+        UIView.animateWithDuration(0.333) {
+            self.errorLabel.alpha = 1
+            self.view.layoutIfNeeded()
         }
         
-        delegate?.shouldCloseAll()
+        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
+    }
+    
+    func hideError() {
+        UIView.animateWithDuration(0.333) {
+            self.errorLabel.alpha = 0
+            self.view.layoutIfNeeded()
+        }
     }
 }

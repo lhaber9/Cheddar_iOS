@@ -21,37 +21,52 @@ class RenameChatController: UIViewController {
     
     @IBOutlet var chatRoomTitleText: UITextField!
     @IBOutlet var sendButton: CheddarButton!
-
-    var callInFlight = false
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var errorLabel: UILabel!
     
     override func viewDidLoad() {
         chatRoomTitleText.text = delegate.currentChatRoomName()
         chatRoomTitleText.becomeFirstResponder()
         sendButton.setPrimaryButton()
+        errorLabel.textColor = ColorConstants.colorAccent
+        titleLabel.textColor = ColorConstants.colorAccent
     }
     
     @IBAction func sendTap() {
-        if (callInFlight || chatRoomTitleText.text == "") {
+        if (chatRoomTitleText.text == "") {
             return
         }
         
-        callInFlight = true
-//        UIView.animateWithDuration(0.33) { 
-//            self.sendLabel.alpha = 0
-//            self.activityIndicator.alpha = 1
-//            self.view.layoutIfNeeded()
-//        }
+        self.sendButton.displaySpinner()
         
         CheddarRequest.updateChatRoomName(delegate.myAlias().objectId,
                                           name: chatRoomTitleText.text!,
             successCallback: { (object) in
                 
-                self.callInFlight = false
                 self.delegate.shouldCloseAll()
+                self.sendButton.removeSpinner()
                 
             }) { (error) in
                 
-                self.callInFlight = false
+                self.displayError()
+                self.sendButton.removeSpinner()
+        }
+    }
+    
+    func displayError() {
+        UIView.animateWithDuration(0.333) {
+            self.errorLabel.alpha = 1
+            self.view.layoutIfNeeded()
+        }
+        
+        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
+    }
+    
+    func hideError() {
+        UIView.animateWithDuration(0.333) {
+            self.errorLabel.alpha = 0
+            self.view.layoutIfNeeded()
         }
     }
 }

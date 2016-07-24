@@ -15,6 +15,11 @@ protocol ActiveMembersDelegate:class {
 class ActiveMembersController: UIViewController {
     
     weak var delegate:ActiveMembersDelegate!
+    @IBOutlet var titleLabel: UILabel!
+    
+    override func viewDidLoad() {
+        titleLabel.textColor = ColorConstants.colorAccent
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Array(delegate.currentChatRoom().activeAliases).count
