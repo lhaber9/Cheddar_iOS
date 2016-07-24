@@ -65,6 +65,7 @@ class VerifyEmailViewController: UIViewController {
         
         CheddarRequest.resendVerificationEmail(CheddarRequest.currentUserId()!, successCallback: { (object) in
                 self.resendEmailButton.removeSpinner()
+                self.showInfoLabel("Email Sent!")
             }) { (error) in
                 self.resendEmailButton.removeSpinner()
                 self.showInfoLabel("Error resending email")
