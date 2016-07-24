@@ -31,6 +31,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     var chatController: ChatController!
     var introController: IntroViewController!
     
+    var shouldShowVerifyEmailScreen = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +54,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillAppear(animated)
         if (CheddarRequest.currentUser() != nil) {
             didCompleteLogin()
         }
@@ -61,6 +63,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
                 goToLogin()
                 introController.scrollView.scrollEnabled = false
             }
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if (shouldShowVerifyEmailScreen) {
+            self.showVerifyEmailScreen()
         }
     }
     
@@ -78,6 +87,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func showVerifyEmailScreen() {
+        shouldShowVerifyEmailScreen = true
         performSegueWithIdentifier("showVerifyEmail", sender: self)
     }
     
@@ -221,6 +231,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     // MARK: VerifyEmailDelegate
     
     func didLogout() {
+        shouldShowVerifyEmailScreen = false
         UIView.animateWithDuration(0.1, animations: {
             self.introController.view.alpha = 1
             self.view.layoutIfNeeded()
@@ -229,6 +240,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func emailVerified() {
+        shouldShowVerifyEmailScreen = false
         dismissViewControllerAnimated(true) {
             UIView.animateWithDuration(0.1, animations: {
                 self.introController.view.alpha = 1
