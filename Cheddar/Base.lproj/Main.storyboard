@@ -14,8 +14,21 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -71,21 +84,23 @@
                                 <subviews>
                                     <view alpha="0.33000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gg-Qv-wxK">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="602"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-tn-ZLf">
-                                                <rect key="frame" x="-64" y="98" width="1" height="39"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            </view>
-                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-tn-ZLf">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="602"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="2gg-Qv-wxK" secondAttribute="trailing" id="6dk-iI-4ku"/>
                                     <constraint firstItem="2gg-Qv-wxK" firstAttribute="top" secondItem="EcC-Xr-8c1" secondAttribute="top" id="F30-Ei-cgI"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Wv-tn-ZLf" secondAttribute="trailing" id="LkN-h9-uUv"/>
+                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="leading" secondItem="EcC-Xr-8c1" secondAttribute="leading" id="VaZ-TV-Xzi"/>
                                     <constraint firstItem="2gg-Qv-wxK" firstAttribute="leading" secondItem="EcC-Xr-8c1" secondAttribute="leading" id="jbx-Me-Eec"/>
                                     <constraint firstAttribute="bottom" secondItem="2gg-Qv-wxK" secondAttribute="bottom" id="rm7-vB-4kX"/>
+                                    <constraint firstAttribute="bottom" secondItem="5Wv-tn-ZLf" secondAttribute="bottom" id="uEH-JI-K7D"/>
+                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="top" secondItem="EcC-Xr-8c1" secondAttribute="top" id="zGH-me-RMd"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -264,6 +279,7 @@
                                                     <constraint firstAttribute="width" constant="225" id="DCD-u9-CoG"/>
                                                     <constraint firstAttribute="height" constant="40" id="ctr-5X-cL2"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                                 <state key="normal" title="REGISTER">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
@@ -277,6 +293,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="l1M-cu-2Jk"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                                 <state key="normal" title="LOGIN">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -426,7 +443,7 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="A3r-ag-Rgi" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="175" y="86" width="250" height="35"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T83-Pv-e0T" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
@@ -434,6 +451,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="5Lm-sx-r9G"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                         <state key="normal" title="Register">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -459,7 +477,7 @@
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l8t-Lf-Gnp" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="175" y="43" width="250" height="35"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Husky Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FKy-ut-wbH" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
@@ -468,7 +486,7 @@
                                             <constraint firstAttribute="width" constant="250" id="Ld7-Ub-MDP"/>
                                             <constraint firstAttribute="height" constant="35" id="Ta0-Oj-fJP"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                 </subviews>
@@ -554,12 +572,12 @@
                                             <constraint firstAttribute="width" constant="250" id="1rW-CK-nlb"/>
                                             <constraint firstAttribute="height" constant="35" id="G8G-87-HFX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ChU-Ne-02C" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="175" y="43" width="250" height="35"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcU-YT-9N6" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
@@ -567,6 +585,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="hCR-tX-bze"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                         <state key="normal" title="Login">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
@@ -769,49 +788,50 @@
                         <viewControllerLayoutGuide type="bottom" id="fS8-rS-OzN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="h7S-Xm-NlQ">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="218"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="221"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="15" width="95" height="19"/>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
-                                <rect key="frame" x="16" y="76" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="16" y="79" width="268" height="30"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-BC-osg">
-                                <rect key="frame" x="16" y="144" width="268" height="15"/>
+                                <rect key="frame" x="16" y="147" width="268" height="15"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="10"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-j2-xcN" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="159" width="268" height="44"/>
+                                <rect key="frame" x="16" y="162" width="268" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="dbk-AH-LoJ"/>
                                 </constraints>
-                                <state key="normal" title="Send">
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <state key="normal" title="Submit">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="sendTap" destination="aHJ-US-Sac" eventType="touchUpInside" id="Qm5-kq-gXV"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your school name and email to get notified when Chedar is available at your school!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuB-NY-lEB" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="42" width="268" height="26.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your university and email to get notified when Cheddar comes to your school!" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wuB-NY-lEB" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="45" width="268" height="26"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="11"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
-                                <rect key="frame" x="16" y="114" width="268" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="16" y="117" width="268" height="30"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="107" height="22"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -840,7 +860,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="218"/>
+                    <size key="freeformSize" width="300" height="221"/>
                     <connections>
                         <outlet property="emailField" destination="uBD-8i-pPZ" id="UvG-u9-utL"/>
                         <outlet property="errorLabel" destination="Fko-BC-osg" id="y8V-SF-gdI"/>
