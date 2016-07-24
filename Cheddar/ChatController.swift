@@ -60,6 +60,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     var chatAdded = false
     var isDraggingChatAlert = false
+    var isShowingList = true
     var alertTimerId: String!
     
     override func viewDidLoad() {
@@ -136,13 +137,6 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         
         chatContainer.layer.shadowOffset = CGSizeMake(-1.5, 0)
         chatContainer.layer.shadowRadius = 8
-    }
-    
-    func isShowingList() -> Bool {
-        if (listContainerFocusConstraint.priority > 500) {
-            return true
-        }
-        return false
     }
     
     func joinNextAndAnimate() {
@@ -248,7 +242,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func isCurrentChatRoom(chatRoom: ChatRoom) -> Bool {
         if (chatRoom.objectId == chatViewController.myAlias()?.chatRoomId &&
-            !isShowingList()) {
+            !isShowingList) {
             return true
         }
         return false
@@ -308,13 +302,13 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     @IBAction func titleTap() {
-        if (!isShowingList()) {
+        if (!isShowingList) {
             chatViewController.showRename()
         }
     }
     
     @IBAction func subTitleTap() {
-        if (!isShowingList()) {
+        if (!isShowingList) {
             chatViewController.showActiveMembers()
         }
     }
@@ -328,6 +322,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showList() {
+        isShowingList = true
         self.chatListController.refreshRooms()
         self.chatListController.reloadRooms()
         UIView.animateWithDuration(0.333, animations: {
@@ -402,6 +397,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     func showChatRoom(chatRoom: ChatRoom) {
+        isShowingList = false
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
@@ -480,7 +476,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool) {
         if (!isCurrentChatRoom(chatRoom)) {
-            if (!isShowingList()) {
+            if (!isShowingList) {
                 showNewMessageAlert(chatRoom, chatEvent: chatEvent)
             }
             if (!isMine) {

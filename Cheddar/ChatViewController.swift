@@ -316,16 +316,13 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         let event = chatRoom.sortedChatEvents[indexPath.row]
         if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            dispatch_async(dispatch_get_main_queue(), {
-                let options: [String:AnyObject] = [ "text": event.body,
-                                                    "alias": event.alias,
-                                                    "isOutbound": self.chatRoom.isMyChatEvent(event),
-                                                    "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
-                                                    "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
-                                                    "status": event.status]
-            
-                cell.setMessageOptions(options)
-            })
+            let options: [String:AnyObject] = [ "text": event.body,
+                                                "alias": event.alias,
+                                                "isOutbound": self.chatRoom.isMyChatEvent(event),
+                                                "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
+                                                "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
+                                                "status": event.status]
+            cell.setMessageOptions(options)
             return cell
         }
         else if (event.type == ChatEventType.Presence.rawValue) {

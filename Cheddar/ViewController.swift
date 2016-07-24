@@ -51,7 +51,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         view.layoutIfNeeded()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if (CheddarRequest.currentUser() != nil) {
             didCompleteLogin()
