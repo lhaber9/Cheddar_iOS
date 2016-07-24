@@ -62,7 +62,7 @@ class ChatListController : UIViewController {
                             let alias = Alias.createOrUpdateAliasFromParseObject(chatRoomDict["alias"] as! PFObject)
                             let chatRoom = ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict["chatRoom"] as! PFObject, alias: alias)
                             let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(chatRoomDict["chatEvent"] as! PFObject)
-                            if (chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
+                            if (chatRoom.sortChatEvents().count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
                                 chatRoom.setUnreadMessages(true)
                             }
                         }

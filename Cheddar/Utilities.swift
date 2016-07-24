@@ -25,4 +25,16 @@ class Utilities {
         ChatRoom.removeAll()
         Alias.removeAll()
     }
+    
+    class func getKeyConstant(name: String) -> String! {
+        var keys: NSDictionary?
+        
+        if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
+            keys = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = keys![NSProcessInfo.processInfo().environment["ENV_NAME"]!] {
+            return (dict[name] as? String)!
+        }
+        return nil
+    }
 }

@@ -94,8 +94,8 @@ class CheddarRequest: NSObject {
         callFunction("sendMessage",
                      params: ["aliasId":aliasId,
                               "body":body,
-                              "pubkey" :EnvironmentConstants.pubNubPublishKey,
-                              "subkey" :EnvironmentConstants.pubNubSubscribeKey,
+                              "pubkey" :Utilities.getKeyConstant("PubnubPublishKey"),
+                              "subkey" :Utilities.getKeyConstant("PubnubSubscribeKey"),
                               "messageId":messageId],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
@@ -106,8 +106,8 @@ class CheddarRequest: NSObject {
         callFunction("joinNextAvailableChatRoom",
                      params: ["userId": userId,
                               "maxOccupancy": maxOccupancy,
-                              "pubkey": EnvironmentConstants.pubNubPublishKey,
-                              "subkey": EnvironmentConstants.pubNubSubscribeKey],
+                              "pubkey": Utilities.getKeyConstant("PubnubPublishKey"),
+                              "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }
@@ -115,9 +115,9 @@ class CheddarRequest: NSObject {
     static func leaveChatroom(aliasId: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("leaveChatRoom",
-                     params: ["aliasId": aliasId,
-                              "pubkey" : EnvironmentConstants.pubNubPublishKey,
-                              "subkey" : EnvironmentConstants.pubNubSubscribeKey],
+                     params: [  "aliasId": aliasId,
+                                "pubkey" : Utilities.getKeyConstant("PubnubPublishKey"),
+                                "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }
@@ -149,7 +149,7 @@ class CheddarRequest: NSObject {
     static func replayEvents(params: [NSObject:AnyObject], successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         var mutableParams = params
-        mutableParams["subkey"] = EnvironmentConstants.pubNubSubscribeKey
+        mutableParams["subkey"] = Utilities.getKeyConstant("PubnubSubscribeKey")
         
         callFunction("replayEvents",
                      params: mutableParams,
@@ -178,8 +178,8 @@ class CheddarRequest: NSObject {
         callFunction("updateChatRoomName",
                      params: ["aliasId": aliasId,
                               "name":name,
-                              "pubkey":EnvironmentConstants.pubNubPublishKey,
-                              "subkey":EnvironmentConstants.pubNubSubscribeKey],
+                              "pubkey": Utilities.getKeyConstant("PubnubPublishKey"),
+                              "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }

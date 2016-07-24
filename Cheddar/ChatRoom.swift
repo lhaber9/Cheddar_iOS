@@ -356,7 +356,7 @@ class ChatRoom: NSManagedObject {
         
         let count = 25
         
-        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
+        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }

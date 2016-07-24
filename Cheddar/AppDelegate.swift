@@ -30,12 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let configuration = PNConfiguration(publishKey: EnvironmentConstants.pubNubPublishKey,
-                                          subscribeKey: EnvironmentConstants.pubNubSubscribeKey)
+        let configuration = PNConfiguration(publishKey:  Utilities.getKeyConstant("PubnubPublishKey"),
+                                          subscribeKey:  Utilities.getKeyConstant("PubnubSubscribeKey"))
         pnClient = PubNub.clientWithConfiguration(configuration)
         pnClient.addListener(self)
         
-        Parse.setApplicationId(EnvironmentConstants.parseApplicationId, clientKey:EnvironmentConstants.parseClientKey)
+        Parse.setApplicationId( Utilities.getKeyConstant("ParseAppId"), clientKey: Utilities.getKeyConstant("ParseClientKey"))
         
 //        initializeUser()
         if ( isUpdate() ) {
