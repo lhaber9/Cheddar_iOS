@@ -40,8 +40,12 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func logout() {
-        CheddarRequest.logoutUser()
-        delegate.didLogout()
+        CheddarRequest.logoutUser({
+            Utilities.removeAllUserData()
+            self.delegate.didLogout()
+        }) { (error) in
+            
+        }
     }
     
     @IBAction func checkVerification() {

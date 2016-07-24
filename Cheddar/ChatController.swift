@@ -286,8 +286,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     @IBAction func hamburgerButtonTap() {
-        CheddarRequest.logoutUser()
-        delegate.removeChat()
+        CheddarRequest.logoutUser({ 
+            Utilities.removeAllUserData()
+            self.delegate.removeChat()
+        }) { (error) in
+                
+        }
     }
     
     @IBAction func newChatButtonTap() {

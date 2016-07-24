@@ -60,8 +60,14 @@ class CheddarRequest: NSObject {
         }
     }
     
-    static func logoutUser() {
-        PFUser.logOutInBackground()
+    static func logoutUser(successCallback: () -> (), errorCallback: (error: NSError?) -> ()) {
+        PFUser.logOutInBackgroundWithBlock { (error: NSError?) in
+            if (error != nil) {
+                errorCallback(error: error!)
+            }
+            
+            successCallback()
+        }
     }
     
     static func currentUser() -> PFUser? {

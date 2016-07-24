@@ -34,6 +34,14 @@ class ChatEvent: NSManagedObject {
     @NSManaged var status: String!
     @NSManaged var roomName: String!
     
+    class func removeAll() {
+        let chatEvents = fetchAll()
+        for chatEvent in chatEvents {
+            Utilities.appDelegate().managedObjectContext.deleteObject(chatEvent)
+        }
+        Utilities.appDelegate().saveContext()
+    }
+    
     class func newChatEvent() -> ChatEvent {
         let ent =  NSEntityDescription.entityForName("ChatEvent", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         let chatevent = ChatEvent(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
@@ -144,6 +152,17 @@ class ChatEvent: NSManagedObject {
         }
         
         return false
+    }
+    
+    class func fetchAll() -> [ChatEvent] {
+        let moc = Utilities.appDelegate().managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "ChatEvent")
+        
+        do {
+            return try moc.executeFetchRequest(dataFetch) as! [ChatEvent]
+        } catch {
+            return []
+        }
     }
     
     class func fetchById(eventId:String) -> ChatEvent! {

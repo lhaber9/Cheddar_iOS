@@ -19,4 +19,10 @@ class Utilities {
     class func appDelegate() -> AppDelegate {
         return UIApplication.sharedApplication().delegate as! AppDelegate
     }
+    
+    class func removeAllUserData() {
+        ChatEvent.removeAll()
+        ChatRoom.removeAll()
+        Alias.removeAll()
+    }
 }

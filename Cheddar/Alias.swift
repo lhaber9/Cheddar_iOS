@@ -21,6 +21,14 @@ class Alias: NSManagedObject {
     
     var leftAt: NSDate!
     
+    class func removeAll() {
+        let aliases = fetchAll()
+        for alias in aliases {
+            Utilities.appDelegate().managedObjectContext.deleteObject(alias)
+        }
+        Utilities.appDelegate().saveContext()
+    }
+    
     class func newAlias() -> Alias {
         let ent =  NSEntityDescription.entityForName("Alias", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         
@@ -79,6 +87,17 @@ class Alias: NSManagedObject {
         newAlias.joinedAt = pfObject.createdAt
         
         return newAlias
+    }
+    
+    class func fetchAll() -> [Alias] {
+        let moc = Utilities.appDelegate().managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "Alias")
+        
+        do {
+            return try moc.executeFetchRequest(dataFetch) as! [Alias]
+        } catch {
+            return []
+        }
     }
     
     class func fetchById(aliasId:String) -> Alias! {

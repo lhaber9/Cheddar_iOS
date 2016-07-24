@@ -51,6 +51,14 @@ class ChatRoom: NSManagedObject {
     var loadMessageCallInFlight = false
     var loadAliasCallInFlight = false
     
+    class func removeAll() {
+        let chatRooms = fetchAll()
+        for chatRoom in chatRooms {
+            Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+        }
+        Utilities.appDelegate().saveContext()
+    }
+    
     class func newChatRoom() -> ChatRoom {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
