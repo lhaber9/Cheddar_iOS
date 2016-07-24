@@ -1,5 +1,4 @@
 EnvironmentConstants.swift
 .DS_Store
 build
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
+xcuserdata/*
