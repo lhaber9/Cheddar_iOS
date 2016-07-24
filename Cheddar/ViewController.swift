@@ -60,8 +60,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         }
         else {
             if (Utilities.appDelegate().deviceDidOnboard()) {
-                goToLogin()
-                introController.scrollView.scrollEnabled = false
+                introController.setOnboardingHidden()
             }
         }
     }
@@ -82,6 +81,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         return chatController != nil
     }
     
+    
+    
     func useSmallerViews() -> Bool {
         return Utilities.IS_IPHONE_4_OR_LESS()
     }
@@ -93,6 +94,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func didCompleteLogin() {
         introController.loginSignupViewController.reset()
+        introController.setOnboardingHidden()
         hideLoadingView()
         if let isVerified = CheddarRequest.currentUser()?["emailVerified"] as? Bool {
             self.hideLoadingView()
@@ -106,6 +108,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func didCompleteSignup(user: PFUser) {
         showVerifyEmailScreen()
+        introController.setOnboardingHidden()
     }
     
     func goToLogin() {

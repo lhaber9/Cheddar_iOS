@@ -77,6 +77,11 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
         }
     }
     
+    func setOnboardingHidden() {
+        goToLastPageNoAnimation()
+        scrollView.scrollEnabled = false
+    }
+    
     // MARK: UIScrollViewDelegate
     
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -91,19 +96,21 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         delegate.scrollViewDidScroll(scrollView)
+        
+        if (scrollView.contentOffset.x >= scrollView.contentSize.width - scrollView.frame.size.width) {
+            scrollView.setContentOffset(CGPoint(x: scrollView.contentSize.width - scrollView.frame.size.width, y: scrollView.contentOffset.y ), animated: false)
+        }
     }
     
     // MARK: LoginSignupDelegate
     
     func didCompleteLogin() {
         delegate.didCompleteLogin()
-        scrollView.scrollEnabled = false
         Utilities.appDelegate().setDeviceOnboarded()
     }
     
     func didCompleteSignup(user: PFUser) {
         delegate.didCompleteSignup(user)
-        scrollView.scrollEnabled = false
         Utilities.appDelegate().setDeviceOnboarded()
     }
     

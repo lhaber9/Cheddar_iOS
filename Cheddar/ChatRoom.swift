@@ -198,7 +198,7 @@ class ChatRoom: NSManagedObject {
         }
     }
     
-    func sortChatEvents() {
+    func sortChatEvents() -> [ChatEvent] {
         sortedChatEvents = chatEvents.sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
             
             var ascend = false
@@ -218,6 +218,8 @@ class ChatRoom: NSManagedObject {
             
             return ascend
         })
+        
+        return sortedChatEvents
     }
     
     func reloadActiveAlaises() {
