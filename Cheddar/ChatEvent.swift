@@ -80,7 +80,7 @@ class ChatEvent: NSManagedObject {
             return nil
         }
         
-        chatEvent.objectId = object.objectForKey("objectId") as? String
+        chatEvent.objectId = object.objectId
         chatEvent.messageId = object.objectForKey("messageId") as? String
         chatEvent.body = object.objectForKey("body") as? String
         chatEvent.type = object.objectForKey("type") as? String
