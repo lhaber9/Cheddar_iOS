@@ -400,7 +400,6 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     func showChatRoom(chatRoom: ChatRoom) {
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
-        chatViewController.reloadTable()
         
         hideNewMessageAlert()
         
@@ -435,6 +434,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
                 self.view.layoutIfNeeded()
             }) { (error: Bool) in
                 self.delegate.hideLoadingView()
+                chatRoom.setUnreadMessages(false)
 //                self.chatViewController.scrollToBottom(true)
             }
         })
@@ -442,7 +442,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     // MARK: ChatRoomDelegate
     
-    func didUpdateUnreadMessages(areUnreadMessages: Bool) {
+    func didUpdateUnreadMessages(chatRoom: ChatRoom, areUnreadMessages: Bool) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
+            return
+        }
+        
         if (chatViewController == nil) {
             return
         }
@@ -505,7 +510,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             numActiveLabel.text = "Waiting for others..."
         }
         else {
-            numActiveLabel.text = "\(aliases.count) members"
+            if (aliases.count == 1) {
+                numActiveLabel.text = "\(aliases.count) member"
+            }
+            else {
+                numActiveLabel.text = "\(aliases.count) members"
+            }
         }
     }
     

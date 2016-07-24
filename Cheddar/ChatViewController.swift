@@ -55,9 +55,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             if (chatRoom == nil) {
                 return
             }
-            
-            reloadTable()
-            setupChatroom()
+        
+            self.reloadTable()
+            self.setupChatroom()
         }
     }
     
@@ -117,11 +117,13 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         setupChatroom()
         
         confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        
+        reloadTable()
     }
     
     func updateLayout() {
         UIView.animateWithDuration(0.333) {
-            if (self.chatRoom.areUnreadMessages.boolValue) {
+            if (self.chatRoom != nil && self.chatRoom.areUnreadMessages.boolValue) {
                 self.unreadMessagesView.alpha = 1
             }
             else {
@@ -314,13 +316,16 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         let event = chatRoom.sortedChatEvents[indexPath.row]
         if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            let options: [String:AnyObject] = ["text": event.body,
-                                               "alias": event.alias,
-                                               "isOutbound": chatRoom.isMyChatEvent(event),
-                                               "showAliasLabel": chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
-                                               "showAliasIcon": chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
-                                               "status": event.status]
-            cell.setMessageOptions(options)
+            dispatch_async(dispatch_get_main_queue(), {
+                let options: [String:AnyObject] = [ "text": event.body,
+                                                    "alias": event.alias,
+                                                    "isOutbound": self.chatRoom.isMyChatEvent(event),
+                                                    "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
+                                                    "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
+                                                    "status": event.status]
+            
+                cell.setMessageOptions(options)
+            })
             return cell
         }
         else if (event.type == ChatEventType.Presence.rawValue) {

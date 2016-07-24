@@ -12,7 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
-    func didUpdateUnreadMessages(areUnreadMessages: Bool)
+    func didUpdateUnreadMessages(chatRoom:ChatRoom, areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
@@ -165,7 +165,7 @@ class ChatRoom: NSManagedObject {
     
     func setUnreadMessages(areUnreadMessages: Bool) {
         self.areUnreadMessages = areUnreadMessages
-        delegate?.didUpdateUnreadMessages(areUnreadMessages)
+        delegate?.didUpdateUnreadMessages(self, areUnreadMessages: areUnreadMessages)
     }
     
     func reload() {
