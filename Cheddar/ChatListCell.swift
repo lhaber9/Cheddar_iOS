@@ -30,6 +30,7 @@ class ChatListCell: UITableViewCell {
         if (aliasIcon == nil) {
             self.alias = alias
             aliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: color, sizeFactor: 0.5)
+            aliasIcon.setTextSize(22)
             aliasIconContainer.addSubview(aliasIcon)
             aliasIcon.autoPinEdgesToSuperviewEdges()
         }
