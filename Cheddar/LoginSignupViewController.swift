@@ -167,10 +167,12 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     func didCompleteSignup(user: PFUser) {
+        reset()
         delegate.didCompleteSignup(user)
     }
     
     func didCompleteLogin() {
+        reset()
         delegate.didCompleteLogin()
     }
     
