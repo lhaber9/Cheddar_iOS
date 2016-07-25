@@ -25,6 +25,8 @@ class RenameChatController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var errorLabel: UILabel!
     
+    var errorLabelTimer: NSTimer!
+    
     override func viewDidLoad() {
         chatRoomTitleText.text = delegate.currentChatRoomName()
         chatRoomTitleText.becomeFirstResponder()
@@ -34,7 +36,12 @@ class RenameChatController: UIViewController {
     }
     
     @IBAction func sendTap() {
-        if (chatRoomTitleText.text == "") {
+        let newTitle = chatRoomTitleText.text!
+        if (newTitle.isEmpty) {
+            displayError("Name cannot be blank")
+            return
+        } else if (delegate.currentChatRoomName() == newTitle) {
+            displayError("Name cannot be the same")
             return
         }
         
@@ -49,18 +56,24 @@ class RenameChatController: UIViewController {
                 
             }) { (error) in
                 
-                self.displayError()
+                self.displayError("Error changing chat room name")
                 self.sendButton.removeSpinner()
         }
     }
     
-    func displayError() {
+    func displayError(text: String) {
+        errorLabel.text = text
         UIView.animateWithDuration(0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RenameChatController.hideError), userInfo: nil, repeats: false)
+        if (errorLabelTimer != nil) {
+            errorLabelTimer.invalidate()
+            errorLabelTimer = nil
+        }
+        
+        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RenameChatController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {

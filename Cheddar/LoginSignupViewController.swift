@@ -18,7 +18,7 @@ protocol LoginSignupDelegate: class {
     func hideOverlay()
 }
 
-class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, UIPopoverPresentationControllerDelegate {
+class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, RegistrationCodeDelegate, UIPopoverPresentationControllerDelegate {
     
     weak var delegate:LoginSignupDelegate!
     
@@ -206,7 +206,12 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         performSegueWithIdentifier("showChangeSchoolSegue", sender: self)
     }
     
-    func hideChangeSchoolView() {
+    func showRegistrationCodeView() {
+        delegate.showOverlay()
+        performSegueWithIdentifier("showRegistrationCodeSegue", sender: self)
+    }
+    
+    func hidePopup() {
         delegate.hideOverlay()
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -216,6 +221,11 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showChangeSchoolSegue" {
             let popoverViewController = segue.destinationViewController as! ChangeSchoolViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        } else if segue.identifier == "showRegistrationCodeSegue" {
+            let popoverViewController = segue.destinationViewController as! RegistrationCodeViewController
             popoverViewController.delegate = self
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self

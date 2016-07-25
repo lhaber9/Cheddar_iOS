@@ -1,23 +1,22 @@
 //
-//  ChangeSchoolViewController.swift
+//  RegistrationCodeViewController.swift
 //  Cheddar
 //
-//  Created by Lucas Haber on 7/11/16.
+//  Created by Lucas Haber on 7/24/16.
 //  Copyright © 2016 Lucas Haber. All rights reserved.
 //
 
 import Foundation
 
-protocol ChangeSchoolDelegate: class {
+protocol RegistrationCodeDelegate: class {
     func hidePopup()
 }
 
-class ChangeSchoolViewController: UIViewController {
+class RegistrationCodeViewController: UIViewController {
     
-    weak var delegate:ChangeSchoolDelegate!
+    weak var delegate:RegistrationCodeDelegate!
     
-    @IBOutlet var emailField: UITextField!
-    @IBOutlet var schoolField: UITextField!
+    @IBOutlet var codeField: UITextField!
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var errorLabel: UILabel!
@@ -33,27 +32,21 @@ class ChangeSchoolViewController: UIViewController {
     }
     
     @IBAction func sendTap() {
-        let schoolName = schoolField.text!
-        let email = emailField.text!
-        
-        if (schoolName.isEmpty || email.isEmpty) {
-            displayError("Must fill out both fields")
-            return
-        }
         
         sendButton.displaySpinner()
         
-        CheddarRequest.sendSchoolChangeRequest(schoolName, email: email, successCallback: { (object) in
-                self.delegate.hidePopup()
-                self.sendButton.removeSpinner()
-            }) { (error) in
-                self.sendButton.removeSpinner()
-                self.displayError("Error sending school information")
-        }
+        let code = codeField.text!
+        
+//        CheddarRequest.sendSchoolChangeRequest(schoolName, email: email, successCallback: { (object) in
+//            self.delegate.hidePopup()
+//            self.sendButton.removeSpinner()
+//        }) { (error) in
+//            self.sendButton.removeSpinner()
+//            self.displayError()
+//        }
     }
     
-    func displayError(text: String) {
-        errorLabel.text = text
+    func displayError() {
         UIView.animateWithDuration(0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()
@@ -72,6 +65,5 @@ class ChangeSchoolViewController: UIViewController {
             self.errorLabel.alpha = 0
             self.view.layoutIfNeeded()
         }
-    }
-
+    }    
 }

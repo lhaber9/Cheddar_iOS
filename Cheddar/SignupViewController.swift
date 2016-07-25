@@ -16,10 +16,10 @@ protocol SignupDelegate: class {
     func showLoadingViewWithText(text: String)
     func hideLoadingView()
     func showChangeSchoolView()
-    func hideChangeSchoolView()
+    func showRegistrationCodeView()
 }
 
-class SignupViewController: UIViewController, UITextFieldDelegate, ChangeSchoolDelegate {
+class SignupViewController: UIViewController, UITextFieldDelegate {
     
     weak var delegate: SignupDelegate!
     
@@ -57,15 +57,15 @@ class SignupViewController: UIViewController, UITextFieldDelegate, ChangeSchoolD
         delegate.showChangeSchoolView()
     }
     
-    func hideChangeSchoolView() {
-        delegate.hideChangeSchoolView()
-    }
-    
     @IBAction func tapRegister() {
         let entryErrors = getEntryErrors()
         if (entryErrors.isEmpty) {
-            delegate.showLoadingViewWithText("Registering...")
-            registerNewUser(emailField.text!, password: passwordField.text!)
+            if (emailField.text!.containsString("@husky.neu.edu")) {
+                delegate.showLoadingViewWithText("Registering...")
+                registerNewUser(emailField.text!, password: passwordField.text!)
+            } else {
+                delegate.showRegistrationCodeView()
+            }
         }
         else {
             showErrorText(entryErrors)
@@ -137,10 +137,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate, ChangeSchoolD
         if (passwordText != confirmPasswordText) {
             return "Passwords must match"
         }
-        
-//        if (!emailText.containsString("@husky.neu.edu")) {
-//            return "Must be Northeastern email"
-//        }
         
         return ""
     }
