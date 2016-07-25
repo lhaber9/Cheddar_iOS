@@ -193,6 +193,7 @@ class CheddarRequest: NSObject {
         
         callFunction("sendFeedback",
                      params: [  "platform": "iOS",
+                                "environment": Utilities.envName(),
                                 "version": version,
                                 "build": build,
                                 "userId": userId,
@@ -207,6 +208,7 @@ class CheddarRequest: NSObject {
         
         callFunction("sendChangeSchoolRequest",
                      params: [ "platform": "iOS",
+                               "environment": Utilities.envName(),
                                "schoolName": schoolName,
                                "email": email   ],
                      successCallback: successCallback,

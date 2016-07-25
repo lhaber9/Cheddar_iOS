@@ -26,13 +26,17 @@ class Utilities {
         Alias.removeAll()
     }
     
+    class func envName() -> String {
+        return NSProcessInfo.processInfo().environment["ENV_NAME"]!
+    }
+    
     class func getKeyConstant(name: String) -> String! {
         var keys: NSDictionary?
         
         if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
             keys = NSDictionary(contentsOfFile: path)
         }
-        if let dict = keys![NSProcessInfo.processInfo().environment["ENV_NAME"]!] {
+        if let dict = keys![envName()] {
             return (dict[name] as? String)!
         }
         return nil
