@@ -95,7 +95,7 @@ if [[ "$CONFIGURATION" == "InternalBeta" ]]; then
   install_framework "Pods/Parse.framework"
   install_framework "Pods/PubNub.framework"
 fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
+if [[ "$CONFIGURATION" == "Production" ]]; then
   install_framework "Pods/Bolts.framework"
   install_framework "Pods/CocoaLumberjack.framework"
   install_framework "Pods/Parse.framework"
