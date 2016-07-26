@@ -10,6 +10,7 @@ import Foundation
 
 protocol RegistrationCodeDelegate: class {
     func hidePopup()
+    func registerNewUser(registrationCode:String!)
 }
 
 class RegistrationCodeViewController: UIViewController {
@@ -37,16 +38,22 @@ class RegistrationCodeViewController: UIViewController {
         
         let code = codeField.text!
         
-//        CheddarRequest.sendSchoolChangeRequest(schoolName, email: email, successCallback: { (object) in
-//            self.delegate.hidePopup()
-//            self.sendButton.removeSpinner()
-//        }) { (error) in
-//            self.sendButton.removeSpinner()
-//            self.displayError()
-//        }
+        CheddarRequest.checkRegistrationCode(code, successCallback: { (object) in
+            self.sendButton.removeSpinner()
+            if (object.boolValue!) {
+                self.delegate.hidePopup()
+                self.delegate.registerNewUser(code)
+            } else {
+                self.displayError("Unknown registration code")
+            }
+        }) { (error) in
+            self.sendButton.removeSpinner()
+            self.displayError("Error validating registration code")
+        }
     }
     
-    func displayError() {
+    func displayError(text: String) {
+        errorLabel.text = text
         UIView.animateWithDuration(0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()

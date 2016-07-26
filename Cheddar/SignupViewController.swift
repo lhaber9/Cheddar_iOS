@@ -17,6 +17,7 @@ protocol SignupDelegate: class {
     func hideLoadingView()
     func showChangeSchoolView()
     func showRegistrationCodeView()
+    func registerNewUser(registrationCode:String!)
 }
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
@@ -101,23 +102,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func registerNewUser(email: String, password: String) {
-        CheddarRequest.registerNewUser(email,
-                                       password: password,
-            successCallback: { (user: PFUser) in
-                
-                self.deselectTextFields()
-                self.delegate.didCompleteSignup(user)
-                self.delegate.hideLoadingView()
-                
-            }) { (error) in
-                
-                self.delegate.hideLoadingView()
-                
-                let errorString = error?.userInfo["error"] as! String
-                if (errorString == "username " + self.emailField.text! + " already taken") {
-                    self.delegate.showErrorText("Email is already taken")
-                }
-        }
+        delegate.registerNewUser(nil)
     }
     
     func getEntryErrors() -> String {

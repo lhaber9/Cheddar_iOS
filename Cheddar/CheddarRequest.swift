@@ -23,15 +23,17 @@ class CheddarRequest: NSObject {
         }
     }
     
-    static func registerNewUser(email: String, password: String, successCallback: (user: PFUser) -> (), errorCallback: (error: NSError?) -> ()) {
+    static func registerNewUser(email: String, password: String, registrationCode: String!, successCallback: (user: PFUser) -> (), errorCallback: (error: NSError?) -> ()) {
         
         let user = PFUser()
         user.username = email
         user.email = email
         user.password = password
+        if (registrationCode != nil) {
+            user.setValue(registrationCode, forKey: "registrationCode")
+        }
         
         user.signUpInBackgroundWithBlock { (completed: Bool, error: NSError?) in
-            
             if (error != nil) {
                 errorCallback(error: error!)
             }
@@ -211,6 +213,14 @@ class CheddarRequest: NSObject {
                                "environment": Utilities.envName(),
                                "schoolName": schoolName,
                                "email": email   ],
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
+    }
+    
+    static func checkRegistrationCode(code: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        callFunction("checkRegistrationCode",
+                     params: [ "registrationCode": code],
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }

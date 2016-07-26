@@ -216,6 +216,30 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    // MARK: SignupDelegate
+    
+    func registerNewUser(registrationCode:String!) {
+        CheddarRequest.registerNewUser(registerController.emailField.text!,
+                                       password: registerController.passwordField.text!,
+                                       registrationCode: registrationCode,
+                                       successCallback: { (user: PFUser) in
+                                        
+                                        self.reset()
+                                        self.deselectTextFields()
+                                        self.delegate.didCompleteSignup(user)
+                                        self.delegate.hideLoadingView()
+                                        
+        }) { (error) in
+            
+            self.delegate.hideLoadingView()
+            
+            let errorString = error?.userInfo["error"] as! String
+            if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
+                self.showErrorText("Email is already taken")
+            }
+        }
+    }
+    
     // MARK: UIPopoverPresentationControllerDelegate
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

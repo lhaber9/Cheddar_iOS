@@ -99,7 +99,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         if let isVerified = CheddarRequest.currentUser()?["emailVerified"] as? Bool {
             self.hideLoadingView()
             if (isVerified) {
-                self.showChat()
+                self.showChat(false)
             } else {
                 self.showVerifyEmailScreen()
             }
@@ -134,7 +134,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         view.layoutIfNeeded()
     }
     
-    func showChat() {
+    func showChat(shouldForceJoin: Bool) {
         if (CheddarRequest.currentUser() == nil) {
             return
         }
@@ -147,6 +147,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         chatController.view.autoPinEdgesToSuperviewEdges()
         
         chatContainer.hidden = false
+        
+        chatController.joinNextAndAnimate()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -249,7 +251,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
                 self.introController.view.alpha = 1
                 self.view.layoutIfNeeded()
             })
-            self.showChat()
+            self.showChat(true)
         }
     }
 }
