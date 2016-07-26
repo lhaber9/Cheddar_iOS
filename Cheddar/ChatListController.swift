@@ -14,9 +14,10 @@ protocol ChatListControllerDelegate: class {
     func forceCloseChat()
     func showChatRoom(chatRoom: ChatRoom)
     func subscribe(chatRoom:ChatRoom)
+    func leaveChatRoom(alias: Alias)
 }
 
-class ChatListController : UIViewController {
+class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     weak var delegate: ChatListControllerDelegate!
     
@@ -27,6 +28,7 @@ class ChatListController : UIViewController {
     override func viewDidLoad() {
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.registerNib(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
+        tableView.allowsMultipleSelectionDuringEditing = false
         
         reloadRooms()
         refreshRooms()
@@ -124,5 +126,20 @@ class ChatListController : UIViewController {
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.Delete) {
+            let chatRoom = self.chatRooms[indexPath.row]
+            delegate.leaveChatRoom(chatRoom.myAlias)
+        }
+    }
+    
+    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+        return "Leave Chatroom"
     }
 }

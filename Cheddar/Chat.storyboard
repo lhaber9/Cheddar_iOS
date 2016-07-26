@@ -748,10 +748,10 @@
                         <viewControllerLayoutGuide type="bottom" id="sF1-iC-2BR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EMr-5Q-dcr">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="261"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pT4-JR-Ar2">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pT4-JR-Ar2">
                                 <rect key="frame" x="0.0" y="41" width="300" height="220"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -849,7 +849,7 @@
                         <constraints>
                             <constraint firstItem="pT4-JR-Ar2" firstAttribute="top" secondItem="oTM-Yu-BLS" secondAttribute="bottom" constant="8" symbolic="YES" id="6ex-0a-OaQ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="i03-7V-dVS" secondAttribute="leading" constant="-8" id="9Y4-EL-Vmg"/>
-                            <constraint firstItem="sF1-iC-2BR" firstAttribute="top" secondItem="pT4-JR-Ar2" secondAttribute="bottom" id="Iy1-eU-ySX"/>
+                            <constraint firstItem="sF1-iC-2BR" firstAttribute="top" secondItem="pT4-JR-Ar2" secondAttribute="bottom" constant="15" id="Iy1-eU-ySX"/>
                             <constraint firstItem="i03-7V-dVS" firstAttribute="leading" secondItem="EMr-5Q-dcr" secondAttribute="leadingMargin" id="MXe-ab-xLd"/>
                             <constraint firstItem="pT4-JR-Ar2" firstAttribute="leading" secondItem="EMr-5Q-dcr" secondAttribute="leading" id="T89-9E-R3s"/>
                             <constraint firstItem="i03-7V-dVS" firstAttribute="top" secondItem="oTM-Yu-BLS" secondAttribute="bottom" constant="15" id="hHU-Va-fyu"/>
@@ -867,7 +867,7 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="261"/>
+                    <size key="freeformSize" width="300" height="276"/>
                     <connections>
                         <outlet property="titleLabel" destination="i03-7V-dVS" id="wDX-Gf-MiL"/>
                     </connections>
