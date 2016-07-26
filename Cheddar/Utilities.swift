@@ -27,7 +27,7 @@ class Utilities {
     }
     
     class func envName() -> String {
-        return NSProcessInfo.processInfo().environment["ENV_NAME"]!
+        return NSBundle.mainBundle().infoDictionary!["SchemeName"] as! String
     }
     
     class func getKeyConstant(name: String) -> String! {
