@@ -148,7 +148,9 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         
         chatContainer.hidden = false
         
-        chatController.joinNextAndAnimate()
+        if (shouldForceJoin) {
+            chatController.joinNextAndAnimate()
+        }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

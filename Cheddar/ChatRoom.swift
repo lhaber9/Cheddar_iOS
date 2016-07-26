@@ -182,6 +182,10 @@ class ChatRoom: NSManagedObject {
     }
     
     func mostRecentChat() -> ChatEvent! {
+        if (objectId == nil) {
+            return nil
+        }
+        
         let moc = Utilities.appDelegate().managedObjectContext
         let dataFetch = NSFetchRequest(entityName: "ChatEvent")
         dataFetch.predicate = NSPredicate(format: "alias.chatRoomId == %@", objectId)
