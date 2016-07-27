@@ -557,7 +557,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hmc-h8-P3I" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="47" y="2474"/>
+            <point key="canvasLocation" x="95" y="2609"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Fxf-OX-GKr">
@@ -873,7 +873,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="218"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="227"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -980,7 +980,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="169"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="187"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
