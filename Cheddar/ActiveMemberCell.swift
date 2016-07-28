@@ -30,7 +30,15 @@ class ActiveMemberCell: UITableViewCell {
             aliasIcon.setTextSize(18)
             aliasIconContainer.addSubview(aliasIcon)
             aliasIcon.autoPinEdgesToSuperviewEdges()
-            layoutIfNeeded()
         }
+        
+        
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        dateFor.dateFormat = "MM/dd"
+        
+        nameLabel.text = alias.name
+        joinedAtLabel.text = dateFor.stringFromDate(alias.joinedAt)
+        
+        layoutIfNeeded()
     }
 }

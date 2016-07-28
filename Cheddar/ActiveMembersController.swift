@@ -33,9 +33,7 @@ class ActiveMembersController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActiveMemberCell", forIndexPath: indexPath) as! ActiveMemberCell
         let chatRoom = delegate.currentChatRoom()
         let alias = Array(chatRoom.activeAliases)[indexPath.row]
-        cell.nameLabel.text = alias.name
-        cell.setAlias(alias, chatRoom: chatRoom)
-//        cell.joinedAtLabel.text = delegate.activeAliases()[indexPath.row].joinedAt as String
+        cell.setAlias(alias, chatRoom: chatRoom)     
         return cell
     }
     
