@@ -33,7 +33,8 @@ class OptionsOverlayViewController: UIViewController {
     var optionbuttonPad: CGFloat = 4
     
     var buttonNames: [String] = []
-    var buttonActions: [() -> Void] = []
+    var buttonData: [AnyObject!] = []
+    var buttonActions: [(object: AnyObject!) -> Void] = []
     
     override func viewDidLayoutSubviews() {
         if(optionButtons.count > 1) {
@@ -88,7 +89,7 @@ class OptionsOverlayViewController: UIViewController {
         view.layoutIfNeeded()
     }
     
-    func setButtonNames(buttonNames: [String], andActions buttonActions: [() -> Void]) {
+    func setButtonNames(buttonNames: [String], andActions buttonActions: [(object: AnyObject!) -> Void], andButtonData buttonData:[AnyObject!]) {
         self.buttonNames = buttonNames
         self.buttonActions = buttonActions
     }
@@ -106,7 +107,7 @@ class OptionsOverlayViewController: UIViewController {
     }
     
     func tapOptionButton(button: CheddarButton) {
-        buttonActions[button.buttonIndex]()
+        buttonActions[button.buttonIndex](object: buttonData[button.buttonIndex])
     }
     
     func willShow() {

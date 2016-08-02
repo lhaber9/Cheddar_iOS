@@ -21,7 +21,7 @@ protocol ChatViewControllerDelegate: class {
     func hideOverlayContents()
 }
 
-class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, UIAlertViewDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -41,8 +41,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
-    
-    var confirmLeaveAlertView = UIAlertView()
     
     var messageVerticalBuffer:CGFloat = 15
     var chatBarHeightDefault:CGFloat = 56
@@ -114,8 +112,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         setupObervers()
         setupChatroom()
-        
-        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
         
         reloadTable()
     }
@@ -246,11 +242,11 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func deselectTextView() {
-        textView.resignFirstResponder()
+        textView?.resignFirstResponder()
     }
     
     func selectTextView() {
-        textView.becomeFirstResponder()
+        textView?.becomeFirstResponder()
     }
     
     func scrollToBottom(animated: Bool) {
@@ -483,16 +479,4 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         // Force popover style
         return UIModalPresentationStyle.None
     }
-    
-    // MARK: UIAlertViewDelegate
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
-            let alias = myAlias()
-            chatRoom = nil
-            delegate!.leaveChatRoom(alias)
-        }
-    }
-
-    
 }

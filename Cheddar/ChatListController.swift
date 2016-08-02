@@ -14,7 +14,7 @@ protocol ChatListControllerDelegate: class {
     func forceCloseChat()
     func showChatRoom(chatRoom: ChatRoom)
     func subscribe(chatRoom:ChatRoom)
-    func leaveChatRoom(alias: Alias)
+    func tryLeaveChatRoom(object: AnyObject!)
 }
 
 class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -135,7 +135,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             let chatRoom = self.chatRooms[indexPath.row]
-            delegate.leaveChatRoom(chatRoom.myAlias)
+            delegate.tryLeaveChatRoom(chatRoom)
         }
     }
     

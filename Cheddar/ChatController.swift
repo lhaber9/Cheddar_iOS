@@ -20,7 +20,7 @@ protocol ChatDelegate: class {
     func hideOverlayContents()
 }
 
-class ChatController: UIViewController, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate, OptionsOverlayViewDelegate {
+class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate, OptionsOverlayViewDelegate {
     
     weak var delegate: ChatDelegate!
     
@@ -54,6 +54,9 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     @IBOutlet var sublabelView: UIView!
     @IBOutlet var numActiveLabel: UILabel!
     
+    var confirmLeaveAlertView = UIAlertView()
+    var confirmLogoutAlertView = UIAlertView()
+    
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
     var chatAlertController: ChatAlertController!
@@ -64,6 +67,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     var isDraggingChatAlert = false
     var isShowingList = true
     var alertTimerId: String!
+    var leavingChatRoom: ChatRoom!
     
     override func viewDidLoad() {
         topBar.backgroundColor = ColorConstants.chatNavBackground
@@ -89,6 +93,10 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         let r = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ChatController.slideFromLeft(_:)))
         r.edges = UIRectEdge.Left
         view.addGestureRecognizer(r)
+        
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        
+        confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
         
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier();
@@ -184,7 +192,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     func performJoinChatAnimation(callback: () -> Void) {
         delegate.showLoadingViewWithText("Joining Chat...")
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             callback()
         }
@@ -254,6 +262,11 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         return false
     }
     
+    func askLogoutUser(object: AnyObject!) {
+        optionOverlayController?.shouldClose()
+        confirmLogoutAlertView.show()
+    }
+    
     func logoutUser() {
         CheddarRequest.logoutUser({
             self.optionOverlayController.shouldClose()
@@ -264,11 +277,11 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         }
     }
     
-    func linkToWebsite() {
+    func linkToWebsite(object: AnyObject!) {
         
     }
     
-    func showVersion() {
+    func showVersion(object: AnyObject!) {
         
     }
     
@@ -317,7 +330,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     @IBAction func optionsButtonTap() {
         chatViewController.deselectTextView()
-        showChatViewOptions()
+        showChatRoomViewOptions(chatViewController.chatRoom)
     }
     
     @IBAction func titleTap() {
@@ -340,11 +353,12 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         chatRoom.delegate = self
     }
     
-    func showChatViewOptions() {
+    func showChatRoomViewOptions(chatRoom:ChatRoom) {
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
         optionOverlayController.buttonNames = ["Send Feedback", "Leave Group"]
+        optionOverlayController.buttonData = [nil,chatRoom]
         optionOverlayController.buttonActions = [selectedFeedback, tryLeaveChatRoom]
         
         self.delegate!.showOverlay()
@@ -354,8 +368,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func showList() {
         isShowingList = true
-        self.chatListController.refreshRooms()
-        self.chatListController.reloadRooms()
+        chatListController.reloadRooms()
         UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
             self.listContainerFocusConstraint.priority = 900
@@ -365,7 +378,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             if let selectedRow = self.chatListController.tableView.indexPathForSelectedRow {
                 self.chatListController.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
             }
-            self.chatViewController.deselectTextView()
+            self.chatViewController?.deselectTextView()
             self.hamburgerButton.enabled = true
             self.hamburgerButton.alpha = 1
             self.newChatButton.enabled = true
@@ -381,6 +394,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     func leaveChatRoom(alias: Alias) {
         
+        leavingChatRoom = nil
         delegate.showLoadingViewWithText("Leaving Chat...")
         
         CheddarRequest.leaveChatroom(alias.objectId!,
@@ -388,6 +402,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
             
             Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": alias.chatRoomId, "lengthOfStay":alias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             
+            self.chatViewController.chatRoom = nil
             self.forceLeaveChatRoom(alias)
             
         }) { (error) in
@@ -420,15 +435,16 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         delegate.hideOverlayContents()
     }
     
-    func selectedFeedback() {
+    func selectedFeedback(object: AnyObject!) {
         optionOverlayController.willHide()
         hideOverlayContents()
         self.performSegueWithIdentifier("showFeedbackSegue", sender: self)
     }
     
-    func tryLeaveChatRoom() {
-        optionOverlayController.shouldClose()
-        chatViewController.confirmLeaveAlertView.show()
+    func tryLeaveChatRoom(object: AnyObject!) {
+        leavingChatRoom = object as! ChatRoom
+        optionOverlayController?.shouldClose()
+        confirmLeaveAlertView.show()
     }
     
     // MARK: ChatListControllerDelegate
@@ -438,7 +454,8 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         optionOverlayController.delegate = self
         
         optionOverlayController.buttonNames = ["Logout", "Website","Version"]
-        optionOverlayController.buttonActions = [logoutUser, linkToWebsite, showVersion]
+        optionOverlayController.buttonData = [nil, nil, nil]
+        optionOverlayController.buttonActions = [askLogoutUser, linkToWebsite, showVersion]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
@@ -583,4 +600,16 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         if (firstLoad) { chatViewController.scrollToBottom(true) }
         else { chatViewController.scrollToEventIndex(eventCount, animated: false) }
     }
+    
+    // MARK: UIAlertViewDelegate
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
+            leaveChatRoom(leavingChatRoom.myAlias)
+        }
+        if (buttonIndex == 1 && alertView.isEqual(confirmLogoutAlertView)) {
+            logoutUser()
+        }
+    }
+
 }
