@@ -18,8 +18,6 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
@@ -349,9 +347,6 @@
                                 <exclude reference="b4K-9j-GqL"/>
                             </mask>
                         </variation>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="wtk-hy-ztG" appends="YES" id="6fL-7Z-6v9"/>
-                        </connections>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
@@ -388,12 +383,6 @@
                         <action selector="subTitleTap" destination="8S6-g2-5lY" id="Tpl-Lb-pGJ"/>
                     </connections>
                 </tapGestureRecognizer>
-                <screenEdgePanGestureRecognizer minimumNumberOfTouches="1" id="wtk-hy-ztG">
-                    <rectEdge key="edges" left="YES"/>
-                    <connections>
-                        <action selector="slideFromLeft:" destination="8S6-g2-5lY" id="YvO-zX-FTm"/>
-                    </connections>
-                </screenEdgePanGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="309" y="1375"/>
         </scene>
@@ -413,69 +402,18 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FJq-kg-HXl">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hYO-re-Fac" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="35" y="530" width="530" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CANCEL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BSG-9U-KJH">
-                                        <rect key="frame" x="226" y="12.5" width="77" height="24"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="A1s-MX-xN7"/>
-                                    <constraint firstItem="BSG-9U-KJH" firstAttribute="centerY" secondItem="FJq-kg-HXl" secondAttribute="centerY" id="H4P-k4-xUx"/>
-                                    <constraint firstItem="BSG-9U-KJH" firstAttribute="centerX" secondItem="FJq-kg-HXl" secondAttribute="centerX" id="Pib-5c-Mp9"/>
+                                    <constraint firstAttribute="height" constant="50" id="PAe-Nu-YDV"/>
                                 </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="ejC-oX-7Da" appends="YES" id="hVc-h9-rub"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qxu-IQ-Snv">
-                                <rect key="frame" x="35" y="458" width="530" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEAVE GROUP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x68-DM-RgO">
-                                        <rect key="frame" x="200" y="13" width="129.5" height="24"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="x68-DM-RgO" firstAttribute="centerX" secondItem="Qxu-IQ-Snv" secondAttribute="centerX" id="jRZ-fE-vKw"/>
-                                    <constraint firstItem="x68-DM-RgO" firstAttribute="centerY" secondItem="Qxu-IQ-Snv" secondAttribute="centerY" id="tIp-zu-H8H"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="1HK-Oi-Z7X" appends="YES" id="Jpa-4d-45I"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OJz-Tj-q8z">
-                                <rect key="frame" x="35" y="404" width="530" height="50"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND FEEDBACK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="blh-U9-vJl">
-                                        <rect key="frame" x="188" y="13" width="154.5" height="24"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="20"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="blh-U9-vJl" firstAttribute="centerY" secondItem="OJz-Tj-q8z" secondAttribute="centerY" id="n1d-eH-Um9"/>
-                                    <constraint firstItem="blh-U9-vJl" firstAttribute="centerX" secondItem="OJz-Tj-q8z" secondAttribute="centerX" id="yBX-2O-Q0W"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="4pQ-7T-Crm" appends="YES" id="nLI-lg-RpR"/>
-                                </connections>
-                            </view>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VIK-hF-tT4">
-                                <rect key="frame" x="0.0" y="20" width="600" height="372"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="510"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -485,49 +423,25 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="top" secondItem="VIK-hF-tT4" secondAttribute="bottom" constant="12" id="1xt-Oh-gd8"/>
+                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="hYO-re-Fac" secondAttribute="bottom" priority="900" constant="20" id="6j1-fp-TJj"/>
                             <constraint firstItem="VIK-hF-tT4" firstAttribute="top" secondItem="SvO-ad-Nfl" secondAttribute="bottom" id="8Tu-Se-bJ7"/>
                             <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" id="9xn-Q4-TD3"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="height" secondItem="FJq-kg-HXl" secondAttribute="height" id="F3i-AM-jaa"/>
                             <constraint firstItem="KzI-4N-vst" firstAttribute="top" secondItem="SvO-ad-Nfl" secondAttribute="bottom" id="F9B-dh-051"/>
-                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="Gbn-Ir-Lat"/>
-                            <constraint firstItem="FJq-kg-HXl" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leadingMargin" constant="15" id="GgF-Pw-x8O"/>
                             <constraint firstItem="VIK-hF-tT4" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="HSB-WI-SRE"/>
                             <constraint firstAttribute="trailing" secondItem="VIK-hF-tT4" secondAttribute="trailing" id="IZA-ck-1Vu"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="VQ8-5N-jeA"/>
-                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="height" secondItem="Qxu-IQ-Snv" secondAttribute="height" id="XUt-pk-Opi"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="100" constant="54" id="bP4-IE-8P0"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="leading" secondItem="FJq-kg-HXl" secondAttribute="leading" id="c8A-4d-fG8"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="bottom" constant="4" id="cIA-sS-90V"/>
-                            <constraint firstItem="Qxu-IQ-Snv" firstAttribute="bottom" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="900" constant="-92" id="cZ1-lL-67K"/>
-                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="FJq-kg-HXl" secondAttribute="bottom" priority="900" constant="20" id="ffG-Cu-vvq"/>
+                            <constraint firstItem="hYO-re-Fac" firstAttribute="top" secondItem="VIK-hF-tT4" secondAttribute="bottom" priority="200" id="Ly0-sf-H0F"/>
+                            <constraint firstItem="hYO-re-Fac" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leadingMargin" constant="15" id="NUx-iW-w3X"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hYO-re-Fac" secondAttribute="trailing" constant="15" id="QfJ-PY-i63"/>
+                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="hYO-re-Fac" secondAttribute="top" priority="200" constant="100" id="ZHj-zN-p22"/>
                             <constraint firstItem="KzI-4N-vst" firstAttribute="leading" secondItem="lfq-UC-aP5" secondAttribute="leading" id="flK-XG-JM9"/>
                             <constraint firstAttribute="trailing" secondItem="KzI-4N-vst" secondAttribute="trailing" id="jaP-Lr-er4"/>
-                            <constraint firstItem="FJq-kg-HXl" firstAttribute="top" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="200" constant="135" id="k60-ED-LIj"/>
-                            <constraint firstItem="G42-ZL-oXm" firstAttribute="top" secondItem="OJz-Tj-q8z" secondAttribute="top" priority="200" id="lt1-sC-65n"/>
-                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="bottom" secondItem="KzI-4N-vst" secondAttribute="bottom" priority="900" constant="-146" id="nX4-St-iBZ"/>
-                            <constraint firstItem="OJz-Tj-q8z" firstAttribute="trailing" secondItem="FJq-kg-HXl" secondAttribute="trailing" id="rIA-IM-GaH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="FJq-kg-HXl" secondAttribute="trailing" constant="15" id="yHp-RI-8oD"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="cIA-sS-90V"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="cancelLabel" destination="BSG-9U-KJH" id="oti-2x-kMj"/>
-                        <outlet property="cancelView" destination="FJq-kg-HXl" id="mAN-rj-ALn"/>
-                        <outlet property="hiddenCancelButtonConstraint" destination="k60-ED-LIj" id="Z5u-sa-ZRe"/>
-                        <outlet property="hiddenFeedbackButtonConstraint" destination="lt1-sC-65n" id="pXE-pT-78w"/>
-                        <outlet property="hiddenLeaveButtonConstraint" destination="bP4-IE-8P0" id="yuB-Vl-vTM"/>
-                        <outlet property="leaveChatLabel" destination="x68-DM-RgO" id="Xjb-yx-tvr"/>
-                        <outlet property="leaveChatView" destination="Qxu-IQ-Snv" id="lHo-De-eRa"/>
-                        <outlet property="sendFeedbackLabel" destination="blh-U9-vJl" id="8qD-mn-LVa"/>
-                        <outlet property="sendFeedbackView" destination="OJz-Tj-q8z" id="Zsn-ak-Qaq"/>
-                        <outlet property="showingCancelButtonConstraint" destination="ffG-Cu-vvq" id="eWz-ga-ZPS"/>
-                        <outlet property="showingFeedbackButtonConstraint" destination="nX4-St-iBZ" id="sVR-US-rmE"/>
-                        <outlet property="showingLeaveButtonConstraint" destination="cZ1-lL-67K" id="rwO-oB-8oi"/>
+                        <outlet property="cancelButton" destination="hYO-re-Fac" id="lBk-0E-ygg"/>
+                        <outlet property="hiddenCancelButtonConstraint" destination="ZHj-zN-p22" id="pQs-sJ-JLi"/>
+                        <outlet property="showingCancelButtonConstraint" destination="6j1-fp-TJj" id="pqI-qq-JIB"/>
+                        <outlet property="tapAwayView" destination="VIK-hF-tT4" id="abJ-Jk-yKB"/>
                         <outlet property="view" destination="lfq-UC-aP5" id="SxV-Wl-dfC"/>
                     </connections>
                 </viewController>

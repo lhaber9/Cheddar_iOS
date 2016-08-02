@@ -20,7 +20,7 @@ protocol ChatDelegate: class {
     func hideOverlayContents()
 }
 
-class ChatController: UIViewController, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate {
+class ChatController: UIViewController, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate, OptionsOverlayViewDelegate {
     
     weak var delegate: ChatDelegate!
     
@@ -58,6 +58,8 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     var chatViewController: ChatViewController!
     var chatAlertController: ChatAlertController!
     
+    var optionOverlayController: OptionsOverlayViewController!
+    
     var chatAdded = false
     var isDraggingChatAlert = false
     var isShowingList = true
@@ -83,6 +85,10 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatController.reachabilityChanged), name: kReachabilityChangedNotification, object: nil)
+        
+        let r = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ChatController.slideFromLeft(_:)))
+        r.edges = UIRectEdge.Left
+        view.addGestureRecognizer(r)
         
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier();
@@ -248,6 +254,24 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         return false
     }
     
+    func logoutUser() {
+        CheddarRequest.logoutUser({
+            self.optionOverlayController.shouldClose()
+            Utilities.removeAllUserData()
+            self.delegate.removeChat()
+        }) { (error) in
+            self.optionOverlayController.shouldClose()
+        }
+    }
+    
+    func linkToWebsite() {
+        
+    }
+    
+    func showVersion() {
+        
+    }
+    
     // MARK: Button Actions
     @IBAction func slideFromLeft(recognizer: UIPanGestureRecognizer) {
 
@@ -280,12 +304,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     }
     
     @IBAction func hamburgerButtonTap() {
-        CheddarRequest.logoutUser({ 
-            Utilities.removeAllUserData()
-            self.delegate.removeChat()
-        }) { (error) in
-                
-        }
+        showChatListOptions()
     }
     
     @IBAction func newChatButtonTap() {
@@ -298,7 +317,7 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
     
     @IBAction func optionsButtonTap() {
         chatViewController.deselectTextView()
-        chatViewController.showOptions()
+        showChatViewOptions()
     }
     
     @IBAction func titleTap() {
@@ -319,6 +338,18 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
         Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
         chatRoom.delegate = self
+    }
+    
+    func showChatViewOptions() {
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        
+        optionOverlayController.buttonNames = ["Send Feedback", "Leave Group"]
+        optionOverlayController.buttonActions = [selectedFeedback, tryLeaveChatRoom]
+        
+        self.delegate!.showOverlay()
+        self.delegate!.showOverlayContents(optionOverlayController)
+        self.optionOverlayController.willShow()
     }
     
     func showList() {
@@ -389,7 +420,30 @@ class ChatController: UIViewController, ChatListControllerDelegate, ChatViewCont
         delegate.hideOverlayContents()
     }
     
+    func selectedFeedback() {
+        optionOverlayController.willHide()
+        hideOverlayContents()
+        self.performSegueWithIdentifier("showFeedbackSegue", sender: self)
+    }
+    
+    func tryLeaveChatRoom() {
+        optionOverlayController.shouldClose()
+        chatViewController.confirmLeaveAlertView.show()
+    }
+    
     // MARK: ChatListControllerDelegate
+    
+    func showChatListOptions() {
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        
+        optionOverlayController.buttonNames = ["Logout", "Website","Version"]
+        optionOverlayController.buttonActions = [logoutUser, linkToWebsite, showVersion]
+        
+        self.delegate!.showOverlay()
+        self.delegate!.showOverlayContents(optionOverlayController)
+        self.optionOverlayController.willShow()
+    }
     
     func forceCloseChat() {
 //        Utilities.appDelegate().reinitalizeUser()

@@ -12,9 +12,25 @@ import Foundation
 class CheddarButton: UIButton {
     
     var spinner: UIActivityIndicatorView!
-    var cheddarTextTitle: String!
+    var buttonIndex: Int!
+    var shadowLayer:CALayer!
+    
+    class func newCheddarButton() -> CheddarButton {
+        let newButton = CheddarButton(type: UIButtonType.Custom)
+        newButton.setup()
+        return newButton
+    }
     
     override func awakeFromNib() {
+        setup()
+    }
+    
+    override func rounded(corners: UIRectCorner, radius: CGFloat) {
+        layer.cornerRadius = 0
+        super.rounded(corners, radius: radius)
+    }
+    
+    func setup() {
         tintColor = ColorConstants.textPrimary
         titleLabel?.font = UIFont(name: "Effra-Regular", size: 17)
         self.backgroundColor = ColorConstants.colorAccent
@@ -67,6 +83,11 @@ class CheddarButton: UIButton {
     func setPrimaryButton() {
         backgroundColor = ColorConstants.colorAccent
         setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+    }
+    
+    func setInversePrimaryButton() {
+        backgroundColor = UIColor.whiteColor()
+        setTitleColor(ColorConstants.colorAccent, forState: UIControlState.Normal)
     }
     
     func setSecondaryButton() {

@@ -21,7 +21,7 @@ protocol ChatViewControllerDelegate: class {
     func hideOverlayContents()
 }
 
-class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, UIAlertViewDelegate,  OptionsOverlayViewDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, UIAlertViewDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -42,7 +42,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
     
-    var optionOverlayController: OptionsOverlayViewController!
     var confirmLeaveAlertView = UIAlertView()
     
     var messageVerticalBuffer:CGFloat = 15
@@ -419,23 +418,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     // MARK: OptionsOverlayViewDelegate
     
-    func showOptions() {
-        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
-        optionOverlayController.delegate = self
-        
-        self.delegate!.showOverlay()
-        self.delegate!.showOverlayContents(optionOverlayController)
-        self.optionOverlayController.willShow()
-    }
-    
-    func selectedFeedback() {
-        self.performSegueWithIdentifier("showFeedbackSegue", sender: self)
-    }
-    
-    func willCloseOptions() {
-        self.optionOverlayController?.willHide()
-    }
-    
     func shouldClosePopover() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -448,9 +430,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         self.delegate!.hideOverlay()
     }
     
-    func tryLeaveChatRoom() {
-        confirmLeaveAlertView.show()
-    }
     
     // MARK: FeedbackViewDelegate
     
