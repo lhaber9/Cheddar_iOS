@@ -77,8 +77,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.resignFirstResponder()
     }
     
-    func clearTextFields() {
-        emailField.text = ""
+    func clearPassword() {
         passwordField.text = ""
     }
     

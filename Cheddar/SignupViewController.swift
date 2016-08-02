@@ -91,8 +91,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         confirmPasswordField.resignFirstResponder()
     }
     
-    func clearTextFields() {
-        emailField.text = ""
+    func clearPasswords() {
         passwordField.text = ""
         confirmPasswordField.text = ""
     }

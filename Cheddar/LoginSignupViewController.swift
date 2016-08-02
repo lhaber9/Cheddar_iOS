@@ -99,8 +99,8 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     
     func reset() {
         showMain()
-        loginController.clearTextFields()
-        registerController.clearTextFields()
+        loginController.clearPassword()
+        registerController.clearPasswords()
     }
     
     func showMain() {
@@ -224,14 +224,13 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
                                        registrationCode: registrationCode,
                                        successCallback: { (user: PFUser) in
                                         
-                                        self.reset()
                                         self.deselectTextFields()
-                                        self.delegate.didCompleteSignup(user)
-                                        self.delegate.hideLoadingView()
+                                        self.didCompleteSignup(user)
+                                        self.hideLoadingView()
                                         
         }) { (error) in
             
-            self.delegate.hideLoadingView()
+            self.hideLoadingView()
             
             let errorString = error?.userInfo["error"] as! String
             if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
