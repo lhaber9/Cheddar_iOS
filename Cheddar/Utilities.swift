@@ -30,6 +30,26 @@ class Utilities {
         return NSBundle.mainBundle().infoDictionary!["SchemeName"] as! String
     }
     
+    class func formatDate(date: NSDate) -> String {
+        let dateFor: NSDateFormatter = NSDateFormatter()
+        
+        let midnight = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+        if (midnight.compare(date) == NSComparisonResult.OrderedAscending) {
+            dateFor.dateFormat = "h:mm a"
+        }
+        else {
+            let threeDaysAgo = NSDate().dateByAddingTimeInterval(-1 * 3 * 24 * 3600)
+            if (threeDaysAgo.compare(date) == NSComparisonResult.OrderedAscending) {
+                dateFor.dateFormat = "EEE"
+            }
+            else {
+                dateFor.dateFormat = "MMM d"
+            }
+        }
+
+        return dateFor.stringFromDate(date)
+    }
+    
     class func getKeyConstant(name: String) -> String! {
         var keys: NSDictionary?
         

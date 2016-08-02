@@ -32,12 +32,8 @@ class ActiveMemberCell: UITableViewCell {
             aliasIcon.autoPinEdgesToSuperviewEdges()
         }
         
-        
-        let dateFor: NSDateFormatter = NSDateFormatter()
-        dateFor.dateFormat = "MM/dd"
-        
         nameLabel.text = alias.name
-        joinedAtLabel.text = dateFor.stringFromDate(alias.joinedAt)
+        joinedAtLabel.text = Utilities.formatDate(alias.joinedAt)
         
         layoutIfNeeded()
     }
