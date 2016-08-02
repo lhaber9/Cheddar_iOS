@@ -438,7 +438,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func selectedFeedback(object: AnyObject!) {
         optionOverlayController.willHide()
         hideOverlayContents()
-        self.performSegueWithIdentifier("showFeedbackSegue", sender: self)
+        chatViewController.performSegueWithIdentifier("showFeedbackSegue", sender: self)
     }
     
     func tryLeaveChatRoom(object: AnyObject!) {
