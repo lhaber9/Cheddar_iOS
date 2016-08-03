@@ -351,6 +351,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return 36
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
+            if (indexPath.row == chatRoom.sortedChatEvents.count - 1) {
+                return 48
+            }
             return 44
         }
         
