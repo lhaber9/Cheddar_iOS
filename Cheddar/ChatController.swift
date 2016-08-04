@@ -277,8 +277,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         }
     }
     
+    
     func linkToWebsite(object: AnyObject!) {
-        
+        UIApplication.sharedApplication().openURL(NSURL(string: "neucheddar.com")!)
     }
     
     func showVersion(object: AnyObject!) {
