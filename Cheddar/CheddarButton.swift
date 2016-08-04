@@ -32,7 +32,7 @@ class CheddarButton: UIButton {
     
     func setup() {
         tintColor = ColorConstants.textPrimary
-        titleLabel?.font = UIFont(name: "Effra-Regular", size: 17)
+        titleLabel?.font = UIFont(name: "Effra-Medium", size: 18)
         self.backgroundColor = ColorConstants.colorAccent
         
         layer.masksToBounds = false

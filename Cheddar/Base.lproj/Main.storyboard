@@ -291,7 +291,7 @@
                                                     <constraint firstAttribute="height" constant="40" id="ctr-5X-cL2"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                                <state key="normal" title="REGISTER">
+                                                <state key="normal" title="Register">
                                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -305,7 +305,7 @@
                                                     <constraint firstAttribute="height" constant="50" id="l1M-cu-2Jk"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                                <state key="normal" title="LOGIN">
+                                                <state key="normal" title="Login">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <variation key="default">
