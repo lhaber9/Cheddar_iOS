@@ -69,10 +69,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="01U-8x-dnp">
-                                <rect key="frame" x="-50" y="-2" width="775" height="602"/>
+                                <rect key="frame" x="-35" y="-2" width="790" height="602"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HuskyTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hro-zR-1v8">
-                                <rect key="frame" x="32" y="540" width="135.5" height="60"/>
+                                <rect key="frame" x="70" y="540" width="135.5" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="kol-AQ-zMW"/>
                                     <constraint firstAttribute="width" secondItem="hro-zR-1v8" secondAttribute="height" multiplier="467:207" id="msY-tn-zzF"/>
@@ -119,10 +119,10 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eXX-CZ-hUX" secondAttribute="trailing" id="12U-m1-0dn"/>
                             <constraint firstItem="EcC-Xr-8c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8bP-Xy-5dB"/>
-                            <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="12" id="8wM-Pk-7kO"/>
+                            <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="8wM-Pk-7kO"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="99s-aS-EC5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K0X-5e-tQX" secondAttribute="bottom" id="CUQ-iH-OTx"/>
-                            <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-50" id="CqR-Sc-ZXH"/>
+                            <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-35" id="CqR-Sc-ZXH"/>
                             <constraint firstItem="K0X-5e-tQX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="G7q-bI-M6L"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" priority="900" id="Gdy-6d-8KC"/>
                             <constraint firstAttribute="trailing" secondItem="EcC-Xr-8c1" secondAttribute="trailing" id="H63-f7-iZF"/>
@@ -136,7 +136,7 @@
                             <constraint firstItem="01U-8x-dnp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="USp-po-JRW"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VV5-L5-iV1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hro-zR-1v8" secondAttribute="bottom" id="VaP-RZ-toT"/>
-                            <constraint firstAttribute="trailing" secondItem="01U-8x-dnp" secondAttribute="trailing" constant="-125" id="czb-xO-Le0"/>
+                            <constraint firstAttribute="trailing" secondItem="01U-8x-dnp" secondAttribute="trailing" constant="-155" id="czb-xO-Le0"/>
                             <constraint firstAttribute="trailing" secondItem="Fvd-hD-fbB" secondAttribute="trailing" id="ecG-CD-SEt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eXX-CZ-hUX" secondAttribute="bottom" id="gCl-Uw-b0t"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="hdc-8f-UaL"/>
@@ -156,6 +156,7 @@
                         <outlet property="backgroundCheeseRightConstraint" destination="czb-xO-Le0" id="hxy-PZ-3jH"/>
                         <outlet property="backgroundView" destination="IaD-qd-VxZ" id="mr7-nG-wZ8"/>
                         <outlet property="chatContainer" destination="K0X-5e-tQX" id="4fc-yz-Jsp"/>
+                        <outlet property="huskyImageLeftConstraint" destination="8wM-Pk-7kO" id="Elz-F1-RwV"/>
                         <outlet property="introContainer" destination="Fvd-hD-fbB" id="Rtw-Nb-RaD"/>
                         <outlet property="loadingView" destination="eXX-CZ-hUX" id="2KQ-9V-1Xf"/>
                         <outlet property="overlayContainer" destination="EcC-Xr-8c1" id="Jlz-6q-63I"/>
