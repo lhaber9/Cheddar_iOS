@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 import Parse
 
 class CheddarRequest: NSObject {
@@ -15,6 +16,7 @@ class CheddarRequest: NSObject {
         PFCloud.callFunctionInBackground(name, withParameters: params) { (object: AnyObject?, error: NSError?) in
             
             if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
                 errorCallback(error: error!)
                 return
             }
@@ -35,6 +37,7 @@ class CheddarRequest: NSObject {
         
         user.signUpInBackgroundWithBlock { (completed: Bool, error: NSError?) in
             if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
                 errorCallback(error: error!)
             }
             else if (!completed) {
@@ -53,6 +56,7 @@ class CheddarRequest: NSObject {
         { (user: PFUser?, error: NSError?) in
             
             if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
                 errorCallback(error: error!)
             }
             
@@ -65,10 +69,24 @@ class CheddarRequest: NSObject {
     static func logoutUser(successCallback: () -> (), errorCallback: (error: NSError?) -> ()) {
         PFUser.logOutInBackgroundWithBlock { (error: NSError?) in
             if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
                 errorCallback(error: error!)
             }
             
             successCallback()
+        }
+    }
+    
+    static func requestPasswordReset(email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        PFUser.requestPasswordResetForEmailInBackground(email) { (completed:Bool, error: NSError?) in
+            
+            if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
+                errorCallback(error: error!)
+            }
+            
+            successCallback(object: completed)
         }
     }
     
@@ -84,6 +102,7 @@ class CheddarRequest: NSObject {
         currentUser()?.fetchInBackgroundWithBlock({ (user: PFObject?, error: NSError?) in
             
             if (error != nil) {
+                Crashlytics.sharedInstance().recordError(error!)
                 errorCallback(error: error!)
             }
             

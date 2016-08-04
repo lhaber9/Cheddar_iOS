@@ -26,6 +26,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var loginButton:CheddarButton!
     @IBOutlet var registerButton:UIButton!
+    @IBOutlet var resetPasswordButton:UIButton!
     
     @IBOutlet var keyboardShowingBottomConstraint: NSLayoutConstraint!
     
@@ -40,10 +41,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         loginButton.setSecondaryButton()
         
         registerButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
+        resetPasswordButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
     }
     
     @IBAction func showRegister() {
         delegate.showRegister()
+    }
+    
+    @IBAction func resetPassword() {
+        
     }
     
     @IBAction func doLogin() {
@@ -64,11 +70,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func keyboardWillShow() {
         registerButton.alpha = 0
+        resetPasswordButton.alpha = 0
         keyboardShowingBottomConstraint.priority = 950
     }
     
     func keyboardWillHide() {
         registerButton.alpha = 1
+        resetPasswordButton.alpha = 1
         keyboardShowingBottomConstraint.priority = 200
     }
     

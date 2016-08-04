@@ -40,6 +40,7 @@
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
         </mutableArray>
         <mutableArray key="GothamRounded-Bold.ttf">
             <string>GothamRounded-Bold</string>
@@ -572,7 +573,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6F-kg-omT">
-                                <rect key="frame" x="0.0" y="215" width="600" height="169"/>
+                                <rect key="frame" x="0.0" y="201.5" width="600" height="196"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Husky Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QQx-Od-MZy" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
                                         <rect key="frame" x="175" y="0.0" width="250" height="35"/>
@@ -609,12 +610,21 @@
                                             <action selector="showRegister" destination="rgq-99-5UK" eventType="touchUpInside" id="nSk-hF-Lf5"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gi-ny-AVT">
+                                        <rect key="frame" x="225" y="169" width="150" height="27"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                        <state key="normal" title="Reset password"/>
+                                        <connections>
+                                            <action selector="resetPassword" destination="rgq-99-5UK" eventType="touchUpInside" id="j3k-0Q-OVR"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="wcU-YT-9N6" firstAttribute="width" secondItem="ChU-Ne-02C" secondAttribute="width" id="5pb-ft-oTb"/>
                                     <constraint firstItem="QQx-Od-MZy" firstAttribute="centerX" secondItem="L6F-kg-omT" secondAttribute="centerX" id="7CN-LZ-nxN"/>
                                     <constraint firstItem="wcU-YT-9N6" firstAttribute="top" secondItem="QQx-Od-MZy" secondAttribute="bottom" id="9LT-PK-sSr"/>
+                                    <constraint firstItem="9gi-ny-AVT" firstAttribute="centerX" secondItem="Cly-hH-Xl7" secondAttribute="centerX" id="9mI-FG-MMl"/>
                                     <constraint firstItem="wcU-YT-9N6" firstAttribute="top" secondItem="ChU-Ne-02C" secondAttribute="bottom" constant="12" id="BYa-NL-L8u"/>
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="trailing" secondItem="wcU-YT-9N6" secondAttribute="trailing" constant="-50" id="Cld-dE-tw1"/>
                                     <constraint firstItem="ChU-Ne-02C" firstAttribute="width" secondItem="QQx-Od-MZy" secondAttribute="width" id="HrM-og-2j3"/>
@@ -622,17 +632,21 @@
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="leading" secondItem="wcU-YT-9N6" secondAttribute="leading" id="On5-gg-6B1"/>
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="centerX" secondItem="wcU-YT-9N6" secondAttribute="centerX" id="aqp-ZY-QD8"/>
                                     <constraint firstItem="QQx-Od-MZy" firstAttribute="centerX" secondItem="ChU-Ne-02C" secondAttribute="centerX" id="e85-8d-pbc"/>
+                                    <constraint firstAttribute="bottom" secondItem="9gi-ny-AVT" secondAttribute="bottom" priority="900" id="flW-gW-9oV"/>
                                     <constraint firstItem="wcU-YT-9N6" firstAttribute="centerX" secondItem="QQx-Od-MZy" secondAttribute="centerX" id="gke-DI-7Yt"/>
                                     <constraint firstItem="QQx-Od-MZy" firstAttribute="top" secondItem="L6F-kg-omT" secondAttribute="top" id="h0U-gb-A3m"/>
                                     <constraint firstAttribute="bottom" secondItem="Cly-hH-Xl7" secondAttribute="bottom" priority="750" id="lpa-RP-6ve"/>
                                     <constraint firstAttribute="bottom" secondItem="wcU-YT-9N6" secondAttribute="bottom" priority="200" constant="8" id="tMd-HQ-bmq"/>
                                     <constraint firstItem="ChU-Ne-02C" firstAttribute="top" secondItem="QQx-Od-MZy" secondAttribute="bottom" constant="8" id="vgS-Yj-Ehf"/>
+                                    <constraint firstItem="9gi-ny-AVT" firstAttribute="width" secondItem="Cly-hH-Xl7" secondAttribute="width" id="vsQ-uF-w3e"/>
                                     <constraint firstItem="ChU-Ne-02C" firstAttribute="height" secondItem="QQx-Od-MZy" secondAttribute="height" id="wG2-D2-cVE"/>
+                                    <constraint firstItem="9gi-ny-AVT" firstAttribute="top" secondItem="Cly-hH-Xl7" secondAttribute="bottom" id="zn4-zU-EHy"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="9LT-PK-sSr"/>
                                         <exclude reference="On5-gg-6B1"/>
+                                        <exclude reference="lpa-RP-6ve"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -650,6 +664,7 @@
                         <outlet property="loginButton" destination="wcU-YT-9N6" id="QfK-Oa-BId"/>
                         <outlet property="passwordField" destination="ChU-Ne-02C" id="mqw-8R-CHN"/>
                         <outlet property="registerButton" destination="Cly-hH-Xl7" id="63T-fZ-Tha"/>
+                        <outlet property="resetPasswordButton" destination="9gi-ny-AVT" id="2bJ-5K-kb3"/>
                         <outlet property="view" destination="tss-0X-S8f" id="hrM-MH-fN0"/>
                     </connections>
                 </viewController>
