@@ -37,12 +37,13 @@ class OptionsOverlayViewController: UIViewController {
     var buttonActions: [(object: AnyObject!) -> Void] = []
     
     override func viewDidLayoutSubviews() {
-        if(optionButtons.count > 1) {
-            optionButtons.first!.rounded(unsafeBitCast(UIRectCorner.BottomLeft.rawValue | UIRectCorner.BottomRight.rawValue, UIRectCorner.self), radius: 5)
-            optionButtons.last!.rounded(unsafeBitCast(UIRectCorner.TopRight.rawValue | UIRectCorner.TopLeft.rawValue, UIRectCorner.self), radius: 5)
-        }
         
-        cancelButton.layer.cornerRadius = 5
+        // round only top and bottom corners stuff (not working with shadow)
+//        if(optionButtons.count > 1) {
+//            optionButtons.first!.rounded(unsafeBitCast(UIRectCorner.BottomLeft.rawValue | UIRectCorner.BottomRight.rawValue, UIRectCorner.self), radius: 5)
+//            optionButtons.last!.rounded(unsafeBitCast(UIRectCorner.TopRight.rawValue | UIRectCorner.TopLeft.rawValue, UIRectCorner.self), radius: 5)
+//        }
+        
     }
     
     override func viewDidLoad() {
