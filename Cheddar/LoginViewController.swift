@@ -14,6 +14,7 @@ protocol LoginDelegate: class {
     func showErrorText(text: String)
     func showRegister()
     func showLoadingViewWithText(text: String)
+    func showResetPasswordView()
     func hideLoadingView()
 }
 
@@ -49,7 +50,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func resetPassword() {
-        
+        delegate.showResetPasswordView()
     }
     
     @IBAction func doLogin() {

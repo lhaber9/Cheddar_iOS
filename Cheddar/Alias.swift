@@ -115,17 +115,6 @@ class Alias: NSManagedObject {
         }
     }
     
-//    func toJsonDict() -> [NSObject:AnyObject] {
-//        var jsonDict = [NSObject:AnyObject]()
-//        
-//        jsonDict["objectId"] = objectId
-//        jsonDict["chatRoomId"] = chatRoomId
-//        jsonDict["name"] = name
-//        jsonDict["userId"] = userId
-//        
-//        return jsonDict
-//    }
-    
     func initials() -> String {
         
         var initals = ""
@@ -136,8 +125,14 @@ class Alias: NSManagedObject {
         return initals
     }
     
-//    func managedObjectContext() -> NSManagedObjectContext? {
-//        return Utilities.appDelegate().managedObjectContext
-//    }
-    
+    //    func toJsonDict() -> [NSObject:AnyObject] {
+    //        var jsonDict = [NSObject:AnyObject]()
+    //
+    //        jsonDict["objectId"] = objectId
+    //        jsonDict["chatRoomId"] = chatRoomId
+    //        jsonDict["name"] = name
+    //        jsonDict["userId"] = userId
+    //
+    //        return jsonDict
+    //    }
 }

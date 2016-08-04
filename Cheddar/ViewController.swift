@@ -81,8 +81,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         return chatController != nil
     }
     
-    
-    
     func useSmallerViews() -> Bool {
         return Utilities.IS_IPHONE_4_OR_LESS()
     }

@@ -22,8 +22,13 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -427,6 +432,9 @@
                             <popoverArrowDirection key="popoverArrowDirection"/>
                         </segue>
                         <segue destination="Uo4-VN-2mU" kind="popoverPresentation" identifier="showRegistrationCodeSegue" popoverAnchorView="nQH-jv-ieV" id="Bz7-4L-8eW">
+                            <popoverArrowDirection key="popoverArrowDirection"/>
+                        </segue>
+                        <segue destination="sTi-Sn-zgr" kind="popoverPresentation" identifier="showResetPasswordSegue" popoverAnchorView="nQH-jv-ieV" id="iXh-7B-k0S">
                             <popoverArrowDirection key="popoverArrowDirection"/>
                         </segue>
                     </connections>
@@ -909,7 +917,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1430" y="1701.5"/>
+            <point key="canvasLocation" x="1413" y="1561.5"/>
         </scene>
         <!--Registration Code View Controller-->
         <scene sceneID="QSk-Ti-id6">
@@ -1015,7 +1023,97 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1439" y="1961.5"/>
+            <point key="canvasLocation" x="1413" y="1848.5"/>
+        </scene>
+        <!--Reset Password View Controller-->
+        <scene sceneID="Mjn-FZ-ThR">
+            <objects>
+                <viewController id="sTi-Sn-zgr" customClass="ResetPasswordViewController" customModule="Cheddar" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3p0-Yu-6Rm"/>
+                        <viewControllerLayoutGuide type="bottom" id="vP1-Xu-w09"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DPR-sN-gy0">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="189"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTJ-b6-xF3">
+                                <rect key="frame" x="16" y="115" width="268" height="15"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsV-x0-tgD" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="130" width="268" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="CuD-GR-GrQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendTap" destination="sTi-Sn-zgr" eventType="touchUpInside" id="5zN-rf-ONk"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijV-8w-cCt" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="127" height="22"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email to recieve a password reset message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-CY-fsf" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="45" width="268" height="31"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aPY-oA-e62">
+                                <rect key="frame" x="16" y="84" width="268" height="31"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ZTJ-b6-xF3" firstAttribute="trailing" secondItem="QsV-x0-tgD" secondAttribute="trailing" id="2Re-Jh-RDK"/>
+                            <constraint firstItem="aPY-oA-e62" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="5iD-SZ-maY"/>
+                            <constraint firstItem="vP1-Xu-w09" firstAttribute="top" secondItem="QsV-x0-tgD" secondAttribute="bottom" constant="15" id="8y8-fQ-ScK"/>
+                            <constraint firstItem="ijV-8w-cCt" firstAttribute="top" secondItem="3p0-Yu-6Rm" secondAttribute="bottom" constant="15" id="B0D-DP-bi5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7uV-CY-fsf" secondAttribute="trailing" id="Cch-CZ-5Bz"/>
+                            <constraint firstItem="7uV-CY-fsf" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="K0M-kQ-j1Z"/>
+                            <constraint firstItem="ZTJ-b6-xF3" firstAttribute="leading" secondItem="QsV-x0-tgD" secondAttribute="leading" id="Mx8-OV-fBW"/>
+                            <constraint firstItem="aPY-oA-e62" firstAttribute="top" secondItem="7uV-CY-fsf" secondAttribute="bottom" constant="8" id="OZY-fk-cTd"/>
+                            <constraint firstItem="QsV-x0-tgD" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="Qji-ad-LeY"/>
+                            <constraint firstItem="ZTJ-b6-xF3" firstAttribute="top" secondItem="aPY-oA-e62" secondAttribute="bottom" id="d3R-Od-bhc"/>
+                            <constraint firstItem="QsV-x0-tgD" firstAttribute="top" secondItem="ZTJ-b6-xF3" secondAttribute="bottom" id="dI1-Gy-V6U"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aPY-oA-e62" secondAttribute="trailing" id="mCi-lf-HoI"/>
+                            <constraint firstItem="7uV-CY-fsf" firstAttribute="top" secondItem="ijV-8w-cCt" secondAttribute="bottom" constant="8" id="ocH-bH-hek"/>
+                            <constraint firstItem="ijV-8w-cCt" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="scQ-cX-zS9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QsV-x0-tgD" secondAttribute="trailing" id="teq-Vq-lHL"/>
+                        </constraints>
+                    </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="189"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="300" height="189"/>
+                    <connections>
+                        <outlet property="emailField" destination="aPY-oA-e62" id="8yL-dY-7oe"/>
+                        <outlet property="errorLabel" destination="ZTJ-b6-xF3" id="Vie-hq-tpm"/>
+                        <outlet property="sendButton" destination="QsV-x0-tgD" id="jAV-FV-grM"/>
+                        <outlet property="titleLabel" destination="ijV-8w-cCt" id="NX1-ci-PWv"/>
+                        <outlet property="view" destination="DPR-sN-gy0" id="bXs-57-0pW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rov-2b-aMX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="UOa-1j-SNu">
+                    <connections>
+                        <action selector="sendFeedback" destination="sTi-Sn-zgr" id="Vde-Yy-w66"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1413" y="2143.5"/>
         </scene>
     </scenes>
     <resources>

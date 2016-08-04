@@ -10,11 +10,11 @@
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
 		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
 		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
+		A302FD471D52E89F00E62D24 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */; };
 		A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */; };
 		A32E97FB1D2421B400800546 /* LoginSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */; };
 		A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A333B9D61CB6E39700E5DC25 /* ChatController.swift */; };
 		A3377ADA1D08D17200DD09FC /* CheddarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3377AD91D08D17200DD09FC /* CheddarRequest.swift */; };
-		A3377ADC1D0B10DE00DD09FC /* SignupFrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3377ADB1D0B10DE00DD09FC /* SignupFrontView.swift */; };
 		A344BA201CEA11A000DE6B0A /* NameChangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A344BA1F1CEA11A000DE6B0A /* NameChangeCell.swift */; };
 		A344BA221CEA11BF00DE6B0A /* NameChangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A344BA211CEA11BF00DE6B0A /* NameChangeCell.xib */; };
 		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
@@ -45,19 +45,11 @@
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
-		A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C785501CACD32300AA1673 /* CheddarTextView.swift */; };
 		A3CE46FD1CE94BA5009A23D7 /* ActiveMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CE46FC1CE94BA5009A23D7 /* ActiveMembersController.swift */; };
 		A3CE46FF1CE94F6C009A23D7 /* ActiveMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CE46FE1CE94F6C009A23D7 /* ActiveMemberCell.swift */; };
-		A3D3D43F1D04E1DB00B9D83D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D43E1D04E1DB00B9D83D /* OnboardingViewController.swift */; };
 		A3D3D4431D0644A800B9D83D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4421D0644A800B9D83D /* LoginViewController.swift */; };
 		A3D3D4451D074C8A00B9D83D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */; };
 		A3D3D4471D074DEA00B9D83D /* FullPageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */; };
-		A3D3D44B1D07510A00B9D83D /* ChooseSchoolView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D44A1D07510A00B9D83D /* ChooseSchoolView.swift */; };
-		A3D3D44D1D07512400B9D83D /* ChooseSchoolView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D3D44C1D07512400B9D83D /* ChooseSchoolView.xib */; };
-		A3D3D44F1D07680600B9D83D /* InfoEntryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D3D44E1D07680600B9D83D /* InfoEntryView.xib */; };
-		A3D3D4511D07681300B9D83D /* ConfirmEmailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D3D4501D07681300B9D83D /* ConfirmEmailView.xib */; };
-		A3D3D4531D07681C00B9D83D /* ConfirmEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4521D07681C00B9D83D /* ConfirmEmailView.swift */; };
-		A3D3D4551D07682400B9D83D /* InfoEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4541D07682400B9D83D /* InfoEntryView.swift */; };
 		A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F11CB86EFE0075B314 /* ChatListCell.swift */; };
 		A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D822F31CB86F120075B314 /* ChatListCell.xib */; };
 		A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F51CBBD7A60075B314 /* ChatEvent.swift */; };
@@ -88,7 +80,6 @@
 		A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920621C7AA2E9003E0BC3 /* Alias.swift */; };
 		A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */; };
 		A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */; };
-		A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */; };
 		A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */; };
 		A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */; };
 		A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B41C8124A1003E0BC3 /* Utilities.swift */; };
@@ -118,11 +109,11 @@
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
 		A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSignupViewController.swift; sourceTree = "<group>"; };
 		A333B9D61CB6E39700E5DC25 /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
 		A3377AD91D08D17200DD09FC /* CheddarRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarRequest.swift; sourceTree = "<group>"; };
-		A3377ADB1D0B10DE00DD09FC /* SignupFrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupFrontView.swift; sourceTree = "<group>"; };
 		A344BA1F1CEA11A000DE6B0A /* NameChangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameChangeCell.swift; sourceTree = "<group>"; };
 		A344BA211CEA11BF00DE6B0A /* NameChangeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NameChangeCell.xib; sourceTree = "<group>"; };
 		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
@@ -168,19 +159,11 @@
 		A3C59BD71C61BE07009B82EE /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
-		A3C785501CACD32300AA1673 /* CheddarTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextView.swift; sourceTree = "<group>"; };
 		A3CE46FC1CE94BA5009A23D7 /* ActiveMembersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveMembersController.swift; sourceTree = "<group>"; };
 		A3CE46FE1CE94F6C009A23D7 /* ActiveMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveMemberCell.swift; sourceTree = "<group>"; };
-		A3D3D43E1D04E1DB00B9D83D /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		A3D3D4421D0644A800B9D83D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullPageScrollView.swift; sourceTree = "<group>"; };
-		A3D3D44A1D07510A00B9D83D /* ChooseSchoolView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSchoolView.swift; sourceTree = "<group>"; };
-		A3D3D44C1D07512400B9D83D /* ChooseSchoolView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChooseSchoolView.xib; sourceTree = "<group>"; };
-		A3D3D44E1D07680600B9D83D /* InfoEntryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoEntryView.xib; sourceTree = "<group>"; };
-		A3D3D4501D07681300B9D83D /* ConfirmEmailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmEmailView.xib; sourceTree = "<group>"; };
-		A3D3D4521D07681C00B9D83D /* ConfirmEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmEmailView.swift; sourceTree = "<group>"; };
-		A3D3D4541D07682400B9D83D /* InfoEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoEntryView.swift; sourceTree = "<group>"; };
 		A3D822F11CB86EFE0075B314 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
 		A3D822F31CB86F120075B314 /* ChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
 		A3D822F51CBBD7A60075B314 /* ChatEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEvent.swift; sourceTree = "<group>"; };
@@ -211,7 +194,6 @@
 		A3F920621C7AA2E9003E0BC3 /* Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentConstants.swift; sourceTree = "<group>"; };
 		A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceCell.swift; sourceTree = "<group>"; };
 		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
 		A3F920B41C8124A1003E0BC3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -255,7 +237,6 @@
 		A300583C1CAB202300725FC3 /* Reuse */ = {
 			isa = PBXGroup;
 			children = (
-				A3C785501CACD32300AA1673 /* CheddarTextView.swift */,
 				A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */,
 				A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */,
 				A36173ED1CEE3E240095BE3A /* LockedBackgroundColorView.swift */,
@@ -371,7 +352,6 @@
 			children = (
 				A3E05CB01CA988C4005B9764 /* FrontView.swift */,
 				A38F85E61D02178A00F900B5 /* Onboarding */,
-				A3D3D4491D0750EC00B9D83D /* Signup */,
 			);
 			name = "Front Pages";
 			sourceTree = "<group>";
@@ -417,26 +397,12 @@
 				A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */,
 				A3D3D4421D0644A800B9D83D /* LoginViewController.swift */,
 				A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */,
-				A3D3D43E1D04E1DB00B9D83D /* OnboardingViewController.swift */,
 				A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */,
 				A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */,
+				A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */,
 				A37213851D45A29E0046BA91 /* RegistrationCodeViewController.swift */,
 			);
 			name = IntroViews;
-			sourceTree = "<group>";
-		};
-		A3D3D4491D0750EC00B9D83D /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				A3377ADB1D0B10DE00DD09FC /* SignupFrontView.swift */,
-				A3D3D44A1D07510A00B9D83D /* ChooseSchoolView.swift */,
-				A3D3D44C1D07512400B9D83D /* ChooseSchoolView.xib */,
-				A3D3D4541D07682400B9D83D /* InfoEntryView.swift */,
-				A3D3D44E1D07680600B9D83D /* InfoEntryView.xib */,
-				A3D3D4521D07681C00B9D83D /* ConfirmEmailView.swift */,
-				A3D3D4501D07681300B9D83D /* ConfirmEmailView.xib */,
-			);
-			name = Signup;
 			sourceTree = "<group>";
 		};
 		A3F9205D1C783E77003E0BC3 /* Constants */ = {
@@ -445,7 +411,6 @@
 				A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */,
 				A3F920571C77ECBA003E0BC3 /* StringConstants.swift */,
 				A3F920591C783BE8003E0BC3 /* ColorConstants.swift */,
-				A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */,
 				A3F920B41C8124A1003E0BC3 /* Utilities.swift */,
 			);
 			name = Constants;
@@ -605,12 +570,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3D3D4511D07681300B9D83D /* ConfirmEmailView.xib in Resources */,
 				A3E05CC61CAA38CE005B9764 /* MatchView.xib in Resources */,
-				A3D3D44D1D07512400B9D83D /* ChooseSchoolView.xib in Resources */,
 				A3E05CC41CAA3896005B9764 /* Effra-Medium.ttf in Resources */,
 				A363E8261CEDED4300885AE3 /* AliasCircleView.xib in Resources */,
-				A3D3D44F1D07680600B9D83D /* InfoEntryView.xib in Resources */,
 				A3E05CC51CAA3896005B9764 /* GothamRounded-Bold.ttf in Resources */,
 				A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */,
 				A38896D31C60664A002017B9 /* LaunchScreen.storyboard in Resources */,
@@ -721,7 +683,6 @@
 				A36F3E0B1CAB857700F533FF /* CheddarLabel.swift in Sources */,
 				A3D3D4451D074C8A00B9D83D /* SignupViewController.swift in Sources */,
 				A3E05CB91CA989C3005B9764 /* GroupView.swift in Sources */,
-				A3D3D4551D07682400B9D83D /* InfoEntryView.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
 				A3F0B58D1D2CB46300D6E9DC /* VerifyEmailViewController.swift in Sources */,
 				A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */,
@@ -729,15 +690,12 @@
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
 				A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */,
 				A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */,
-				A3377ADC1D0B10DE00DD09FC /* SignupFrontView.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
 				A3BC4D9F1D399CCC0083A4BE /* Reachability.m in Sources */,
 				A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
 				A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
-				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
-				A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
 				A3377ADA1D08D17200DD09FC /* CheddarRequest.swift in Sources */,
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
@@ -750,7 +708,6 @@
 				A3D3D4471D074DEA00B9D83D /* FullPageScrollView.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */,
-				A3D3D43F1D04E1DB00B9D83D /* OnboardingViewController.swift in Sources */,
 				A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */,
 				A3F0B58B1D2594B700D6E9DC /* CheddarTextField.swift in Sources */,
 				A3E78C7E1CE6404900454BB2 /* RenameChatController.swift in Sources */,
@@ -763,11 +720,10 @@
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
 				A3F0B58F1D34175700D6E9DC /* ChangeSchoolViewController.swift in Sources */,
-				A3D3D44B1D07510A00B9D83D /* ChooseSchoolView.swift in Sources */,
 				A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */,
 				A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */,
 				A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */,
-				A3D3D4531D07681C00B9D83D /* ConfirmEmailView.swift in Sources */,
+				A302FD471D52E89F00E62D24 /* ResetPasswordViewController.swift in Sources */,
 				A3CE46FF1CE94F6C009A23D7 /* ActiveMemberCell.swift in Sources */,
 				A37213861D45A29E0046BA91 /* RegistrationCodeViewController.swift in Sources */,
 				A36173EE1CEE3E240095BE3A /* LockedBackgroundColorView.swift in Sources */,

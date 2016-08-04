@@ -11,7 +11,7 @@ import Foundation
 
 class ChatCell: UITableViewCell {
     
-    @IBOutlet var messageLabel: CheddarTextView!
+    @IBOutlet var messageLabel: UITextView!
     @IBOutlet var messageBackground: UIView!
     
     @IBOutlet var leftSideMessageConstraint: NSLayoutConstraint!
@@ -50,6 +50,7 @@ class ChatCell: UITableViewCell {
 //        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
 //        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
         
+        messageLabel.textColor = ColorConstants.textPrimary
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
     }

@@ -18,7 +18,7 @@ protocol LoginSignupDelegate: class {
     func hideOverlay()
 }
 
-class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, RegistrationCodeDelegate, UIPopoverPresentationControllerDelegate {
+class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, RegistrationCodeDelegate, ResetPasswordDelegate, UIPopoverPresentationControllerDelegate {
     
     weak var delegate:LoginSignupDelegate!
     
@@ -201,6 +201,11 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         delegate.hideLoadingView()
     }
     
+    func showResetPasswordView() {
+        delegate.showOverlay()
+        performSegueWithIdentifier("showResetPasswordSegue", sender: self)
+    }
+    
     func showChangeSchoolView() {
         delegate.showOverlay()
         performSegueWithIdentifier("showChangeSchoolSegue", sender: self)
@@ -252,7 +257,14 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             popoverViewController.delegate = self
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
+        } else if segue.identifier == "showResetPasswordSegue" {
+            let popoverViewController = segue.destinationViewController as! ResetPasswordViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+            popoverViewController.initialEmail = loginController.emailField.text
         }
+
     }
     
     func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
