@@ -36,20 +36,21 @@ class OptionsOverlayViewController: UIViewController {
     var buttonData: [AnyObject!] = []
     var buttonActions: [(object: AnyObject!) -> Void] = []
     
-    override func viewDidLayoutSubviews() {
-        
-        // round only top and bottom corners stuff (not working with shadow)
-//        if(optionButtons.count > 1) {
-//            optionButtons.first!.rounded(unsafeBitCast(UIRectCorner.BottomLeft.rawValue | UIRectCorner.BottomRight.rawValue, UIRectCorner.self), radius: 5)
-//            optionButtons.last!.rounded(unsafeBitCast(UIRectCorner.TopRight.rawValue | UIRectCorner.TopLeft.rawValue, UIRectCorner.self), radius: 5)
-//        }
-        
-    }
+//    override func viewDidLayoutSubviews() {
+//        
+//        // round only top and bottom corners stuff (not working with shadow)
+////        if(optionButtons.count > 1) {
+////            optionButtons.first!.rounded(unsafeBitCast(UIRectCorner.BottomLeft.rawValue | UIRectCorner.BottomRight.rawValue, UIRectCorner.self), radius: 5)
+////            optionButtons.last!.rounded(unsafeBitCast(UIRectCorner.TopRight.rawValue | UIRectCorner.TopLeft.rawValue, UIRectCorner.self), radius: 5)
+////        }
+//        
+//    }
     
     override func viewDidLoad() {
         setupButtons()
         
         cancelButton.setPrimaryButton()
+        cancelButton.layer.shadowOpacity = 0.55
     
         showingCancelButtonConstraint.priority = 200
         hiddenCancelButtonConstraint.priority = 900
@@ -61,6 +62,7 @@ class OptionsOverlayViewController: UIViewController {
         
         for (index, optionButton) in optionButtons.enumerate() {
             optionButton.setInversePrimaryButton()
+            optionButton.layer.shadowOpacity = 0.55
             
             view.addSubview(optionButton)
             
