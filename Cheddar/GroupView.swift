@@ -14,6 +14,7 @@ class GroupView: FrontPageView {
     
     @IBOutlet var imageOffsetSmallConstraint: NSLayoutConstraint!
     @IBOutlet var imageBottomSmallConstraint: NSLayoutConstraint!
+    @IBOutlet var imageHeightSmallConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()
@@ -26,6 +27,7 @@ class GroupView: FrontPageView {
         if (Utilities.IS_IPHONE_4_OR_LESS()) {
             imageOffsetSmallConstraint.priority = 950
             imageBottomSmallConstraint.priority = 950
+            imageHeightSmallConstraint.priority = 950
         }
     }
     

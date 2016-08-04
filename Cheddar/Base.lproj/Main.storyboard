@@ -72,7 +72,7 @@
                                 <rect key="frame" x="-35" y="-2" width="790" height="602"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HuskyTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hro-zR-1v8">
-                                <rect key="frame" x="70" y="540" width="135.5" height="60"/>
+                                <rect key="frame" x="45" y="540" width="135.5" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="kol-AQ-zMW"/>
                                     <constraint firstAttribute="width" secondItem="hro-zR-1v8" secondAttribute="height" multiplier="467:207" id="msY-tn-zzF"/>
@@ -119,7 +119,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eXX-CZ-hUX" secondAttribute="trailing" id="12U-m1-0dn"/>
                             <constraint firstItem="EcC-Xr-8c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8bP-Xy-5dB"/>
-                            <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="8wM-Pk-7kO"/>
+                            <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="8wM-Pk-7kO"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="99s-aS-EC5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K0X-5e-tQX" secondAttribute="bottom" id="CUQ-iH-OTx"/>
                             <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-35" id="CqR-Sc-ZXH"/>

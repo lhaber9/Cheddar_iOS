@@ -157,12 +157,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let backgrounParalaxOffset = scrollView.contentOffset.x / backgroundParalaxScaleFactor;
-        let huskyParalaxOffset = scrollView.contentOffset.x / huskyParalaxScaleFactor;
-        
         backgroundCheeseLeftConstraint.constant  = backgroundCheeseInitalLeftConstraint - backgrounParalaxOffset
         backgroundCheeseRightConstraint.constant = backgroundCheeseInitalRightConstraint + backgrounParalaxOffset
         
-        huskyImageLeftConstraint.constant = huskyImageInitialLeftConstraint - huskyParalaxOffset
+//        turn off husky scrolling
+//
+//        let huskyParalaxOffset = scrollView.contentOffset.x / huskyParalaxScaleFactor;
+//        huskyImageLeftConstraint.constant = huskyImageInitialLeftConstraint - huskyParalaxOffset
         
         view.layoutIfNeeded()
     }
