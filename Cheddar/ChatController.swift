@@ -341,9 +341,10 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     }
     
     @IBAction func subTitleTap() {
-        if (!isShowingList) {
-            chatViewController.showActiveMembers()
-        }
+//        if (!isShowingList) {
+//            chatViewController.showActiveMembers()
+//        }
+        titleTap()
     }
 
     // MARK: ChatViewControllerDelegate
@@ -358,9 +359,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Send Feedback", "Leave Group"]
-        optionOverlayController.buttonData = [nil,chatRoom]
-        optionOverlayController.buttonActions = [selectedFeedback, tryLeaveChatRoom]
+        optionOverlayController.buttonNames = ["Send Feedback", "Leave Group", "View Active Members"]
+        optionOverlayController.buttonData = [nil,chatRoom,nil]
+        optionOverlayController.buttonActions = [selectedFeedback, tryLeaveChatRoom, showActiveMembers]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
@@ -446,6 +447,11 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         leavingChatRoom = object as! ChatRoom
         optionOverlayController?.shouldClose()
         confirmLeaveAlertView.show()
+    }
+    
+    func showActiveMembers(object: AnyObject!) {
+        optionOverlayController?.willHide()
+        chatViewController.showActiveMembers()
     }
     
     // MARK: ChatListControllerDelegate
