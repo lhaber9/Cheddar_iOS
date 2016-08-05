@@ -71,6 +71,17 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="01U-8x-dnp">
                                 <rect key="frame" x="-35" y="-2" width="790" height="602"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7vT-up-tDm">
+                                <rect key="frame" x="-50" y="-2" width="825" height="802"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="7vT-up-tDm" secondAttribute="height" multiplier="9:16" id="VQP-aH-x5t"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="VQP-aH-x5t"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HuskyTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hro-zR-1v8">
                                 <rect key="frame" x="45" y="540" width="135.5" height="60"/>
                                 <constraints>
@@ -121,6 +132,7 @@
                             <constraint firstItem="EcC-Xr-8c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8bP-Xy-5dB"/>
                             <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="8wM-Pk-7kO"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="99s-aS-EC5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7vT-up-tDm" secondAttribute="bottom" constant="-200" id="BNx-yw-abL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K0X-5e-tQX" secondAttribute="bottom" id="CUQ-iH-OTx"/>
                             <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-35" id="CqR-Sc-ZXH"/>
                             <constraint firstItem="K0X-5e-tQX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="G7q-bI-M6L"/>
@@ -136,18 +148,23 @@
                             <constraint firstItem="01U-8x-dnp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="USp-po-JRW"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VV5-L5-iV1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hro-zR-1v8" secondAttribute="bottom" id="VaP-RZ-toT"/>
+                            <constraint firstAttribute="trailing" secondItem="7vT-up-tDm" secondAttribute="trailing" constant="-175" id="cUR-3U-edG"/>
                             <constraint firstAttribute="trailing" secondItem="01U-8x-dnp" secondAttribute="trailing" constant="-155" id="czb-xO-Le0"/>
                             <constraint firstAttribute="trailing" secondItem="Fvd-hD-fbB" secondAttribute="trailing" id="ecG-CD-SEt"/>
+                            <constraint firstItem="7vT-up-tDm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-50" id="fmG-Td-MBJ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eXX-CZ-hUX" secondAttribute="bottom" id="gCl-Uw-b0t"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="hdc-8f-UaL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7vT-up-tDm" secondAttribute="bottom" id="jOe-dN-nve"/>
                             <constraint firstItem="eXX-CZ-hUX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="kto-02-J0q"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="01U-8x-dnp" secondAttribute="bottom" id="kwC-pb-HSK"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="lhg-Sr-2wG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Fvd-hD-fbB" secondAttribute="bottom" id="pVR-V7-POk"/>
+                            <constraint firstItem="7vT-up-tDm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="yXr-E9-bWA"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="ecG-CD-SEt"/>
+                                <exclude reference="jOe-dN-nve"/>
                             </mask>
                         </variation>
                     </view>
@@ -457,15 +474,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VS6-1i-S61">
-                                <rect key="frame" x="0.0" y="180" width="600" height="239"/>
+                                <rect key="frame" x="0.0" y="162" width="600" height="275"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="A3r-ag-Rgi" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="86" width="250" height="35"/>
+                                        <rect key="frame" x="175" y="98" width="250" height="35"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T83-Pv-e0T" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="133" width="250" height="40"/>
+                                        <rect key="frame" x="175" y="145" width="250" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="5Lm-sx-r9G"/>
                                         </constraints>
@@ -478,7 +495,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cz3-KX-VWo">
-                                        <rect key="frame" x="225" y="185" width="150" height="27"/>
+                                        <rect key="frame" x="225" y="197" width="150" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="yX0-h5-CKu"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                         <state key="normal" title="Already have an account?"/>
                                         <connections>
@@ -486,7 +506,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g05-Xg-C5n">
-                                        <rect key="frame" x="225" y="212" width="150" height="27"/>
+                                        <rect key="frame" x="225" y="230" width="150" height="33"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                         <state key="normal" title="Change School"/>
                                         <connections>
@@ -494,12 +514,12 @@
                                         </connections>
                                     </button>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="l8t-Lf-Gnp" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="43" width="250" height="35"/>
+                                        <rect key="frame" x="175" y="55" width="250" height="35"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Husky Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FKy-ut-wbH" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="0.0" width="250" height="35"/>
+                                        <rect key="frame" x="175" y="12" width="250" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="Ld7-Ub-MDP"/>
                                             <constraint firstAttribute="height" constant="35" id="Ta0-Oj-fJP"/>
@@ -511,7 +531,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="l8t-Lf-Gnp" firstAttribute="top" secondItem="FKy-ut-wbH" secondAttribute="bottom" constant="8" id="1Df-Au-veb"/>
-                                    <constraint firstItem="FKy-ut-wbH" firstAttribute="top" secondItem="VS6-1i-S61" secondAttribute="top" id="8XG-x7-WH0"/>
+                                    <constraint firstItem="FKy-ut-wbH" firstAttribute="top" secondItem="VS6-1i-S61" secondAttribute="top" constant="12" id="8XG-x7-WH0"/>
                                     <constraint firstItem="l8t-Lf-Gnp" firstAttribute="width" secondItem="FKy-ut-wbH" secondAttribute="width" id="9jg-t5-rWq"/>
                                     <constraint firstItem="T83-Pv-e0T" firstAttribute="top" secondItem="FKy-ut-wbH" secondAttribute="bottom" id="AwU-xd-zsF"/>
                                     <constraint firstItem="Cz3-KX-VWo" firstAttribute="leading" secondItem="T83-Pv-e0T" secondAttribute="leading" id="BQI-Nc-XC3"/>
@@ -526,11 +546,12 @@
                                     <constraint firstItem="FKy-ut-wbH" firstAttribute="centerX" secondItem="VS6-1i-S61" secondAttribute="centerX" id="drm-8r-lWe"/>
                                     <constraint firstItem="A3r-ag-Rgi" firstAttribute="top" secondItem="l8t-Lf-Gnp" secondAttribute="bottom" constant="8" id="emI-he-8dd"/>
                                     <constraint firstItem="A3r-ag-Rgi" firstAttribute="height" secondItem="l8t-Lf-Gnp" secondAttribute="height" id="es4-4M-Z4d"/>
-                                    <constraint firstAttribute="bottom" secondItem="g05-Xg-C5n" secondAttribute="bottom" priority="900" id="g75-5n-kry"/>
+                                    <constraint firstAttribute="bottom" secondItem="g05-Xg-C5n" secondAttribute="bottom" priority="900" constant="12" id="g75-5n-kry"/>
                                     <constraint firstItem="T83-Pv-e0T" firstAttribute="width" secondItem="l8t-Lf-Gnp" secondAttribute="width" id="hwC-1k-mDF"/>
                                     <constraint firstAttribute="bottom" secondItem="T83-Pv-e0T" secondAttribute="bottom" priority="200" constant="8" id="imT-ml-e3S"/>
                                     <constraint firstItem="A3r-ag-Rgi" firstAttribute="centerX" secondItem="l8t-Lf-Gnp" secondAttribute="centerX" id="j4L-ok-X5k"/>
                                     <constraint firstItem="g05-Xg-C5n" firstAttribute="width" secondItem="Cz3-KX-VWo" secondAttribute="width" id="kRP-nv-s80"/>
+                                    <constraint firstItem="Cz3-KX-VWo" firstAttribute="height" secondItem="g05-Xg-C5n" secondAttribute="height" id="lhq-JK-17J"/>
                                     <constraint firstItem="T83-Pv-e0T" firstAttribute="top" secondItem="l8t-Lf-Gnp" secondAttribute="bottom" constant="12" id="nU4-3X-vL7"/>
                                     <constraint firstItem="Cz3-KX-VWo" firstAttribute="centerX" secondItem="T83-Pv-e0T" secondAttribute="centerX" id="os1-3n-UQZ"/>
                                     <constraint firstItem="A3r-ag-Rgi" firstAttribute="width" secondItem="l8t-Lf-Gnp" secondAttribute="width" id="qDM-au-D1B"/>
@@ -560,7 +581,7 @@
                         <outlet property="confirmPasswordField" destination="A3r-ag-Rgi" id="raH-V3-NEJ"/>
                         <outlet property="emailField" destination="FKy-ut-wbH" id="SmJ-KP-LgH"/>
                         <outlet property="goToLoginButton" destination="Cz3-KX-VWo" id="zE1-Ou-rNm"/>
-                        <outlet property="keyboardShowingBottomConstraint" destination="imT-ml-e3S" id="n6I-9N-3z2"/>
+                        <outlet property="hiddenButtonsBottomConstraint" destination="imT-ml-e3S" id="5fI-SF-dZ1"/>
                         <outlet property="passwordField" destination="l8t-Lf-Gnp" id="bUw-zv-AIX"/>
                         <outlet property="registerButton" destination="T83-Pv-e0T" id="bUt-X8-daO"/>
                     </connections>
@@ -582,10 +603,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L6F-kg-omT">
-                                <rect key="frame" x="0.0" y="201.5" width="600" height="196"/>
+                                <rect key="frame" x="0.0" y="183.5" width="600" height="232"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Husky Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="QQx-Od-MZy" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="0.0" width="250" height="35"/>
+                                        <rect key="frame" x="175" y="12" width="250" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="250" id="1rW-CK-nlb"/>
                                             <constraint firstAttribute="height" constant="35" id="G8G-87-HFX"/>
@@ -594,12 +615,12 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ChU-Ne-02C" customClass="CheddarTextField" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="43" width="250" height="35"/>
+                                        <rect key="frame" x="175" y="55" width="250" height="35"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wcU-YT-9N6" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="175" y="90" width="250" height="40"/>
+                                        <rect key="frame" x="175" y="102" width="250" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="hCR-tX-bze"/>
                                         </constraints>
@@ -612,7 +633,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cly-hH-Xl7">
-                                        <rect key="frame" x="225" y="142" width="150" height="27"/>
+                                        <rect key="frame" x="225" y="154" width="150" height="33"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="33" id="3Ca-7p-oCp"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                         <state key="normal" title="Need to register an account?"/>
                                         <connections>
@@ -620,7 +644,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gi-ny-AVT">
-                                        <rect key="frame" x="225" y="169" width="150" height="27"/>
+                                        <rect key="frame" x="225" y="187" width="150" height="33"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                         <state key="normal" title="Reset password"/>
                                         <connections>
@@ -639,11 +663,12 @@
                                     <constraint firstItem="ChU-Ne-02C" firstAttribute="width" secondItem="QQx-Od-MZy" secondAttribute="width" id="HrM-og-2j3"/>
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="top" secondItem="wcU-YT-9N6" secondAttribute="bottom" constant="12" id="OOD-dW-NVj"/>
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="leading" secondItem="wcU-YT-9N6" secondAttribute="leading" id="On5-gg-6B1"/>
+                                    <constraint firstItem="Cly-hH-Xl7" firstAttribute="height" secondItem="9gi-ny-AVT" secondAttribute="height" id="YCc-a7-H0V"/>
                                     <constraint firstItem="Cly-hH-Xl7" firstAttribute="centerX" secondItem="wcU-YT-9N6" secondAttribute="centerX" id="aqp-ZY-QD8"/>
                                     <constraint firstItem="QQx-Od-MZy" firstAttribute="centerX" secondItem="ChU-Ne-02C" secondAttribute="centerX" id="e85-8d-pbc"/>
-                                    <constraint firstAttribute="bottom" secondItem="9gi-ny-AVT" secondAttribute="bottom" priority="900" id="flW-gW-9oV"/>
+                                    <constraint firstAttribute="bottom" secondItem="9gi-ny-AVT" secondAttribute="bottom" priority="900" constant="12" id="flW-gW-9oV"/>
                                     <constraint firstItem="wcU-YT-9N6" firstAttribute="centerX" secondItem="QQx-Od-MZy" secondAttribute="centerX" id="gke-DI-7Yt"/>
-                                    <constraint firstItem="QQx-Od-MZy" firstAttribute="top" secondItem="L6F-kg-omT" secondAttribute="top" id="h0U-gb-A3m"/>
+                                    <constraint firstItem="QQx-Od-MZy" firstAttribute="top" secondItem="L6F-kg-omT" secondAttribute="top" constant="12" id="h0U-gb-A3m"/>
                                     <constraint firstAttribute="bottom" secondItem="Cly-hH-Xl7" secondAttribute="bottom" priority="750" id="lpa-RP-6ve"/>
                                     <constraint firstAttribute="bottom" secondItem="wcU-YT-9N6" secondAttribute="bottom" priority="200" constant="8" id="tMd-HQ-bmq"/>
                                     <constraint firstItem="ChU-Ne-02C" firstAttribute="top" secondItem="QQx-Od-MZy" secondAttribute="bottom" constant="8" id="vgS-Yj-Ehf"/>
@@ -669,7 +694,7 @@
                     </view>
                     <connections>
                         <outlet property="emailField" destination="QQx-Od-MZy" id="RvP-JY-E1q"/>
-                        <outlet property="keyboardShowingBottomConstraint" destination="tMd-HQ-bmq" id="6bE-ol-kIL"/>
+                        <outlet property="hiddenButtonsBottomConstraint" destination="tMd-HQ-bmq" id="GAA-mf-gUa"/>
                         <outlet property="loginButton" destination="wcU-YT-9N6" id="QfK-Oa-BId"/>
                         <outlet property="passwordField" destination="ChU-Ne-02C" id="mqw-8R-CHN"/>
                         <outlet property="registerButton" destination="Cly-hH-Xl7" id="63T-fZ-Tha"/>

@@ -29,7 +29,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var registerButton:UIButton!
     @IBOutlet var resetPasswordButton:UIButton!
     
-    @IBOutlet var keyboardShowingBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var hiddenButtonsBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,15 +70,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     func keyboardWillShow() {
-        registerButton.alpha = 0
-        resetPasswordButton.alpha = 0
-        keyboardShowingBottomConstraint.priority = 950
+        if (Utilities.IS_IPHONE_5_OR_LESS()) {
+                registerButton.alpha = 0
+                resetPasswordButton.alpha = 0
+                hiddenButtonsBottomConstraint.priority = 950
+        }
     }
     
     func keyboardWillHide() {
-        registerButton.alpha = 1
-        resetPasswordButton.alpha = 1
-        keyboardShowingBottomConstraint.priority = 200
+        if (Utilities.IS_IPHONE_5_OR_LESS()) {
+            registerButton.alpha = 1
+            resetPasswordButton.alpha = 1
+            hiddenButtonsBottomConstraint.priority = 200
+        }
     }
     
     func deselectTextFields() {

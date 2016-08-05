@@ -32,7 +32,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var goToLoginButton:UIButton!
     @IBOutlet var changeSchoolButton:UIButton!
     
-    @IBOutlet var keyboardShowingBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var hiddenButtonsBottomConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,15 +74,19 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     }
     
     func keyboardWillShow() {
-        goToLoginButton.alpha = 0
-        changeSchoolButton.alpha = 0
-        keyboardShowingBottomConstraint.priority = 950
+        if (Utilities.IS_IPHONE_5_OR_LESS()) {
+            goToLoginButton.alpha = 0
+            changeSchoolButton.alpha = 0
+            hiddenButtonsBottomConstraint.priority = 950
+        }
     }
     
     func keyboardWillHide() {
-        goToLoginButton.alpha = 1
-        changeSchoolButton.alpha = 1
-        keyboardShowingBottomConstraint.priority = 200
+        if (Utilities.IS_IPHONE_5_OR_LESS()) {
+            goToLoginButton.alpha = 1
+            changeSchoolButton.alpha = 1
+            hiddenButtonsBottomConstraint.priority = 200
+        }
     }
     
     func deselectTextFields() {
