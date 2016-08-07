@@ -32,6 +32,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         
         reloadRooms()
         refreshRooms()
+        view.layoutIfNeeded()
     }
     
     func reloadRooms() {
