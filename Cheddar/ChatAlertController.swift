@@ -9,6 +9,7 @@
 import Foundation
 
 protocol ChatAlertDelegate: class {
+    func hideNewMessageAlert()
     func showChatRoom(chatRoom: ChatRoom)
 }
 
@@ -57,6 +58,7 @@ class ChatAlertController: UIViewController {
     }
     
     @IBAction func tapped() {
+        delegate.hideNewMessageAlert()
         delegate.showChatRoom(chatRoom)
     }
 }

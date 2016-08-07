@@ -63,7 +63,6 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     var optionOverlayController: OptionsOverlayViewController!
     
-    var chatAdded = false
     var isDraggingChatAlert = false
     var isShowingList = true
     var alertTimerId: String!
@@ -151,6 +150,11 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         chatContainer.layer.shadowOffset = CGSizeMake(-1.5, 0)
         chatContainer.layer.shadowRadius = 8
+        
+        self.addChildViewController(self.chatViewController)
+        self.chatContainer.addSubview(self.chatViewController.view)
+        self.chatViewController.view.autoPinEdgesToSuperviewEdges()
+
     }
     
     func joinNextAndAnimate() {
@@ -286,6 +290,28 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
     }
     
+    func showChatListButtons() {
+        self.hamburgerButton.enabled = true
+        self.hamburgerButton.alpha = 1
+        self.newChatButton.enabled = true
+        self.newChatButton.alpha = 1
+        self.backButton.enabled = false
+        self.backButton.alpha = 0
+        self.optionsButton.enabled = false
+        self.optionsButton.alpha = 0
+    }
+    
+    func showChatViewButtons() {
+        self.hamburgerButton.enabled = false
+        self.hamburgerButton.alpha = 0
+        self.newChatButton.enabled = false
+        self.newChatButton.alpha = 0
+        self.backButton.enabled = true
+        self.backButton.alpha = 1
+        self.optionsButton.enabled = true
+        self.optionsButton.alpha = 1
+    }
+    
     // MARK: Button Actions
     @IBAction func slideFromLeft(recognizer: UIPanGestureRecognizer) {
 
@@ -381,14 +407,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
                 self.chatListController.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
             }
             self.chatViewController?.deselectTextView()
-            self.hamburgerButton.enabled = true
-            self.hamburgerButton.alpha = 1
-            self.newChatButton.enabled = true
-            self.newChatButton.alpha = 1
-            self.backButton.enabled = false
-            self.backButton.alpha = 0
-            self.optionsButton.enabled = false
-            self.optionsButton.alpha = 0
+            
+            self.showChatListButtons()
+            
             self.titleLabel.text = "Groups"
             self.view.layoutIfNeeded()
         })
@@ -479,17 +500,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
-        hideNewMessageAlert()
-        
-        if (!chatAdded) {
-            self.addChildViewController(self.chatViewController)
-            self.chatContainer.addSubview(self.chatViewController.view)
-            self.chatViewController.view.autoPinEdgesToSuperviewEdges()
-            chatAdded = true
-        }
-        
         self.chatViewController.scrollToBottom(false)
-        
         view.layoutIfNeeded()
         
         dispatch_async(dispatch_get_main_queue(), {
@@ -500,15 +511,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
                 self.sublabelShowingConstraint.priority = 900
                 self.sublabelHiddenConstraint.priority = 200
                 self.sublabelView.alpha = 1
-                self.hamburgerButton.enabled = false
-                self.hamburgerButton.alpha = 0
-                self.newChatButton.enabled = false
-                self.newChatButton.alpha = 0
-                self.backButton.enabled = true
-                self.backButton.alpha = 1
-                self.optionsButton.enabled = true
-                self.optionsButton.alpha = 1
                 self.titleLabel.text = chatRoom.name
+                
+                self.showChatViewButtons()
                 self.view.layoutIfNeeded()
             }) { (error: Bool) in
                 self.delegate.hideLoadingView()

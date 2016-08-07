@@ -54,7 +54,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
         
             self.reloadTable()
-            self.setupChatroom()
+            self.didUpdateChatRoom()
         }
     }
     
@@ -111,7 +111,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         initStyle()
         
         setupObervers()
-        setupChatroom()
         
         reloadTable()
     }
@@ -127,10 +126,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
     }
     
-    func setupChatroom() {
-        chatRoom.reloadActiveAlaises()
+    func didUpdateChatRoom() {
+        chatRoom?.reloadActiveAlaises()
         
-        CheddarRequest.findAlias(myAlias().objectId,
+        CheddarRequest.findAlias((myAlias()?.objectId)!,
             successCallback: { (object) in
                 
                 if (self.chatRoom.chatEvents.count == 0) {
@@ -156,6 +155,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func reloadTable() {
+        if (chatRoom == nil) {
+            return
+        }
+        
         chatRoom.sortChatEvents()
         self.tableView?.reloadData()
     }
@@ -303,6 +306,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     // MARK: TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (chatRoom == nil) {
+            return 0
+        }
+        
         return chatRoom.chatEvents.count
     }
     
