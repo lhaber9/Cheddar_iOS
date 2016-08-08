@@ -240,6 +240,8 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             let errorString = error?.userInfo["error"] as! String
             if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
                 self.showErrorText("Email is already taken")
+            } else if (errorString == "invalid email address") {
+                self.showErrorText("Invalid email address")
             }
         }
     }
