@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -71,17 +71,6 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="01U-8x-dnp">
                                 <rect key="frame" x="-35" y="-2" width="790" height="602"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="7vT-up-tDm">
-                                <rect key="frame" x="-50" y="-2" width="825" height="802"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="7vT-up-tDm" secondAttribute="height" multiplier="9:16" id="VQP-aH-x5t"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="VQP-aH-x5t"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HuskyTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hro-zR-1v8">
                                 <rect key="frame" x="45" y="540" width="135.5" height="60"/>
                                 <constraints>
@@ -132,7 +121,6 @@
                             <constraint firstItem="EcC-Xr-8c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8bP-Xy-5dB"/>
                             <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="8wM-Pk-7kO"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="99s-aS-EC5"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7vT-up-tDm" secondAttribute="bottom" constant="-200" id="BNx-yw-abL"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K0X-5e-tQX" secondAttribute="bottom" id="CUQ-iH-OTx"/>
                             <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-35" id="CqR-Sc-ZXH"/>
                             <constraint firstItem="K0X-5e-tQX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="G7q-bI-M6L"/>
@@ -148,23 +136,18 @@
                             <constraint firstItem="01U-8x-dnp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="USp-po-JRW"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VV5-L5-iV1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hro-zR-1v8" secondAttribute="bottom" id="VaP-RZ-toT"/>
-                            <constraint firstAttribute="trailing" secondItem="7vT-up-tDm" secondAttribute="trailing" constant="-175" id="cUR-3U-edG"/>
                             <constraint firstAttribute="trailing" secondItem="01U-8x-dnp" secondAttribute="trailing" constant="-155" id="czb-xO-Le0"/>
                             <constraint firstAttribute="trailing" secondItem="Fvd-hD-fbB" secondAttribute="trailing" id="ecG-CD-SEt"/>
-                            <constraint firstItem="7vT-up-tDm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-50" id="fmG-Td-MBJ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eXX-CZ-hUX" secondAttribute="bottom" id="gCl-Uw-b0t"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="hdc-8f-UaL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7vT-up-tDm" secondAttribute="bottom" id="jOe-dN-nve"/>
                             <constraint firstItem="eXX-CZ-hUX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="kto-02-J0q"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="01U-8x-dnp" secondAttribute="bottom" id="kwC-pb-HSK"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="lhg-Sr-2wG"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Fvd-hD-fbB" secondAttribute="bottom" id="pVR-V7-POk"/>
-                            <constraint firstItem="7vT-up-tDm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="yXr-E9-bWA"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="ecG-CD-SEt"/>
-                                <exclude reference="jOe-dN-nve"/>
                             </mask>
                         </variation>
                     </view>
