@@ -481,9 +481,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Logout", "Website","Version"]
-        optionOverlayController.buttonData = [nil, nil, nil]
-        optionOverlayController.buttonActions = [askLogoutUser, linkToWebsite, showVersion]
+        optionOverlayController.buttonNames = ["Logout"]
+        optionOverlayController.buttonData = [nil]
+        optionOverlayController.buttonActions = [askLogoutUser]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
