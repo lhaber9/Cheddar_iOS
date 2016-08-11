@@ -828,35 +828,22 @@
                         <viewControllerLayoutGuide type="bottom" id="fS8-rS-OzN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="h7S-Xm-NlQ">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="227"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
-                                <rect key="frame" x="16" y="84" width="268" height="31"/>
+                                <rect key="frame" x="16" y="84" width="268" height="30.5"/>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-BC-osg">
-                                <rect key="frame" x="16" y="153" width="268" height="15"/>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
+                                <rect key="frame" x="16" y="153" width="268" height="18"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-j2-xcN" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="168" width="268" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="dbk-AH-LoJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                <state key="normal" title="Submit">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="sendTap" destination="aHJ-US-Sac" eventType="touchUpInside" id="Qm5-kq-gXV"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
-                                <rect key="frame" x="16" y="123" width="268" height="30"/>
+                                <rect key="frame" x="16" y="122" width="268" height="30.5"/>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -872,6 +859,19 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-j2-xcN" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="171" width="268" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="dbk-AH-LoJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendTap" destination="aHJ-US-Sac" eventType="touchUpInside" id="Qm5-kq-gXV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -882,10 +882,9 @@
                             <constraint firstItem="uc6-1T-lgn" firstAttribute="top" secondItem="iK1-NA-7eo" secondAttribute="bottom" constant="15" id="8Oe-Ir-iFa"/>
                             <constraint firstItem="Fko-BC-osg" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" id="9ga-JB-nI6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uBD-8i-pPZ" secondAttribute="trailing" id="Ah9-eq-KJ9"/>
-                            <constraint firstItem="fS8-rS-OzN" firstAttribute="top" secondItem="A8Y-j2-xcN" secondAttribute="bottom" constant="15" id="Db9-7R-gqe"/>
                             <constraint firstItem="Fko-BC-osg" firstAttribute="leading" secondItem="A8Y-j2-xcN" secondAttribute="leading" id="JZu-AW-JDp"/>
                             <constraint firstItem="Fko-BC-osg" firstAttribute="trailing" secondItem="A8Y-j2-xcN" secondAttribute="trailing" id="NQJ-kL-VLl"/>
-                            <constraint firstItem="A8Y-j2-xcN" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" constant="15" id="PVH-w6-wal"/>
+                            <constraint firstItem="A8Y-j2-xcN" firstAttribute="top" secondItem="XLJ-8i-iwk" secondAttribute="bottom" constant="18" id="PVH-w6-wal"/>
                             <constraint firstAttribute="trailingMargin" secondItem="A8Y-j2-xcN" secondAttribute="trailing" id="RpG-xD-kZX"/>
                             <constraint firstItem="wuB-NY-lEB" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="TLZ-Iv-TLk"/>
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="height" secondItem="XLJ-8i-iwk" secondAttribute="height" id="YKB-wU-T29"/>
@@ -894,6 +893,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="XLJ-8i-iwk" secondAttribute="trailing" id="eek-hh-4S0"/>
                             <constraint firstItem="uc6-1T-lgn" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="g9V-YP-v4z"/>
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="top" secondItem="wuB-NY-lEB" secondAttribute="bottom" constant="8" id="gE5-2H-O8c"/>
+                            <constraint firstItem="fS8-rS-OzN" firstAttribute="top" secondItem="A8Y-j2-xcN" secondAttribute="bottom" constant="15" id="jNe-c5-vjw"/>
                             <constraint firstItem="A8Y-j2-xcN" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="mxr-hg-vhY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wuB-NY-lEB" secondAttribute="trailing" id="r0q-hV-Auk"/>
                             <constraint firstItem="uBD-8i-pPZ" firstAttribute="leading" secondItem="h7S-Xm-NlQ" secondAttribute="leadingMargin" id="vAF-dM-GG4"/>
@@ -905,11 +905,11 @@
                             </mask>
                         </variation>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="227"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="230"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="227"/>
+                    <size key="freeformSize" width="300" height="230"/>
                     <connections>
                         <outlet property="emailField" destination="uBD-8i-pPZ" id="UvG-u9-utL"/>
                         <outlet property="errorLabel" destination="Fko-BC-osg" id="y8V-SF-gdI"/>
@@ -937,7 +937,7 @@
                         <viewControllerLayoutGuide type="bottom" id="bPI-a4-jkB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7s1-UW-7BD">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="187"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="190"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Registration Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bF5-Hr-L4s">
@@ -948,15 +948,6 @@
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFt-Wt-XcI">
-                                <rect key="frame" x="16" y="113" width="268" height="15"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="15" id="fI6-sU-3MJ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Non husky email addresses require a code to register." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1L-aw-P3a" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="44" width="268" height="31"/>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
@@ -970,7 +961,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lcm-2G-afh" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="128" width="268" height="44"/>
+                                <rect key="frame" x="16" y="131" width="268" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="vHC-Ui-oSU"/>
                                 </constraints>
@@ -982,6 +973,15 @@
                                     <action selector="sendTap" destination="Uo4-VN-2mU" eventType="touchUpInside" id="4VD-o8-fmu"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFt-Wt-XcI">
+                                <rect key="frame" x="16" y="113" width="268" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="fI6-sU-3MJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -994,10 +994,10 @@
                             <constraint firstItem="vFt-Wt-XcI" firstAttribute="top" secondItem="bF5-Hr-L4s" secondAttribute="bottom" id="TZE-cZ-f7n"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bF5-Hr-L4s" secondAttribute="trailing" id="acy-G7-fK9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="s1L-aw-P3a" secondAttribute="trailing" id="b8r-zo-dGN"/>
+                            <constraint firstItem="bPI-a4-jkB" firstAttribute="top" secondItem="Lcm-2G-afh" secondAttribute="bottom" constant="15" id="cJC-3R-tPb"/>
                             <constraint firstItem="vFt-Wt-XcI" firstAttribute="trailing" secondItem="Lcm-2G-afh" secondAttribute="trailing" id="e6d-Hv-dL5"/>
                             <constraint firstItem="s1L-aw-P3a" firstAttribute="leading" secondItem="7s1-UW-7BD" secondAttribute="leadingMargin" id="eZk-Wu-ffC"/>
                             <constraint firstItem="vFt-Wt-XcI" firstAttribute="top" secondItem="bF5-Hr-L4s" secondAttribute="bottom" id="eeK-T0-hsP"/>
-                            <constraint firstItem="bPI-a4-jkB" firstAttribute="top" secondItem="Lcm-2G-afh" secondAttribute="bottom" constant="15" id="hlX-pC-eGa"/>
                             <constraint firstItem="vFt-Wt-XcI" firstAttribute="top" secondItem="bF5-Hr-L4s" secondAttribute="bottom" id="lHx-G2-Wha"/>
                             <constraint firstItem="vFt-Wt-XcI" firstAttribute="top" secondItem="bF5-Hr-L4s" secondAttribute="bottom" id="rAW-v5-Y4H"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Lcm-2G-afh" secondAttribute="trailing" id="veJ-vk-G5t"/>
@@ -1012,11 +1012,11 @@
                             </mask>
                         </variation>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="187"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="190"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="187"/>
+                    <size key="freeformSize" width="300" height="190"/>
                     <connections>
                         <outlet property="codeField" destination="bF5-Hr-L4s" id="Qoo-fu-EG5"/>
                         <outlet property="errorLabel" destination="vFt-Wt-XcI" id="8Uh-9d-JO8"/>
@@ -1043,17 +1043,40 @@
                         <viewControllerLayoutGuide type="bottom" id="vP1-Xu-w09"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DPR-sN-gy0">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="189"/>
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="191"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZTJ-b6-xF3">
-                                <rect key="frame" x="16" y="115" width="268" height="15"/>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
+                                <rect key="frame" x="16" y="113.5" width="268" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="18" id="cdw-OY-Haf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijV-8w-cCt" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="127" height="21.5"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email to recieve a password reset message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-CY-fsf" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="44.5" width="268" height="31"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aPY-oA-e62">
+                                <rect key="frame" x="16" y="83.5" width="268" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4SL-ac-Fd5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsV-x0-tgD" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="130" width="268" height="44"/>
+                                <rect key="frame" x="16" y="131.5" width="268" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="CuD-GR-GrQ"/>
                                 </constraints>
@@ -1065,29 +1088,12 @@
                                     <action selector="sendTap" destination="sTi-Sn-zgr" eventType="touchUpInside" id="5zN-rf-ONk"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ijV-8w-cCt" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="15" width="127" height="22"/>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your email to recieve a password reset message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-CY-fsf" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="45" width="268" height="31"/>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aPY-oA-e62">
-                                <rect key="frame" x="16" y="84" width="268" height="31"/>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="vP1-Xu-w09" firstAttribute="top" secondItem="QsV-x0-tgD" secondAttribute="bottom" constant="15" id="0rb-1x-0fp"/>
                             <constraint firstItem="ZTJ-b6-xF3" firstAttribute="trailing" secondItem="QsV-x0-tgD" secondAttribute="trailing" id="2Re-Jh-RDK"/>
                             <constraint firstItem="aPY-oA-e62" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="5iD-SZ-maY"/>
-                            <constraint firstItem="vP1-Xu-w09" firstAttribute="top" secondItem="QsV-x0-tgD" secondAttribute="bottom" constant="15" id="8y8-fQ-ScK"/>
                             <constraint firstItem="ijV-8w-cCt" firstAttribute="top" secondItem="3p0-Yu-6Rm" secondAttribute="bottom" constant="15" id="B0D-DP-bi5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7uV-CY-fsf" secondAttribute="trailing" id="Cch-CZ-5Bz"/>
                             <constraint firstItem="7uV-CY-fsf" firstAttribute="leading" secondItem="DPR-sN-gy0" secondAttribute="leadingMargin" id="K0M-kQ-j1Z"/>
@@ -1102,11 +1108,11 @@
                             <constraint firstAttribute="trailingMargin" secondItem="QsV-x0-tgD" secondAttribute="trailing" id="teq-Vq-lHL"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="300" height="189"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="300" height="191"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="300" height="189"/>
+                    <size key="freeformSize" width="300" height="191"/>
                     <connections>
                         <outlet property="emailField" destination="aPY-oA-e62" id="8yL-dY-7oe"/>
                         <outlet property="errorLabel" destination="ZTJ-b6-xF3" id="Vie-hq-tpm"/>
