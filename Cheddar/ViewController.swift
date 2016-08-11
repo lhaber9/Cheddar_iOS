@@ -17,13 +17,12 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     @IBOutlet var backgroundView: UIView!
     @IBOutlet var backgroundCheeseLeftConstraint: NSLayoutConstraint!
-    @IBOutlet var backgroundCheeseRightConstraint: NSLayoutConstraint!
     @IBOutlet var huskyImageLeftConstraint: NSLayoutConstraint!
     var backgroundCheeseInitalLeftConstraint: CGFloat!
     var backgroundCheeseInitalRightConstraint: CGFloat!
     var huskyImageInitialLeftConstraint: CGFloat!
-    var backgroundParalaxScaleFactor: CGFloat = 8
-    var huskyParalaxScaleFactor: CGFloat = 22
+    var backgroundParalaxScaleFactor: CGFloat = 5
+//    var huskyParalaxScaleFactor: CGFloat = 22
     
     @IBOutlet var overlayContainer: UIView!
     @IBOutlet var overlayContentsContainer: UIView!
@@ -40,7 +39,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         super.viewDidLoad()
         
         backgroundCheeseInitalLeftConstraint = backgroundCheeseLeftConstraint.constant
-        backgroundCheeseInitalRightConstraint = backgroundCheeseRightConstraint.constant
         huskyImageInitialLeftConstraint = huskyImageLeftConstraint.constant
         
         loadOverlay = LoadingView.instanceFromNib()
@@ -158,7 +156,6 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     func scrollViewDidScroll(scrollView: UIScrollView) {
         let backgrounParalaxOffset = scrollView.contentOffset.x / backgroundParalaxScaleFactor;
         backgroundCheeseLeftConstraint.constant  = backgroundCheeseInitalLeftConstraint - backgrounParalaxOffset
-        backgroundCheeseRightConstraint.constant = backgroundCheeseInitalRightConstraint + backgrounParalaxOffset
         
 //        turn off husky scrolling
 //

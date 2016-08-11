@@ -71,6 +71,12 @@
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="01U-8x-dnp">
                                 <rect key="frame" x="-35" y="-2" width="790" height="602"/>
                             </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="OnboardBackground" translatesAutoresizingMaskIntoConstraints="NO" id="pV5-J2-ia9">
+                                <rect key="frame" x="-50" y="-2" width="1080" height="960"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pV5-J2-ia9" secondAttribute="height" multiplier="9:8" id="Ivy-qb-POB"/>
+                                </constraints>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HuskyTalk" translatesAutoresizingMaskIntoConstraints="NO" id="hro-zR-1v8">
                                 <rect key="frame" x="45" y="540" width="135.5" height="60"/>
                                 <constraints>
@@ -118,11 +124,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="eXX-CZ-hUX" secondAttribute="trailing" id="12U-m1-0dn"/>
+                            <constraint firstItem="pV5-J2-ia9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-50" id="1hC-IO-2RB"/>
                             <constraint firstItem="EcC-Xr-8c1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="8bP-Xy-5dB"/>
                             <constraint firstItem="hro-zR-1v8" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="25" id="8wM-Pk-7kO"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="99s-aS-EC5"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="K0X-5e-tQX" secondAttribute="bottom" id="CUQ-iH-OTx"/>
                             <constraint firstItem="01U-8x-dnp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="-35" id="CqR-Sc-ZXH"/>
+                            <constraint firstItem="pV5-J2-ia9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="Dvd-CU-Wj8"/>
                             <constraint firstItem="K0X-5e-tQX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="G7q-bI-M6L"/>
                             <constraint firstItem="Fvd-hD-fbB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" priority="900" id="Gdy-6d-8KC"/>
                             <constraint firstAttribute="trailing" secondItem="EcC-Xr-8c1" secondAttribute="trailing" id="H63-f7-iZF"/>
@@ -136,6 +144,7 @@
                             <constraint firstItem="01U-8x-dnp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="USp-po-JRW"/>
                             <constraint firstItem="IaD-qd-VxZ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VV5-L5-iV1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hro-zR-1v8" secondAttribute="bottom" id="VaP-RZ-toT"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" relation="lessThanOrEqual" secondItem="pV5-J2-ia9" secondAttribute="bottom" id="aTG-zc-mw7"/>
                             <constraint firstAttribute="trailing" secondItem="01U-8x-dnp" secondAttribute="trailing" constant="-155" id="czb-xO-Le0"/>
                             <constraint firstAttribute="trailing" secondItem="Fvd-hD-fbB" secondAttribute="trailing" id="ecG-CD-SEt"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eXX-CZ-hUX" secondAttribute="bottom" id="gCl-Uw-b0t"/>
@@ -152,8 +161,7 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="backgroundCheeseLeftConstraint" destination="CqR-Sc-ZXH" id="2zg-bD-Fbc"/>
-                        <outlet property="backgroundCheeseRightConstraint" destination="czb-xO-Le0" id="hxy-PZ-3jH"/>
+                        <outlet property="backgroundCheeseLeftConstraint" destination="1hC-IO-2RB" id="nez-mv-KSi"/>
                         <outlet property="backgroundView" destination="IaD-qd-VxZ" id="mr7-nG-wZ8"/>
                         <outlet property="chatContainer" destination="K0X-5e-tQX" id="4fc-yz-Jsp"/>
                         <outlet property="huskyImageLeftConstraint" destination="8wM-Pk-7kO" id="Elz-F1-RwV"/>
@@ -1134,7 +1142,7 @@
     <resources>
         <image name="HuskyTalk" width="467" height="207"/>
         <image name="LeftArrow" width="200" height="200"/>
-        <image name="OnboardBackground" width="540" height="960"/>
+        <image name="OnboardBackground" width="1080" height="960"/>
         <image name="RightArrow" width="200" height="200"/>
     </resources>
 </document>
