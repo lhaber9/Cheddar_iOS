@@ -386,7 +386,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController.delegate = self
         
         optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
-        optionOverlayController.buttonData = [nil,chatRoom,nil]
+        optionOverlayController.buttonData = [chatRoom,nil,nil]
         optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
