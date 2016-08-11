@@ -10,6 +10,8 @@ import Foundation
 
 class ColorConstants {
     
+    static var whiteColor = UIColor(hex: 0xFFFFFF)
+    
     static var colorPrimary = UIColor(hex: 0xfade52)
     static var colorAccent = UIColor(hex: 0xf06767)
 

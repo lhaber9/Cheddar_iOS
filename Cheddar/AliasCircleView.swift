@@ -40,10 +40,10 @@ class AliasCircleView: LockedBackgroundColorView {
         indicatorView.layer.cornerRadius = indicatorView.frame.size.height / 2
         indicatorView.lockedBackgroundColor = ColorConstants.outboundChatBubble
         indicatorStrokeView.layer.cornerRadius = indicatorStrokeView.frame.size.height / 2
-        indicatorStrokeView.lockedBackgroundColor = UIColor.whiteColor()
+        indicatorStrokeView.lockedBackgroundColor = ColorConstants.whiteColor
         
         initalsLabel.text = alias.initials()
-        initalsLabel.textColor = UIColor.whiteColor()
+        initalsLabel.textColor = ColorConstants.whiteColor
         initialsWidthConstraint.constant = height * sizeFactor
         initalsLabel.adjustsFontSizeToFitWidth = true
         
