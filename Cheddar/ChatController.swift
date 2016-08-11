@@ -385,9 +385,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Send Feedback", "Leave Group", "View Active Members"]
+        optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
         optionOverlayController.buttonData = [nil,chatRoom,nil]
-        optionOverlayController.buttonActions = [selectedFeedback, tryLeaveChatRoom, showActiveMembers]
+        optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
