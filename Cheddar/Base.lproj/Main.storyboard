@@ -45,7 +45,6 @@
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
-            <string>Effra-Regular</string>
         </mutableArray>
         <mutableArray key="GothamRounded-Bold.ttf">
             <string>GothamRounded-Bold</string>
@@ -111,13 +110,13 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="2gg-Qv-wxK" secondAttribute="trailing" id="6dk-iI-4ku"/>
+                                    <constraint firstAttribute="bottom" secondItem="5Wv-tn-ZLf" secondAttribute="bottom" id="BoJ-ac-jxu"/>
                                     <constraint firstItem="2gg-Qv-wxK" firstAttribute="top" secondItem="EcC-Xr-8c1" secondAttribute="top" id="F30-Ei-cgI"/>
-                                    <constraint firstAttribute="trailing" secondItem="5Wv-tn-ZLf" secondAttribute="trailing" id="LkN-h9-uUv"/>
-                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="leading" secondItem="EcC-Xr-8c1" secondAttribute="leading" id="VaZ-TV-Xzi"/>
+                                    <constraint firstAttribute="trailing" secondItem="5Wv-tn-ZLf" secondAttribute="trailing" id="HvV-K2-Jhf"/>
+                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="leading" secondItem="EcC-Xr-8c1" secondAttribute="leading" id="bAk-Eh-GzE"/>
                                     <constraint firstItem="2gg-Qv-wxK" firstAttribute="leading" secondItem="EcC-Xr-8c1" secondAttribute="leading" id="jbx-Me-Eec"/>
                                     <constraint firstAttribute="bottom" secondItem="2gg-Qv-wxK" secondAttribute="bottom" id="rm7-vB-4kX"/>
-                                    <constraint firstAttribute="bottom" secondItem="5Wv-tn-ZLf" secondAttribute="bottom" id="uEH-JI-K7D"/>
-                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="top" secondItem="EcC-Xr-8c1" secondAttribute="top" id="zGH-me-RMd"/>
+                                    <constraint firstItem="5Wv-tn-ZLf" firstAttribute="top" secondItem="EcC-Xr-8c1" secondAttribute="top" id="vmP-Lp-IEi"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -269,6 +268,124 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8No-eq-Oe5">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qVr-eE-uVV" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="191" y="129" width="217" height="52"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="52" id="hyC-o8-2o5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="52"/>
+                                        <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a friend. Find a date. Troll." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YY8-0P-UHq" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="166" y="181" width="267" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="mg0-b1-bmN"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="20"/>
+                                        <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GiH-PK-eSt">
+                                        <rect key="frame" x="0.0" y="230" width="600" height="250"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fMA-TT-neT">
+                                                <rect key="frame" x="0.0" y="42" width="600" height="135"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivP-LY-3fy" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                                        <rect key="frame" x="187" y="20" width="225" height="40"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="40" id="0cm-BI-Oi7"/>
+                                                            <constraint firstAttribute="width" constant="225" id="2q0-13-Clf"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                                        <state key="normal" title="Register">
+                                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="showRegister" destination="emR-sm-HRS" eventType="touchUpInside" id="abf-jB-ihY"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKd-ki-Z8l" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
+                                                        <rect key="frame" x="187" y="75" width="225" height="40"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="50" id="Suj-rR-VTc"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                                        <state key="normal" title="Login">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="Suj-rR-VTc"/>
+                                                            </mask>
+                                                        </variation>
+                                                        <connections>
+                                                            <action selector="showLogin" destination="emR-sm-HRS" eventType="touchUpInside" id="miG-7v-uhO"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="ivP-LY-3fy" firstAttribute="top" secondItem="fMA-TT-neT" secondAttribute="top" constant="20" id="LAf-Pj-ybm"/>
+                                                    <constraint firstItem="ivP-LY-3fy" firstAttribute="centerX" secondItem="fMA-TT-neT" secondAttribute="centerX" id="SPG-JZ-iIR"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dKd-ki-Z8l" secondAttribute="bottom" constant="20" id="YSB-qf-WQD"/>
+                                                    <constraint firstItem="dKd-ki-Z8l" firstAttribute="width" secondItem="ivP-LY-3fy" secondAttribute="width" id="dDs-Hn-5QF"/>
+                                                    <constraint firstItem="dKd-ki-Z8l" firstAttribute="top" secondItem="ivP-LY-3fy" secondAttribute="bottom" constant="15" id="edM-Vc-B2Q"/>
+                                                    <constraint firstItem="dKd-ki-Z8l" firstAttribute="height" secondItem="ivP-LY-3fy" secondAttribute="height" id="fz2-iA-wcx"/>
+                                                    <constraint firstItem="dKd-ki-Z8l" firstAttribute="centerX" secondItem="ivP-LY-3fy" secondAttribute="centerX" id="pCb-qQ-ph2"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="fMA-TT-neT" firstAttribute="centerY" secondItem="GiH-PK-eSt" secondAttribute="centerY" constant="-15" id="0Od-Df-4tW"/>
+                                            <constraint firstAttribute="trailing" secondItem="fMA-TT-neT" secondAttribute="trailing" id="BOB-lW-gbv"/>
+                                            <constraint firstItem="fMA-TT-neT" firstAttribute="leading" secondItem="GiH-PK-eSt" secondAttribute="leading" id="IQi-K4-vBq"/>
+                                        </constraints>
+                                    </view>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GqM-8e-itz">
+                                        <rect key="frame" x="0.0" y="230" width="600" height="250"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PuB-Fy-nPP">
+                                        <rect key="frame" x="0.0" y="230" width="600" height="250"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="YY8-0P-UHq" firstAttribute="top" secondItem="qVr-eE-uVV" secondAttribute="bottom" priority="900" id="2BC-rG-H7U"/>
+                                    <constraint firstItem="GiH-PK-eSt" firstAttribute="top" secondItem="YY8-0P-UHq" secondAttribute="bottom" constant="25" id="4an-As-Fgi"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="leading" secondItem="GiH-PK-eSt" secondAttribute="leading" id="4oB-1z-88P"/>
+                                    <constraint firstAttribute="trailing" secondItem="GiH-PK-eSt" secondAttribute="trailing" id="65V-Cv-Rkr"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="bottom" secondItem="GiH-PK-eSt" secondAttribute="bottom" id="6d2-yz-50E"/>
+                                    <constraint firstItem="GiH-PK-eSt" firstAttribute="top" secondItem="qVr-eE-uVV" secondAttribute="bottom" priority="200" id="ELS-TU-Q6W"/>
+                                    <constraint firstAttribute="bottom" secondItem="GiH-PK-eSt" secondAttribute="bottom" priority="900" constant="100" id="Hil-h3-4k8"/>
+                                    <constraint firstItem="qVr-eE-uVV" firstAttribute="centerY" secondItem="8No-eq-Oe5" secondAttribute="centerY" priority="200" constant="-135" id="K4f-Zx-8PS"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="trailing" secondItem="GiH-PK-eSt" secondAttribute="trailing" id="Lht-he-sx8"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="leading" secondItem="GiH-PK-eSt" secondAttribute="leading" id="MkN-c2-4Oo"/>
+                                    <constraint firstItem="GiH-PK-eSt" firstAttribute="leading" secondItem="8No-eq-Oe5" secondAttribute="leading" id="Pl9-6G-5Cq"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="trailing" secondItem="GiH-PK-eSt" secondAttribute="trailing" id="T6k-Oc-kp9"/>
+                                    <constraint firstAttribute="bottom" secondItem="GiH-PK-eSt" secondAttribute="bottom" priority="200" constant="100" id="XwG-T6-Nk1"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="leading" secondItem="GiH-PK-eSt" secondAttribute="leading" id="YHb-y6-pIy"/>
+                                    <constraint firstItem="YY8-0P-UHq" firstAttribute="centerX" secondItem="qVr-eE-uVV" secondAttribute="centerX" id="Zoe-Ac-qTi"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="trailing" secondItem="GiH-PK-eSt" secondAttribute="trailing" id="deS-Hz-wYT"/>
+                                    <constraint firstItem="qVr-eE-uVV" firstAttribute="centerX" secondItem="8No-eq-Oe5" secondAttribute="centerX" id="dvW-FH-2IU"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="leading" secondItem="GiH-PK-eSt" secondAttribute="leading" id="j9V-CX-pZi"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="trailing" secondItem="GiH-PK-eSt" secondAttribute="trailing" id="kRN-dO-wwf"/>
+                                    <constraint firstItem="qVr-eE-uVV" firstAttribute="centerY" secondItem="8No-eq-Oe5" secondAttribute="centerY" priority="900" constant="-135" id="lN1-6e-yIG"/>
+                                    <constraint firstItem="qVr-eE-uVV" firstAttribute="top" secondItem="8No-eq-Oe5" secondAttribute="top" priority="200" constant="50" id="sx2-of-Z9D"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="top" secondItem="GiH-PK-eSt" secondAttribute="top" id="tKr-mq-Jgh"/>
+                                    <constraint firstItem="PuB-Fy-nPP" firstAttribute="top" secondItem="GiH-PK-eSt" secondAttribute="top" id="v92-lN-KwJ"/>
+                                    <constraint firstItem="GqM-8e-itz" firstAttribute="bottom" secondItem="GiH-PK-eSt" secondAttribute="bottom" id="xqZ-Ye-NTX"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nQH-jv-ieV" userLabel="Anchor View">
                                 <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -277,87 +394,10 @@
                                     <constraint firstAttribute="width" id="zcw-Sm-lvf"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vap-Lx-lnb" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="191" y="139" width="217" height="52"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="DH3-KE-yJF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="52"/>
-                                <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gte-X4-SsP">
-                                <rect key="frame" x="0.0" y="240" width="600" height="260"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nb5-lT-aKv">
-                                        <rect key="frame" x="0.0" y="47" width="600" height="135"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fZL-Lv-ULh" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                                <rect key="frame" x="187" y="20" width="225" height="40"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="225" id="DCD-u9-CoG"/>
-                                                    <constraint firstAttribute="height" constant="40" id="ctr-5X-cL2"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                                <state key="normal" title="Register">
-                                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="showRegister" destination="emR-sm-HRS" eventType="touchUpInside" id="G9A-RP-Sfb"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WaV-pw-xlb" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                                <rect key="frame" x="187" y="75" width="225" height="40"/>
-                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="l1M-cu-2Jk"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                                <state key="normal" title="Login">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="l1M-cu-2Jk"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="showLogin" destination="emR-sm-HRS" eventType="touchUpInside" id="AwU-s8-B6h"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstItem="WaV-pw-xlb" firstAttribute="top" secondItem="fZL-Lv-ULh" secondAttribute="bottom" constant="15" id="4uL-HF-dAW"/>
-                                            <constraint firstItem="WaV-pw-xlb" firstAttribute="width" secondItem="fZL-Lv-ULh" secondAttribute="width" id="8Ic-cG-kod"/>
-                                            <constraint firstAttribute="bottom" secondItem="WaV-pw-xlb" secondAttribute="bottom" constant="20" id="Nbe-R0-fHb"/>
-                                            <constraint firstItem="fZL-Lv-ULh" firstAttribute="top" secondItem="nb5-lT-aKv" secondAttribute="top" constant="20" id="hUZ-A0-CXh"/>
-                                            <constraint firstItem="fZL-Lv-ULh" firstAttribute="centerX" secondItem="nb5-lT-aKv" secondAttribute="centerX" id="lyP-TY-Phm"/>
-                                            <constraint firstItem="WaV-pw-xlb" firstAttribute="centerX" secondItem="fZL-Lv-ULh" secondAttribute="centerX" id="r96-ye-uG4"/>
-                                            <constraint firstItem="WaV-pw-xlb" firstAttribute="height" secondItem="fZL-Lv-ULh" secondAttribute="height" id="vPt-rL-888"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="nb5-lT-aKv" secondAttribute="trailing" id="DRu-v5-ATr"/>
-                                    <constraint firstItem="nb5-lT-aKv" firstAttribute="centerY" secondItem="gte-X4-SsP" secondAttribute="centerY" constant="-15" id="c8c-l5-9fZ"/>
-                                    <constraint firstItem="nb5-lT-aKv" firstAttribute="leading" secondItem="gte-X4-SsP" secondAttribute="leading" id="jC8-kg-9Ot"/>
-                                </constraints>
-                            </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I9O-c6-0z9">
-                                <rect key="frame" x="0.0" y="240" width="600" height="260"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dPt-fC-aWQ">
-                                <rect key="frame" x="0.0" y="240" width="600" height="260"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ttC-ni-nMd">
                                 <rect key="frame" x="277" y="468" width="47" height="32"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8R-qO-yHn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8R-qO-yHn">
                                         <rect key="frame" x="8" y="8" width="31" height="16"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -368,75 +408,42 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="x8R-qO-yHn" secondAttribute="bottom" constant="8" id="1Jc-ZQ-Seo"/>
                                     <constraint firstAttribute="trailing" secondItem="x8R-qO-yHn" secondAttribute="trailing" constant="8" id="CN2-pR-ud7"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="225" id="Upn-AE-EiC"/>
                                     <constraint firstItem="x8R-qO-yHn" firstAttribute="leading" secondItem="ttC-ni-nMd" secondAttribute="leading" constant="8" id="lJ1-4M-LSJ"/>
                                     <constraint firstItem="x8R-qO-yHn" firstAttribute="top" secondItem="ttC-ni-nMd" secondAttribute="top" constant="8" id="y1D-cr-hNv"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a friend. Find a date. Troll." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdZ-AX-yax" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="166" y="191" width="267" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="n2q-Go-nVQ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="20"/>
-                                <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="centerY" secondItem="JxO-9y-ttT" secondAttribute="centerY" priority="200" constant="-135" id="5QV-bZ-yh9"/>
+                            <constraint firstAttribute="trailing" secondItem="8No-eq-Oe5" secondAttribute="trailing" id="6lD-fv-jAV"/>
                             <constraint firstItem="ttC-ni-nMd" firstAttribute="centerX" secondItem="JxO-9y-ttT" secondAttribute="centerX" id="7H6-LP-cIb"/>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="centerX" secondItem="gdZ-AX-yax" secondAttribute="centerX" id="8Bg-Y5-IA8"/>
-                            <constraint firstItem="I9O-c6-0z9" firstAttribute="trailing" secondItem="gte-X4-SsP" secondAttribute="trailing" id="Aun-r7-2KD"/>
-                            <constraint firstItem="gte-X4-SsP" firstAttribute="top" secondItem="gdZ-AX-yax" secondAttribute="bottom" constant="25" id="Ay2-7f-Atk"/>
                             <constraint firstItem="nQH-jv-ieV" firstAttribute="centerY" secondItem="JxO-9y-ttT" secondAttribute="centerY" id="Do5-Fo-VV2"/>
-                            <constraint firstItem="dPt-fC-aWQ" firstAttribute="bottom" secondItem="gte-X4-SsP" secondAttribute="bottom" id="FTd-y6-7xe"/>
-                            <constraint firstItem="I9O-c6-0z9" firstAttribute="leading" secondItem="gte-X4-SsP" secondAttribute="leading" id="Grj-SP-mF9"/>
-                            <constraint firstItem="gdZ-AX-yax" firstAttribute="top" secondItem="vap-Lx-lnb" secondAttribute="bottom" priority="900" id="K6l-S9-JFV"/>
-                            <constraint firstItem="gte-X4-SsP" firstAttribute="centerY" secondItem="JxO-9y-ttT" secondAttribute="centerY" constant="-50" id="KSW-J0-6r1"/>
-                            <constraint firstItem="gte-X4-SsP" firstAttribute="top" secondItem="vap-Lx-lnb" secondAttribute="bottom" priority="200" id="NXu-QQ-lkR"/>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="centerY" secondItem="JxO-9y-ttT" secondAttribute="centerY" priority="200" constant="-135" id="Ptb-0f-vi0"/>
+                            <constraint firstItem="8No-eq-Oe5" firstAttribute="leading" secondItem="JxO-9y-ttT" secondAttribute="leading" id="Ifj-U8-5C8"/>
                             <constraint firstItem="nQH-jv-ieV" firstAttribute="centerX" secondItem="JxO-9y-ttT" secondAttribute="centerX" id="R9u-ty-W9B"/>
-                            <constraint firstItem="I9O-c6-0z9" firstAttribute="top" secondItem="gte-X4-SsP" secondAttribute="top" id="Rdt-VI-ANa"/>
-                            <constraint firstItem="dPt-fC-aWQ" firstAttribute="top" secondItem="gte-X4-SsP" secondAttribute="top" id="RjB-Yh-yBe"/>
-                            <constraint firstItem="ttC-ni-nMd" firstAttribute="bottom" secondItem="gte-X4-SsP" secondAttribute="bottom" id="TIh-aC-cXo"/>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="centerY" secondItem="JxO-9y-ttT" secondAttribute="centerY" priority="900" constant="-135" id="brD-ey-LvA"/>
-                            <constraint firstItem="ajo-lZ-rv8" firstAttribute="top" secondItem="gte-X4-SsP" secondAttribute="bottom" priority="900" constant="100" id="cef-DA-iUw"/>
-                            <constraint firstItem="dPt-fC-aWQ" firstAttribute="trailing" secondItem="gte-X4-SsP" secondAttribute="trailing" id="elI-Uh-Gch"/>
-                            <constraint firstItem="I9O-c6-0z9" firstAttribute="bottom" secondItem="gte-X4-SsP" secondAttribute="bottom" id="haZ-HV-zxH"/>
-                            <constraint firstAttribute="trailing" secondItem="gte-X4-SsP" secondAttribute="trailing" id="iAN-Lx-01u"/>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="top" secondItem="GOp-u1-h1E" secondAttribute="bottom" priority="200" constant="50" id="iD8-ro-FjB"/>
-                            <constraint firstItem="gte-X4-SsP" firstAttribute="top" relation="greaterThanOrEqual" secondItem="GOp-u1-h1E" secondAttribute="bottom" id="lDh-Eb-eci"/>
-                            <constraint firstItem="gte-X4-SsP" firstAttribute="leading" secondItem="JxO-9y-ttT" secondAttribute="leading" id="p7L-F4-5HV"/>
-                            <constraint firstItem="ajo-lZ-rv8" firstAttribute="top" secondItem="gte-X4-SsP" secondAttribute="bottom" priority="200" constant="100" id="sVZ-em-J45"/>
-                            <constraint firstItem="vap-Lx-lnb" firstAttribute="centerX" secondItem="JxO-9y-ttT" secondAttribute="centerX" id="wsm-SM-GqH"/>
-                            <constraint firstItem="dPt-fC-aWQ" firstAttribute="leading" secondItem="gte-X4-SsP" secondAttribute="leading" id="zK4-Dj-2Xt"/>
+                            <constraint firstItem="ajo-lZ-rv8" firstAttribute="top" secondItem="8No-eq-Oe5" secondAttribute="bottom" id="SPG-J0-aP3"/>
+                            <constraint firstItem="ttC-ni-nMd" firstAttribute="bottom" secondItem="GiH-PK-eSt" secondAttribute="bottom" id="rZt-AC-AuN"/>
+                            <constraint firstItem="8No-eq-Oe5" firstAttribute="top" secondItem="GOp-u1-h1E" secondAttribute="bottom" id="tPs-lW-of1"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Ptb-0f-vi0"/>
-                                <exclude reference="KSW-J0-6r1"/>
-                                <exclude reference="lDh-Eb-eci"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="bottomConstraint" destination="cef-DA-iUw" id="XKQ-av-vaG"/>
-                        <outlet property="bottomConstraintKeyboard" destination="sVZ-em-J45" id="jJf-Dd-llF"/>
-                        <outlet property="buttonsCenterConstraint" destination="c8c-l5-9fZ" id="gJ2-N5-4Lq"/>
-                        <outlet property="cheddarLabelKeyboardConstraint" destination="NXu-QQ-lkR" id="sT3-kD-z3c"/>
+                        <outlet property="bottomConstraint" destination="Hil-h3-4k8" id="z5a-C9-f6T"/>
+                        <outlet property="bottomConstraintKeyboard" destination="XwG-T6-Nk1" id="urx-SB-WLy"/>
+                        <outlet property="buttonsCenterConstraint" destination="0Od-Df-4tW" id="7ss-La-lZT"/>
+                        <outlet property="cheddarLabelKeyboardConstraint" destination="ELS-TU-Q6W" id="7cl-p9-iPk"/>
                         <outlet property="errorLabel" destination="x8R-qO-yHn" id="B4l-4S-Igm"/>
                         <outlet property="errorTextContainer" destination="ttC-ni-nMd" id="d5s-Ae-7eS"/>
-                        <outlet property="loginButton" destination="WaV-pw-xlb" id="pq4-S6-0gA"/>
-                        <outlet property="loginContainer" destination="dPt-fC-aWQ" id="VUP-B2-da4"/>
-                        <outlet property="mainContainer" destination="gte-X4-SsP" id="nSp-w8-dJm"/>
-                        <outlet property="registerButton" destination="fZL-Lv-ULh" id="vWC-hm-dmT"/>
-                        <outlet property="registerContainer" destination="I9O-c6-0z9" id="Ur1-Qd-Utc"/>
-                        <outlet property="taglineLabel" destination="gdZ-AX-yax" id="eqv-dR-MRT"/>
-                        <outlet property="topConstraint" destination="brD-ey-LvA" id="4fs-1q-Zlb"/>
-                        <outlet property="topConstraintKeyboard" destination="5QV-bZ-yh9" id="y1n-ol-4bZ"/>
-                        <outlet property="topConstraintKeyboardSmallSize" destination="iD8-ro-FjB" id="u3g-M9-TII"/>
+                        <outlet property="loginButton" destination="dKd-ki-Z8l" id="WFk-xQ-BVV"/>
+                        <outlet property="loginContainer" destination="GqM-8e-itz" id="caB-NQ-qY8"/>
+                        <outlet property="mainContainer" destination="GiH-PK-eSt" id="5mT-Av-mND"/>
+                        <outlet property="registerButton" destination="ivP-LY-3fy" id="kVq-ZV-d27"/>
+                        <outlet property="registerContainer" destination="PuB-Fy-nPP" id="hyz-cg-0jU"/>
+                        <outlet property="taglineLabel" destination="YY8-0P-UHq" id="dZu-nT-099"/>
+                        <outlet property="topConstraint" destination="lN1-6e-yIG" id="UIr-Ba-RnH"/>
+                        <outlet property="topConstraintKeyboard" destination="K4f-Zx-8PS" id="5Db-Pe-4OL"/>
+                        <outlet property="topConstraintKeyboardSmallSize" destination="sx2-of-Z9D" id="Dih-RQ-T7Q"/>
                         <outlet property="view" destination="JxO-9y-ttT" id="Cz0-HZ-0Wy"/>
+                        <outlet property="viewContents" destination="8No-eq-Oe5" id="xHr-dQ-beF"/>
                         <segue destination="aHJ-US-Sac" kind="popoverPresentation" identifier="showChangeSchoolSegue" popoverAnchorView="nQH-jv-ieV" id="zhG-KP-P7x">
                             <popoverArrowDirection key="popoverArrowDirection"/>
                         </segue>
@@ -713,7 +720,7 @@
                                 <rect key="frame" x="200" y="272" width="200" height="156"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgA-qU-hyO" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="112" width="200" height="44"/>
+                                        <rect key="frame" x="0.0" y="56" width="200" height="44"/>
                                         <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
                                         <state key="normal" title="Resend Email">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -723,7 +730,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OiP-Wt-tmz" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
+                                        <rect key="frame" x="0.0" y="112" width="200" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="Dgi-XG-Vfz"/>
                                         </constraints>
@@ -736,7 +743,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jdT-QN-xTg" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="56" width="200" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="44"/>
                                         <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
                                         <state key="normal" title="Check Verify">
                                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -751,10 +758,13 @@
                                     <constraint firstAttribute="trailing" secondItem="OiP-Wt-tmz" secondAttribute="trailing" id="0ID-Ml-VL2"/>
                                     <constraint firstAttribute="width" constant="200" id="49i-aR-LBa"/>
                                     <constraint firstAttribute="bottom" secondItem="jdT-QN-xTg" secondAttribute="bottom" id="5Df-me-VYS"/>
+                                    <constraint firstItem="jdT-QN-xTg" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="6bB-2d-GXW"/>
                                     <constraint firstItem="jdT-QN-xTg" firstAttribute="leading" secondItem="4rl-B2-rJS" secondAttribute="leading" id="7he-xv-QXN"/>
                                     <constraint firstAttribute="bottom" secondItem="xgA-qU-hyO" secondAttribute="bottom" id="C07-zb-1RB"/>
                                     <constraint firstItem="jdT-QN-xTg" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="GFt-kj-E0k"/>
                                     <constraint firstItem="xgA-qU-hyO" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="GN7-97-4S8"/>
+                                    <constraint firstItem="OiP-Wt-tmz" firstAttribute="top" secondItem="xgA-qU-hyO" secondAttribute="bottom" constant="12" id="Gfl-DH-57a"/>
+                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="top" secondItem="jdT-QN-xTg" secondAttribute="bottom" constant="12" id="HgF-4b-p5C"/>
                                     <constraint firstItem="xgA-qU-hyO" firstAttribute="height" secondItem="jdT-QN-xTg" secondAttribute="height" id="KBd-IO-H5x"/>
                                     <constraint firstAttribute="trailing" secondItem="jdT-QN-xTg" secondAttribute="trailing" id="Web-IL-yM1"/>
                                     <constraint firstItem="xgA-qU-hyO" firstAttribute="leading" secondItem="4rl-B2-rJS" secondAttribute="leading" id="bcP-L8-TOX"/>
@@ -766,16 +776,23 @@
                                     <constraint firstItem="jdT-QN-xTg" firstAttribute="top" secondItem="OiP-Wt-tmz" secondAttribute="bottom" constant="12" id="r1c-me-0zs"/>
                                     <constraint firstItem="OiP-Wt-tmz" firstAttribute="height" secondItem="xgA-qU-hyO" secondAttribute="height" id="szE-0t-ugG"/>
                                     <constraint firstAttribute="trailing" secondItem="xgA-qU-hyO" secondAttribute="trailing" id="uDX-wh-5mQ"/>
+                                    <constraint firstItem="xgA-qU-hyO" firstAttribute="bottom" secondItem="OiP-Wt-tmz" secondAttribute="top" constant="-12" id="ujm-K6-1v5"/>
+                                    <constraint firstAttribute="bottom" secondItem="OiP-Wt-tmz" secondAttribute="bottom" id="utR-54-gEy"/>
                                     <constraint firstItem="OiP-Wt-tmz" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="top" id="wNh-6u-g1y"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="nC0-ea-k1a"/>
-                                        <exclude reference="bz0-p5-Udz"/>
                                         <exclude reference="5Df-me-VYS"/>
                                         <exclude reference="GFt-kj-E0k"/>
+                                        <exclude reference="r1c-me-0zs"/>
                                         <exclude reference="C07-zb-1RB"/>
                                         <exclude reference="GN7-97-4S8"/>
+                                        <exclude reference="nI5-cH-rhE"/>
+                                        <exclude reference="pno-Ph-6vc"/>
+                                        <exclude reference="ujm-K6-1v5"/>
+                                        <exclude reference="bz0-p5-Udz"/>
+                                        <exclude reference="wNh-6u-g1y"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -789,35 +806,18 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0TZ-XJ-xXb">
-                                <rect key="frame" x="225.5" y="463" width="150" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="XUp-xg-Th3"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="OiP-Wt-tmz" firstAttribute="top" secondItem="0TZ-XJ-xXb" secondAttribute="bottom" constant="18" id="0Wq-EE-zc8"/>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerX" secondItem="XlZ-0Q-bg3" secondAttribute="centerX" id="0fF-35-zeH"/>
                             <constraint firstItem="4rl-B2-rJS" firstAttribute="centerY" secondItem="XlZ-0Q-bg3" secondAttribute="centerY" constant="50" id="2ic-Tx-pgp"/>
                             <constraint firstItem="Q0e-rU-wB0" firstAttribute="centerY" secondItem="XlZ-0Q-bg3" secondAttribute="centerY" constant="-135" id="IlE-Jm-1iQ"/>
-                            <constraint firstItem="0TZ-XJ-xXb" firstAttribute="top" secondItem="4rl-B2-rJS" secondAttribute="bottom" constant="35" id="Mru-s8-IJH"/>
                             <constraint firstItem="Q0e-rU-wB0" firstAttribute="centerX" secondItem="XlZ-0Q-bg3" secondAttribute="centerX" id="bF9-6O-N9D"/>
-                            <constraint firstItem="0TZ-XJ-xXb" firstAttribute="centerX" secondItem="Q0e-rU-wB0" secondAttribute="centerX" id="bgs-r6-WAp"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="0Wq-EE-zc8"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
+                        <outlet property="buttonsCenterConstraint" destination="2ic-Tx-pgp" id="dQt-h8-Shl"/>
                         <outlet property="checkVerificationButton" destination="jdT-QN-xTg" id="o2Y-fA-SHv"/>
-                        <outlet property="infoLabel" destination="0TZ-XJ-xXb" id="rFZ-5X-TDJ"/>
                         <outlet property="logoutButton" destination="OiP-Wt-tmz" id="3l8-Zk-mnV"/>
                         <outlet property="resendEmailButton" destination="xgA-qU-hyO" id="KId-Fh-yHL"/>
                         <outlet property="view" destination="XlZ-0Q-bg3" id="Yzi-Ey-IdL"/>
@@ -839,11 +839,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="230"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
-                                <rect key="frame" x="16" y="84" width="268" height="30.5"/>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error sending school information" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-BC-osg">
                                 <rect key="frame" x="16" y="153" width="268" height="18"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
@@ -853,7 +848,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="School Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="XLJ-8i-iwk">
                                 <rect key="frame" x="16" y="122" width="268" height="30.5"/>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coming Soon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uc6-1T-lgn" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="15" width="107" height="22"/>
@@ -880,6 +875,11 @@
                                     <action selector="sendTap" destination="aHJ-US-Sac" eventType="touchUpInside" id="Qm5-kq-gXV"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="uBD-8i-pPZ">
+                                <rect key="frame" x="16" y="84" width="268" height="30.5"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -948,14 +948,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="190"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Registration Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bF5-Hr-L4s">
-                                <rect key="frame" x="16" y="83" width="268" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="TFl-rb-1uz"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Non husky email addresses require a code to register." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1L-aw-P3a" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="44" width="268" height="31"/>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
@@ -990,6 +982,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Registration Code" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="bF5-Hr-L4s">
+                                <rect key="frame" x="16" y="83" width="268" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TFl-rb-1uz"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1081,7 +1081,7 @@
                                     <constraint firstAttribute="height" constant="30" id="4SL-ac-Fd5"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QsV-x0-tgD" customClass="CheddarButton" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="16" y="131.5" width="268" height="44"/>

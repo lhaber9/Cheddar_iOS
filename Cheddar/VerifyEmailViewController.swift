@@ -13,15 +13,20 @@ protocol VerifyEmailDelegate: class {
     func didLogout()
 }
 
+protocol VerifyEmailErrorDelegate: class {
+    func showErrorText(text: String)
+}
+
 class VerifyEmailViewController: UIViewController {
     
     weak var delegate:VerifyEmailDelegate!
+    weak var errorDelegate:VerifyEmailErrorDelegate!
     
     @IBOutlet var logoutButton: CheddarButton!
     @IBOutlet var checkVerificationButton: CheddarButton!
     @IBOutlet var resendEmailButton: CheddarButton!
     
-    @IBOutlet var infoLabel: UILabel!
+    @IBOutlet var buttonsCenterConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         NSNotificationCenter.defaultCenter().addObserverForName("applicationDidBecomeActive", object: nil, queue: nil) { (notification: NSNotification) in
@@ -32,7 +37,13 @@ class VerifyEmailViewController: UIViewController {
         checkVerificationButton.setSecondaryButton()
         resendEmailButton.setSecondaryButton()
         
-        infoLabel.textColor = ColorConstants.colorAccent
+        if (Utilities.IS_IPHONE_4_OR_LESS()) {
+            buttonsCenterConstraint.constant = -5
+        } else if (Utilities.IS_IPHONE_5()) {
+            buttonsCenterConstraint.constant = 25
+        }
+        
+        view.layoutIfNeeded()
     }
     
     deinit {
@@ -57,7 +68,7 @@ class VerifyEmailViewController: UIViewController {
                 self.delegate.emailVerified()
             }
             else {
-                self.showInfoLabel("Email is not verified")
+                self.errorDelegate.showErrorText("please check your email for the verification link")
             }
             }, errorCallback: { (error) in
                 self.checkVerificationButton.removeSpinner()
@@ -69,29 +80,10 @@ class VerifyEmailViewController: UIViewController {
         
         CheddarRequest.resendVerificationEmail(CheddarRequest.currentUserId()!, successCallback: { (object) in
                 self.resendEmailButton.removeSpinner()
-                self.showInfoLabel("Email Sent!")
+                self.errorDelegate.showErrorText("verification email has been sent to " + (CheddarRequest.currentUser()?.email)!)
             }) { (error) in
                 self.resendEmailButton.removeSpinner()
-                self.showInfoLabel("Error resending email")
+                self.errorDelegate.showErrorText("Error resending email")
         }
     }
-    
-    func showInfoLabel(text:String) {
-        self.infoLabel.text = text
-        
-        UIView.animateWithDuration(0.333) {
-            self.infoLabel.alpha = 1
-            self.view.layoutIfNeeded()
-        }
-        
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(VerifyEmailViewController.hideInfoLabel), userInfo: nil, repeats: false)
-    }
-    
-    func hideInfoLabel() {
-        UIView.animateWithDuration(0.333) {
-            self.infoLabel.alpha = 0
-            self.view.layoutIfNeeded()
-        }
-    }
-    
 }

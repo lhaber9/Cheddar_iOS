@@ -119,9 +119,11 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         if segue.identifier == "showVerifyEmail" {
             let popoverViewController = segue.destinationViewController as! VerifyEmailViewController
             popoverViewController.delegate = self
+            popoverViewController.errorDelegate = introController.loginSignupViewController
             
             UIView.animateWithDuration(0.1, animations: {
-                self.introController.view.alpha = 0
+                self.introController.loginSignupViewController.hideErrorLabel()
+                self.introController.loginSignupViewController.viewContents.alpha = 0
                 self.view.layoutIfNeeded()
             })
         }
@@ -243,7 +245,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     func didLogout() {
         shouldShowVerifyEmailScreen = false
         UIView.animateWithDuration(0.1, animations: {
-            self.introController.view.alpha = 1
+            self.introController.loginSignupViewController.viewContents.alpha = 1
             self.view.layoutIfNeeded()
         })
         dismissViewControllerAnimated(true, completion: nil)
@@ -253,7 +255,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         shouldShowVerifyEmailScreen = false
         dismissViewControllerAnimated(true) {
             UIView.animateWithDuration(0.1, animations: {
-                self.introController.view.alpha = 1
+                self.introController.loginSignupViewController.viewContents.alpha = 1
                 self.view.layoutIfNeeded()
             })
             self.showChat(true)

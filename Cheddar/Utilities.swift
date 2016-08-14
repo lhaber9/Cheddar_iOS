@@ -31,20 +31,33 @@ class Utilities {
         return NSBundle.mainBundle().infoDictionary!["SchemeName"] as! String
     }
     
-    class func formatDate(date: NSDate) -> String {
+    class func formatDate(date: NSDate, withTrailingHours: Bool) -> String {
         let dateFor: NSDateFormatter = NSDateFormatter()
         
         let midnight = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-        if (midnight.compare(date) == NSComparisonResult.OrderedAscending) {
+        let sixHoursAgo = NSDate().dateByAddingTimeInterval(-1 * 6 * 3600)  // 6hours 3600seconds
+        if (midnight.compare(date) == NSComparisonResult.OrderedAscending ||
+            sixHoursAgo.compare(date) == NSComparisonResult.OrderedAscending) {
             dateFor.dateFormat = "h:mm a"
         }
         else {
-            let threeDaysAgo = NSDate().dateByAddingTimeInterval(-1 * 3 * 24 * 3600)
+            let threeDaysAgo = NSDate().dateByAddingTimeInterval(-1 * 3 * 24 * 3600) // 3days 24hours 3600seconds
             if (threeDaysAgo.compare(date) == NSComparisonResult.OrderedAscending) {
-                dateFor.dateFormat = "EEE"
+                if (withTrailingHours) {
+                    dateFor.dateFormat = "EEE, h:mm a"
+                }
+                else {
+                    dateFor.dateFormat = "EEE"
+                }
             }
             else {
-                dateFor.dateFormat = "MMM d"
+                if (withTrailingHours) {
+                    dateFor.dateFormat = "MMM d, h:mm a"
+                }
+                else {
+                    dateFor.dateFormat = "MMM d"
+                }
+                
             }
         }
 

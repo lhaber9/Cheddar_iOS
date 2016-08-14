@@ -319,22 +319,24 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
             let options: [String:AnyObject] = [ "text": event.body,
+                                                "date": event.createdAt,
                                                 "alias": event.alias,
                                                 "isOutbound": self.chatRoom.isMyChatEvent(event),
                                                 "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
                                                 "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
+                                                "showTimestampLabel": self.chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row),
                                                 "status": event.status]
             cell.setMessageOptions(options)
             return cell
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(event.alias, andAction: event.body, isMine: chatRoom.isMyChatEvent(event))
+            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row))
             return cell
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
-            cell.setEvent(event)
+            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row))
             return cell
         }
         
@@ -345,23 +347,35 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         let event = chatRoom.sortedChatEvents[indexPath.row]
         if (event.type == ChatEventType.Message.rawValue) {
             
-            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row)) + 2
+            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), withTimestampLabel: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) + 2
             
             let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
             if (nextMessage?.alias.objectId != event.alias.objectId) {
                 cellHeight += messageVerticalBuffer
             }
             
+            if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
+                cellHeight += 8
+            }
+            
             return cellHeight
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
-            return 36
+            var height = 36
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) {
+                height += 15
+            }
+            return CGFloat(height)
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
-            if (indexPath.row == chatRoom.sortedChatEvents.count - 1) {
-                return 48
+            var height = 44
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) {
+                height += 15
             }
-            return 44
+            if (indexPath.row == chatRoom.sortedChatEvents.count - 1) {
+                height += 4
+            }
+            return CGFloat(height)
         }
         
         return 0

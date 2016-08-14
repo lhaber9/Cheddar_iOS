@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
         </mutableArray>
@@ -42,6 +43,31 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="J9D-gN-PEC"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZdJ-BW-BaN">
+                                <rect key="frame" x="0.0" y="0.0" width="376" height="15"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92N-uE-feS">
+                                        <rect key="frame" x="0.0" y="0.0" width="376" height="14.5"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="16x-Xm-7gw"/>
+                                    <constraint firstAttribute="bottom" secondItem="92N-uE-feS" secondAttribute="bottom" id="C8y-UC-U3Z"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="leading" secondItem="ZdJ-BW-BaN" secondAttribute="leading" id="G2E-YB-3VT"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="centerY" secondItem="ZdJ-BW-BaN" secondAttribute="centerY" id="HMV-hq-Lh2"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="top" id="ZGR-I1-hmy"/>
+                                    <constraint firstAttribute="trailing" secondItem="92N-uE-feS" secondAttribute="trailing" id="pyY-Ku-xLS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HMV-hq-Lh2"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -99,9 +125,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="gsk-tc-l14" secondAttribute="bottom" constant="2" id="2av-bt-Y6c"/>
+                            <constraint firstItem="ZdJ-BW-BaN" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="3HD-BD-oCr"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" constant="8" id="3vY-3D-RHs"/>
+                            <constraint firstItem="ZdJ-BW-BaN" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" id="83b-MY-gUu"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="91T-zQ-j9i"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" priority="900" constant="46" id="9rX-ai-iKW"/>
+                            <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="bottom" priority="200" constant="2" id="9uo-sr-Umo"/>
                             <constraint firstAttribute="height" constant="172.5" id="Hj0-gU-VG3"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="leading" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="900" constant="8" id="HsY-hQ-he1"/>
                             <constraint firstAttribute="height" constant="17.5" id="Kri-1Q-gZA"/>
@@ -116,6 +145,7 @@
                             <constraint firstItem="UFS-Z9-Lw6" firstAttribute="leading" secondItem="JLw-Dz-RJj" secondAttribute="leading" priority="900" id="aLM-VQ-QiD"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" constant="2" id="ae1-Ki-oDg"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="centerY" secondItem="gsk-tc-l14" secondAttribute="centerY" id="awv-cs-2y8"/>
+                            <constraint firstAttribute="trailing" secondItem="ZdJ-BW-BaN" secondAttribute="trailing" id="bZn-c2-vZ5"/>
                             <constraint firstItem="UFS-Z9-Lw6" firstAttribute="trailing" secondItem="JLw-Dz-RJj" secondAttribute="trailing" priority="200" id="bcu-ax-cuZ"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="rR7-Sb-RzQ" secondAttribute="trailing" priority="900" constant="8" id="cl2-gh-dXb"/>
                             <constraint firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="200" constant="46" id="eY1-xR-Caf"/>
@@ -164,9 +194,12 @@
                 <outlet property="messageLabel" destination="UFS-Z9-Lw6" id="3L1-jg-68k"/>
                 <outlet property="messageTopConstraint" destination="ae1-Ki-oDg" id="MwZ-Oa-TFG"/>
                 <outlet property="messageTopConstraintAlias" destination="u0R-wH-xFC" id="rUm-Sj-eTp"/>
+                <outlet property="messageTopConstraintTimestamp" destination="9uo-sr-Umo" id="WEv-U4-gir"/>
                 <outlet property="rightIcon" destination="pt8-I5-5ej" id="7WU-14-zuK"/>
                 <outlet property="rightSideLabelConstraint" destination="bcu-ax-cuZ" id="zig-4Z-573"/>
                 <outlet property="rightSideMessageConstraint" destination="Xfk-Hw-sTP" id="sx8-aq-gfH"/>
+                <outlet property="timestampLabel" destination="92N-uE-feS" id="s32-9b-fxh"/>
+                <outlet property="timestampLabelView" destination="ZdJ-BW-BaN" id="0md-XB-sET"/>
             </connections>
             <point key="canvasLocation" x="260" y="-140"/>
         </tableViewCell>

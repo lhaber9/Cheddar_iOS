@@ -18,17 +18,20 @@ protocol LoginSignupDelegate: class {
     func hideOverlay()
 }
 
-class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, RegistrationCodeDelegate, ResetPasswordDelegate, UIPopoverPresentationControllerDelegate {
+class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate, ChangeSchoolDelegate, RegistrationCodeDelegate, ResetPasswordDelegate, UIPopoverPresentationControllerDelegate, VerifyEmailErrorDelegate {
     
     weak var delegate:LoginSignupDelegate!
     
     @IBOutlet var registerButton:CheddarButton!
     @IBOutlet var loginButton:CheddarButton!
     
+    @IBOutlet var viewContents: UIView!
+    
     @IBOutlet var taglineLabel: UILabel!
     
     @IBOutlet var errorTextContainer: UIView!
     @IBOutlet var errorLabel: UILabel!
+    var errorLabelTimer: NSTimer!
     
     @IBOutlet var registerContainer: UIView!
     @IBOutlet var loginContainer: UIView!
@@ -183,10 +186,16 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             self.view.layoutIfNeeded()
         }
         
-        NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(LoginSignupViewController.hideErrorLabel), userInfo: nil, repeats: false)
+        if (errorLabelTimer != nil) {
+            errorLabelTimer.invalidate()
+            errorLabelTimer = nil
+        }
+        
+        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(LoginSignupViewController.hideErrorLabel), userInfo: nil, repeats: false)
     }
     
     func hideErrorLabel() {
+        errorLabelTimer = nil
         UIView.animateWithDuration(0.333) {
             self.errorTextContainer.alpha = 0
             self.view.layoutIfNeeded()

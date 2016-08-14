@@ -25,6 +25,7 @@ class ColorConstants {
     
     static var presenceText = UIColor(hex: 0xa0a0a0)
     static var aliasLabelText = UIColor(hex: 0xa0a0a0)
+    static var timestampText = UIColor(hex: 0xa0a0a0)
     
     static var inboundMessageText = textPrimary
     static var inboundChatBubble = UIColor(hex: 0xEFEFEF)

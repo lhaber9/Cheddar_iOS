@@ -432,6 +432,21 @@ class ChatRoom: NSManagedObject {
         return false
     }
     
+    func shouldShowTimestampLabelForEventIndex(eventIdx: Int) -> Bool {
+        if (eventIdx < 1) {
+            return true
+        }
+        
+        let event = sortedChatEvents[eventIdx]
+        let eventBefore = sortedChatEvents[eventIdx - 1]
+        
+        let twentyMinutesAgo = event.createdAt.dateByAddingTimeInterval(-1 * 20 * 60)  // 20minutes 60seconds
+        if (twentyMinutesAgo.compare(eventBefore.createdAt) == NSComparisonResult.OrderedDescending) {
+            return true
+        }
+        return false
+    }
+    
     func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
         let event = sortedChatEvents[messageIdx]
         if (event.type == ChatEventType.Message.rawValue) {
@@ -447,4 +462,22 @@ class ChatRoom: NSManagedObject {
         return false
     }
     
+    func shouldShowMessageEventBottomGap(messageIdx: Int) -> Bool {
+        let event = sortedChatEvents[messageIdx]
+        if (event.type == ChatEventType.Message.rawValue) {
+            let messageAfter = findFirstMessageAfterIndex(messageIdx)
+            if (messageAfter != nil && messageAfter.alias.objectId == event.alias.objectId) {
+                let twoMinutesAhead = event.createdAt.dateByAddingTimeInterval(2 * 60)  // 2minutes 60seconds
+                if (twoMinutesAhead.compare(messageAfter.createdAt) == NSComparisonResult.OrderedAscending) {
+                    return true
+                }
+                return false
+            }
+            else {
+                return false
+            }
+        }
+        
+        return false
+    }
 }

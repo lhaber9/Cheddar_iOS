@@ -59,7 +59,7 @@ class ChatListCell: UITableViewCell {
             lastMessageLabel.text = lastMessageText
             setAlias(chatEvent.alias, chatRoom:chatRoom)
             timeLabel.hidden = false
-            timeLabel.text = Utilities.formatDate(chatEvent.createdAt)
+            timeLabel.text = Utilities.formatDate(chatEvent.createdAt, withTrailingHours: false)
         }
         else {
             lastMessageLabel.text = "No Activity"

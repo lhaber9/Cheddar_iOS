@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Effra-Medium.ttf">
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+        </mutableArray>
+        <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -21,45 +23,77 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="36.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwA-zu-HJ5">
-                        <rect key="frame" x="0.0" y="19" width="320" height="13"/>
-                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLK-0G-smz">
-                        <rect key="frame" x="0.0" y="4" width="320" height="13"/>
-                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="11"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGI-ch-Deb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="15"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXl-L7-S0f">
+                                <rect key="frame" x="0.0" y="0.5" width="320" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="cXl-L7-S0f" firstAttribute="top" secondItem="FGI-ch-Deb" secondAttribute="top" id="DKB-FS-VMG"/>
+                            <constraint firstItem="cXl-L7-S0f" firstAttribute="leading" secondItem="FGI-ch-Deb" secondAttribute="leading" id="YeC-CM-oCt"/>
+                            <constraint firstAttribute="trailing" secondItem="cXl-L7-S0f" secondAttribute="trailing" id="ZbJ-eJ-tpn"/>
+                            <constraint firstAttribute="height" constant="15" id="bT5-n8-Igr"/>
+                            <constraint firstAttribute="bottom" secondItem="cXl-L7-S0f" secondAttribute="bottom" id="uwQ-oz-dUy"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ceo-jR-d2f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="36.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLK-0G-smz">
+                                <rect key="frame" x="0.0" y="4" width="320" height="13"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cwA-zu-HJ5">
+                                <rect key="frame" x="0.0" y="19" width="320" height="13"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="11"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jLK-0G-smz" firstAttribute="top" secondItem="ceo-jR-d2f" secondAttribute="top" constant="4" id="AQ2-jE-QcQ"/>
+                            <constraint firstItem="cwA-zu-HJ5" firstAttribute="leading" secondItem="ceo-jR-d2f" secondAttribute="leading" id="JmN-x4-iBg"/>
+                            <constraint firstAttribute="trailing" secondItem="cwA-zu-HJ5" secondAttribute="trailing" id="MPC-Iu-CLX"/>
+                            <constraint firstAttribute="trailing" secondItem="jLK-0G-smz" secondAttribute="trailing" id="g2o-Q8-FT3"/>
+                            <constraint firstItem="jLK-0G-smz" firstAttribute="leading" secondItem="ceo-jR-d2f" secondAttribute="leading" id="gOx-bT-Qdg"/>
+                            <constraint firstItem="cwA-zu-HJ5" firstAttribute="top" secondItem="jLK-0G-smz" secondAttribute="top" id="kEb-CP-VTo"/>
+                            <constraint firstItem="cwA-zu-HJ5" firstAttribute="top" secondItem="jLK-0G-smz" secondAttribute="bottom" constant="2" id="lsV-qv-A3b"/>
+                            <constraint firstAttribute="bottom" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="4" id="mBx-7j-NNh"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="kEb-CP-VTo"/>
+                                <exclude reference="mBx-7j-NNh"/>
+                            </mask>
+                        </variation>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="jLK-0G-smz" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" constant="4" id="5Ui-6q-VfA"/>
-                    <constraint firstItem="cwA-zu-HJ5" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="CWW-OT-Olc"/>
-                    <constraint firstAttribute="trailing" secondItem="cwA-zu-HJ5" secondAttribute="trailing" id="LJq-Ux-FQy"/>
-                    <constraint firstAttribute="trailing" secondItem="jLK-0G-smz" secondAttribute="trailing" id="QfC-Co-lAg"/>
-                    <constraint firstAttribute="bottom" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="4" id="VVr-5v-TNs"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="cwA-zu-HJ5" secondAttribute="bottom" id="XNJ-US-xe4"/>
-                    <constraint firstItem="cwA-zu-HJ5" firstAttribute="top" secondItem="jLK-0G-smz" secondAttribute="bottom" constant="2" id="YoG-9e-prV"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="4" id="fop-Kd-4Pl"/>
-                    <constraint firstAttribute="bottom" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="20" symbolic="YES" id="glb-Id-l6t"/>
-                    <constraint firstAttribute="bottom" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="4" id="mZn-k0-kLP"/>
-                    <constraint firstItem="jLK-0G-smz" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="pZ9-HF-sHg"/>
+                    <constraint firstItem="FGI-ch-Deb" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" id="7kY-vz-QqU"/>
+                    <constraint firstItem="ceo-jR-d2f" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="7xQ-Kj-SHA"/>
+                    <constraint firstAttribute="trailing" secondItem="FGI-ch-Deb" secondAttribute="trailing" id="97x-jk-pPe"/>
+                    <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" priority="900" id="FL0-hg-7Xq"/>
+                    <constraint firstAttribute="trailing" secondItem="ceo-jR-d2f" secondAttribute="trailing" id="jP0-sH-gKa"/>
+                    <constraint firstItem="FGI-ch-Deb" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="mdm-bf-6Ba"/>
+                    <constraint firstAttribute="bottom" secondItem="ceo-jR-d2f" secondAttribute="bottom" id="w7u-xm-jzd"/>
+                    <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="FGI-ch-Deb" secondAttribute="bottom" priority="200" id="zoE-Up-8Rr"/>
                 </constraints>
-                <variation key="default">
-                    <mask key="constraints">
-                        <exclude reference="VVr-5v-TNs"/>
-                        <exclude reference="XNJ-US-xe4"/>
-                        <exclude reference="fop-Kd-4Pl"/>
-                        <exclude reference="glb-Id-l6t"/>
-                        <exclude reference="mZn-k0-kLP"/>
-                    </mask>
-                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bodyLabel" destination="jLK-0G-smz" id="XNv-Ux-o2j"/>
                 <outlet property="nameLabel" destination="cwA-zu-HJ5" id="las-uv-EFZ"/>
+                <outlet property="timestampLabel" destination="cXl-L7-S0f" id="g6n-01-pW4"/>
+                <outlet property="timestampLabelView" destination="FGI-ch-Deb" id="tHd-gN-aUA"/>
+                <outlet property="topConstraintTimestamp" destination="zoE-Up-8Rr" id="Bpf-Tk-pLm"/>
             </connections>
             <point key="canvasLocation" x="218" y="155"/>
         </tableViewCell>

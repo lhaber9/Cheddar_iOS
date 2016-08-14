@@ -20,6 +20,7 @@ class ChatCell: UITableViewCell {
     @IBOutlet var rightSideLabelConstraint: NSLayoutConstraint!
     
     @IBOutlet var messageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var messageTopConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var messageTopConstraintAlias: NSLayoutConstraint!
     @IBOutlet var messageTopConstraint: NSLayoutConstraint!
     
@@ -29,6 +30,9 @@ class ChatCell: UITableViewCell {
     
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
+    
+    @IBOutlet var timestampLabelView: UIView!
+    @IBOutlet var timestampLabel: UILabel!
 
     @IBOutlet var rightIcon: UIView!
     @IBOutlet var rightIconLabel: UILabel!
@@ -38,18 +42,13 @@ class ChatCell: UITableViewCell {
     var rightAliasIcon: AliasCircleView!
     var leftAliasIcon: AliasCircleView!
     
-    static var verticalTextBuffer:CGFloat = 13;
-    static var aliasLabelHeight:CGFloat = 18;
-    static var singleRowHeight:CGFloat = 32;
+    static var verticalTextBuffer:CGFloat = 13
+    static var aliasLabelHeight:CGFloat = 15
+    static var timestampLabelHeight:CGFloat = 15
+    static var singleRowHeight:CGFloat = 32
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
-//        leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
-//        rightIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        
-//        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
-//        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
-        
         messageLabel.textColor = ColorConstants.textPrimary
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
@@ -68,10 +67,13 @@ class ChatCell: UITableViewCell {
         return height
     }
     
-    class func rowHeightForText(text: String, withAliasLabel: Bool) -> CGFloat {
+    class func rowHeightForText(text: String, withAliasLabel: Bool, withTimestampLabel: Bool) -> CGFloat {
         var height = labelHeightForText(text)
         if (withAliasLabel) {
             height += aliasLabelHeight
+        }
+        else if (withTimestampLabel) {
+            height += timestampLabelHeight
         }
         return height
     }
@@ -86,6 +88,19 @@ class ChatCell: UITableViewCell {
             messageTopConstraintAlias.priority = 200;
             messageTopConstraint.priority = 950;
             aliasLabelView.hidden = true;
+        }
+    }
+    
+    func setShowTimestampLabel(showTimestampLabel: Bool) {
+        if (showTimestampLabel) {
+            messageTopConstraintTimestamp.priority = 950;
+            messageTopConstraint.priority = 200;
+            timestampLabelView.hidden = false;
+        }
+        else {
+            messageTopConstraintTimestamp.priority = 200;
+            messageTopConstraint.priority = 950;
+            timestampLabelView.hidden = true;
         }
     }
     
@@ -149,7 +164,10 @@ class ChatCell: UITableViewCell {
         let alias = options["alias"] as! Alias
         self.aliasLabel.text = alias.name.lowercaseString
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
+        self.timestampLabel.text = Utilities.formatDate(options["date"] as! NSDate, withTrailingHours: true)
+        self.timestampLabel.textColor = ColorConstants.timestampText
         self.setShowAliasLabel(options["showAliasLabel"] as! Bool)
+        self.setShowTimestampLabel(options["showTimestampLabel"] as! Bool)
         
         let isOutbound = options["isOutbound"] as! Bool
         self.setIsOutbound(isOutbound)

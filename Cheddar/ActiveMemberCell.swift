@@ -33,7 +33,7 @@ class ActiveMemberCell: UITableViewCell {
         }
         
         nameLabel.text = alias.name
-        joinedAtLabel.text = Utilities.formatDate(alias.joinedAt)
+        joinedAtLabel.text = Utilities.formatDate(alias.joinedAt, withTrailingHours: true)
         
         layoutIfNeeded()
     }
