@@ -205,22 +205,25 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func sendFeedback(feedbackBody: String, alias: Alias, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func sendFeedback(feedbackBody: String, alias: Alias!, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
         let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
-        let userId = alias.userId
-        let chatRoomId = alias.chatRoomId
-        let aliasName = alias.name
+        let userId = CheddarRequest.currentUser()?.objectId
+        
+        var params = [  "platform": "iOS",
+                        "environment": Utilities.envName(),
+                        "version": version,
+                        "build": build,
+                        "userId": userId!,
+                        "body": feedbackBody ]
+        
+        if (alias != nil) {
+            params["chatRoomId"] = alias.chatRoomId
+            params["aliasName"] = alias.name
+        }
         
         callFunction("sendFeedback",
-                     params: [  "platform": "iOS",
-                                "environment": Utilities.envName(),
-                                "version": version,
-                                "build": build,
-                                "userId": userId,
-                                "chatRoomId": chatRoomId,
-                                "aliasName": aliasName,
-                                "body": feedbackBody ],
+                     params: params,
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }

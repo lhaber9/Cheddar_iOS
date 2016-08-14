@@ -397,7 +397,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController.delegate = self
         
         optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
-        optionOverlayController.buttonData = [chatRoom,nil,nil]
+        optionOverlayController.buttonData = [chatRoom,nil,chatViewController.myAlias()]
         optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
@@ -472,6 +472,10 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func selectedFeedback(object: AnyObject!) {
         optionOverlayController.willHide()
         hideOverlayContents()
+        if (object == nil) {
+            chatListController.performSegueWithIdentifier("showFeedbackSegue", sender: self)
+            return
+        }
         chatViewController.performSegueWithIdentifier("showFeedbackSegue", sender: self)
     }
     
@@ -492,9 +496,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Logout"]
-        optionOverlayController.buttonData = [nil]
-        optionOverlayController.buttonActions = [askLogoutUser]
+        optionOverlayController.buttonNames = ["Logout", "Send Feedback"]
+        optionOverlayController.buttonData = [nil, nil]
+        optionOverlayController.buttonActions = [askLogoutUser, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)

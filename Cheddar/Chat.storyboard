@@ -51,6 +51,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBx-aa-znN">
+                                <rect key="frame" x="300" y="300" width="0.0" height="0.0"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="lmA-0y-qZ7"/>
+                                    <constraint firstAttribute="height" id="xU9-BX-pYE"/>
+                                </constraints>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h0e-OE-JEm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -62,11 +70,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="oBx-aa-znN" firstAttribute="centerY" secondItem="Czh-tR-H0L" secondAttribute="centerY" id="3fc-1s-YcN"/>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="leading" secondItem="Czh-tR-H0L" secondAttribute="leading" id="FRm-OP-FzX"/>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="top" secondItem="DYC-P4-OVr" secondAttribute="bottom" id="HV3-tH-u4h"/>
                             <constraint firstItem="PHC-K1-k7o" firstAttribute="centerX" secondItem="Czh-tR-H0L" secondAttribute="centerX" id="Saa-Rv-jpE"/>
                             <constraint firstAttribute="trailing" secondItem="h0e-OE-JEm" secondAttribute="trailing" id="Yzj-89-Gqp"/>
                             <constraint firstItem="2Hu-OH-ZlQ" firstAttribute="top" secondItem="PHC-K1-k7o" secondAttribute="bottom" constant="8" id="aXE-Di-Oi5"/>
+                            <constraint firstItem="oBx-aa-znN" firstAttribute="centerX" secondItem="Czh-tR-H0L" secondAttribute="centerX" id="dM9-Gd-RLl"/>
                             <constraint firstItem="2Hu-OH-ZlQ" firstAttribute="top" secondItem="h0e-OE-JEm" secondAttribute="bottom" id="fH4-qY-OXV"/>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="top" secondItem="DYC-P4-OVr" secondAttribute="bottom" id="ghM-tc-Yst"/>
                         </constraints>
@@ -83,6 +93,9 @@
                         <outlet property="developmentOnlyVersionLabel" destination="PHC-K1-k7o" id="WlL-5M-7Ta"/>
                         <outlet property="tableView" destination="h0e-OE-JEm" id="cZa-zr-SxZ"/>
                         <outlet property="view" destination="Czh-tR-H0L" id="kSt-HY-5UL"/>
+                        <segue destination="Oi3-lK-e2A" kind="popoverPresentation" identifier="showFeedbackSegue" popoverAnchorView="oBx-aa-znN" id="j91-9m-JhM">
+                            <popoverArrowDirection key="popoverArrowDirection"/>
+                        </segue>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IAW-bj-1uY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1212,4 +1225,7 @@
         <image name="ThreeDots" width="200" height="200"/>
         <image name="nil" width="540" height="960"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="j91-9m-JhM"/>
+    </inferredMetricsTieBreakers>
 </document>

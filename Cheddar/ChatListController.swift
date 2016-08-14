@@ -15,9 +15,13 @@ protocol ChatListControllerDelegate: class {
     func showChatRoom(chatRoom: ChatRoom)
     func subscribe(chatRoom:ChatRoom)
     func tryLeaveChatRoom(object: AnyObject!)
+    func showOverlay()
+    func hideOverlay()
+    func showOverlayContents(viewController: UIViewController)
+    func hideOverlayContents()
 }
 
-class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate {
     
     weak var delegate: ChatListControllerDelegate!
     
@@ -152,5 +156,38 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
         return "Leave Chatroom"
+    }
+    
+    // MARK: FeedbackViewDelegate
+    
+    func myAlias() -> Alias! {
+        return nil
+    }
+    
+    func shouldCloseAll() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+        self.delegate!.hideOverlayContents()
+        self.delegate!.hideOverlay()
+    }
+    
+    // MARK: UIPopoverPresentationControllerDelegate
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showFeedbackSegue" {
+            let popoverViewController = segue.destinationViewController as! FeedbackViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
+    
+    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+        shouldCloseAll()
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        // Force popover style
+        return UIModalPresentationStyle.None
     }
 }

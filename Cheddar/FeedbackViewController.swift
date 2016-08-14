@@ -42,7 +42,7 @@ class FeedbackViewController: UIViewController {
         
         sendButton.displaySpinner()
         
-        CheddarRequest.sendFeedback(feedbackString, alias: (delegate?.myAlias())!, successCallback: { (object) in
+        CheddarRequest.sendFeedback(feedbackString, alias: (delegate?.myAlias()), successCallback: { (object) in
                 self.sendButton.removeSpinner()
                 self.delegate?.shouldCloseAll()
             }) { (error) in
