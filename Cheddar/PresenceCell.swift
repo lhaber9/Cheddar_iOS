@@ -14,10 +14,11 @@ class PresenceCell: UITableViewCell {
     @IBOutlet var topConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
+    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     var alias: Alias!
     var body: String!
     
-    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool) {
+    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool, isFirstEvent:Bool) {
         if (presenceEvent.type != ChatEventType.Presence.rawValue) {
             return
         }
@@ -32,7 +33,15 @@ class PresenceCell: UITableViewCell {
             topConstraintTimestamp.priority = 950;
             timestampLabelView.hidden = false;
         } else {
+            topConstraintTimestamp.priority = 200;
             timestampLabelView.hidden = true;
+        }
+        
+        if (isFirstEvent) {
+            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+        }
+        else {
+            timestampLabelTopConstraint.constant = 0
         }
     }
 }

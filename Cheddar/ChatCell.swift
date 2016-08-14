@@ -28,9 +28,11 @@ class ChatCell: UITableViewCell {
     @IBOutlet var errorRightConstraint: NSLayoutConstraint!
     @IBOutlet var errorLabel: UILabel!
     
+    @IBOutlet var aliasLabelTopConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
     
+    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var timestampLabelView: UIView!
     @IBOutlet var timestampLabel: UILabel!
 
@@ -43,6 +45,7 @@ class ChatCell: UITableViewCell {
     var leftAliasIcon: AliasCircleView!
     
     static var verticalTextBuffer:CGFloat = 13
+    static var bufferSize:CGFloat = 8
     static var aliasLabelHeight:CGFloat = 15
     static var timestampLabelHeight:CGFloat = 15
     static var singleRowHeight:CGFloat = 32
@@ -72,35 +75,50 @@ class ChatCell: UITableViewCell {
         if (withAliasLabel) {
             height += aliasLabelHeight
         }
-        else if (withTimestampLabel) {
+        if (withTimestampLabel) {
             height += timestampLabelHeight
         }
         return height
     }
     
-    func setShowAliasLabel(showAliasLabel: Bool) {
-        if (showAliasLabel) {
+    func setShowAliasLabel(showAliasLabel: Bool, andTimestampLabel showTimestampLabel: Bool) {
+        if (showAliasLabel && showTimestampLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 950
             messageTopConstraintAlias.priority = 950;
+            messageTopConstraintTimestamp.priority = 200;
             messageTopConstraint.priority = 200;
             aliasLabelView.hidden = false;
-        }
-        else {
+            timestampLabelView.hidden = false;
+        } else if (showAliasLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 200
+            messageTopConstraintAlias.priority = 950;
+            messageTopConstraintTimestamp.priority = 200;
+            messageTopConstraint.priority = 200;
+            aliasLabelView.hidden = false;
+            timestampLabelView.hidden = true;
+        } else if (showTimestampLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 200
             messageTopConstraintAlias.priority = 200;
+            messageTopConstraintTimestamp.priority = 950;
+            messageTopConstraint.priority = 200;
+            aliasLabelView.hidden = true;
+            timestampLabelView.hidden = false;
+        } else {
+            aliasLabelTopConstraintTimestamp.priority = 200
+            messageTopConstraintAlias.priority = 200;
+            messageTopConstraintTimestamp.priority = 200;
             messageTopConstraint.priority = 950;
             aliasLabelView.hidden = true;
+            timestampLabelView.hidden = true;
         }
     }
     
-    func setShowTimestampLabel(showTimestampLabel: Bool) {
-        if (showTimestampLabel) {
-            messageTopConstraintTimestamp.priority = 950;
-            messageTopConstraint.priority = 200;
-            timestampLabelView.hidden = false;
+    func setIsFirstEvent(isFirstEvent: Bool) {
+        if (isFirstEvent) {
+            timestampLabelTopConstraint.constant = ChatCell.bufferSize
         }
         else {
-            messageTopConstraintTimestamp.priority = 200;
-            messageTopConstraint.priority = 950;
-            timestampLabelView.hidden = true;
+            timestampLabelTopConstraint.constant = 0
         }
     }
     
@@ -166,8 +184,8 @@ class ChatCell: UITableViewCell {
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
         self.timestampLabel.text = Utilities.formatDate(options["date"] as! NSDate, withTrailingHours: true)
         self.timestampLabel.textColor = ColorConstants.timestampText
-        self.setShowAliasLabel(options["showAliasLabel"] as! Bool)
-        self.setShowTimestampLabel(options["showTimestampLabel"] as! Bool)
+        self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
+        self.setIsFirstEvent(options["isFirstEvent"] as! Bool)
         
         let isOutbound = options["isOutbound"] as! Bool
         self.setIsOutbound(isOutbound)

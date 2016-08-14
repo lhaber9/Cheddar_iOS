@@ -624,8 +624,20 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         chatViewController.reloadTable()
         chatListController.refreshRooms()
-        if (firstLoad) { chatViewController.scrollToBottom(true) }
-        else { chatViewController.scrollToEventIndex(eventCount, animated: false) }
+        if (firstLoad) {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.chatViewController.scrollToBottom(true)
+            })
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), {
+               self.chatViewController.scrollToEventIndex(eventCount - 3, animated: true)
+            })
+        }
+    }
+    
+    func endRefresh() {
+        chatViewController.refreshControl.endRefreshing()
     }
     
     // MARK: UIAlertViewDelegate

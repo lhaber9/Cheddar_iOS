@@ -16,8 +16,11 @@ class NameChangeCell: UITableViewCell {
     @IBOutlet var topConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
+    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     
-    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool) {
+    static var bottomBufferSize:CGFloat = 4
+    
+    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, isFirstEvent: Bool) {
         if (nameChangeEvent.type != ChatEventType.NameChange.rawValue) {
             return
         }
@@ -34,7 +37,15 @@ class NameChangeCell: UITableViewCell {
             topConstraintTimestamp.priority = 950;
             timestampLabelView.hidden = false;
         } else {
+            topConstraintTimestamp.priority = 200;
             timestampLabelView.hidden = true;
+        }
+        
+        if (isFirstEvent) {
+            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+        }
+        else {
+            timestampLabelTopConstraint.constant = 0
         }
     }
 }

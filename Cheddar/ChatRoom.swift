@@ -17,6 +17,7 @@ protocol ChatRoomDelegate: class {
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
+    func endRefresh()
 }
 
 class ChatRoom: NSManagedObject {
@@ -355,6 +356,7 @@ class ChatRoom: NSManagedObject {
     func loadNextPageMessages() {
         
         if (allMessagesLoaded.boolValue || loadMessageCallInFlight) {
+            self.delegate?.endRefresh()
             return
         }
         
@@ -384,6 +386,7 @@ class ChatRoom: NSManagedObject {
                     
                     if (events.count == 1 && self.chatEvents.count == 1) {
                         self.loadMessageCallInFlight = false
+                        self.delegate?.endRefresh()
                         return
                     }
                     
@@ -409,11 +412,13 @@ class ChatRoom: NSManagedObject {
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                 }
                 
+                self.delegate?.endRefresh()
                 self.loadMessageCallInFlight = false
                 
             }) { (error) in
                 
-                 self.loadMessageCallInFlight = false
+                self.loadMessageCallInFlight = false
+                self.delegate?.endRefresh()
         }
     }
     

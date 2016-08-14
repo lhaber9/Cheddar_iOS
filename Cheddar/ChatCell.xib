@@ -134,7 +134,7 @@
                             <constraint firstAttribute="height" constant="172.5" id="Hj0-gU-VG3"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="leading" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="900" constant="8" id="HsY-hQ-he1"/>
                             <constraint firstAttribute="height" constant="17.5" id="Kri-1Q-gZA"/>
-                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="KtO-nJ-ME1"/>
+                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" id="KtO-nJ-ME1"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="LHl-Sm-Zed"/>
                             <constraint firstAttribute="bottom" secondItem="gsk-tc-l14" secondAttribute="bottom" constant="2" id="MS5-rL-mrj"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="leading" priority="200" constant="-8" id="QSI-0p-oaT"/>
@@ -154,6 +154,7 @@
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="m7g-rU-tJt"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="aoB-dj-1gj" secondAttribute="bottom" priority="200" constant="2" id="u0R-wH-xFC"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="gsk-tc-l14" secondAttribute="top" id="xU2-2d-Eso"/>
+                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="bottom" priority="200" id="xwA-JM-CU7"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="gsk-tc-l14" secondAttribute="top" id="zxp-cN-wnZ"/>
                         </constraints>
                         <variation key="default">
@@ -182,6 +183,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aliasLabel" destination="JLw-Dz-RJj" id="0du-94-fQx"/>
+                <outlet property="aliasLabelTopConstraintTimestamp" destination="xwA-JM-CU7" id="Vwh-Cp-eBS"/>
                 <outlet property="aliasLabelView" destination="aoB-dj-1gj" id="cZg-vz-q5e"/>
                 <outlet property="errorLabel" destination="DmO-Gd-Lgq" id="rX8-Ch-dqu"/>
                 <outlet property="errorLeftConstraint" destination="HsY-hQ-he1" id="ipd-P3-1Qu"/>
@@ -199,6 +201,7 @@
                 <outlet property="rightSideLabelConstraint" destination="bcu-ax-cuZ" id="zig-4Z-573"/>
                 <outlet property="rightSideMessageConstraint" destination="Xfk-Hw-sTP" id="sx8-aq-gfH"/>
                 <outlet property="timestampLabel" destination="92N-uE-feS" id="s32-9b-fxh"/>
+                <outlet property="timestampLabelTopConstraint" destination="3HD-BD-oCr" id="Ngk-f2-Hg5"/>
                 <outlet property="timestampLabelView" destination="ZdJ-BW-BaN" id="0md-XB-sET"/>
             </connections>
             <point key="canvasLocation" x="260" y="-140"/>

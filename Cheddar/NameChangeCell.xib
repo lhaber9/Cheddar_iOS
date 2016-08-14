@@ -92,6 +92,7 @@
                 <outlet property="bodyLabel" destination="jLK-0G-smz" id="XNv-Ux-o2j"/>
                 <outlet property="nameLabel" destination="cwA-zu-HJ5" id="las-uv-EFZ"/>
                 <outlet property="timestampLabel" destination="cXl-L7-S0f" id="g6n-01-pW4"/>
+                <outlet property="timestampLabelTopConstraint" destination="7kY-vz-QqU" id="xcv-Mq-CP5"/>
                 <outlet property="timestampLabelView" destination="FGI-ch-Deb" id="tHd-gN-aUA"/>
                 <outlet property="topConstraintTimestamp" destination="zoE-Up-8Rr" id="Bpf-Tk-pLm"/>
             </connections>
