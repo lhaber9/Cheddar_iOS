@@ -39,7 +39,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     @IBOutlet var sublabelShowingConstraint: NSLayoutConstraint!
     @IBOutlet var sublabelHiddenConstraint: NSLayoutConstraint!
     
-    @IBOutlet var notificationConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationShowingConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationHeightConstraint: NSLayoutConstraint!
     @IBOutlet var notificationContainer: UIView!
     
     @IBOutlet var topBar: UIView!
@@ -67,6 +68,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     var isShowingList = true
     var alertTimerId: String!
     var leavingChatRoom: ChatRoom!
+    var messageAlertTouchStartLocation:CGPoint!
+    var notificationHeight: CGFloat!
     
     override func viewDidLoad() {
         topBar.backgroundColor = ColorConstants.chatNavBackground
@@ -139,6 +142,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action:#selector(self.dragMessageAlert))
         notificationContainer.addGestureRecognizer(panGestureRecognizer)
+        
+        notificationHeight = notificationContainer.frame.height
     }
     
     func initChatViewVC() {
@@ -216,7 +221,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     func showNewMessageAlert() {
         UIView.animateWithDuration(0.125) {
-            self.notificationConstraint.constant = 70
+            self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.priority = 950
             self.view.layoutIfNeeded()
         }
         
@@ -233,7 +239,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     func hideNewMessageAlert() {
         UIView.animateWithDuration(0.125) {
-            self.notificationConstraint.constant = 0
+            self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.priority = 200
             self.view.layoutIfNeeded()
         }
     }
@@ -241,15 +248,19 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func dragMessageAlert(panGestureRecognizer: UIPanGestureRecognizer) {
         isDraggingChatAlert = true
         let touchLocation = panGestureRecognizer.locationInView(self.view)
-        self.notificationConstraint.constant = touchLocation.y
+        if (messageAlertTouchStartLocation == nil) {
+            messageAlertTouchStartLocation = touchLocation
+        }
+        let notificationLocation = touchLocation.y - messageAlertTouchStartLocation.y + 80
+        self.notificationHeightConstraint.constant = notificationLocation
         
-        if (touchLocation.y > 90) {
-            self.notificationConstraint.constant = 90
+        if (notificationLocation > 105) {
+            self.notificationHeightConstraint.constant = 105 + notificationLocation / 25
         }
         
         if (panGestureRecognizer.state == UIGestureRecognizerState.Ended) {
             isDraggingChatAlert = false
-            if (touchLocation.y < (self.notificationContainer.frame.height / 2)) {
+            if (notificationLocation < (self.notificationHeight / 2)) {
                 hideNewMessageAlert()
             }
             else {

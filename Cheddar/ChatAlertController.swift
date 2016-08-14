@@ -21,7 +21,6 @@ class ChatAlertController: UIViewController {
     @IBOutlet var aliasIconContainer: UIView!
     @IBOutlet var mainLabel: UILabel!
     @IBOutlet var subLabel: UILabel!
-    @IBOutlet var dateLabel: UILabel!
     var chatRoom: ChatRoom!
     var chatEvent: ChatEvent!
     
@@ -47,10 +46,6 @@ class ChatAlertController: UIViewController {
         aliasIconContainer.addSubview(aliasIcon)
         aliasIcon.autoPinEdgesToSuperviewEdges()
         
-        let dateFor: NSDateFormatter = NSDateFormatter()
-        dateFor.dateFormat = "h:mm a"
-        
-        dateLabel.text = dateFor.stringFromDate(chatEvent.createdAt)
         mainLabel.text = chatEvent.alias.name
         subLabel.text = chatEvent.body
         

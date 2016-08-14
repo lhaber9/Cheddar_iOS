@@ -51,11 +51,15 @@ class VerifyEmailViewController: UIViewController {
     }
     
     @IBAction func logout() {
+        logoutButton.displaySpinner()
+        
         CheddarRequest.logoutUser({
+            self.logoutButton.removeSpinner()
             Utilities.removeAllUserData()
             self.delegate.didLogout()
         }) { (error) in
-            
+            self.logoutButton.removeSpinner()
+            self.errorDelegate.showErrorText("error loggin out")
         }
     }
     
