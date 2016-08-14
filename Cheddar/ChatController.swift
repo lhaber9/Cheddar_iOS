@@ -101,7 +101,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
         
         reachability = Reachability.reachabilityForInternetConnection()
-        reachability!.startNotifier();
+        reachability!.startNotifier()
+        
+        checkMaxRooms()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -162,6 +164,17 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
 
     }
     
+    func checkMaxRooms() {
+        UIView.animateWithDuration(0.333) { 
+            if (ChatRoom.fetchAll().count >= 5) {
+                self.newChatButton.setImage(UIImage(named: "MaxChats"), forState: UIControlState.Normal)
+            }
+            else {
+                self.newChatButton.setImage(UIImage(named: "NewChat"), forState: UIControlState.Normal)
+            }
+        }
+    }
+    
     func joinNextAndAnimate() {
         
         var chatRoom: ChatRoom!
@@ -183,6 +196,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
                 self.showChatRoom(chatRoom)
             }
             
+            self.checkMaxRooms()
         }) { (error) in
             NSLog("Error Joining Room: %@", error)
             self.chatListController.reloadRooms()
@@ -359,6 +373,13 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     }
     
     @IBAction func newChatButtonTap() {
+        if (ChatRoom.fetchAll().count >= 5) {
+            checkMaxRooms()
+            UIAlertView(title: "Maxiumum Rooms Reached", message: "You must leave a chatroom before joining another", delegate: self, cancelButtonTitle: "OK").show()
+            return
+        }
+        
+        checkMaxRooms()
         joinNextAndAnimate()
     }
     
@@ -438,7 +459,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             
             self.chatViewController.chatRoom = nil
             self.forceLeaveChatRoom(alias)
-            
+            self.checkMaxRooms()
         }) { (error) in
             NSLog("Error leaving chatroom: %@", error)
             self.delegate.hideLoadingView()
