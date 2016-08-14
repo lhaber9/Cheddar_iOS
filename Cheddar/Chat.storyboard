@@ -19,6 +19,7 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
+            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
             <string>Effra-Regular</string>
@@ -44,9 +45,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-K1-k7o">
+                                <rect key="frame" x="285" y="577.5" width="29" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h0e-OE-JEm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
                                     <outlet property="dataSource" destination="66P-Qa-66E" id="H8O-o4-lsh"/>
                                     <outlet property="delegate" destination="66P-Qa-66E" id="lil-uA-z6k"/>
@@ -57,7 +64,9 @@
                         <constraints>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="leading" secondItem="Czh-tR-H0L" secondAttribute="leading" id="FRm-OP-FzX"/>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="top" secondItem="DYC-P4-OVr" secondAttribute="bottom" id="HV3-tH-u4h"/>
+                            <constraint firstItem="PHC-K1-k7o" firstAttribute="centerX" secondItem="Czh-tR-H0L" secondAttribute="centerX" id="Saa-Rv-jpE"/>
                             <constraint firstAttribute="trailing" secondItem="h0e-OE-JEm" secondAttribute="trailing" id="Yzj-89-Gqp"/>
+                            <constraint firstItem="2Hu-OH-ZlQ" firstAttribute="top" secondItem="PHC-K1-k7o" secondAttribute="bottom" constant="8" id="aXE-Di-Oi5"/>
                             <constraint firstItem="2Hu-OH-ZlQ" firstAttribute="top" secondItem="h0e-OE-JEm" secondAttribute="bottom" id="fH4-qY-OXV"/>
                             <constraint firstItem="h0e-OE-JEm" firstAttribute="top" secondItem="DYC-P4-OVr" secondAttribute="bottom" id="ghM-tc-Yst"/>
                         </constraints>
@@ -71,6 +80,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="developmentOnlyVersionLabel" destination="PHC-K1-k7o" id="WlL-5M-7Ta"/>
                         <outlet property="tableView" destination="h0e-OE-JEm" id="cZa-zr-SxZ"/>
                         <outlet property="view" destination="Czh-tR-H0L" id="kSt-HY-5UL"/>
                     </connections>
@@ -91,10 +101,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEP-7m-Aee">
-                                <rect key="frame" x="0.0" y="66" width="600" height="534"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2f5-Ph-ovY">
                                 <rect key="frame" x="615" y="66" width="600" height="534"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -312,6 +318,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="cd3-XI-F8J"/>
                                 </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEP-7m-Aee">
+                                <rect key="frame" x="0.0" y="66" width="600" height="534"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

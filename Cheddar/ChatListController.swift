@@ -23,6 +23,8 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var developmentOnlyVersionLabel: UILabel!
+    
     var chatRooms: [ChatRoom] = []
 
     override func viewDidLoad() {
@@ -32,6 +34,14 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         
         reloadRooms()
         refreshRooms()
+        
+        if (Utilities.envName() != "Production") {
+            let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
+            let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+            
+            developmentOnlyVersionLabel.text = "Version: " + version + "/ Build: " + build
+        }
+        
         view.layoutIfNeeded()
     }
     
