@@ -16,7 +16,7 @@ class ColorConstants {
     static var colorAccent = UIColor(hex: 0xf06767)
 
     static var textPrimary = UIColor(hex: 0x494949)
-    static var textSecondary = UIColor(hex: 0x494949)
+    static var textSecondary = UIColor(hex: 0x909090)
     
     static var chatNavBackground = UIColor(hex: 0xF0F0F0)
     static var chatNavBorder = UIColor(hex: 0xdadada)

@@ -15,7 +15,7 @@ protocol RenameChatDelegate:class {
     func shouldCloseAll()
 }
 
-class RenameChatController: UIViewController {
+class RenameChatController: UIViewController, UITextFieldDelegate {
     
     weak var delegate:RenameChatDelegate!
     
@@ -24,15 +24,28 @@ class RenameChatController: UIViewController {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var errorLabel: UILabel!
+    @IBOutlet var charCountLabel: UILabel!
     
     var errorLabelTimer: NSTimer!
+    var roomNameCharacterLimit = 30
     
     override func viewDidLoad() {
         chatRoomTitleText.text = delegate.currentChatRoomName()
         chatRoomTitleText.becomeFirstResponder()
+        chatRoomTitleText.delegate = self
         sendButton.setPrimaryButton()
         errorLabel.textColor = ColorConstants.colorAccent
         titleLabel.textColor = ColorConstants.colorAccent
+        charCountLabel.textColor = ColorConstants.textSecondary
+        charCountLabel.text = " of " + String(roomNameCharacterLimit)
+        
+        chatRoomTitleText.addTarget(
+            self,
+            action: #selector(RenameChatController.textFieldDidChange),
+            forControlEvents: UIControlEvents.EditingChanged
+        )
+        
+        textFieldDidChange()
     }
     
     @IBAction func sendTap() {
@@ -81,5 +94,30 @@ class RenameChatController: UIViewController {
             self.errorLabel.alpha = 0
             self.view.layoutIfNeeded()
         }
+    }
+    
+    func setText(text: String) {
+        titleLabel.text = text
+        textFieldDidChange()
+    }
+    
+    func textFieldDidChange() {
+        charCountLabel.text = String((chatRoomTitleText.text?.characters.count)! as Int) + " of " + String(roomNameCharacterLimit)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let oldLength = textField.text?.characters.count
+        let replacementLength = string.characters.count
+        let rangeLength = range.length
+        
+        let newLength = oldLength! - rangeLength + replacementLength;
+        
+        if (newLength <= roomNameCharacterLimit) {
+            return true
+        }
+        
+        displayError("must be less than 30 characters")
+        return false
     }
 }

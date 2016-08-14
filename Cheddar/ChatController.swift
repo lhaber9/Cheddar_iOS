@@ -74,7 +74,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     override func viewDidLoad() {
         topBar.backgroundColor = ColorConstants.chatNavBackground
         topBarDivider.backgroundColor = ColorConstants.chatNavBorder
-        numActiveLabel.textColor = ColorConstants.textSecondary
+        numActiveLabel.textColor = ColorConstants.textPrimary
         
         initChatListVC()
         initChatAlertVC()
