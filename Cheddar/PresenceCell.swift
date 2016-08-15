@@ -11,22 +11,37 @@ import Foundation
 class PresenceCell: UITableViewCell {
 
     @IBOutlet var aliasLabel: UILabel!
+    @IBOutlet var topConstraintTimestamp: NSLayoutConstraint!
+    @IBOutlet var timestampLabel: UILabel!
+    @IBOutlet var timestampLabelView: UIView!
+    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     var alias: Alias!
     var body: String!
     
-    func setAlias(alias: Alias, andAction body: String, isMine:Bool) {
-        self.alias = alias
+    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool, isFirstEvent:Bool) {
+        if (presenceEvent.type != ChatEventType.Presence.rawValue) {
+            return
+        }
         
-//        if (isMine && action == "join") {
-//            let dayTimePeriodFormatter = NSDateFormatter()
-//            dayTimePeriodFormatter.dateFormat = "LLL dd"
-//            
-//            let dateString = dayTimePeriodFormatter.stringFromDate(alias.joinedAt).uppercaseString
-//            
-//            text += " on " + dateString
-//        }
-        
-        aliasLabel.text = body
+        self.alias = presenceEvent.alias
+        aliasLabel.text = presenceEvent.body.uppercaseString
         aliasLabel.textColor = ColorConstants.presenceText
+        
+        if (showTimestamp) {
+            timestampLabel.text = Utilities.formatDate(presenceEvent.createdAt, withTrailingHours: true)
+            timestampLabel.textColor = ColorConstants.timestampText
+            topConstraintTimestamp.priority = 950;
+            timestampLabelView.hidden = false;
+        } else {
+            topConstraintTimestamp.priority = 200;
+            timestampLabelView.hidden = true;
+        }
+        
+        if (isFirstEvent) {
+            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+        }
+        else {
+            timestampLabelTopConstraint.constant = 0
+        }
     }
 }

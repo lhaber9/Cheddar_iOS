@@ -13,41 +13,23 @@ class AlphaWarningView: FrontPageView {
     @IBOutlet var joinButton: CheddarButton!
     @IBOutlet var joinButtonView: UIView!
     
+    @IBOutlet var buttonOffsetSmallConstraint: NSLayoutConstraint!
+    
     class func instanceFromNib() -> AlphaWarningView {
         return UINib(nibName: "AlphaWarningView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! AlphaWarningView
     }
     
     override func awakeFromNib() {
-        joinButtonView.layer.masksToBounds = false;
-        setStandardShadow()
-    }
-    
-    func setStandardShadow() {
-        joinButtonView.layer.shadowOffset = CGSizeMake(0, 1);
-        joinButtonView.layer.shadowRadius = 1;
-        joinButtonView.layer.shadowOpacity = 0.45;
-        joinButtonView.layer.shadowColor = UIColor.blackColor().CGColor
-        joinButtonView.layer.shadowPath = UIBezierPath(rect: joinButtonView.bounds).CGPath;
-    }
-    
-    func setActiveShadow() {
-        joinButtonView.layer.shadowOffset = CGSizeMake(0, 5);
-        joinButtonView.layer.shadowRadius = 2;
-        joinButtonView.layer.shadowOpacity = 0.55;
-        joinButtonView.layer.shadowColor = UIColor.blackColor().CGColor
-        joinButtonView.layer.shadowPath = UIBezierPath(rect: joinButtonView.bounds).CGPath;
-    }
-    
-    @IBAction func tapDownButton() {
-        setActiveShadow()
+        if (Utilities.IS_IPHONE_4_OR_LESS()) {
+            buttonOffsetSmallConstraint.priority = 950
+        }
     }
     
     @IBAction func tapUpButton() {
-        setStandardShadow()
-        joinChat()
+        finishOnboard()
     }
     
-    func joinChat() {
-        delegate?.showChat()
+    func finishOnboard() {
+//        delegate?.showLogin()
     }
 }

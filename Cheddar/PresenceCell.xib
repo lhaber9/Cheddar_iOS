@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,6 +7,9 @@
     <customFonts key="customFonts">
         <mutableArray key="Effra-Medium.ttf">
             <string>Effra-Medium</string>
+        </mutableArray>
+        <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -19,8 +22,27 @@
                 <rect key="frame" x="0.0" y="0.0" width="381" height="35.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4qN-wQ-8nS">
+                        <rect key="frame" x="0.0" y="0.0" width="381" height="15"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEo-Ts-sDk">
+                                <rect key="frame" x="0.0" y="0.5" width="381" height="14.5"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="cEo-Ts-sDk" secondAttribute="bottom" id="3W7-JC-PZh"/>
+                            <constraint firstAttribute="trailing" secondItem="cEo-Ts-sDk" secondAttribute="trailing" id="Br6-Fr-h7W"/>
+                            <constraint firstItem="cEo-Ts-sDk" firstAttribute="top" secondItem="4qN-wQ-8nS" secondAttribute="top" id="Eqm-4j-uzK"/>
+                            <constraint firstItem="cEo-Ts-sDk" firstAttribute="leading" secondItem="4qN-wQ-8nS" secondAttribute="leading" id="aAF-5Q-VTx"/>
+                            <constraint firstAttribute="height" constant="15" id="yC7-gh-i50"/>
+                        </constraints>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iID-WJ-CDg">
-                        <rect key="frame" x="0.0" y="0.0" width="381" height="36"/>
+                        <rect key="frame" x="0.0" y="-0.5" width="381" height="36"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyb-R8-Ebh">
                                 <rect key="frame" x="0.0" y="0.0" width="381" height="36"/>
@@ -42,12 +64,20 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="iID-WJ-CDg" secondAttribute="trailing" id="8iN-ck-d8A"/>
                     <constraint firstAttribute="bottom" secondItem="iID-WJ-CDg" secondAttribute="bottom" id="LJJ-0k-Wwx"/>
+                    <constraint firstItem="4qN-wQ-8nS" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="WGG-zu-la3"/>
+                    <constraint firstItem="4qN-wQ-8nS" firstAttribute="top" secondItem="y5W-fa-Gg1" secondAttribute="top" id="oOl-TU-fY7"/>
                     <constraint firstItem="iID-WJ-CDg" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="ppK-IO-R4T"/>
-                    <constraint firstItem="iID-WJ-CDg" firstAttribute="top" secondItem="y5W-fa-Gg1" secondAttribute="top" id="q2a-zr-SJ1"/>
+                    <constraint firstItem="iID-WJ-CDg" firstAttribute="top" secondItem="y5W-fa-Gg1" secondAttribute="top" priority="900" id="q2a-zr-SJ1"/>
+                    <constraint firstAttribute="trailing" secondItem="4qN-wQ-8nS" secondAttribute="trailing" id="sLq-wl-hzj"/>
+                    <constraint firstItem="iID-WJ-CDg" firstAttribute="top" secondItem="4qN-wQ-8nS" secondAttribute="bottom" priority="200" id="sor-Ys-fXs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="aliasLabel" destination="Iyb-R8-Ebh" id="Snc-W8-5HS"/>
+                <outlet property="timestampLabel" destination="cEo-Ts-sDk" id="nQI-5X-hf6"/>
+                <outlet property="timestampLabelTopConstraint" destination="oOl-TU-fY7" id="yiw-9G-wcM"/>
+                <outlet property="timestampLabelView" destination="4qN-wQ-8nS" id="GRU-4t-bCs"/>
+                <outlet property="topConstraintTimestamp" destination="sor-Ys-fXs" id="Zpn-h3-oGU"/>
             </connections>
             <point key="canvasLocation" x="422.5" y="21.5"/>
         </tableViewCell>

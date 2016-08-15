@@ -12,24 +12,28 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
+    func didUpdateUnreadMessages(chatRoom:ChatRoom, areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
+    func endRefresh()
 }
 
 class ChatRoom: NSManagedObject {
     
     weak var delegate: ChatRoomDelegate?
     
-    @NSManaged var objectId: String
-    @NSManaged var maxOccupants: Int
-    @NSManaged var numOccupants: Int
+    @NSManaged var objectId: String!
+    @NSManaged var name: String!
+    @NSManaged var maxOccupants: NSNumber!
+    @NSManaged var numOccupants: NSNumber!
     
     @NSManaged var myAlias: Alias!
     @NSManaged var activeAliases: Set<Alias>!
     
     @NSManaged var chatEvents: Set<ChatEvent>!
+    var sortedChatEvents: [ChatEvent]!
     
     @NSManaged func addChatEventsObject(value:ChatEvent)
     @NSManaged func removeChatEventsObject(value:ChatEvent)
@@ -43,31 +47,38 @@ class ChatRoom: NSManagedObject {
     
     @NSManaged var currentStartToken: String!
     @NSManaged var allMessagesLoaded: NSNumber!
+    @NSManaged var areUnreadMessages: NSNumber!
 
     var loadMessageCallInFlight = false
+    var loadAliasCallInFlight = false
+    
+    class func removeAll() {
+        let chatRooms = fetchAll()
+        for chatRoom in chatRooms {
+            Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+        }
+        Utilities.appDelegate().saveContext()
+    }
     
     class func newChatRoom() -> ChatRoom {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
         chatRoom.currentStartToken = nil
         chatRoom.allMessagesLoaded = false
+        chatRoom.setUnreadMessages(false)
+        chatRoom.name = "Unnamed"
         return chatRoom
     }
     
-    class func createChatRoom(jsonMessage: [NSObject: AnyObject]) -> ChatRoom {
-        let newRoom = ChatRoom.newChatRoom()
+    class func createOrRetrieve(objectId:String) -> ChatRoom! {
         
-        if let objectId = jsonMessage["objectId"] as? String {
-            newRoom.objectId = objectId
-        }
-        if let maxOccupants = jsonMessage["maxOccupants"] as? Int {
-            newRoom.maxOccupants = maxOccupants
-        }
-        if let numOccupants = jsonMessage["numOccupants"] as? Int {
-            newRoom.numOccupants = numOccupants
-        }
+        var chatRoom: ChatRoom!
+        chatRoom = fetchById(objectId)
         
-        return newRoom
+        if (chatRoom == nil) {
+            return newChatRoom()
+        }
+        return chatRoom
     }
     
     class func createWithMyAlias(alias: Alias) -> ChatRoom {
@@ -77,6 +88,46 @@ class ChatRoom: NSManagedObject {
         newRoom.myAlias = alias
         
         return newRoom
+    }
+    
+    class func createOrUpdateChatRoomFromJson(jsonMessage: [NSObject: AnyObject], alias: Alias) -> ChatRoom! {
+        
+        let objectId = jsonMessage["objectId"] as? String
+        let chatRoom = ChatRoom.createOrRetrieve(objectId!)
+        
+        chatRoom.objectId = objectId!
+        chatRoom.maxOccupants = jsonMessage["maxOccupants"] as? Int
+        chatRoom.numOccupants = jsonMessage["numOccupants"] as? Int
+        chatRoom.myAlias = alias
+    
+        if let name = jsonMessage["name"] as? String where name != "" {
+            chatRoom.name = name
+        }
+        
+        return chatRoom
+    }
+    
+    class func createOrUpdateAliasFromParseObject(pfObject: PFObject, alias: Alias) -> ChatRoom! {
+        let chatRoom = ChatRoom.createOrRetrieve(pfObject.objectId!)
+        
+        chatRoom.objectId = pfObject.objectId!
+        chatRoom.maxOccupants = pfObject.objectForKey("maxOccupants") as? Int
+        chatRoom.numOccupants = pfObject.objectForKey("numOccupants") as? Int
+        chatRoom.myAlias = alias
+        
+        if let name = pfObject.objectForKey("name") as? String where name != "" {
+            chatRoom.name = name
+        }
+        
+        return chatRoom
+    }
+    
+    class func removeChatRoom(chatRoomId: String) {
+        if let chatRoom = ChatRoom.fetchById(chatRoomId) {
+            Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
+        }
+        Utilities.appDelegate().unsubscribeFromPubNubChannel(chatRoomId)
+        Utilities.appDelegate().unsubscribeFromPubNubPushChannel(chatRoomId)
     }
     
     class func fetchFirstRoom() -> ChatRoom! {
@@ -121,42 +172,92 @@ class ChatRoom: NSManagedObject {
         }
     }
     
+    func setUnreadMessages(areUnreadMessages: Bool) {
+        self.areUnreadMessages = areUnreadMessages
+        delegate?.didUpdateUnreadMessages(self, areUnreadMessages: areUnreadMessages)
+    }
+    
     func reload() {
         reloadActiveAlaises()
         reloadMessages()
     }
     
-    func sortedChatEvents() -> [ChatEvent] {
-        return chatEvents.sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
-            if (event1.createdAt.compare(event2.createdAt) == NSComparisonResult.OrderedAscending){
-                return true
+    func mostRecentChat() -> ChatEvent! {
+        if (objectId == nil) {
+            return nil
+        }
+        
+        let moc = Utilities.appDelegate().managedObjectContext
+        let dataFetch = NSFetchRequest(entityName: "ChatEvent")
+        dataFetch.predicate = NSPredicate(format: "alias.chatRoomId == %@", objectId)
+        dataFetch.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
+        
+        do {
+            let results = (try moc.executeFetchRequest(dataFetch) as! [ChatEvent])
+            if (results.count > 0) {
+                return results[0]
             }
-            return false
+            return nil
+        } catch {
+            return nil
+        }
+    }
+    
+    func sortChatEvents() -> [ChatEvent] {
+        sortedChatEvents = chatEvents.sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
+            
+            var ascend = false
+            
+            if (event1.createdAt.compare(event2.createdAt) == NSComparisonResult.OrderedAscending){
+                ascend = true
+            }
+            
+            if (ascend && event1.status == ChatEventStatus.Sent.rawValue &&
+                          event2.status != ChatEventStatus.Sent.rawValue) {
+                ascend = false
+            }
+            else if (!ascend && event1.status != ChatEventStatus.Sent.rawValue &&
+                                event2.status == ChatEventStatus.Sent.rawValue) {
+                ascend = true
+            }
+            
+            return ascend
         })
+        
+        return sortedChatEvents
     }
     
     func reloadActiveAlaises() {
-        PFCloud.callFunctionInBackground("getActiveAliases", withParameters: ["chatRoomId":myAlias.chatRoomId]) { (objects: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                NSLog("error: %@", error!)
+        if (loadAliasCallInFlight) {
+            return
+        }
+        
+        loadAliasCallInFlight = true
+        
+        CheddarRequest.getActiveAliases(myAlias.chatRoomId,
+            successCallback: { (object) in
+                
+                self.loadAliasCallInFlight = false
+                
+                var activeAliases = Set<Alias>()
+                
+                for alias in object as! [PFObject] {
+                    activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias))
+                }
+                
+                if (self.activeAliases != nil) {
+                    self.removeActiveAliases(self.activeAliases)
+                }
+                self.addActiveAliases(activeAliases)
+                
+                Utilities.appDelegate().saveContext()
+                
+                self.delegate?.didUpdateActiveAliases(self, aliases: activeAliases)
+                
+            }) { (error) in
+                self.loadAliasCallInFlight = false
+                NSLog("error: %@", error)
                 return
-            }
-            
-            var activeAliases = Set<Alias>()
-            
-            for alias in objects as! [PFObject] {
-                activeAliases.insert(Alias.createOrUpdateAliasFromParseObject(alias, isTemporary: false))
-            }
-            
-            if (self.activeAliases != nil) {
-                 self.removeActiveAliases(self.activeAliases)
-            }
-            self.addActiveAliases(activeAliases)
-            
-            Utilities.appDelegate().saveContext()
-            
-            self.delegate?.didUpdateActiveAliases(self, aliases: activeAliases)
         }
     }
     
@@ -172,6 +273,7 @@ class ChatRoom: NSManagedObject {
     func addChatEvent(event: ChatEvent) {
         chatEvents.insert(event)
         Utilities.appDelegate().saveContext()
+        if (event.type == ChatEventType.NameChange.rawValue) { name = event.roomName }
         self.delegate?.didAddEvent(self, chatEvent: event, isMine: isMyChatEvent(event))
     }
     
@@ -181,11 +283,11 @@ class ChatRoom: NSManagedObject {
             return nil
         }
         
-        var message = sortedChatEvents()[position]
+        var message = sortedChatEvents[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position -= 1
             if (position < 0) { return nil }
-            message = sortedChatEvents()[position]
+            message = sortedChatEvents[position]
         }
         return message
     }
@@ -195,12 +297,12 @@ class ChatRoom: NSManagedObject {
         if (position >= chatEvents.count) {
             return nil
         }
-        
-        var message = sortedChatEvents()[position]
+
+        var message = sortedChatEvents[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= chatEvents.count) { return nil }
-            message = sortedChatEvents()[position]
+            message = sortedChatEvents[position]
         }
         return message
     }
@@ -213,96 +315,115 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         
         let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
-                                            "subkey":EnvironmentConstants.pubNubSubscribeKey,
                                             "endTimeToken" : currentStartToken]
         
-        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
-
-            var replayEvents = Set<ChatEvent>()
+        CheddarRequest.replayEvents(params,
+            successCallback: { (object) in
             
-            if let events = object?["events"] as? [[NSObject:AnyObject]] {
-
-                for eventDict in events {
+                var replayEvents = Set<ChatEvent>()
+                
+                let objectDict = object as! [NSObject:AnyObject]
+                if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    let objectType = eventDict["objectType"] as! String
-                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
-                    
-                    if (objectType == "ChatEvent") {
-                        replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                    for eventDict in events {
+                        
+                        let objectType = eventDict["objectType"] as! String
+                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        
+                        if (objectType == "ChatEvent") {
+                            replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        }
                     }
+                    
+                    if (self.chatEvents != nil) {
+                        self.removeChatEvents(self.chatEvents)
+                    }
+                    self.addChatEvents(replayEvents)
+                    
+                    Utilities.appDelegate().saveContext()
+                    
+                    self.delegate?.didUpdateEvents(self)
                 }
-
-                if (self.chatEvents != nil) {
-                    self.removeChatEvents(self.chatEvents)
-                }
-                self.addChatEvents(replayEvents)
                 
-                Utilities.appDelegate().saveContext()
+                self.loadMessageCallInFlight = false
                 
-                self.delegate?.didUpdateEvents(self)
-            }
-            
-            self.loadMessageCallInFlight = false
+            }) { (error) in
+                
+                self.loadMessageCallInFlight = false
         }
     }
     
     func loadNextPageMessages() {
         
         if (allMessagesLoaded.boolValue || loadMessageCallInFlight) {
+            self.delegate?.endRefresh()
             return
         }
         
         let count = 25
         
-        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
+        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }
         
         loadMessageCallInFlight = true
-        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if let startToken = object?["startTimeToken"] as? String {
-                self.currentStartToken = startToken
-            }
-            
-            if let events = object?["events"] as? [[NSObject:AnyObject]] {
+        
+        CheddarRequest.replayEvents(params,
+            successCallback: { (object) in
                 
-                if (events.count < count) {
-                    self.allMessagesLoaded = true
+                let objectDict = object as! [NSObject: AnyObject]
+                
+                if let startToken = objectDict["startTimeToken"] as? String {
+                    self.currentStartToken = startToken
                 }
                 
-                if (events.count == 1 && self.chatEvents.count == 1) {
-                    self.loadMessageCallInFlight = false
-                    return
-                }
-                
-                for eventDict in events {
+                if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    let objectType = eventDict["objectType"] as! String
-                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
-                    
-                    if (objectType == "ChatEvent") {
-                        self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                    if (events.count < count) {
+                        self.allMessagesLoaded = true
                     }
+                    
+                    if (events.count == 1 && self.chatEvents.count == 1) {
+                        self.loadMessageCallInFlight = false
+                        self.delegate?.endRefresh()
+                        return
+                    }
+                    
+                    let originalMessageCount = self.chatEvents.count
+                    
+                    for eventDict in events {
+                        
+                        let objectType = eventDict["objectType"] as! String
+                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        
+                        if (objectType == "ChatEvent") {
+                            self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                        }
+                    }
+                    
+                    var isFirstLoad = false
+                    if (originalMessageCount <= 1) {
+                        isFirstLoad = true
+                    }
+                    
+                    Utilities.appDelegate().saveContext()
+                    
+                    self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                 }
                 
-                var isFirstLoad = false
-                if (self.chatEvents.count == 0) {
-                    isFirstLoad = true
-                }
+                self.delegate?.endRefresh()
+                self.loadMessageCallInFlight = false
                 
-                Utilities.appDelegate().saveContext()
+            }) { (error) in
                 
-                self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
-            }
-            
-            self.loadMessageCallInFlight = false
+                self.loadMessageCallInFlight = false
+                self.delegate?.endRefresh()
         }
     }
     
     func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
-        let event = sortedChatEvents()[messageIdx]
+        let event = sortedChatEvents[messageIdx]
         if (event.type == ChatEventType.Message.rawValue) {
             let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             if (messageBefore != nil) {
@@ -316,8 +437,23 @@ class ChatRoom: NSManagedObject {
         return false
     }
     
+    func shouldShowTimestampLabelForEventIndex(eventIdx: Int) -> Bool {
+        if (eventIdx < 1) {
+            return true
+        }
+        
+        let event = sortedChatEvents[eventIdx]
+        let eventBefore = sortedChatEvents[eventIdx - 1]
+        
+        let twentyMinutesAgo = event.createdAt.dateByAddingTimeInterval(-1 * 20 * 60)  // 20minutes 60seconds
+        if (twentyMinutesAgo.compare(eventBefore.createdAt) == NSComparisonResult.OrderedDescending) {
+            return true
+        }
+        return false
+    }
+    
     func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
-        let event = sortedChatEvents()[messageIdx]
+        let event = sortedChatEvents[messageIdx]
         if (event.type == ChatEventType.Message.rawValue) {
             let messageAfter = findFirstMessageAfterIndex(messageIdx)
             if (messageAfter != nil) {
@@ -331,4 +467,22 @@ class ChatRoom: NSManagedObject {
         return false
     }
     
+    func shouldShowMessageEventBottomGap(messageIdx: Int) -> Bool {
+        let event = sortedChatEvents[messageIdx]
+        if (event.type == ChatEventType.Message.rawValue) {
+            let messageAfter = findFirstMessageAfterIndex(messageIdx)
+            if (messageAfter != nil && messageAfter.alias.objectId == event.alias.objectId) {
+                let twoMinutesAhead = event.createdAt.dateByAddingTimeInterval(2 * 60)  // 2minutes 60seconds
+                if (twoMinutesAhead.compare(messageAfter.createdAt) == NSComparisonResult.OrderedAscending) {
+                    return true
+                }
+                return false
+            }
+            else {
+                return false
+            }
+        }
+        
+        return false
+    }
 }

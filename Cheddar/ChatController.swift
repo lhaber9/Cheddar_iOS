@@ -11,18 +11,27 @@ import Parse
 import Crashlytics
 
 protocol ChatDelegate: class {
+    func removeChat()
     func showLoadingViewWithText(text:String)
     func hideLoadingView()
+    func showOverlay()
+    func hideOverlay()
+    func showOverlayContents(viewController: UIViewController)
+    func hideOverlayContents()
 }
 
-class ChatController: UIViewController, UIPopoverPresentationControllerDelegate, OptionsOverlayViewDelegate, FeedbackViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, UIAlertViewDelegate, ChatRoomDelegate, ChatAlertDelegate {
+class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerDelegate, ChatViewControllerDelegate, ChatRoomDelegate, ChatAlertDelegate, OptionsOverlayViewDelegate {
     
     weak var delegate: ChatDelegate!
     
+    var reachability:Reachability?
+    @IBOutlet var networkErrorAlertView: UIView!
+    @IBOutlet var showingNetworkErrorAlertConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var titleLabel: UILabel!
+    
     @IBOutlet var listContainer: UIView!
     @IBOutlet var chatContainer: UIView!
-    @IBOutlet var overlayContainer: UIView!
-    @IBOutlet var optionsOverlayContainer: UIView!
     
     @IBOutlet var listContainerFocusConstraint: NSLayoutConstraint!
     @IBOutlet var chatContainerFocusConstraint: NSLayoutConstraint!
@@ -31,45 +40,93 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     @IBOutlet var sublabelHiddenConstraint: NSLayoutConstraint!
     
     @IBOutlet var notificationShowingConstraint: NSLayoutConstraint!
-    @IBOutlet var notificationHiddenConstraint: NSLayoutConstraint!
+    @IBOutlet var notificationHeightConstraint: NSLayoutConstraint!
     @IBOutlet var notificationContainer: UIView!
     
     @IBOutlet var topBar: UIView!
     @IBOutlet var topBarDivider: UIView!
     
-    @IBOutlet var topLeftButton: UIButton!
-    @IBOutlet var topRightButton: UIButton!
+    @IBOutlet var hamburgerButton: UIButton!
+    @IBOutlet var newChatButton: UIButton!
+    
+    @IBOutlet var backButton: UIButton!
+    @IBOutlet var optionsButton: UIButton!
     
     @IBOutlet var sublabelView: UIView!
     @IBOutlet var numActiveLabel: UILabel!
     
+    var confirmLeaveAlertView = UIAlertView()
+    var confirmLogoutAlertView = UIAlertView()
+    
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
     var chatAlertController: ChatAlertController!
+    
     var optionOverlayController: OptionsOverlayViewController!
     
-    var confirmLeaveAlertView = UIAlertView()
-    var chatAdded = false
+    var isDraggingChatAlert = false
+    var isShowingList = true
+    var alertTimerId: String!
+    var leavingChatRoom: ChatRoom!
+    var messageAlertTouchStartLocation:CGPoint!
+    var notificationHeight: CGFloat!
     
     override func viewDidLoad() {
         topBar.backgroundColor = ColorConstants.chatNavBackground
         topBarDivider.backgroundColor = ColorConstants.chatNavBorder
-        numActiveLabel.textColor = ColorConstants.textSecondary
+        numActiveLabel.textColor = ColorConstants.textPrimary
         
         initChatListVC()
         initChatAlertVC()
         initChatViewVC()
-        initOptionsOverlayVC()
+        
+        networkErrorAlertView.backgroundColor = ColorConstants.colorAccent
         
         NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) in
             self.chatListController.refreshRooms()
         }
         
-        Utilities.appDelegate().setUserOnboarded()
+        NSNotificationCenter.defaultCenter().addObserverForName("applicationDidBecomeActive", object: nil, queue: nil) { (notification: NSNotification) in
+            self.reachabilityChanged(nil)
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatController.reachabilityChanged), name: kReachabilityChangedNotification, object: nil)
+        
+        let r = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(ChatController.slideFromLeft(_:)))
+        r.edges = UIRectEdge.Left
+        view.addGestureRecognizer(r)
+        
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        
+        confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
+        
+        reachability = Reachability.reachabilityForInternetConnection()
+        reachability!.startNotifier()
+        
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
+        checkMaxRooms()
     }
     
     override func viewWillDisappear(animated: Bool) {
-         NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: kReachabilityChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "applicationDidBecomeActive", object: nil)
+    }
+    
+    func reachabilityChanged(notification: NSNotification?) {
+        let remoteHostStatus = reachability!.currentReachabilityStatus()
+        if (remoteHostStatus == NotReachable) {
+            UIView.animateWithDuration(0.15, animations: { 
+                self.showingNetworkErrorAlertConstraint.priority = 950
+                self.view.layoutIfNeeded()
+            })
+        } else {
+            UIView.animateWithDuration(0.15, animations: {
+                self.showingNetworkErrorAlertConstraint.priority = 200
+                self.view.layoutIfNeeded()
+            })
+        }
     }
     
     func initChatListVC() {
@@ -86,31 +143,38 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         addChildViewController(chatAlertController)
         notificationContainer.addSubview(chatAlertController.view)
         chatAlertController.view.autoPinEdgesToSuperviewEdges()
+        
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action:#selector(self.dragMessageAlert))
+        notificationContainer.addGestureRecognizer(panGestureRecognizer)
+        
+        notificationHeight = notificationContainer.frame.height
     }
     
     func initChatViewVC() {
         chatViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
         chatViewController.delegate = self
         
-        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
-    }
-    
-    func initOptionsOverlayVC() {
-        overlayContainer.hidden = true
-        overlayContainer.alpha = 0
+        chatContainer.layer.shadowOpacity = 0.5
+        chatContainer.layer.shadowColor = UIColor.blackColor().CGColor
         
-        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
-        optionOverlayController.delegate = self
-        addChildViewController(optionOverlayController)
-        optionsOverlayContainer.addSubview(optionOverlayController.view)
-        optionOverlayController.view.autoPinEdgesToSuperviewEdges()
+        chatContainer.layer.shadowOffset = CGSizeMake(-1.5, 0)
+        chatContainer.layer.shadowRadius = 8
+        
+        self.addChildViewController(self.chatViewController)
+        self.chatContainer.addSubview(self.chatViewController.view)
+        self.chatViewController.view.autoPinEdgesToSuperviewEdges()
+
     }
     
-    func isShowingList() -> Bool {
-        if (listContainerFocusConstraint.priority > 500) {
-            return true
+    func checkMaxRooms() {
+        UIView.animateWithDuration(0.333) { 
+            if (ChatRoom.fetchAll().count >= 5) {
+                self.newChatButton.setImage(UIImage(named: "MaxChats"), forState: UIControlState.Normal)
+            }
+            else {
+                self.newChatButton.setImage(UIImage(named: "NewChat"), forState: UIControlState.Normal)
+            }
         }
-        return false
     }
     
     func joinNextAndAnimate() {
@@ -118,17 +182,28 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         var chatRoom: ChatRoom!
         var animationComplete = false
         
-        PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 5, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject, isTemporary: false)
+        CheddarRequest.joinNextAvailableChatRoom(CheddarRequest.currentUserId()!,
+                                                 maxOccupancy: 5,
+        successCallback: { (object) in
+        
+            let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
             chatRoom = ChatRoom.createWithMyAlias(alias)
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
             Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
             self.chatListController.reloadRooms()
+            chatRoom.loadNextPageMessages()
             if (animationComplete) {
                 self.showChatRoom(chatRoom)
             }
+            
+            self.checkMaxRooms()
+        }) { (error) in
+            NSLog("Error Joining Room: %@", error)
+            self.chatListController.reloadRooms()
+            self.delegate.hideLoadingView()
+            return
         }
         
         performJoinChatAnimation { () -> Void in
@@ -142,58 +217,211 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
     func performJoinChatAnimation(callback: () -> Void) {
         delegate.showLoadingViewWithText("Joining Chat...")
         
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             callback()
         }
     }
     
     func showNewMessageAlert(chatRoom:ChatRoom, chatEvent:ChatEvent) {
+        if (chatEvent.alias.objectId == chatRoom.myAlias.objectId){
+            return
+        }
         
         chatAlertController.chatRoom = chatRoom
-        chatAlertController.label.text = "New Mess in ChatRoom \(chatRoom.objectId)"
+        chatAlertController.chatEvent = chatEvent
+        chatAlertController.refreshView()
         
-        UIView.animateWithDuration(0.333) { 
-            self.notificationHiddenConstraint.priority = 200
-            self.notificationShowingConstraint.priority = 900
+        showNewMessageAlert()
+    }
+    
+    func showNewMessageAlert() {
+        UIView.animateWithDuration(0.125) {
+            self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.constant = 0
+            self.notificationShowingConstraint.priority = 950
             self.view.layoutIfNeeded()
+        }
+        
+        let thisAlertTimerId = NSUUID.init().UUIDString
+        alertTimerId = thisAlertTimerId
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(4 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            
+            if (!self.isDraggingChatAlert && thisAlertTimerId == self.alertTimerId) {
+                self.hideNewMessageAlert()
+            }
         }
     }
     
     func hideNewMessageAlert() {
-        UIView.animateWithDuration(0.333) {
-            self.notificationHiddenConstraint.priority = 900
+        UIView.animateWithDuration(0.125) {
+            self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.constant = 0
             self.notificationShowingConstraint.priority = 200
             self.view.layoutIfNeeded()
         }
     }
     
+    func dragMessageAlert(panGestureRecognizer: UIPanGestureRecognizer) {
+        isDraggingChatAlert = true
+        let touchLocation = panGestureRecognizer.locationInView(self.view)
+        let velocity = panGestureRecognizer.velocityInView(self.view).y
+        if (messageAlertTouchStartLocation == nil) {
+            messageAlertTouchStartLocation = touchLocation
+        }
+        
+        let notificationLocation = touchLocation.y - messageAlertTouchStartLocation.y + 80
+        if (notificationLocation <= notificationHeight) {
+            self.notificationHeightConstraint.constant = notificationHeight
+            self.notificationShowingConstraint.constant = notificationLocation - notificationHeight
+        } else {
+            self.notificationHeightConstraint.constant = notificationLocation
+            self.notificationShowingConstraint.constant = 0
+        }
+        
+        if (notificationLocation > 105) {
+            self.notificationHeightConstraint.constant = 105 + notificationLocation / 25
+        }
+        
+        if (panGestureRecognizer.state == UIGestureRecognizerState.Ended) {
+            isDraggingChatAlert = false
+            if (velocity < -200) {
+                hideNewMessageAlert()
+                return
+            }
+            
+            if (notificationLocation < (self.notificationHeight / 2)) {
+                hideNewMessageAlert()
+            }
+            else {
+                showNewMessageAlert()
+            }
+        }
+    }
+    
+    func isCurrentChatRoom(chatRoom: ChatRoom) -> Bool {
+        if (chatRoom.objectId == chatViewController.myAlias()?.chatRoomId &&
+            !isShowingList) {
+            return true
+        }
+        return false
+    }
+    
+    func askLogoutUser(object: AnyObject!) {
+        optionOverlayController?.shouldClose()
+        confirmLogoutAlertView.show()
+    }
+    
+    func logoutUser() {
+        CheddarRequest.logoutUser({
+            self.optionOverlayController.shouldClose()
+            Utilities.removeAllUserData()
+            self.delegate.removeChat()
+        }) { (error) in
+            self.optionOverlayController.shouldClose()
+        }
+    }
+    
+    
+    func linkToWebsite(object: AnyObject!) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "neucheddar.com")!)
+    }
+    
+    func showVersion(object: AnyObject!) {
+        
+    }
+    
+    func showChatListButtons() {
+        self.hamburgerButton.enabled = true
+        self.hamburgerButton.alpha = 1
+        self.newChatButton.enabled = true
+        self.newChatButton.alpha = 1
+        self.backButton.enabled = false
+        self.backButton.alpha = 0
+        self.optionsButton.enabled = false
+        self.optionsButton.alpha = 0
+    }
+    
+    func showChatViewButtons() {
+        self.hamburgerButton.enabled = false
+        self.hamburgerButton.alpha = 0
+        self.newChatButton.enabled = false
+        self.newChatButton.alpha = 0
+        self.backButton.enabled = true
+        self.backButton.alpha = 1
+        self.optionsButton.enabled = true
+        self.optionsButton.alpha = 1
+    }
+    
     // MARK: Button Actions
-    
-    @IBAction func topRightButtonTap() {
-        if (isShowingList()) {
-           joinNextAndAnimate()
+    @IBAction func slideFromLeft(recognizer: UIPanGestureRecognizer) {
+
+        if (chatContainerFocusConstraint.priority == 200) {
+            return
         }
-        else {
-            UIView.animateWithDuration(0.33, animations: {
-                self.overlayContainer.hidden = false
-                self.overlayContainer.alpha = 1
-                self.optionsOverlayContainer.hidden = false
-                self.optionsOverlayContainer.alpha = 1
-                self.optionOverlayController.willShow()
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
-    @IBAction func topLeftButtonTap() {
-        if (isShowingList()) {
-        }
-        else {
+        
+        let point = recognizer.locationInView(view)
+        
+        if (recognizer.velocityInView(view).x > 1500) {
+            chatContainerFocusConstraint.constant = 0;
+            chatContainerFocusConstraint.priority = 200;
             showList()
+            return
+        }
+        
+        if (recognizer.state == UIGestureRecognizerState.Ended) {
+            if (point.x > UIScreen.mainScreen().bounds.size.width / 2) {
+                chatContainerFocusConstraint.constant = 0;
+                chatContainerFocusConstraint.priority = 200;
+                showList()
+            } else {
+                showChatRoom(chatViewController.chatRoom)
+            }
+            return
+        }
+        
+        self.chatContainerFocusConstraint.constant = point.x;
+        view.layoutIfNeeded()
+    }
+    
+    @IBAction func hamburgerButtonTap() {
+        showChatListOptions()
+    }
+    
+    @IBAction func newChatButtonTap() {
+        if (ChatRoom.fetchAll().count >= 5) {
+            checkMaxRooms()
+            UIAlertView(title: "Maxiumum Rooms Reached", message: "You must leave a chatroom before joining another", delegate: self, cancelButtonTitle: "OK").show()
+            return
+        }
+        
+        checkMaxRooms()
+        joinNextAndAnimate()
+    }
+    
+    @IBAction func backButtonTap() {
+        showList()
+    }
+    
+    @IBAction func optionsButtonTap() {
+        chatViewController.deselectTextView()
+        showChatRoomViewOptions(chatViewController.chatRoom)
+    }
+    
+    @IBAction func titleTap() {
+        if (!isShowingList) {
+            chatViewController.showRename()
         }
     }
     
+    @IBAction func subTitleTap() {
+//        if (!isShowingList) {
+//            chatViewController.showActiveMembers()
+//        }
+        titleTap()
+    }
+
     // MARK: ChatViewControllerDelegate
     
     func subscribe(chatRoom:ChatRoom) {
@@ -202,7 +430,22 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         chatRoom.delegate = self
     }
     
+    func showChatRoomViewOptions(chatRoom:ChatRoom) {
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        
+        optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
+        optionOverlayController.buttonData = [chatRoom,nil,chatViewController.myAlias()]
+        optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
+        
+        self.delegate!.showOverlay()
+        self.delegate!.showOverlayContents(optionOverlayController)
+        self.optionOverlayController.willShow()
+    }
+    
     func showList() {
+        isShowingList = true
+        chatListController.reloadRooms()
         UIView.animateWithDuration(0.333, animations: {
             self.chatContainerFocusConstraint.priority = 200
             self.listContainerFocusConstraint.priority = 900
@@ -212,182 +455,175 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             if let selectedRow = self.chatListController.tableView.indexPathForSelectedRow {
                 self.chatListController.tableView.deselectRowAtIndexPath(selectedRow, animated: true)
             }
-            self.chatViewController.deselectTextView()
-            self.topLeftButton.imageView?.image = UIImage(named: "Hamburger")
-            self.topRightButton.imageView?.image = UIImage(named: "NewChat")
+            self.chatViewController?.deselectTextView()
+            
+            self.showChatListButtons()
+            
+            self.titleLabel.text = "Groups"
             self.view.layoutIfNeeded()
-        }) { (error: Bool) in
-            self.chatListController.reloadRooms()
-        }
-    }
-    
-    func tryLeaveChatRoom(alias: Alias) {
-        confirmLeaveAlertView.show()
+        })
     }
     
     func leaveChatRoom(alias: Alias) {
         
+        leavingChatRoom = nil
         delegate.showLoadingViewWithText("Leaving Chat...")
         
-        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": alias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
+        CheddarRequest.leaveChatroom(alias.objectId!,
+        successCallback: { (object) in
             
-            if (error != nil) {
-                self.delegate.hideLoadingView()
-                return
-            }
+            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": alias.chatRoomId, "lengthOfStay":alias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             
+            self.chatViewController.chatRoom = nil
             self.forceLeaveChatRoom(alias)
+            self.checkMaxRooms()
+        }) { (error) in
+            NSLog("Error leaving chatroom: %@", error)
+            self.delegate.hideLoadingView()
+            return
         }
     }
-
     
     func forceLeaveChatRoom(alias: Alias) {
-        if let chatRoom = ChatRoom.fetchById(alias.chatRoomId) {
-            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": chatRoom.objectId, "lengthOfStay":chatRoom.myAlias.joinedAt.timeIntervalSinceNow * -1 * 1000])
-            Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
-            Utilities.appDelegate().saveContext()
-        }
-        Utilities.appDelegate().unsubscribeFromPubNubChannel(alias.chatRoomId)
-        Utilities.appDelegate().unsubscribeFromPubNubPushChannel(alias.chatRoomId)
+        ChatRoom.removeChatRoom(alias.chatRoomId)
+        Utilities.appDelegate().saveContext()
         delegate.hideLoadingView()
         showList()
     }
     
-    func didUpdateActiveAliases(aliases:NSSet) {
-        if (aliases.count == 0) {
-            numActiveLabel.text = "Waiting for others..."
-        }
-        else {
-            numActiveLabel.text = "\(aliases.count) members"
-        }
+    func showOverlay() {
+        delegate.showOverlay()
     }
     
-    func isCurrentChatRoom(chatRoom: ChatRoom) -> Bool {
-        if (chatRoom.objectId == currentAlias()?.chatRoomId &&
-            !isShowingList()) {
-            return true
+    func hideOverlay() {
+        delegate.hideOverlay()
+    }
+    
+    func showOverlayContents(viewController: UIViewController) {
+        delegate.showOverlayContents(viewController)
+    }
+    
+    func hideOverlayContents() {
+        delegate.hideOverlayContents()
+    }
+    
+    func selectedFeedback(object: AnyObject!) {
+        optionOverlayController.willHide()
+        hideOverlayContents()
+        if (object == nil) {
+            chatListController.performSegueWithIdentifier("showFeedbackSegue", sender: self)
+            return
         }
-        return false
+        chatViewController.performSegueWithIdentifier("showFeedbackSegue", sender: self)
+    }
+    
+    func tryLeaveChatRoom(object: AnyObject!) {
+        leavingChatRoom = object as! ChatRoom
+        optionOverlayController?.shouldClose()
+        confirmLeaveAlertView.show()
+    }
+    
+    func showActiveMembers(object: AnyObject!) {
+        optionOverlayController?.willHide()
+        chatViewController.showActiveMembers()
     }
     
     // MARK: ChatListControllerDelegate
     
+    func showChatListOptions() {
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        
+        optionOverlayController.buttonNames = ["Logout", "Send Feedback"]
+        optionOverlayController.buttonData = [nil, nil]
+        optionOverlayController.buttonActions = [askLogoutUser, selectedFeedback]
+        
+        self.delegate!.showOverlay()
+        self.delegate!.showOverlayContents(optionOverlayController)
+        self.optionOverlayController.willShow()
+    }
+    
+    func forceCloseChat() {
+//        Utilities.appDelegate().reinitalizeUser()
+        delegate.removeChat()
+    }
+    
     func showChatRoom(chatRoom: ChatRoom) {
+        isShowingList = false
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
-        hideNewMessageAlert()
+        self.chatViewController.scrollToBottom(false)
+        view.layoutIfNeeded()
         
-        if (!chatAdded) {
-            dispatch_async(dispatch_get_main_queue(), {
-                self.addChildViewController(self.chatViewController)
-                self.chatContainer.addSubview(self.chatViewController.view)
-                self.chatViewController.view.autoPinEdgesToSuperviewEdges()
-            });
-            chatAdded = true
-        }
-        
-        UIView.animateWithDuration(0.333, animations:{
-            self.chatContainerFocusConstraint.priority = 900
-            self.listContainerFocusConstraint.priority = 200
-            self.sublabelShowingConstraint.priority = 900
-            self.sublabelHiddenConstraint.priority = 200
-            self.sublabelView.alpha = 1
-            self.topLeftButton.imageView?.image = UIImage(named: "BackArrow")
-            self.topRightButton.imageView?.image = UIImage(named: "ThreeDots")
-            self.view.layoutIfNeeded()
-        }) { (error: Bool) in
-            self.delegate.hideLoadingView()
-            self.chatViewController.scrollToBottom(true)
-        }
-    }
-    
-    // MARK: OptionsOverlayViewDelegate
-    
-    func selectedFeedback() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        self.performSegueWithIdentifier("popoverFeedbackSegue", sender: self)
-    }
-    
-    func shouldCloseOptions() {
-        UIView.animateWithDuration(0.33, animations: {
-            self.optionOverlayController.willHide()
-            self.optionsOverlayContainer.alpha = 0
-        }) { (completed: Bool) in
-            self.optionsOverlayContainer.hidden = true
-        }
-    }
-    
-    func shouldClose() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-        UIView.animateWithDuration(0.33, animations: {
-            self.optionOverlayController.willHide()
-            self.optionsOverlayContainer.alpha = 0
-            self.overlayContainer.alpha = 0
-        }) { (completed: Bool) in
-            self.overlayContainer.hidden = true
-            self.optionsOverlayContainer.hidden = true
-        }
-    }
-    
-    func tryLeaveChatRoom() {
-        tryLeaveChatRoom(currentAlias())
-    }
-    
-    // MARK: FeedbackViewDelegate
-    
-    func currentAlias() -> Alias! {
-        return chatViewController?.chatRoom?.myAlias
-    }
-    
-    // MARK: UIPopoverPresentationControllerDelegate
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showOptionsView" {
-            let optionsViewController = segue.destinationViewController as! OptionsOverlayViewController
-            optionsViewController.delegate = self
-        }
-        if segue.identifier == "popoverFeedbackSegue" {
-            let popoverViewController = segue.destinationViewController as! FeedbackViewController
-            popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-            popoverViewController.popoverPresentationController!.delegate = self
-        }
-        
-    }
-    
-    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
-        shouldClose()
-    }
-    
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        
-        // Force popover style
-        return UIModalPresentationStyle.None
-    }
-    
-    // MARK: UIAlertViewDelegate
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
-            leaveChatRoom(currentAlias())
-        }
+        dispatch_async(dispatch_get_main_queue(), {
+            UIView.animateWithDuration(0.333, animations:{
+                self.chatContainerFocusConstraint.constant = 0
+                self.chatContainerFocusConstraint.priority = 900
+                self.listContainerFocusConstraint.priority = 200
+                self.sublabelShowingConstraint.priority = 900
+                self.sublabelHiddenConstraint.priority = 200
+                self.sublabelView.alpha = 1
+                self.titleLabel.text = chatRoom.name
+                
+                self.showChatViewButtons()
+                self.view.layoutIfNeeded()
+            }) { (error: Bool) in
+                self.delegate.hideLoadingView()
+                chatRoom.setUnreadMessages(false)
+//                self.chatViewController.scrollToBottom(true)
+            }
+        })
     }
     
     // MARK: ChatRoomDelegate
     
+    func didUpdateUnreadMessages(chatRoom: ChatRoom, areUnreadMessages: Bool) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
+            return
+        }
+        
+        if (chatViewController == nil) {
+            return
+        }
+        
+        chatViewController.updateLayout()
+    }
+    
+    func didUpdateName(chatRoom:ChatRoom) {
+        if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
+            return
+        }
+        
+        self.titleLabel.text = chatRoom.name
+    }
+    
     func didUpdateEvents(chatRoom:ChatRoom) {
         if (!isCurrentChatRoom(chatRoom)) {
+            chatListController.refreshRooms()
             return
         }
         
         chatViewController.reloadTable()
+        chatListController.refreshRooms()
     }
     
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool) {
         if (!isCurrentChatRoom(chatRoom)) {
-            showNewMessageAlert(chatRoom, chatEvent: chatEvent)
+            if (!isShowingList) {
+                showNewMessageAlert(chatRoom, chatEvent: chatEvent)
+            }
+            if (!isMine) {
+                chatRoom.setUnreadMessages(true)
+            }
+            chatListController.refreshRooms()
             return
+        }
+        
+        if (chatEvent.type == ChatEventType.NameChange.rawValue) {
+            didUpdateName(chatRoom)
         }
         
         didUpdateEvents(chatRoom)
@@ -397,7 +633,7 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             chatViewController.scrollToBottom(true)
         }
         else if (!isMine) {
-            chatViewController.isUnreadMessages = true
+            chatRoom.setUnreadMessages(true)
         }
     }
     
@@ -406,7 +642,17 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
             return
         }
         
-        didUpdateActiveAliases(aliases)
+        if (aliases.count == 0) {
+            numActiveLabel.text = "Waiting for others..."
+        }
+        else {
+            if (aliases.count == 1) {
+                numActiveLabel.text = "\(aliases.count) member"
+            }
+            else {
+                numActiveLabel.text = "\(aliases.count) members"
+            }
+        }
     }
     
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool) {
@@ -415,7 +661,32 @@ class ChatController: UIViewController, UIPopoverPresentationControllerDelegate,
         }
         
         chatViewController.reloadTable()
-        if (firstLoad) { chatViewController.scrollToBottom(true) }
-        else { chatViewController.scrollToEventIndex(eventCount, animated: false) }
+        chatListController.refreshRooms()
+        if (firstLoad) {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.chatViewController.scrollToBottom(true)
+            })
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), {
+               self.chatViewController.scrollToEventIndex(eventCount - 3, animated: true)
+            })
+        }
     }
+    
+    func endRefresh() {
+        chatViewController.refreshControl.endRefreshing()
+    }
+    
+    // MARK: UIAlertViewDelegate
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
+            leaveChatRoom(leavingChatRoom.myAlias)
+        }
+        if (buttonIndex == 1 && alertView.isEqual(confirmLogoutAlertView)) {
+            logoutUser()
+        }
+    }
+
 }

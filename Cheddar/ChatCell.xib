@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Effra-Medium.ttf">
-            <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
-        </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
         </mutableArray>
@@ -49,15 +46,40 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZdJ-BW-BaN">
+                                <rect key="frame" x="0.0" y="0.0" width="376" height="15"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="92N-uE-feS">
+                                        <rect key="frame" x="0.0" y="0.0" width="376" height="14.5"/>
+                                        <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="16x-Xm-7gw"/>
+                                    <constraint firstAttribute="bottom" secondItem="92N-uE-feS" secondAttribute="bottom" id="C8y-UC-U3Z"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="leading" secondItem="ZdJ-BW-BaN" secondAttribute="leading" id="G2E-YB-3VT"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="centerY" secondItem="ZdJ-BW-BaN" secondAttribute="centerY" id="HMV-hq-Lh2"/>
+                                    <constraint firstItem="92N-uE-feS" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="top" id="ZGR-I1-hmy"/>
+                                    <constraint firstAttribute="trailing" secondItem="92N-uE-feS" secondAttribute="trailing" id="pyY-Ku-xLS"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HMV-hq-Lh2"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gsk-tc-l14">
                                 <rect key="frame" x="48" y="2" width="60.5" height="32"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UFS-Z9-Lw6" customClass="CheddarTextView" customModule="Cheddar" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UFS-Z9-Lw6">
                                         <rect key="frame" x="10" y="3" width="40.5" height="26"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </textView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.82549356457242584" green="0.82549356457242584" blue="0.82549356457242584" alpha="1" colorSpace="calibratedRGB"/>
@@ -77,44 +99,20 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rR7-Sb-RzQ">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rR7-Sb-RzQ" customClass="AliasCircleView" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="8" y="2" width="32" height="32"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ekh-0k-fGA">
-                                        <rect key="frame" x="2" y="2" width="28" height="28"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.92254325000000004" blue="0.20825473150000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Ekh-0k-fGA" secondAttribute="bottom" constant="2" id="9WZ-o6-fm9"/>
-                                    <constraint firstItem="Ekh-0k-fGA" firstAttribute="leading" secondItem="rR7-Sb-RzQ" secondAttribute="leading" constant="2" id="BMY-uZ-ZiZ"/>
-                                    <constraint firstItem="Ekh-0k-fGA" firstAttribute="top" secondItem="rR7-Sb-RzQ" secondAttribute="top" constant="2" id="JKc-zz-5oA"/>
                                     <constraint firstAttribute="height" constant="32" id="Qna-YS-Ung"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ekh-0k-fGA" secondAttribute="trailing" constant="2" id="ui0-Wn-Bn3"/>
                                     <constraint firstAttribute="width" constant="32" id="zAE-Eu-At0"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pt8-I5-5ej">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pt8-I5-5ej" customClass="AliasCircleView" customModule="Cheddar" customModuleProvider="target">
                                 <rect key="frame" x="336" y="2" width="32" height="32"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fjL-ul-4Yc">
-                                        <rect key="frame" x="2" y="2" width="28" height="28"/>
-                                        <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="15"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="fjL-ul-4Yc" secondAttribute="bottom" constant="2" id="OzX-mw-2RC"/>
-                                    <constraint firstAttribute="trailing" secondItem="fjL-ul-4Yc" secondAttribute="trailing" constant="2" id="bno-cs-KVT"/>
                                     <constraint firstAttribute="width" constant="32" id="gGC-ZN-RKO"/>
                                     <constraint firstAttribute="height" constant="32" id="h53-OU-ejY"/>
-                                    <constraint firstItem="fjL-ul-4Yc" firstAttribute="leading" secondItem="pt8-I5-5ej" secondAttribute="leading" constant="2" id="jiO-pN-79a"/>
-                                    <constraint firstItem="fjL-ul-4Yc" firstAttribute="top" secondItem="pt8-I5-5ej" secondAttribute="top" constant="2" id="k02-UD-mq6"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
@@ -127,13 +125,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="gsk-tc-l14" secondAttribute="bottom" constant="2" id="2av-bt-Y6c"/>
+                            <constraint firstItem="ZdJ-BW-BaN" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="3HD-BD-oCr"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" constant="8" id="3vY-3D-RHs"/>
+                            <constraint firstItem="ZdJ-BW-BaN" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" id="83b-MY-gUu"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="91T-zQ-j9i"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" priority="900" constant="46" id="9rX-ai-iKW"/>
+                            <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="bottom" priority="200" constant="2" id="9uo-sr-Umo"/>
                             <constraint firstAttribute="height" constant="172.5" id="Hj0-gU-VG3"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="leading" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="900" constant="8" id="HsY-hQ-he1"/>
                             <constraint firstAttribute="height" constant="17.5" id="Kri-1Q-gZA"/>
-                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="KtO-nJ-ME1"/>
+                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" id="KtO-nJ-ME1"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="LHl-Sm-Zed"/>
                             <constraint firstAttribute="bottom" secondItem="gsk-tc-l14" secondAttribute="bottom" constant="2" id="MS5-rL-mrj"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="leading" priority="200" constant="-8" id="QSI-0p-oaT"/>
@@ -144,6 +145,7 @@
                             <constraint firstItem="UFS-Z9-Lw6" firstAttribute="leading" secondItem="JLw-Dz-RJj" secondAttribute="leading" priority="900" id="aLM-VQ-QiD"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" constant="2" id="ae1-Ki-oDg"/>
                             <constraint firstItem="DmO-Gd-Lgq" firstAttribute="centerY" secondItem="gsk-tc-l14" secondAttribute="centerY" id="awv-cs-2y8"/>
+                            <constraint firstAttribute="trailing" secondItem="ZdJ-BW-BaN" secondAttribute="trailing" id="bZn-c2-vZ5"/>
                             <constraint firstItem="UFS-Z9-Lw6" firstAttribute="trailing" secondItem="JLw-Dz-RJj" secondAttribute="trailing" priority="200" id="bcu-ax-cuZ"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="leading" secondItem="rR7-Sb-RzQ" secondAttribute="trailing" priority="900" constant="8" id="cl2-gh-dXb"/>
                             <constraint firstAttribute="trailing" secondItem="gsk-tc-l14" secondAttribute="trailing" priority="200" constant="46" id="eY1-xR-Caf"/>
@@ -152,6 +154,7 @@
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="m7g-rU-tJt"/>
                             <constraint firstItem="gsk-tc-l14" firstAttribute="top" secondItem="aoB-dj-1gj" secondAttribute="bottom" priority="200" constant="2" id="u0R-wH-xFC"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="gsk-tc-l14" secondAttribute="top" id="xU2-2d-Eso"/>
+                            <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="ZdJ-BW-BaN" secondAttribute="bottom" priority="200" id="xwA-JM-CU7"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="gsk-tc-l14" secondAttribute="top" id="zxp-cN-wnZ"/>
                         </constraints>
                         <variation key="default">
@@ -180,12 +183,12 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="aliasLabel" destination="JLw-Dz-RJj" id="0du-94-fQx"/>
+                <outlet property="aliasLabelTopConstraintTimestamp" destination="xwA-JM-CU7" id="Vwh-Cp-eBS"/>
                 <outlet property="aliasLabelView" destination="aoB-dj-1gj" id="cZg-vz-q5e"/>
                 <outlet property="errorLabel" destination="DmO-Gd-Lgq" id="rX8-Ch-dqu"/>
                 <outlet property="errorLeftConstraint" destination="HsY-hQ-he1" id="ipd-P3-1Qu"/>
                 <outlet property="errorRightConstraint" destination="QSI-0p-oaT" id="krn-Pg-11q"/>
                 <outlet property="leftIcon" destination="rR7-Sb-RzQ" id="ReD-t2-8ML"/>
-                <outlet property="leftIconLabel" destination="Ekh-0k-fGA" id="me6-Jx-Tsu"/>
                 <outlet property="leftSideLabelConstraint" destination="aLM-VQ-QiD" id="R6H-Z2-Iu3"/>
                 <outlet property="leftSideMessageConstraint" destination="cl2-gh-dXb" id="rhk-O0-gvQ"/>
                 <outlet property="messageBackground" destination="gsk-tc-l14" id="znN-8q-NRu"/>
@@ -193,10 +196,13 @@
                 <outlet property="messageLabel" destination="UFS-Z9-Lw6" id="3L1-jg-68k"/>
                 <outlet property="messageTopConstraint" destination="ae1-Ki-oDg" id="MwZ-Oa-TFG"/>
                 <outlet property="messageTopConstraintAlias" destination="u0R-wH-xFC" id="rUm-Sj-eTp"/>
+                <outlet property="messageTopConstraintTimestamp" destination="9uo-sr-Umo" id="WEv-U4-gir"/>
                 <outlet property="rightIcon" destination="pt8-I5-5ej" id="7WU-14-zuK"/>
-                <outlet property="rightIconLabel" destination="fjL-ul-4Yc" id="6bE-lX-9Ra"/>
                 <outlet property="rightSideLabelConstraint" destination="bcu-ax-cuZ" id="zig-4Z-573"/>
                 <outlet property="rightSideMessageConstraint" destination="Xfk-Hw-sTP" id="sx8-aq-gfH"/>
+                <outlet property="timestampLabel" destination="92N-uE-feS" id="s32-9b-fxh"/>
+                <outlet property="timestampLabelTopConstraint" destination="3HD-BD-oCr" id="Ngk-f2-Hg5"/>
+                <outlet property="timestampLabelView" destination="ZdJ-BW-BaN" id="0md-XB-sET"/>
             </connections>
             <point key="canvasLocation" x="260" y="-140"/>
         </tableViewCell>

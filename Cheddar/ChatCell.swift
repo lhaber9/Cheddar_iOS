@@ -11,7 +11,7 @@ import Foundation
 
 class ChatCell: UITableViewCell {
     
-    @IBOutlet var messageLabel: CheddarTextView!
+    @IBOutlet var messageLabel: UITextView!
     @IBOutlet var messageBackground: UIView!
     
     @IBOutlet var leftSideMessageConstraint: NSLayoutConstraint!
@@ -20,6 +20,7 @@ class ChatCell: UITableViewCell {
     @IBOutlet var rightSideLabelConstraint: NSLayoutConstraint!
     
     @IBOutlet var messageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var messageTopConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var messageTopConstraintAlias: NSLayoutConstraint!
     @IBOutlet var messageTopConstraint: NSLayoutConstraint!
     
@@ -27,26 +28,31 @@ class ChatCell: UITableViewCell {
     @IBOutlet var errorRightConstraint: NSLayoutConstraint!
     @IBOutlet var errorLabel: UILabel!
     
+    @IBOutlet var aliasLabelTopConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
+    
+    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet var timestampLabelView: UIView!
+    @IBOutlet var timestampLabel: UILabel!
 
     @IBOutlet var rightIcon: UIView!
     @IBOutlet var rightIconLabel: UILabel!
     @IBOutlet var leftIcon: UIView!
     @IBOutlet var leftIconLabel: UILabel!
     
-    static var verticalTextBuffer:CGFloat = 13;
-    static var aliasLabelHeight:CGFloat = 18;
-    static var singleRowHeight:CGFloat = 32;
+    var rightAliasIcon: AliasCircleView!
+    var leftAliasIcon: AliasCircleView!
+    
+    static var verticalTextBuffer:CGFloat = 13
+    static var bufferSize:CGFloat = 8
+    static var aliasLabelHeight:CGFloat = 15
+    static var timestampLabelHeight:CGFloat = 15
+    static var singleRowHeight:CGFloat = 32
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        leftIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        rightIcon.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        
-        leftIcon.backgroundColor = ColorConstants.inboundIcons[0]
-        rightIcon.backgroundColor = ColorConstants.outboundChatBubble
-        
+        messageLabel.textColor = ColorConstants.textPrimary
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
     }
@@ -64,24 +70,55 @@ class ChatCell: UITableViewCell {
         return height
     }
     
-    class func rowHeightForText(text: String, withAliasLabel: Bool) -> CGFloat {
+    class func rowHeightForText(text: String, withAliasLabel: Bool, withTimestampLabel: Bool) -> CGFloat {
         var height = labelHeightForText(text)
         if (withAliasLabel) {
             height += aliasLabelHeight
         }
+        if (withTimestampLabel) {
+            height += timestampLabelHeight
+        }
         return height
     }
     
-    func setShowAliasLabel(showAliasLabel: Bool) {
-        if (showAliasLabel) {
+    func setShowAliasLabel(showAliasLabel: Bool, andTimestampLabel showTimestampLabel: Bool) {
+        if (showAliasLabel && showTimestampLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 950
             messageTopConstraintAlias.priority = 950;
+            messageTopConstraintTimestamp.priority = 200;
             messageTopConstraint.priority = 200;
             aliasLabelView.hidden = false;
-        }
-        else {
+            timestampLabelView.hidden = false;
+        } else if (showAliasLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 200
+            messageTopConstraintAlias.priority = 950;
+            messageTopConstraintTimestamp.priority = 200;
+            messageTopConstraint.priority = 200;
+            aliasLabelView.hidden = false;
+            timestampLabelView.hidden = true;
+        } else if (showTimestampLabel) {
+            aliasLabelTopConstraintTimestamp.priority = 200
             messageTopConstraintAlias.priority = 200;
+            messageTopConstraintTimestamp.priority = 950;
+            messageTopConstraint.priority = 200;
+            aliasLabelView.hidden = true;
+            timestampLabelView.hidden = false;
+        } else {
+            aliasLabelTopConstraintTimestamp.priority = 200
+            messageTopConstraintAlias.priority = 200;
+            messageTopConstraintTimestamp.priority = 200;
             messageTopConstraint.priority = 950;
             aliasLabelView.hidden = true;
+            timestampLabelView.hidden = true;
+        }
+    }
+    
+    func setIsFirstEvent(isFirstEvent: Bool) {
+        if (isFirstEvent) {
+            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+        }
+        else {
+            timestampLabelTopConstraint.constant = 0
         }
     }
     
@@ -128,39 +165,56 @@ class ChatCell: UITableViewCell {
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
     func setMessageOptions(options: [String:AnyObject]) {
         
-        messageLabel.text = options["text"] as! String
-        let height = ChatCell.labelHeightForText( messageLabel.text )
-        messageHeightConstraint.constant = height
+        self.messageLabel.text = options["text"] as! String
+        let height = ChatCell.labelHeightForText( self.messageLabel.text )
+        self.messageHeightConstraint.constant = height
+        self.errorLabel.hidden = true
+        self.messageBackground.alpha = 1
         
-        if (messageLabel.text.characters.count == 1) {
-            messageLabel.textAlignment = NSTextAlignment.Center
+        if (self.messageLabel.text.characters.count == 1) {
+            self.messageLabel.textAlignment = NSTextAlignment.Center
         }
         else {
-            messageLabel.textAlignment = NSTextAlignment.Left
+            self.messageLabel.textAlignment = NSTextAlignment.Left
         }
         
+        
         let alias = options["alias"] as! Alias
-        leftIconLabel.text = alias.initials()
-        rightIconLabel.text = alias.initials()
-        aliasLabel.text = alias.name.lowercaseString
-        aliasLabel.textColor = ColorConstants.aliasLabelText
-        leftIcon.backgroundColor = ColorConstants.inboundIcons[alias.colorId]
+        self.aliasLabel.text = alias.name.lowercaseString
+        self.aliasLabel.textColor = ColorConstants.aliasLabelText
+        self.timestampLabel.text = Utilities.formatDate(options["date"] as! NSDate, withTrailingHours: true)
+        self.timestampLabel.textColor = ColorConstants.timestampText
+        self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
+        self.setIsFirstEvent(options["isFirstEvent"] as! Bool)
         
-        errorLabel.hidden = true
-        messageBackground.alpha = 1
-        
-        setShowAliasLabel(options["showAliasLabel"] as! Bool)
-        setIsOutbound(options["isOutbound"] as! Bool)
-        if (options["isOutbound"] as! Bool) {
-            setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
+        let isOutbound = options["isOutbound"] as! Bool
+        self.setIsOutbound(isOutbound)
+        if (isOutbound) {
+            self.setStatus(ChatEventStatus(rawValue:options["status"] as! String)!)
+            
+            if (rightAliasIcon == nil) {
+                rightAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.outboundChatBubble, sizeFactor: 0.7)
+                self.rightIcon.addSubview(rightAliasIcon)
+                rightAliasIcon.autoPinEdgesToSuperviewEdges()
+            }
+            
+            rightAliasIcon.setCellAlias(alias, color: ColorConstants.outboundChatBubble)
+            rightAliasIcon.setTextSize(15)
+        }
+        else {
+            if (leftAliasIcon == nil) {
+                leftAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias, color: ColorConstants.iconColors[Int(alias.colorId)], sizeFactor: 0.7)
+                self.leftIcon.addSubview(leftAliasIcon)
+                leftAliasIcon.autoPinEdgesToSuperviewEdges()
+            }
+            
+            leftAliasIcon.setCellAlias(alias, color: ColorConstants.iconColors[Int(alias.colorId)])
+            leftAliasIcon.setTextSize(15)
         }
         
         if (!(options["showAliasIcon"] as! Bool)){
-            rightIcon.hidden = true;
-            leftIcon.hidden = true;
+            self.rightIcon.hidden = true;
+            self.leftIcon.hidden = true;
         }
-        
-        setNeedsLayout()
-        layoutIfNeeded()
     }
 }

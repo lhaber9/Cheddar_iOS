@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -18,13 +18,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardMatch" translatesAutoresizingMaskIntoConstraints="NO" id="Frp-He-qTH">
-                    <rect key="frame" x="211.5" y="65" width="178" height="330"/>
+                    <rect key="frame" x="211" y="65" width="178" height="330"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Frp-He-qTH" secondAttribute="height" multiplier="475:881" id="5ol-Iw-g6o"/>
-                        <constraint firstAttribute="height" constant="330" id="alr-5S-52W"/>
+                        <constraint firstAttribute="height" priority="200" constant="275" id="Wj3-Y9-AkR"/>
+                        <constraint firstAttribute="height" priority="900" constant="330" id="alr-5S-52W"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get randomly matched with 4 other Huskies" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wHe-5q-RCx" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get randomly matched with 4 other Huskies" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="wHe-5q-RCx" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                     <rect key="frame" x="168" y="447" width="265" height="52"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="235" id="Lvq-t7-91J"/>
@@ -43,19 +44,24 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="wHe-5q-RCx" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2yh-K7-mdT"/>
-                <constraint firstItem="wHe-5q-RCx" firstAttribute="top" secondItem="Frp-He-qTH" secondAttribute="bottom" constant="52" id="88q-Mm-2x4"/>
+                <constraint firstItem="wHe-5q-RCx" firstAttribute="top" secondItem="Frp-He-qTH" secondAttribute="bottom" priority="200" constant="26" id="88q-Mm-2x4"/>
+                <constraint firstItem="wHe-5q-RCx" firstAttribute="top" secondItem="Frp-He-qTH" secondAttribute="bottom" priority="900" constant="52" id="NqC-Dw-iEp"/>
                 <constraint firstItem="Frp-He-qTH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="feU-Hr-S0j"/>
-                <constraint firstItem="Frp-He-qTH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-70" id="ydg-E5-436"/>
+                <constraint firstItem="Frp-He-qTH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="200" constant="-50" id="vQw-pO-xva"/>
+                <constraint firstItem="Frp-He-qTH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="900" constant="-70" id="ydg-E5-436"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <connections>
                 <outlet property="bottomTextLabel" destination="wHe-5q-RCx" id="ogU-x0-HhZ"/>
+                <outlet property="imageBottomSmallConstraint" destination="88q-Mm-2x4" id="53l-Hy-bzf"/>
+                <outlet property="imageHeightSmallConstraint" destination="Wj3-Y9-AkR" id="q9y-1r-gna"/>
+                <outlet property="imageOffsetSmallConstraint" destination="vQw-pO-xva" id="cp2-Je-Fry"/>
             </connections>
         </view>
     </objects>
     <resources>
-        <image name="OnboardMatch" width="76" height="140"/>
+        <image name="OnboardMatch" width="150" height="279"/>
     </resources>
 </document>
