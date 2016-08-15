@@ -43,7 +43,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
             let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
             
-            developmentOnlyVersionLabel.text = "Version: " + version + "/ Build: " + build
+            developmentOnlyVersionLabel.text = "Version: " + version + " / Build: " + build + " / " + Utilities.envName()
         }
         
         view.layoutIfNeeded()

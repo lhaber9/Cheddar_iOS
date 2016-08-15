@@ -103,6 +103,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier()
         
+        titleLabel.adjustsFontSizeToFitWidth = true
+        
         checkMaxRooms()
     }
     
@@ -236,6 +238,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func showNewMessageAlert() {
         UIView.animateWithDuration(0.125) {
             self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.constant = 0
             self.notificationShowingConstraint.priority = 950
             self.view.layoutIfNeeded()
         }
@@ -254,6 +257,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func hideNewMessageAlert() {
         UIView.animateWithDuration(0.125) {
             self.notificationHeightConstraint.constant = self.notificationHeight
+            self.notificationShowingConstraint.constant = 0
             self.notificationShowingConstraint.priority = 200
             self.view.layoutIfNeeded()
         }
@@ -262,11 +266,19 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func dragMessageAlert(panGestureRecognizer: UIPanGestureRecognizer) {
         isDraggingChatAlert = true
         let touchLocation = panGestureRecognizer.locationInView(self.view)
+        let velocity = panGestureRecognizer.velocityInView(self.view).y
         if (messageAlertTouchStartLocation == nil) {
             messageAlertTouchStartLocation = touchLocation
         }
+        
         let notificationLocation = touchLocation.y - messageAlertTouchStartLocation.y + 80
-        self.notificationHeightConstraint.constant = notificationLocation
+        if (notificationLocation <= notificationHeight) {
+            self.notificationHeightConstraint.constant = notificationHeight
+            self.notificationShowingConstraint.constant = notificationLocation - notificationHeight
+        } else {
+            self.notificationHeightConstraint.constant = notificationLocation
+            self.notificationShowingConstraint.constant = 0
+        }
         
         if (notificationLocation > 105) {
             self.notificationHeightConstraint.constant = 105 + notificationLocation / 25
@@ -274,6 +286,11 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         if (panGestureRecognizer.state == UIGestureRecognizerState.Ended) {
             isDraggingChatAlert = false
+            if (velocity < -200) {
+                hideNewMessageAlert()
+                return
+            }
+            
             if (notificationLocation < (self.notificationHeight / 2)) {
                 hideNewMessageAlert()
             }

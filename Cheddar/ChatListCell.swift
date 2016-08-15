@@ -18,6 +18,10 @@ class ChatListCell: UITableViewCell {
     var aliasIcon: AliasCircleView!
     var alias: Alias!
     
+    override func awakeFromNib() {
+        chatNameLabel.adjustsFontSizeToFitWidth = true
+    }
+    
     func setAlias(alias: Alias, chatRoom:ChatRoom) {
         var color: UIColor!
         if (alias.objectId != chatRoom.myAlias.objectId) {

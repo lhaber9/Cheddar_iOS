@@ -31,6 +31,8 @@ class ChatAlertController: UIViewController {
         alertView.layer.shadowRadius = 2;
         alertView.layer.shadowOpacity = 0.45;
         alertView.layer.shadowColor = UIColor.blackColor().CGColor
+        
+        mainLabel.adjustsFontSizeToFitWidth = true
     }
     
     func refreshView() {
