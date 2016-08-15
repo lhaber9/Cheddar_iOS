@@ -234,14 +234,8 @@
                                                 </constraints>
                                             </view>
                                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
-                                                <rect key="frame" x="242" y="25" width="116" height="14"/>
+                                                <rect key="frame" x="249" y="25" width="102" height="14"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RightArrow" translatesAutoresizingMaskIntoConstraints="NO" id="RKD-M3-7k4">
-                                                        <rect key="frame" x="102" y="0.0" width="14" height="14"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" secondItem="RKD-M3-7k4" secondAttribute="height" multiplier="1:1" id="PZ7-1C-wAx"/>
-                                                        </constraints>
-                                                    </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
                                                         <rect key="frame" x="0.0" y="0.0" width="102" height="14"/>
                                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
@@ -253,12 +247,9 @@
                                                 <gestureRecognizers/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="sgo-9N-mFA" secondAttribute="bottom" id="2aS-Us-3Cn"/>
-                                                    <constraint firstAttribute="trailing" secondItem="RKD-M3-7k4" secondAttribute="trailing" id="4tq-aY-Grw"/>
                                                     <constraint firstAttribute="height" constant="14.5" id="EW6-cL-uq3"/>
-                                                    <constraint firstItem="RKD-M3-7k4" firstAttribute="leading" secondItem="sgo-9N-mFA" secondAttribute="trailing" id="Lzr-iE-KFQ"/>
                                                     <constraint firstItem="sgo-9N-mFA" firstAttribute="top" secondItem="Tpy-Q0-pOI" secondAttribute="top" id="X0d-uW-pSe"/>
-                                                    <constraint firstAttribute="bottom" secondItem="RKD-M3-7k4" secondAttribute="bottom" id="aue-WN-Tfk"/>
-                                                    <constraint firstItem="RKD-M3-7k4" firstAttribute="top" secondItem="Tpy-Q0-pOI" secondAttribute="top" id="dbx-2h-Y26"/>
+                                                    <constraint firstAttribute="trailing" secondItem="sgo-9N-mFA" secondAttribute="trailing" id="foX-OU-f9f"/>
                                                     <constraint firstItem="sgo-9N-mFA" firstAttribute="leading" secondItem="Tpy-Q0-pOI" secondAttribute="leading" id="gQ0-zp-x4Y"/>
                                                 </constraints>
                                                 <connections>
@@ -1216,7 +1207,6 @@
         <image name="BackArrow" width="200" height="200"/>
         <image name="Hamburger" width="200" height="200"/>
         <image name="NewChat" width="200" height="200"/>
-        <image name="RightArrow" width="200" height="200"/>
         <image name="SendDisabled" width="200" height="200"/>
         <image name="SendEnabled" width="200" height="200"/>
         <image name="ThreeDots" width="200" height="200"/>
