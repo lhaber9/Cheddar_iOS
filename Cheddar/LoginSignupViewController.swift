@@ -56,6 +56,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         setupRegister()
         
         errorTextContainer.layer.cornerRadius = errorTextContainer.bounds.size.height / 2
+        errorTextContainer.backgroundColor = ColorConstants.textPrimary
         errorTextContainer.alpha = 0
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginSignupViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -247,11 +248,12 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             self.hideLoadingView()
             
             let errorString = error?.userInfo["error"] as! String
-            if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
-                self.showErrorText("Email is already taken")
-            } else if (errorString == "invalid email address") {
-                self.showErrorText("Invalid email address")
-            }
+            self.showErrorText(errorString)
+//            if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
+//                self.showErrorText("Email is already taken")
+//            } else if (errorString == "invalid email address") {
+//                self.showErrorText("Invalid email address")
+//            }
         }
     }
     

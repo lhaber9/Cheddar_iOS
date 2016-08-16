@@ -510,6 +510,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         else if segue.identifier == "showActiveMembersSegue" {
             let popoverViewController = segue.destinationViewController as! ActiveMembersController
             popoverViewController.delegate = self
+            popoverViewController.preferredContentSize = CGSizeMake(300, popoverViewController.bottomBuffer() + popoverViewController.headerHeight() +
+                (popoverViewController.tableView(UITableView(), heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) * CGFloat(chatRoom.activeAliases.count)))
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
             popoverViewController.popoverPresentationController!.delegate = self
         }

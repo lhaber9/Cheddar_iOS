@@ -96,7 +96,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         r.edges = UIRectEdge.Left
         view.addGestureRecognizer(r)
         
-        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "You wont be able to rejoin this chat room once you leave", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
         
         confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
         

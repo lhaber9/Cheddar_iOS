@@ -64,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
             }) { (error) in
                 
-                self.delegate.showErrorText("Invalid email/pass combo")
+                self.delegate.showErrorText("Invalid email or password")
                 self.delegate.hideLoadingView()
         }
     }
