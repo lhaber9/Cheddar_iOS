@@ -411,7 +411,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     @IBAction func titleTap() {
         if (!isShowingList) {
-            chatViewController.showRename()
+            showRename(nil)
         }
     }
     
@@ -422,6 +422,11 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         titleTap()
     }
 
+    func showRename(object: AnyObject!) {
+        optionOverlayController?.shouldClose()
+        chatViewController.showRename()
+    }
+    
     // MARK: ChatViewControllerDelegate
     
     func subscribe(chatRoom:ChatRoom) {
@@ -434,9 +439,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
-        optionOverlayController.buttonData = [chatRoom,nil,chatViewController.myAlias()]
-        optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
+        optionOverlayController.buttonNames = ["Leave Group", "Change Room Name", "View Active Members", "Send Feedback"]
+        optionOverlayController.buttonData = [chatRoom,nil,nil,chatViewController.myAlias()]
+        optionOverlayController.buttonActions = [tryLeaveChatRoom, showRename, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
