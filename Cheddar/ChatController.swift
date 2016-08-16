@@ -660,7 +660,12 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
-        chatViewController.reloadTable()
+        let isDragging = chatViewController.dragPosition == nil
+        
+        if (isDragging) {
+            chatViewController.reloadTable()
+        }
+        
         chatListController.refreshRooms()
         if (firstLoad) {
             dispatch_async(dispatch_get_main_queue(), {
@@ -668,14 +673,10 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             })
         }
         else {
-            dispatch_async(dispatch_get_main_queue(), {
-               self.chatViewController.scrollToEventIndex(eventCount - 3, animated: true)
-            })
+            if (isDragging) {
+                chatViewController.scrollToTopEventForLoading()
+            }
         }
-    }
-    
-    func endRefresh() {
-        chatViewController.refreshControl.endRefreshing()
     }
     
     // MARK: UIAlertViewDelegate

@@ -19,6 +19,7 @@ protocol ChatListControllerDelegate: class {
     func hideOverlay()
     func showOverlayContents(viewController: UIViewController)
     func hideOverlayContents()
+    func checkMaxRooms()
 }
 
 class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate {
@@ -114,6 +115,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             }
             return true
         }
+        delegate.checkMaxRooms()
         tableView.reloadData()
     }
     

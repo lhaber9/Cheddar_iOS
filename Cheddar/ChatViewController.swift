@@ -42,8 +42,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     @IBOutlet var sendButton: UIButton!
     @IBOutlet var tableView: UITableView!
     
-    var refreshControl: UIRefreshControl!
+//    var refreshControl: UIRefreshControl!
     
+    var topEventForLoading: ChatEvent!
     var messageVerticalBuffer:CGFloat = 15
     var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
@@ -116,13 +117,13 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         reloadTable()
         
-        refreshControl = UIRefreshControl()
-        refreshControl.backgroundColor = ColorConstants.whiteColor
-        refreshControl.tintColor = ColorConstants.textPrimary
-        refreshControl.addTarget(self,
-                                      action:#selector(ChatViewController.loadNextPageMessages),
-                                      forControlEvents:UIControlEvents.ValueChanged)
-        tableView.addSubview(refreshControl)
+//        refreshControl = UIRefreshControl()
+//        refreshControl.backgroundColor = ColorConstants.whiteColor
+//        refreshControl.tintColor = ColorConstants.textPrimary
+//        refreshControl.addTarget(self,
+//                                      action:#selector(ChatViewController.loadNextPageMessages),
+//                                      forControlEvents:UIControlEvents.ValueChanged)
+//        tableView.addSubview(refreshControl)
     }
     
     func updateLayout() {
@@ -137,7 +138,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func loadNextPageMessages() {
-         self.chatRoom?.loadNextPageMessages()
+        if (topEventForLoading == nil) {
+            topEventForLoading = chatRoom.eventForIndex(0)
+        }
+        self.chatRoom?.loadNextPageMessages()
     }
     
     func didUpdateChatRoom() {
@@ -216,6 +220,16 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         return chatRoom?.myAlias
     }
     
+    func scrollToTopEventForLoading() {
+        if (topEventForLoading == nil) {
+            return
+        }
+        
+        let index = chatRoom.indexForEvent(topEventForLoading)
+        scrollToEventIndex(index, animated: false)
+        topEventForLoading = nil
+    }
+    
     // MARK: Button Action
     
     @IBAction func sendPress() {
@@ -276,11 +290,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func scrollToEventIndex(index: Int, animated: Bool) {
-        dispatch_async(dispatch_get_main_queue(), {
+//        dispatch_async(dispatch_get_main_queue(), {
             let indexPath = NSIndexPath(forRow: index, inSection:0)
             self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
-        })
-        
+//        })
     }
     
     // MARK: Keyboard Delegate Methods
@@ -333,6 +346,15 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         let isFirstEvent = (indexPath.row == 0)
         if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
+            
+            var bottomGapSize:CGFloat = 0
+            let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
+            if (nextMessage?.alias.objectId != event.alias.objectId) {
+                bottomGapSize += ChatCell.largeBufferSize
+            } else if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
+                bottomGapSize += ChatCell.bufferSize
+            }
+            
             let options: [String:AnyObject] = [ "text": event.body,
                                                 "date": event.createdAt,
                                                 "alias": event.alias,
@@ -340,19 +362,22 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                                                 "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
                                                 "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
                                                 "showTimestampLabel": self.chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row),
+                                                "showActivityIndicator": isFirstEvent && !chatRoom.allMessagesLoaded.boolValue,
                                                 "status": event.status,
-                                                "isFirstEvent": isFirstEvent]
+                                                "isFirstEvent": isFirstEvent,
+                                                "isAllLoaded": chatRoom.allMessagesLoaded,
+                                                "bottomGapSize": bottomGapSize]
             cell.setMessageOptions(options)
             return cell
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent)
+            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
             return cell
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
-            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent)
+            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
             return cell
         }
         
@@ -368,10 +393,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             
             let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
             if (nextMessage?.alias.objectId != event.alias.objectId) {
-                cellHeight += messageVerticalBuffer
-            }
-            
-            if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
+                cellHeight += ChatCell.largeBufferSize
+            } else if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
                 cellHeight += ChatCell.bufferSize
             }
             
@@ -397,6 +420,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         if (indexPath.row == 0) {
             height += ChatCell.bufferSize
+            
+            if (!chatRoom.allMessagesLoaded.boolValue) {
+                height += ChatCell.activityIndicatorBuffer
+            }
         }
         
         return height
@@ -408,8 +435,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         dragPosition = scrollView.contentOffset.y
     }
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         dragPosition = nil
+        reloadTable()
+        scrollToTopEventForLoading()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -419,21 +448,25 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         
         if (dragPosition != nil) {
+            if (tableView.contentOffset.y <= 75 && scrollView.contentOffset.y < dragPosition) {
+                if (!chatRoom.allMessagesLoaded.boolValue) {
+//                    refreshControl.beginRefreshing()
+                    loadNextPageMessages()
+                }
+            }
+            
             if (scrollView.contentOffset.y < dragPosition - 15) {
                 deselectTextView()
             }
             else {
                 dragPosition = scrollView.contentOffset.y
             }
+            
         }
         
         if (isNearBottom(5)) {
             chatRoom?.setUnreadMessages(false)
         }
-        
-//        if (tableView.contentOffset.y <= 50) {
-//            loadNextPageMessages()
-//        }
     }
     
     // MARK: TextViewDelegate

@@ -17,7 +17,6 @@ protocol ChatRoomDelegate: class {
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
-    func endRefresh()
 }
 
 class ChatRoom: NSManagedObject {
@@ -172,6 +171,23 @@ class ChatRoom: NSManagedObject {
         }
     }
     
+    func eventForIndex(index: Int) -> ChatEvent! {
+        if (index >= chatEvents.count) {
+            return nil
+        }
+        
+        return sortChatEvents()[index]
+    }
+    
+    func indexForEvent(event: ChatEvent) -> Int! {
+        for (index, chatEvent) in sortChatEvents().enumerate() {
+            if (chatEvent.objectId == event.objectId) {
+                return index;
+            }
+        }
+        return nil
+    }
+    
     func setUnreadMessages(areUnreadMessages: Bool) {
         self.areUnreadMessages = areUnreadMessages
         delegate?.didUpdateUnreadMessages(self, areUnreadMessages: areUnreadMessages)
@@ -298,7 +314,7 @@ class ChatRoom: NSManagedObject {
             return nil
         }
 
-        var message = sortedChatEvents[position]
+        var message = sortChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= chatEvents.count) { return nil }
@@ -356,7 +372,6 @@ class ChatRoom: NSManagedObject {
     func loadNextPageMessages() {
         
         if (allMessagesLoaded.boolValue || loadMessageCallInFlight) {
-            self.delegate?.endRefresh()
             return
         }
         
@@ -386,7 +401,6 @@ class ChatRoom: NSManagedObject {
                     
                     if (events.count == 1 && self.chatEvents.count == 1) {
                         self.loadMessageCallInFlight = false
-                        self.delegate?.endRefresh()
                         return
                     }
                     
@@ -412,13 +426,11 @@ class ChatRoom: NSManagedObject {
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                 }
                 
-                self.delegate?.endRefresh()
                 self.loadMessageCallInFlight = false
                 
             }) { (error) in
                 
                 self.loadMessageCallInFlight = false
-                self.delegate?.endRefresh()
         }
     }
     

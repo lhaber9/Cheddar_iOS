@@ -13,14 +13,15 @@ class NameChangeCell: UITableViewCell {
     @IBOutlet var bodyLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!
     
-    @IBOutlet var topConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
     @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     
+    @IBOutlet var activityIndicator:UIActivityIndicatorView!
+    
     static var bottomBufferSize:CGFloat = 4
     
-    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, isFirstEvent: Bool) {
+    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, isFirstEvent: Bool, showActivityIndicator:Bool) {
         if (nameChangeEvent.type != ChatEventType.NameChange.rawValue) {
             return
         }
@@ -34,18 +35,24 @@ class NameChangeCell: UITableViewCell {
         if (showTimestamp) {
             timestampLabel.text = Utilities.formatDate(nameChangeEvent.createdAt, withTrailingHours: true)
             timestampLabel.textColor = ColorConstants.timestampText
-            topConstraintTimestamp.priority = 950;
             timestampLabelView.hidden = false;
         } else {
-            topConstraintTimestamp.priority = 200;
             timestampLabelView.hidden = true;
         }
         
-        if (isFirstEvent) {
-            timestampLabelTopConstraint.constant = ChatCell.bufferSize
-        }
-        else {
-            timestampLabelTopConstraint.constant = 0
+//        if (isFirstEvent) {
+//            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+//        }
+//        else {
+//            timestampLabelTopConstraint.constant = 0
+//        }
+        
+        if (showActivityIndicator) {
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.hidden = true
+            activityIndicator.startAnimating()
         }
     }
 }
