@@ -48,8 +48,8 @@ class ChatAlertController: UIViewController {
         aliasIconContainer.addSubview(aliasIcon)
         aliasIcon.autoPinEdgesToSuperviewEdges()
         
-        mainLabel.text = chatEvent.alias.name
-        subLabel.text = chatEvent.body
+        mainLabel.text = chatRoom.name
+        subLabel.text = Utilities.formattedLastMessageText(chatEvent)
         
         view.layoutIfNeeded()
     }

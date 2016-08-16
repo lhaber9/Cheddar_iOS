@@ -64,6 +64,21 @@ class Utilities {
         return dateFor.stringFromDate(date)
     }
     
+    class func formattedLastMessageText(chatEvent: ChatEvent) -> String {
+        var lastMessageText: String = ""
+        if (chatEvent.type == ChatEventType.Message.rawValue) {
+            lastMessageText = chatEvent.alias.name + ": "
+        }
+        
+        lastMessageText = lastMessageText + chatEvent.body
+        
+        if (chatEvent.type == ChatEventType.NameChange.rawValue) {
+            lastMessageText = lastMessageText.substringToIndex(lastMessageText.endIndex.advancedBy((chatEvent.roomName.characters.count + 4) * -1)) // +4 for _to_ text
+        }
+
+        return lastMessageText
+    }
+    
     class func getKeyConstant(name: String) -> String! {
         var keys: NSDictionary?
         
