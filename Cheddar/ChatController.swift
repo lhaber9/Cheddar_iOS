@@ -665,11 +665,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
-        let isDragging = chatViewController.dragPosition == nil
+        chatViewController.cellHeightCache = [Int:CGFloat]()
         
-        if (isDragging) {
-            chatViewController.reloadTable()
-        }
+        chatViewController.reloadTable()
         
         chatListController.refreshRooms()
         if (firstLoad) {
@@ -678,9 +676,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             })
         }
         else {
-            if (isDragging) {
-                chatViewController.scrollToTopEventForLoading()
-            }
+            chatViewController.scrollToTopEventForLoading()
         }
     }
     

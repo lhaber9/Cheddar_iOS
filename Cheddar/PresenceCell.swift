@@ -13,14 +13,13 @@ class PresenceCell: UITableViewCell {
     @IBOutlet var aliasLabel: UILabel!
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
-    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     
     @IBOutlet var activityIndicator:UIActivityIndicatorView!
     
     var alias: Alias!
     var body: String!
     
-    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool, isFirstEvent:Bool, showActivityIndicator: Bool) {
+    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool, showActivityIndicator: Bool) {
         if (presenceEvent.type != ChatEventType.Presence.rawValue) {
             return
         }
@@ -36,13 +35,6 @@ class PresenceCell: UITableViewCell {
         } else {
             timestampLabelView.hidden = true;
         }
-        
-//        if (isFirstEvent) {
-//            timestampLabelTopConstraint.constant = ChatCell.bufferSize
-//        }
-//        else {
-//            timestampLabelTopConstraint.constant = 0
-//        }
         
         if (showActivityIndicator) {
             activityIndicator.hidden = false

@@ -339,6 +339,11 @@ class ChatRoom: NSManagedObject {
                 var replayEvents = Set<ChatEvent>()
                 
                 let objectDict = object as! [NSObject:AnyObject]
+                
+                if let startToken = objectDict["startTimeToken"] as? String {
+                    self.currentStartToken = startToken
+                }
+                
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
                     for eventDict in events {
@@ -349,6 +354,10 @@ class ChatRoom: NSManagedObject {
                         if (objectType == "ChatEvent") {
                             replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
                         }
+                    }
+                    
+                    if (self.chatEvents.count > replayEvents.count) {
+                        self.allMessagesLoaded = false
                     }
                     
                     if (self.chatEvents != nil) {
@@ -395,10 +404,6 @@ class ChatRoom: NSManagedObject {
                 
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    if (events.count < count) {
-                        self.allMessagesLoaded = true
-                    }
-                    
                     if (events.count == 1 && self.chatEvents.count == 1) {
                         self.loadMessageCallInFlight = false
                         return
@@ -424,6 +429,10 @@ class ChatRoom: NSManagedObject {
                     Utilities.appDelegate().saveContext()
                     
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
+                    
+                    if (events.count < count) {
+                        self.allMessagesLoaded = true
+                    }
                 }
                 
                 self.loadMessageCallInFlight = false

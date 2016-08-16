@@ -50,6 +50,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     var previousTextRect = CGRectZero
     var dragPosition: CGFloat!
     
+    var cellHeightCache = [Int:CGFloat]()
+    
     var chatRoom: ChatRoom! {
         didSet {
             if (chatRoom == nil) {
@@ -117,13 +119,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         reloadTable()
         
-//        refreshControl = UIRefreshControl()
-//        refreshControl.backgroundColor = ColorConstants.whiteColor
-//        refreshControl.tintColor = ColorConstants.textPrimary
-//        refreshControl.addTarget(self,
-//                                      action:#selector(ChatViewController.loadNextPageMessages),
-//                                      forControlEvents:UIControlEvents.ValueChanged)
-//        tableView.addSubview(refreshControl)
+        cellHeightCache = [Int:CGFloat]()
     }
     
     func updateLayout() {
@@ -146,6 +142,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     func didUpdateChatRoom() {
         chatRoom?.reloadActiveAlaises()
+        cellHeightCache = [Int:CGFloat]()
         
         CheddarRequest.findAlias((myAlias()?.objectId)!,
             successCallback: { (object) in
@@ -372,12 +369,12 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
+            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
             return cell
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
-            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), isFirstEvent: isFirstEvent, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
+            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), showBottomBuffer: indexPath.row == chatRoom.sortedChatEvents.count - 1, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
             return cell
         }
         
@@ -385,6 +382,11 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if (cellHeightCache[indexPath.row] != nil) {
+            return cellHeightCache[indexPath.row]!
+        }
+       
         let event = chatRoom.sortedChatEvents[indexPath.row]
         var height: CGFloat = 0
         if (event.type == ChatEventType.Message.rawValue) {
@@ -426,6 +428,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
         }
         
+        if (chatRoom.sortChatEvents().count - 1 != indexPath.row && indexPath.row != 0) {
+            cellHeightCache[indexPath.row] = height
+        }
+        
         return height
     }
     
@@ -437,8 +443,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         dragPosition = nil
-        reloadTable()
-        scrollToTopEventForLoading()
+//        reloadTable()
+//        scrollToTopEventForLoading()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

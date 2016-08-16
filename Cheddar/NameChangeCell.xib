@@ -101,6 +101,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="jEp-Aw-WBb" id="ro9-jM-8u5"/>
                 <outlet property="bodyLabel" destination="jLK-0G-smz" id="XNv-Ux-o2j"/>
+                <outlet property="bottomConstraint" destination="w7u-xm-jzd" id="Z4b-lT-2dh"/>
                 <outlet property="nameLabel" destination="cwA-zu-HJ5" id="las-uv-EFZ"/>
                 <outlet property="timestampLabel" destination="cXl-L7-S0f" id="g6n-01-pW4"/>
                 <outlet property="timestampLabelView" destination="FGI-ch-Deb" id="tHd-gN-aUA"/>

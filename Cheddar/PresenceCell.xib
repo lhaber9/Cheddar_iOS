@@ -70,7 +70,6 @@
                     <constraint firstItem="wJG-bo-Aed" firstAttribute="centerX" secondItem="y5W-fa-Gg1" secondAttribute="centerX" id="U7r-Tt-pEK"/>
                     <constraint firstItem="4qN-wQ-8nS" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="WGG-zu-la3"/>
                     <constraint firstItem="wJG-bo-Aed" firstAttribute="bottom" secondItem="4qN-wQ-8nS" secondAttribute="top" constant="-2" id="Xi1-3d-afO"/>
-                    <constraint firstItem="4qN-wQ-8nS" firstAttribute="top" relation="lessThanOrEqual" secondItem="y5W-fa-Gg1" secondAttribute="top" id="oOl-TU-fY7"/>
                     <constraint firstItem="iID-WJ-CDg" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="ppK-IO-R4T"/>
                     <constraint firstItem="iID-WJ-CDg" firstAttribute="top" secondItem="y5W-fa-Gg1" secondAttribute="top" priority="900" id="q2a-zr-SJ1"/>
                     <constraint firstAttribute="trailing" secondItem="4qN-wQ-8nS" secondAttribute="trailing" id="sLq-wl-hzj"/>
@@ -79,7 +78,6 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="q2a-zr-SJ1"/>
-                        <exclude reference="oOl-TU-fY7"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -87,7 +85,6 @@
                 <outlet property="activityIndicator" destination="wJG-bo-Aed" id="hep-th-ACB"/>
                 <outlet property="aliasLabel" destination="Iyb-R8-Ebh" id="Snc-W8-5HS"/>
                 <outlet property="timestampLabel" destination="cEo-Ts-sDk" id="nQI-5X-hf6"/>
-                <outlet property="timestampLabelTopConstraint" destination="oOl-TU-fY7" id="yiw-9G-wcM"/>
                 <outlet property="timestampLabelView" destination="4qN-wQ-8nS" id="GRU-4t-bCs"/>
             </connections>
             <point key="canvasLocation" x="422.5" y="21.5"/>

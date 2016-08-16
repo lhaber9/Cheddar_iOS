@@ -15,13 +15,13 @@ class NameChangeCell: UITableViewCell {
     
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
-    @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var activityIndicator:UIActivityIndicatorView!
     
     static var bottomBufferSize:CGFloat = 4
     
-    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, isFirstEvent: Bool, showActivityIndicator:Bool) {
+    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, showBottomBuffer:Bool, showActivityIndicator:Bool) {
         if (nameChangeEvent.type != ChatEventType.NameChange.rawValue) {
             return
         }
@@ -40,12 +40,12 @@ class NameChangeCell: UITableViewCell {
             timestampLabelView.hidden = true;
         }
         
-//        if (isFirstEvent) {
-//            timestampLabelTopConstraint.constant = ChatCell.bufferSize
-//        }
-//        else {
-//            timestampLabelTopConstraint.constant = 0
-//        }
+        if (showBottomBuffer) {
+            bottomConstraint.constant = NameChangeCell.bottomBufferSize
+        }
+        else {
+            bottomConstraint.constant = 0
+        }
         
         if (showActivityIndicator) {
             activityIndicator.hidden = false
