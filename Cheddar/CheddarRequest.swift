@@ -145,7 +145,7 @@ class CheddarRequest: NSObject {
         successCallback: { (object) in
                         
             successCallback(object: object)
-            Answers.logCustomEventWithName("Joined Chat", customAttributes: ["aliasId":object["objectId"]])
+            Answers.logCustomEventWithName("Joined Chat", customAttributes: ["aliasId":(object as! PFObject).objectId!])
             
         }, errorCallback: errorCallback)
     }
@@ -235,7 +235,8 @@ class CheddarRequest: NSObject {
         
         successCallback: { (object) in
             
-             Answers.logCustomEventWithName("Change Chat Name", customAttributes: ["aliasId": aliasId, "name": name])
+            successCallback(object: object)
+            Answers.logCustomEventWithName("Change Chat Name", customAttributes: ["aliasId": aliasId, "name": name])
                 
         }, errorCallback: errorCallback)
     }
