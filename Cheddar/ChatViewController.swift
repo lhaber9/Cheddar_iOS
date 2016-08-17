@@ -436,7 +436,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
         }
         
-        if (chatRoom.sortChatEvents().count - 1 != indexPath.row && indexPath.row != 0) {
+        if (indexPath.row < chatRoom.sortChatEvents().count - 5 && indexPath.row != 0) {
             cellHeightCache[indexPath.row] = height
         }
         
