@@ -125,11 +125,13 @@ class CheddarRequest: NSObject {
                               "subkey" :Utilities.getKeyConstant("PubnubSubscribeKey"),
                               "messageId":messageId],
         successCallback: { (object) in
-                        
+            
+            successCallback(object: object)
             Answers.logCustomEventWithName("Sent Message", customAttributes: ["lifeCycle": "SENT", "aliasId": aliasId])
                         
         }, errorCallback: { (object) in
-                
+            
+            errorCallback(error: object)
             Answers.logCustomEventWithName("Sent Message", customAttributes: ["lifeCycle": "FAILED", "aliasId":aliasId])
                 
         })
