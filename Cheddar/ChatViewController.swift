@@ -174,8 +174,14 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return
         }
         
+        let isNearBottomNow = isNearBottom(5)
+        
         chatRoom.sortChatEvents()
         tableView?.reloadData()
+        
+        if (isNearBottomNow) {
+            scrollToBottom()
+        }
     }
     
     func initStyle() {
@@ -251,6 +257,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func showActiveMembers() {
+        
+        Answers.logCustomEventWithName("View Active Members", customAttributes: ["aliasId": myAlias().objectId])
+        
         self.delegate?.showOverlay()
         self.performSegueWithIdentifier("showActiveMembersSegue", sender: self)
     }
@@ -260,7 +269,6 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     func sendText(text: String) {
         let message = ChatEvent.createEvent(text, alias: myAlias(), createdAt: NSDate(), type: ChatEventType.Message.rawValue, status: ChatEventStatus.Sent)
         chatRoom.sendMessage(message)
-        Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": chatRoom.objectId, "lifeCycle":"SENT"])
     }
     
     func clearTextView() {

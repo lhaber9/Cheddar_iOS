@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 import Parse
 
 protocol RenameChatDelegate:class {

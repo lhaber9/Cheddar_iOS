@@ -160,8 +160,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
                 
             }) { (error) in
                 
-                NSLog("%@",error);
-                Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 message.status = ChatEventStatus.Error.rawValue
                 self.saveContext()
                 let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)

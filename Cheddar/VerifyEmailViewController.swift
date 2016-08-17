@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 protocol VerifyEmailDelegate: class {
     func emailVerified()

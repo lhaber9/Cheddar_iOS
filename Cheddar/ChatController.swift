@@ -191,7 +191,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
-            Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
+            
             self.chatListController.reloadRooms()
             chatRoom.loadNextPageMessages()
             if (animationComplete) {
@@ -477,8 +477,6 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         CheddarRequest.leaveChatroom(alias.objectId!,
         successCallback: { (object) in
             
-            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": alias.chatRoomId, "lengthOfStay":alias.joinedAt.timeIntervalSinceNow * -1 * 1000])
-            
             self.chatViewController.chatRoom = nil
             self.forceLeaveChatRoom(alias)
             self.checkMaxRooms()
@@ -558,8 +556,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
-        self.chatViewController.scrollToBottom(false)
         view.layoutIfNeeded()
+        self.chatViewController.scrollToBottom(false)
         
         dispatch_async(dispatch_get_main_queue(), {
             UIView.animateWithDuration(0.333, animations:{

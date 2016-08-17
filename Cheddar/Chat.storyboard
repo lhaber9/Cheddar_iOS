@@ -1099,15 +1099,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9A-Ac-hu0">
                                         <rect key="frame" x="0.0" y="22" width="400" height="63"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-Ti-La6">
-                                                <rect key="frame" x="78" y="13" width="37.5" height="19"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="38" id="Kov-4i-U5u"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5yP-Hz-gUn">
                                                 <rect key="frame" x="15" y="7" width="48" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1128,9 +1119,19 @@
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-Ti-La6">
+                                                <rect key="frame" x="78" y="13" width="37.5" height="19"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="38" id="Kov-4i-U5u"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mGQ-VU-BaC" secondAttribute="trailing" constant="15" id="1hh-rq-rCy"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="centerY" secondItem="q9A-Ac-hu0" secondAttribute="centerY" id="DQb-EI-eH6"/>
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="top" secondItem="D6b-Ti-La6" secondAttribute="top" id="JTJ-bg-DyQ"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="top" secondItem="q9A-Ac-hu0" secondAttribute="top" constant="2" id="O92-DD-WLl"/>
@@ -1148,6 +1149,7 @@
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="top" secondItem="D6b-Ti-La6" secondAttribute="bottom" constant="2" id="pWt-2s-dzx"/>
                                             <constraint firstItem="D6b-Ti-La6" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="rfq-Ti-67S"/>
                                             <constraint firstAttribute="bottom" secondItem="5yP-Hz-gUn" secondAttribute="bottom" constant="2" id="tSS-KA-9v1"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D6b-Ti-La6" secondAttribute="trailing" constant="15" id="ws9-8i-gHN"/>
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="wzZ-kK-bxn"/>
                                         </constraints>
                                         <variation key="default">
