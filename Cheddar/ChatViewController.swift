@@ -258,7 +258,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     func showActiveMembers() {
         
-        Answers.logCustomEventWithName("View Active Members", customAttributes: ["aliasId": myAlias().objectId])
+        Utilities.sendAnswersEvent("View Active Members", alias: myAlias(), attributes: [:])
         
         self.delegate?.showOverlay()
         self.performSegueWithIdentifier("showActiveMembersSegue", sender: self)

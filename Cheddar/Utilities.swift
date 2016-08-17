@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class Utilities {
     class func IS_IPHONE_4_OR_LESS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height < 568.0) }
@@ -77,6 +78,15 @@ class Utilities {
         }
 
         return lastMessageText
+    }
+    
+    class func sendAnswersEvent(eventName: String, alias:Alias, attributes:[String:AnyObject]) {
+        
+        var mutableAttrs = attributes
+        mutableAttrs["aliasId"] = alias.objectId
+        mutableAttrs["chatRoomId"] = alias.chatRoomId
+        
+        Answers.logCustomEventWithName(eventName, customAttributes: mutableAttrs)
     }
     
     class func getKeyConstant(name: String) -> String! {

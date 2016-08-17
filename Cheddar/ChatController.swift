@@ -474,7 +474,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         leavingChatRoom = nil
         delegate.showLoadingViewWithText("Leaving Chat...")
         
-        CheddarRequest.leaveChatroom(alias.objectId!,
+        CheddarRequest.leaveChatroom(alias,
         successCallback: { (object) in
             
             self.chatViewController.chatRoom = nil

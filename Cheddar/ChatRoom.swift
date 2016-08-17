@@ -51,6 +51,8 @@ class ChatRoom: NSManagedObject {
     var loadMessageCallInFlight = false
     var loadAliasCallInFlight = false
     
+    var pageSize = 25
+    
     class func removeAll() {
         let chatRooms = fetchAll()
         for chatRoom in chatRooms {
@@ -331,7 +333,8 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         
         let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
-                                            "endTimeToken" : currentStartToken]
+                                            "endTimeToken" : currentStartToken,
+                                            "count": pageSize]
         
         CheddarRequest.replayEvents(params,
             successCallback: { (object) in
@@ -368,6 +371,10 @@ class ChatRoom: NSManagedObject {
                     Utilities.appDelegate().saveContext()
                     
                     self.delegate?.didUpdateEvents(self)
+                    
+                    if (events.count < self.pageSize) {
+                        self.allMessagesLoaded = true
+                    }
                 }
                 
                 self.loadMessageCallInFlight = false
@@ -384,9 +391,7 @@ class ChatRoom: NSManagedObject {
             return
         }
         
-        let count = 25
-        
-        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
+        var params: [NSObject:AnyObject] = ["count":pageSize, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }
@@ -430,7 +435,7 @@ class ChatRoom: NSManagedObject {
                     
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                     
-                    if (events.count < count) {
+                    if (events.count < self.pageSize) {
                         self.allMessagesLoaded = true
                     }
                 }

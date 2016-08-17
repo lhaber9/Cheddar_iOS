@@ -116,10 +116,10 @@ class CheddarRequest: NSObject {
         })
     }
     
-    static func sendMessage(messageId: String, aliasId: String, body: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func sendMessage(messageId: String, alias: Alias, body: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
     
         callFunction("sendMessage",
-                     params: ["aliasId":aliasId,
+                     params: ["aliasId":alias.objectId,
                               "body":body,
                               "pubkey" :Utilities.getKeyConstant("PubnubPublishKey"),
                               "subkey" :Utilities.getKeyConstant("PubnubSubscribeKey"),
@@ -127,12 +127,12 @@ class CheddarRequest: NSObject {
         successCallback: { (object) in
             
             successCallback(object: object)
-            Answers.logCustomEventWithName("Sent Message", customAttributes: ["lifeCycle": "SENT", "aliasId": aliasId])
+            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "SENT"])
                         
         }, errorCallback: { (object) in
             
             errorCallback(error: object)
-            Answers.logCustomEventWithName("Sent Message", customAttributes: ["lifeCycle": "FAILED", "aliasId":aliasId])
+            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "FAILED"])
                 
         })
     }
@@ -147,21 +147,22 @@ class CheddarRequest: NSObject {
         successCallback: { (object) in
                         
             successCallback(object: object)
-            Answers.logCustomEventWithName("Joined Chat", customAttributes: ["aliasId":(object as! PFObject).objectId!])
+            let pfObject = (object as! PFObject)
+            Answers.logCustomEventWithName("Joined Chat", customAttributes: ["aliasId":pfObject.objectId!, "chatRoomId":pfObject["chatRoomId"]])
             
         }, errorCallback: errorCallback)
     }
     
-    static func leaveChatroom(aliasId: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func leaveChatroom(alias: Alias, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("leaveChatRoom",
-                     params: [  "aliasId": aliasId,
+                     params: [  "aliasId": alias.objectId,
                                 "pubkey" : Utilities.getKeyConstant("PubnubPublishKey"),
                                 "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
         successCallback: { (object) in
                         
             successCallback(object: object)
-            Answers.logCustomEventWithName("Left Chat", customAttributes: ["aliasId":aliasId])
+            Utilities.sendAnswersEvent("Left Chat", alias: alias, attributes: [:])
                         
         }, errorCallback: errorCallback)
     }
@@ -221,16 +222,16 @@ class CheddarRequest: NSObject {
         successCallback: { (object) in
             
             successCallback(object: object)
-            Answers.logCustomEventWithName("Reset Password", customAttributes: ["userId":userId])
+            Answers.logCustomEventWithName("Resend Email", customAttributes: ["userId":userId])
             
         }, errorCallback: errorCallback)
     }
     
-    static func updateChatRoomName(aliasId: String, name: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func updateChatRoomName(alias: Alias, name: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("updateChatRoomName",
                      params: [
-                        "aliasId": aliasId,
+                        "aliasId": alias.objectId,
                         "name":name,
                         "pubkey": Utilities.getKeyConstant("PubnubPublishKey"),
                         "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
@@ -238,7 +239,7 @@ class CheddarRequest: NSObject {
         successCallback: { (object) in
             
             successCallback(object: object)
-            Answers.logCustomEventWithName("Change Chat Name", customAttributes: ["aliasId": aliasId, "name": name])
+            Utilities.sendAnswersEvent("Change Chat Name", alias: alias, attributes: ["name": name])
                 
         }, errorCallback: errorCallback)
     }
