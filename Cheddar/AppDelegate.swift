@@ -255,13 +255,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-         NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
         
-        PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                return
-            }
+        CheddarRequest.getMinimumBuildNumber({ (object) in
             
             let minmumBuildNum = object as! Int
             
@@ -270,6 +266,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             if (minmumBuildNum > currentBuildNum) {
                 UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK").show()
             }
+            
+        }) { (error) in
+            return
         }
     }
 
@@ -359,12 +358,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         
-        NSLog("HERE1")
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        
-        NSLog("here")
         
         if #available(iOS 9.0, *) {
             let reply = responseInfo[UIUserNotificationActionResponseTypedTextKey]

@@ -12,7 +12,7 @@ import Parse
 
 class CheddarRequest: NSObject {
     
-    static func callFunction(name: String, params: [NSObject : AnyObject],successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func callFunction(name: String, params: [NSObject : AnyObject]!,successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         PFCloud.callFunctionInBackground(name, withParameters: params) { (object: AnyObject?, error: NSError?) in
             
             if (error != nil) {
@@ -23,6 +23,16 @@ class CheddarRequest: NSObject {
             
             successCallback(object: object!)
         }
+    }
+    
+    
+    
+    static func getMinimumBuildNumber(successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError?) -> ()) {
+        
+        callFunction("minimumIosBuildNumber",
+                     params: nil,
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
     }
     
     static func registerNewUser(email: String, password: String, registrationCode: String!, successCallback: (user: PFUser) -> (), errorCallback: (error: NSError?) -> ()) {
