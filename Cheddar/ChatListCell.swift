@@ -24,7 +24,7 @@ class ChatListCell: UITableViewCell {
     
     func setAlias(alias: Alias, chatRoom:ChatRoom) {
         var color: UIColor!
-        if (alias.objectId != chatRoom.myAlias.objectId) {
+        if (alias.objectId != chatRoom.myAlias?.objectId) {
             color = ColorConstants.iconColors[Int(alias.colorId)]
         }
         else {

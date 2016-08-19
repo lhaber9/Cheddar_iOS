@@ -609,6 +609,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
+        chatViewController.invalidateHeightCache()
+        
         chatViewController.reloadTable()
         chatListController.refreshRooms()
     }
@@ -663,10 +665,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
-        chatViewController.cellHeightCache = [Int:CGFloat]()
+        chatViewController.invalidateHeightCache()
         
         chatViewController.reloadTable()
-        
         chatListController.refreshRooms()
         if (firstLoad) {
             dispatch_async(dispatch_get_main_queue(), {

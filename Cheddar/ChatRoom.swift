@@ -280,7 +280,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func isMyChatEvent(event: ChatEvent) -> Bool {
-        return (event.alias.objectId == myAlias.objectId)
+        return (event.alias.objectId == myAlias?.objectId)
     }
     
     func sendMessage(message: ChatEvent) {

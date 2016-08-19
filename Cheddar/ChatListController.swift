@@ -78,11 +78,27 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                         }
                         
                         for chatRoomDict in serverChatRooms {
-                            let alias = Alias.createOrUpdateAliasFromParseObject(chatRoomDict["alias"] as! PFObject)
-                            let chatRoom = ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict["chatRoom"] as! PFObject, alias: alias)
-                            let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(chatRoomDict["chatEvent"] as! PFObject)
-                            if (chatRoom.sortChatEvents().count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
-                                chatRoom.setUnreadMessages(true)
+                            var alias: Alias! = nil
+                            var chatRoom: ChatRoom! = nil
+                            var chatEvent: ChatEvent! = nil
+                            
+                            if let aliasDict = chatRoomDict["alias"] as? PFObject {
+                                alias = Alias.createOrUpdateAliasFromParseObject(aliasDict)
+                                
+                                if let chatRoomDict = chatRoomDict["chatRoom"] as? PFObject {
+                                    chatRoom = ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict, alias: alias)
+                                }
+                            }
+                            
+                            if let chatEventDict = chatRoomDict["chatEvent"] as? PFObject {
+                                chatEvent = ChatEvent.createOrUpdateEventFromParseObject(chatEventDict)
+                            }
+                            
+                            if (chatRoom != nil && chatEvent != nil) {
+                                
+                                if (chatRoom.chatEvents.count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
+                                    chatRoom.setUnreadMessages(true)
+                                }
                             }
                         }
                         

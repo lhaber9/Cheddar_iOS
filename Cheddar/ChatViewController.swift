@@ -117,9 +117,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         setupObervers()
         
+        invalidateHeightCache()
         reloadTable()
-        
-        cellHeightCache = [Int:CGFloat]()
     }
     
     func updateLayout() {
@@ -142,7 +141,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     func didUpdateChatRoom() {
         chatRoom?.reloadActiveAlaises()
-        cellHeightCache = [Int:CGFloat]()
+        invalidateHeightCache()
         
         CheddarRequest.findAlias((myAlias()?.objectId)!,
             successCallback: { (object) in
@@ -389,10 +388,38 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         return UITableViewCell()
     }
     
+    func shouldUseHeightCacheForIndex(index: Int) -> Bool {
+        if (index == chatRoom.chatEvents.count - 1 || index == 0) {
+            return false
+        }
+        
+        return true
+    }
+    
+    func setHeightToCache(index: Int, height: CGFloat) {
+        if (!shouldUseHeightCacheForIndex(index)) {
+            return
+        }
+        
+        cellHeightCache[index] = height
+    }
+    
+    func getHeightFromCache(index: Int) -> CGFloat! {
+        if (!shouldUseHeightCacheForIndex(index)) {
+            return nil
+        }
+        
+        return cellHeightCache[index]
+    }
+    
+    func invalidateHeightCache() {
+        cellHeightCache = [Int:CGFloat]()
+    }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if (cellHeightCache[indexPath.row] != nil) {
-            return cellHeightCache[indexPath.row]!
+        if (getHeightFromCache(indexPath.row) != nil) {
+            return getHeightFromCache(indexPath.row)
         }
        
         let event = chatRoom.sortedChatEvents[indexPath.row]
@@ -436,9 +463,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
         }
         
-        if (indexPath.row < chatRoom.sortChatEvents().count - 5 && indexPath.row != 0) {
-            cellHeightCache[indexPath.row] = height
-        }
+        setHeightToCache(indexPath.row, height: height)
         
         return height
     }
@@ -472,10 +497,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             if (scrollView.contentOffset.y < dragPosition - 15) {
                 deselectTextView()
             }
-            else {
-                dragPosition = scrollView.contentOffset.y
-            }
             
+            dragPosition = scrollView.contentOffset.y
         }
         
         if (isNearBottom(5)) {
