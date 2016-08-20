@@ -23,6 +23,11 @@ class Utilities {
     }
     
     class func removeAllUserData() {
+        for chatRoom in ChatRoom.fetchAll() {
+            Utilities.appDelegate().unsubscribeFromPubNubChannel(chatRoom.objectId)
+            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(chatRoom.objectId)
+        }
+        
         ChatEvent.removeAll()
         ChatRoom.removeAll()
         Alias.removeAll()
