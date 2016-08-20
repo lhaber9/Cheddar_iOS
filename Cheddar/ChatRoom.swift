@@ -12,6 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
+    func didUpdateName(chatRoom: ChatRoom)
     func didUpdateUnreadMessages(chatRoom:ChatRoom, areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
@@ -67,7 +68,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.currentStartToken = nil
         chatRoom.allMessagesLoaded = false
         chatRoom.setUnreadMessages(false)
-        chatRoom.name = "Unnamed"
+        chatRoom.setChatName("Group Message")
         return chatRoom
     }
     
@@ -102,7 +103,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.myAlias = alias
     
         if let name = jsonMessage["name"] as? String where name != "" {
-            chatRoom.name = name
+            chatRoom.setChatName(name)
         }
         
         return chatRoom
@@ -117,7 +118,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.myAlias = alias
         
         if let name = pfObject.objectForKey("name") as? String where name != "" {
-            chatRoom.name = name
+            chatRoom.setChatName(name)
         }
         
         return chatRoom
@@ -171,6 +172,11 @@ class ChatRoom: NSManagedObject {
         } catch {
             return nil
         }
+    }
+    
+    func setChatName(name: String) {
+        self.name = name
+        delegate?.didUpdateName(self)
     }
     
     func eventForIndex(index: Int) -> ChatEvent! {
