@@ -46,6 +46,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             
             developmentOnlyVersionLabel.text = "Version: " + version + " / Build: " + build + " / " + Utilities.envName()
             developmentOnlyVersionLabel.textColor = ColorConstants.textSecondary
+            developmentOnlyVersionLabel.hidden = false
         }
         
         view.layoutIfNeeded()
