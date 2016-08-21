@@ -374,7 +374,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        let iTunesLink = "itms://itunes.apple.com/us/app/apple-store/id375380948?mt=8"
+        let iTunesLink = "itms://itunes.apple.com/us/app/cheddar-anonymous-group-messaging/id1086160475?ls=1&mt=8"
         UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
     }
 
