@@ -627,6 +627,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
+        chatViewController.invalidateHeightCache()
+        
         if (chatEvent.type == ChatEventType.NameChange.rawValue) {
             didUpdateName(chatRoom)
         }

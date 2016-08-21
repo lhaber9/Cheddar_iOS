@@ -346,6 +346,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (chatRoom == nil) {
+            return UITableViewCell()
+        }
+        
         let event = chatRoom.sortedChatEvents[indexPath.row]
         let isFirstEvent = (indexPath.row == 0)
         if (event.type == ChatEventType.Message.rawValue) {
@@ -417,6 +421,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if (chatRoom == nil) {
+            return 0
+        }
         
         if (getHeightFromCache(indexPath.row) != nil) {
             return getHeightFromCache(indexPath.row)

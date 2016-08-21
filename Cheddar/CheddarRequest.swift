@@ -193,7 +193,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func getActiveAliases(chatRoomId: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+    static func getActiveAliases(chatRoomId: String!, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("getActiveAliases",
                      params: ["chatRoomId":chatRoomId],
