@@ -19,6 +19,7 @@ protocol ChatListControllerDelegate: class {
     func hideOverlay()
     func showOverlayContents(viewController: UIViewController)
     func hideOverlayContents()
+    func checkMaxRooms()
 }
 
 class ChatListController : UIViewController, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate {
@@ -44,6 +45,8 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
             
             developmentOnlyVersionLabel.text = "Version: " + version + " / Build: " + build + " / " + Utilities.envName()
+            developmentOnlyVersionLabel.textColor = ColorConstants.textSecondary
+            developmentOnlyVersionLabel.hidden = false
         }
         
         view.layoutIfNeeded()
@@ -76,11 +79,27 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                         }
                         
                         for chatRoomDict in serverChatRooms {
-                            let alias = Alias.createOrUpdateAliasFromParseObject(chatRoomDict["alias"] as! PFObject)
-                            let chatRoom = ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict["chatRoom"] as! PFObject, alias: alias)
-                            let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(chatRoomDict["chatEvent"] as! PFObject)
-                            if (chatRoom.sortChatEvents().count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
-                                chatRoom.setUnreadMessages(true)
+                            var alias: Alias! = nil
+                            var chatRoom: ChatRoom! = nil
+                            var chatEvent: ChatEvent! = nil
+                            
+                            if let aliasDict = chatRoomDict["alias"] as? PFObject {
+                                alias = Alias.createOrUpdateAliasFromParseObject(aliasDict)
+                                
+                                if let chatRoomDict = chatRoomDict["chatRoom"] as? PFObject {
+                                    chatRoom = ChatRoom.createOrUpdateAliasFromParseObject(chatRoomDict, alias: alias)
+                                }
+                            }
+                            
+                            if let chatEventDict = chatRoomDict["chatEvent"] as? PFObject {
+                                chatEvent = ChatEvent.createOrUpdateEventFromParseObject(chatEventDict)
+                            }
+                            
+                            if (chatRoom != nil && chatEvent != nil) {
+                                
+                                if (chatRoom.chatEvents.count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
+                                    chatRoom.setUnreadMessages(true)
+                                }
                             }
                         }
                         
@@ -114,6 +133,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             }
             return true
         }
+        delegate.checkMaxRooms()
         tableView.reloadData()
     }
     
@@ -132,7 +152,6 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCellWithIdentifier("ChatListCell", forIndexPath: indexPath) as! ChatListCell
 //        dispatch_async(dispatch_get_main_queue(), {
             let chatRoom = self.chatRooms[indexPath.row]
-            cell.chatNameLabel.text = chatRoom.name
             cell.setMostRecentChatEvent(chatRoom.mostRecentChat(), chatRoom: chatRoom)
             cell.showUnreadIndicator(chatRoom.areUnreadMessages.boolValue)
 //        })

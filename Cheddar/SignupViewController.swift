@@ -34,6 +34,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet var hiddenButtonsBottomConstraint: NSLayoutConstraint!
     
+    var minimumPasswordLength = 6
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,16 +116,13 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         let confirmPasswordText = confirmPasswordField.text!
         
         if (emailText.isEmpty) {
-            return "Must supply email"
+            return "Invalid email"
         }
-        if (passwordText.isEmpty) {
-            return "Must supply password"
-        }
-        if (confirmPasswordText.isEmpty) {
-            return "Must confirm password"
+        if (passwordText.characters.count < minimumPasswordLength) {
+            return "Passwords must be 6 characters"
         }
         if (passwordText != confirmPasswordText) {
-            return "Passwords must match"
+            return "Passwords don't match"
         }
         
         return ""

@@ -16,9 +16,18 @@ class ActiveMembersController: UIViewController {
     
     weak var delegate:ActiveMembersDelegate!
     @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var tableView: UITableView!
     
     override func viewDidLoad() {
         titleLabel.textColor = ColorConstants.colorAccent
+    }
+    
+    func headerHeight() -> CGFloat {
+        return 44
+    }
+    
+    func bottomBuffer() -> CGFloat {
+        return 15
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,6 +47,6 @@ class ActiveMembersController: UIViewController {
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 44
+        return 58
     }
 }

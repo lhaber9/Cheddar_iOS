@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 protocol ResetPasswordDelegate: class {
     func hidePopup()

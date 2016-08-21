@@ -23,8 +23,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="36.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jEp-Aw-WBb">
+                        <rect key="frame" x="150" y="-37" width="20" height="20"/>
+                    </activityIndicatorView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGI-ch-Deb">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="15"/>
+                        <rect key="frame" x="0.0" y="-15" width="320" height="15"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXl-L7-S0f">
                                 <rect key="frame" x="0.0" y="0.5" width="320" height="14.5"/>
@@ -65,6 +68,7 @@
                             <constraint firstAttribute="trailing" secondItem="cwA-zu-HJ5" secondAttribute="trailing" id="MPC-Iu-CLX"/>
                             <constraint firstAttribute="trailing" secondItem="jLK-0G-smz" secondAttribute="trailing" id="g2o-Q8-FT3"/>
                             <constraint firstItem="jLK-0G-smz" firstAttribute="leading" secondItem="ceo-jR-d2f" secondAttribute="leading" id="gOx-bT-Qdg"/>
+                            <constraint firstAttribute="height" constant="37" id="j0y-KL-840"/>
                             <constraint firstItem="cwA-zu-HJ5" firstAttribute="top" secondItem="jLK-0G-smz" secondAttribute="top" id="kEb-CP-VTo"/>
                             <constraint firstItem="cwA-zu-HJ5" firstAttribute="top" secondItem="jLK-0G-smz" secondAttribute="bottom" constant="2" id="lsV-qv-A3b"/>
                             <constraint firstAttribute="bottom" secondItem="cwA-zu-HJ5" secondAttribute="bottom" constant="4" id="mBx-7j-NNh"/>
@@ -78,23 +82,29 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="FGI-ch-Deb" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" id="7kY-vz-QqU"/>
                     <constraint firstItem="ceo-jR-d2f" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="7xQ-Kj-SHA"/>
                     <constraint firstAttribute="trailing" secondItem="FGI-ch-Deb" secondAttribute="trailing" id="97x-jk-pPe"/>
                     <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" priority="900" id="FL0-hg-7Xq"/>
                     <constraint firstAttribute="trailing" secondItem="ceo-jR-d2f" secondAttribute="trailing" id="jP0-sH-gKa"/>
+                    <constraint firstItem="jEp-Aw-WBb" firstAttribute="bottom" secondItem="FGI-ch-Deb" secondAttribute="top" constant="-2" id="kXb-M6-lTQ"/>
                     <constraint firstItem="FGI-ch-Deb" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="mdm-bf-6Ba"/>
+                    <constraint firstItem="jEp-Aw-WBb" firstAttribute="centerX" secondItem="5eh-vj-QT5" secondAttribute="centerX" id="pUZ-ld-cxa"/>
                     <constraint firstAttribute="bottom" secondItem="ceo-jR-d2f" secondAttribute="bottom" id="w7u-xm-jzd"/>
-                    <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="FGI-ch-Deb" secondAttribute="bottom" priority="200" id="zoE-Up-8Rr"/>
+                    <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="FGI-ch-Deb" secondAttribute="bottom" id="zoE-Up-8Rr"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="FL0-hg-7Xq"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicator" destination="jEp-Aw-WBb" id="ro9-jM-8u5"/>
                 <outlet property="bodyLabel" destination="jLK-0G-smz" id="XNv-Ux-o2j"/>
+                <outlet property="bottomConstraint" destination="w7u-xm-jzd" id="Z4b-lT-2dh"/>
                 <outlet property="nameLabel" destination="cwA-zu-HJ5" id="las-uv-EFZ"/>
                 <outlet property="timestampLabel" destination="cXl-L7-S0f" id="g6n-01-pW4"/>
-                <outlet property="timestampLabelTopConstraint" destination="7kY-vz-QqU" id="xcv-Mq-CP5"/>
                 <outlet property="timestampLabelView" destination="FGI-ch-Deb" id="tHd-gN-aUA"/>
-                <outlet property="topConstraintTimestamp" destination="zoE-Up-8Rr" id="Bpf-Tk-pLm"/>
             </connections>
             <point key="canvasLocation" x="218" y="155"/>
         </tableViewCell>

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 import Parse
 
 protocol RenameChatDelegate:class {
@@ -60,7 +61,7 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
         
         self.sendButton.displaySpinner()
         
-        CheddarRequest.updateChatRoomName(delegate.myAlias().objectId,
+        CheddarRequest.updateChatRoomName(delegate.myAlias(),
                                           name: chatRoomTitleText.text!,
             successCallback: { (object) in
                 

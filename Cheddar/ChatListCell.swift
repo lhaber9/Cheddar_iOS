@@ -24,7 +24,7 @@ class ChatListCell: UITableViewCell {
     
     func setAlias(alias: Alias, chatRoom:ChatRoom) {
         var color: UIColor!
-        if (alias.objectId != chatRoom.myAlias.objectId) {
+        if (alias.objectId != chatRoom.myAlias?.objectId) {
             color = ColorConstants.iconColors[Int(alias.colorId)]
         }
         else {
@@ -48,19 +48,10 @@ class ChatListCell: UITableViewCell {
     }
     
     func setMostRecentChatEvent(chatEvent: ChatEvent!, chatRoom:ChatRoom) {
+        chatNameLabel.text = chatRoom.name
+        
         if (chatEvent != nil) {
-            var lastMessageText: String = ""
-            if (chatEvent.type == ChatEventType.Message.rawValue) {
-                lastMessageText = chatEvent.alias.name + ": "
-            }
-            
-            lastMessageText = lastMessageText + chatEvent.body
-            
-            if (chatEvent.type == ChatEventType.NameChange.rawValue) {
-                lastMessageText = lastMessageText.substringToIndex(lastMessageText.endIndex.advancedBy((chatEvent.roomName.characters.count + 4) * -1)) // +4 for _to_ text
-            }
-            
-            lastMessageLabel.text = lastMessageText
+            lastMessageLabel.text = Utilities.formattedLastMessageText(chatEvent)
             setAlias(chatEvent.alias, chatRoom:chatRoom)
             timeLabel.hidden = false
             timeLabel.text = Utilities.formatDate(chatEvent.createdAt, withTrailingHours: false)
@@ -74,5 +65,10 @@ class ChatListCell: UITableViewCell {
     
     func showUnreadIndicator(show: Bool) {
         aliasIcon?.showUnreadIndicator(show)
+        if (show) {
+            chatNameLabel.font = UIFont(name: "Effra-Medium", size: 16)
+        } else {
+            chatNameLabel.font = UIFont(name: "Effra-Regular", size: 16)
+        }
     }
 }

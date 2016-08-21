@@ -19,10 +19,10 @@
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
             <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
-            <string>Effra-Medium</string>
         </mutableArray>
         <mutableArray key="Effra-Regular.ttf">
+            <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
@@ -46,10 +46,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-K1-k7o">
-                                <rect key="frame" x="285" y="577.5" width="29" height="14.5"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHC-K1-k7o">
+                                <rect key="frame" x="285" y="578" width="29" height="14"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBx-aa-znN">
@@ -161,7 +161,7 @@
                                                     <constraint firstAttribute="width" secondItem="hgq-aB-n7D" secondAttribute="height" multiplier="1:1" id="Alg-Sj-4kd"/>
                                                     <constraint firstAttribute="width" constant="28" id="OTD-zP-A3P"/>
                                                 </constraints>
-                                                <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                                <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                                 <state key="normal" image="Hamburger"/>
                                                 <state key="disabled" image="nil"/>
                                                 <variation key="default">
@@ -197,7 +197,7 @@
                                                     <constraint firstAttribute="width" secondItem="xMd-nh-B8S" secondAttribute="height" multiplier="1:1" id="YmG-64-VJO"/>
                                                     <constraint firstAttribute="width" constant="28" id="hrC-mh-ps5"/>
                                                 </constraints>
-                                                <inset key="contentEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
+                                                <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
                                                 <state key="normal" image="NewChat"/>
                                                 <variation key="default">
                                                     <mask key="constraints">
@@ -233,10 +233,10 @@
                                                     <constraint firstAttribute="height" constant="1" id="ddo-Io-21x"/>
                                                 </constraints>
                                             </view>
-                                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
+                                            <view alpha="0.0" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tpy-Q0-pOI">
                                                 <rect key="frame" x="249" y="25" width="102" height="14"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Waiting for others..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sgo-9N-mFA">
                                                         <rect key="frame" x="0.0" y="0.0" width="102" height="14"/>
                                                         <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -499,8 +499,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="245"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a1-Gb-2ew" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="15" width="120" height="21.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Send Feedback" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a1-Gb-2ew" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="120" height="22"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -511,14 +511,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your feedback will be used to make Cheddar even better!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwW-cO-8D1" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="44" width="268" height="31"/>
-                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your feedback will be used to make Cheddar even better!" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwW-cO-8D1" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="45" width="268" height="34"/>
+                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nwX-me-1Gd">
-                                <rect key="frame" x="15" y="83" width="270" height="85"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nwX-me-1Gd">
+                                <rect key="frame" x="15" y="87" width="270" height="81"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="5Td-lN-jYM"/>
@@ -611,16 +611,16 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GMx-5B-C0I">
-                                <rect key="frame" x="16" y="46" width="268" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="GMx-5B-C0I">
+                                <rect key="frame" x="16" y="47" width="268" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="lBf-zs-PVe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rename Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5U-wn-T4c" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="15" width="114.5" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Rename Room" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R5U-wn-T4c" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="115" height="24"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -639,9 +639,9 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Jy-Be-TDa">
-                                <rect key="frame" x="243" y="30.5" width="29" height="14.5"/>
+                                <rect key="frame" x="243" y="31" width="29" height="14"/>
                                 <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -699,42 +699,46 @@
                         <rect key="frame" x="0.0" y="0.0" width="300" height="276"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pT4-JR-Ar2">
-                                <rect key="frame" x="0.0" y="41" width="300" height="220"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Active Members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i03-7V-dVS" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                                <rect key="frame" x="16" y="15" width="129" height="22"/>
+                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pT4-JR-Ar2">
+                                <rect key="frame" x="0.0" y="45" width="300" height="216"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="220" id="W72-BN-yN9"/>
-                                </constraints>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActiveMemberCell" id="1lc-xp-U14" customClass="ActiveMemberCell" customModule="Cheddar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="300" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActiveMemberCell" rowHeight="58" id="1lc-xp-U14" customClass="ActiveMemberCell" customModule="Cheddar" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="300" height="58"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1lc-xp-U14" id="9S0-Gx-8tV">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="58"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Ia-af-nft">
-                                                    <rect key="frame" x="8" y="0.0" width="284" height="43.5"/>
+                                                    <rect key="frame" x="8" y="0.0" width="284" height="58"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaf-Tl-FzF">
-                                                            <rect key="frame" x="8" y="2" width="39.5" height="39.5"/>
+                                                            <rect key="frame" x="8" y="9" width="40" height="40"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
+                                                                <constraint firstAttribute="width" constant="40" id="RXA-YJ-1R0"/>
                                                                 <constraint firstAttribute="width" secondItem="gaf-Tl-FzF" secondAttribute="height" multiplier="1:1" id="qz8-Gk-1DS"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWE-KJ-SgI">
-                                                            <rect key="frame" x="56" y="0.0" width="220" height="44"/>
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uWE-KJ-SgI">
+                                                            <rect key="frame" x="56" y="9" width="220" height="41"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQj-vu-ofy">
-                                                                    <rect key="frame" x="8" y="23" width="31" height="19"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UQj-vu-ofy">
+                                                                    <rect key="frame" x="8" y="23" width="31" height="16"/>
                                                                     <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3G-Gl-b8K">
-                                                                    <rect key="frame" x="8" y="2" width="41" height="20.5"/>
-                                                                    <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="17"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3G-Gl-b8K">
+                                                                    <rect key="frame" x="8" y="2" width="40" height="21"/>
+                                                                    <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -752,23 +756,31 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="uWE-KJ-SgI" secondAttribute="bottom" id="1Ql-Yt-8Ff"/>
+                                                        <constraint firstItem="uWE-KJ-SgI" firstAttribute="centerY" secondItem="gaf-Tl-FzF" secondAttribute="centerY" id="86s-fj-ffP"/>
                                                         <constraint firstItem="gaf-Tl-FzF" firstAttribute="top" secondItem="6Ia-af-nft" secondAttribute="top" constant="2" id="AOD-rO-hbj"/>
                                                         <constraint firstItem="uWE-KJ-SgI" firstAttribute="top" secondItem="6Ia-af-nft" secondAttribute="top" id="QZp-or-DhJ"/>
                                                         <constraint firstAttribute="trailing" secondItem="uWE-KJ-SgI" secondAttribute="trailing" constant="8" id="Rl6-Qd-cgh"/>
                                                         <constraint firstItem="uWE-KJ-SgI" firstAttribute="leading" secondItem="gaf-Tl-FzF" secondAttribute="trailing" constant="8" id="TqO-w9-VLW"/>
+                                                        <constraint firstItem="gaf-Tl-FzF" firstAttribute="centerY" secondItem="6Ia-af-nft" secondAttribute="centerY" id="Txs-qk-A2B"/>
                                                         <constraint firstAttribute="height" constant="44" id="hnH-iQ-WeL"/>
                                                         <constraint firstAttribute="bottom" secondItem="gaf-Tl-FzF" secondAttribute="bottom" constant="2" id="lSi-fQ-QYJ"/>
                                                         <constraint firstItem="gaf-Tl-FzF" firstAttribute="leading" secondItem="6Ia-af-nft" secondAttribute="leading" constant="8" id="tAe-oO-ty5"/>
+                                                        <constraint firstAttribute="height" constant="58" id="uJU-Sm-ccw"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
                                                             <exclude reference="hnH-iQ-WeL"/>
+                                                            <exclude reference="AOD-rO-hbj"/>
+                                                            <exclude reference="lSi-fQ-QYJ"/>
+                                                            <exclude reference="1Ql-Yt-8Ff"/>
+                                                            <exclude reference="QZp-or-DhJ"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6Ia-af-nft" firstAttribute="top" secondItem="9S0-Gx-8tV" secondAttribute="top" id="3Iu-zm-foF"/>
+                                                <constraint firstItem="6Ia-af-nft" firstAttribute="centerY" secondItem="9S0-Gx-8tV" secondAttribute="centerY" id="OXp-kM-QqA"/>
                                                 <constraint firstAttribute="trailing" secondItem="6Ia-af-nft" secondAttribute="trailing" constant="8" id="ReM-2I-QAv"/>
                                                 <constraint firstAttribute="bottom" secondItem="6Ia-af-nft" secondAttribute="bottom" id="b6y-qL-sKw"/>
                                                 <constraint firstItem="6Ia-af-nft" firstAttribute="leading" secondItem="9S0-Gx-8tV" secondAttribute="leading" constant="8" id="ywm-iQ-dOj"/>
@@ -786,12 +798,6 @@
                                     <outlet property="delegate" destination="Wfb-dn-Lux" id="bO8-B0-rpk"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Active Members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i03-7V-dVS" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                                <rect key="frame" x="16" y="15" width="129" height="18"/>
-                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="18"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -817,6 +823,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="300" height="276"/>
                     <connections>
+                        <outlet property="tableView" destination="pT4-JR-Ar2" id="M5U-gw-Y0x"/>
                         <outlet property="titleLabel" destination="i03-7V-dVS" id="wDX-Gf-MiL"/>
                     </connections>
                 </viewController>
@@ -1083,32 +1090,17 @@
                         <viewControllerLayoutGuide type="bottom" id="Dqo-ES-y50"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Rkg-nX-ma4">
-                        <rect key="frame" x="0.0" y="0.0" width="400" height="45"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6W-vH-hXY">
-                                <rect key="frame" x="0.0" y="0.0" width="400" height="45"/>
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="85"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9A-Ac-hu0">
-                                        <rect key="frame" x="0.0" y="22" width="400" height="23"/>
+                                        <rect key="frame" x="0.0" y="22" width="400" height="63"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-Ti-La6">
-                                                <rect key="frame" x="76" y="-31" width="38.5" height="19"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="38" id="Kov-4i-U5u"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="16"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGQ-VU-BaC">
-                                                <rect key="frame" x="76" y="-14" width="30.5" height="15.5"/>
-                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5yP-Hz-gUn">
-                                                <rect key="frame" x="20" y="-33" width="48" height="48"/>
+                                                <rect key="frame" x="15" y="7" width="48" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="8eo-Bg-WzP"/>
@@ -1121,25 +1113,43 @@
                                                     </mask>
                                                 </variation>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mGQ-VU-BaC">
+                                                <rect key="frame" x="78" y="34" width="31" height="16"/>
+                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="13"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="D6b-Ti-La6">
+                                                <rect key="frame" x="78" y="13" width="38" height="19"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="38" id="Kov-4i-U5u"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="16"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="mGQ-VU-BaC" secondAttribute="trailing" constant="15" id="1hh-rq-rCy"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="centerY" secondItem="q9A-Ac-hu0" secondAttribute="centerY" id="DQb-EI-eH6"/>
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="top" secondItem="D6b-Ti-La6" secondAttribute="top" id="JTJ-bg-DyQ"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="top" secondItem="q9A-Ac-hu0" secondAttribute="top" constant="2" id="O92-DD-WLl"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="leading" secondItem="q9A-Ac-hu0" secondAttribute="leading" constant="20" id="PT5-Ek-9qT"/>
                                             <constraint firstAttribute="height" constant="48" id="Rmq-t5-rud"/>
                                             <constraint firstItem="5yP-Hz-gUn" firstAttribute="top" secondItem="q9A-Ac-hu0" secondAttribute="top" constant="5" id="SSi-KC-hI1"/>
-                                            <constraint firstItem="5yP-Hz-gUn" firstAttribute="leading" secondItem="q9A-Ac-hu0" secondAttribute="leading" constant="20" id="SsC-dT-TTg"/>
-                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="WA2-KR-DBZ"/>
-                                            <constraint firstItem="mGQ-VU-BaC" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="a0c-Xc-3rr"/>
-                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="top" secondItem="5yP-Hz-gUn" secondAttribute="top" constant="2" id="eX0-Ir-EzP"/>
+                                            <constraint firstItem="5yP-Hz-gUn" firstAttribute="leading" secondItem="q9A-Ac-hu0" secondAttribute="leading" constant="15" id="SsC-dT-TTg"/>
+                                            <constraint firstItem="mGQ-VU-BaC" firstAttribute="top" secondItem="D6b-Ti-La6" secondAttribute="bottom" constant="2" id="TcG-2c-YI8"/>
+                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="15" id="WA2-KR-DBZ"/>
+                                            <constraint firstItem="mGQ-VU-BaC" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="15" id="a0c-Xc-3rr"/>
+                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="top" secondItem="5yP-Hz-gUn" secondAttribute="top" constant="6" id="eX0-Ir-EzP"/>
                                             <constraint firstAttribute="bottom" secondItem="5yP-Hz-gUn" secondAttribute="bottom" constant="8" id="eoU-z9-19h"/>
                                             <constraint firstItem="D6b-Ti-La6" firstAttribute="top" secondItem="5yP-Hz-gUn" secondAttribute="top" id="g9D-TQ-LxH"/>
-                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="bottom" secondItem="mGQ-VU-BaC" secondAttribute="top" constant="2" id="iPS-gX-C9Q"/>
+                                            <constraint firstItem="D6b-Ti-La6" firstAttribute="bottom" secondItem="mGQ-VU-BaC" secondAttribute="top" id="iPS-gX-C9Q"/>
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="top" secondItem="D6b-Ti-La6" secondAttribute="bottom" constant="2" id="pWt-2s-dzx"/>
                                             <constraint firstItem="D6b-Ti-La6" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="rfq-Ti-67S"/>
                                             <constraint firstAttribute="bottom" secondItem="5yP-Hz-gUn" secondAttribute="bottom" constant="2" id="tSS-KA-9v1"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="D6b-Ti-La6" secondAttribute="trailing" constant="15" id="ws9-8i-gHN"/>
                                             <constraint firstItem="mGQ-VU-BaC" firstAttribute="leading" secondItem="5yP-Hz-gUn" secondAttribute="trailing" constant="8" id="wzZ-kK-bxn"/>
                                         </constraints>
                                         <variation key="default">
@@ -1151,6 +1161,7 @@
                                                 <exclude reference="SSi-KC-hI1"/>
                                                 <exclude reference="tSS-KA-9v1"/>
                                                 <exclude reference="g9D-TQ-LxH"/>
+                                                <exclude reference="iPS-gX-C9Q"/>
                                                 <exclude reference="rfq-Ti-67S"/>
                                                 <exclude reference="JTJ-bg-DyQ"/>
                                                 <exclude reference="pWt-2s-dzx"/>
@@ -1184,7 +1195,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="400" height="45"/>
+                    <size key="freeformSize" width="400" height="85"/>
                     <connections>
                         <outlet property="alertView" destination="w6W-vH-hXY" id="BAU-O9-hAb"/>
                         <outlet property="aliasIconContainer" destination="5yP-Hz-gUn" id="PFS-bt-KvF"/>
@@ -1213,6 +1224,6 @@
         <image name="nil" width="540" height="960"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Pgb-6f-shq"/>
+        <segue reference="j91-9m-JhM"/>
     </inferredMetricsTieBreakers>
 </document>

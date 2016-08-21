@@ -20,21 +20,20 @@ class ChatCell: UITableViewCell {
     @IBOutlet var rightSideLabelConstraint: NSLayoutConstraint!
     
     @IBOutlet var messageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var messageTopConstraintTimestamp: NSLayoutConstraint!
-    @IBOutlet var messageTopConstraintAlias: NSLayoutConstraint!
-    @IBOutlet var messageTopConstraint: NSLayoutConstraint!
+    @IBOutlet var messageBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet var errorLeftConstraint: NSLayoutConstraint!
     @IBOutlet var errorRightConstraint: NSLayoutConstraint!
     @IBOutlet var errorLabel: UILabel!
     
-    @IBOutlet var aliasLabelTopConstraintTimestamp: NSLayoutConstraint!
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
     
     @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var timestampLabelView: UIView!
     @IBOutlet var timestampLabel: UILabel!
+    
+    @IBOutlet var activityIndicator:UIActivityIndicatorView!
 
     @IBOutlet var rightIcon: UIView!
     @IBOutlet var rightIconLabel: UILabel!
@@ -46,9 +45,11 @@ class ChatCell: UITableViewCell {
     
     static var verticalTextBuffer:CGFloat = 13
     static var bufferSize:CGFloat = 8
+    static var largeBufferSize:CGFloat = 15
     static var aliasLabelHeight:CGFloat = 15
     static var timestampLabelHeight:CGFloat = 15
     static var singleRowHeight:CGFloat = 32
+    static var activityIndicatorBuffer:CGFloat = 24
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
@@ -81,45 +82,36 @@ class ChatCell: UITableViewCell {
         return height
     }
     
-    func setShowAliasLabel(showAliasLabel: Bool, andTimestampLabel showTimestampLabel: Bool) {
-        if (showAliasLabel && showTimestampLabel) {
-            aliasLabelTopConstraintTimestamp.priority = 950
-            messageTopConstraintAlias.priority = 950;
-            messageTopConstraintTimestamp.priority = 200;
-            messageTopConstraint.priority = 200;
-            aliasLabelView.hidden = false;
-            timestampLabelView.hidden = false;
-        } else if (showAliasLabel) {
-            aliasLabelTopConstraintTimestamp.priority = 200
-            messageTopConstraintAlias.priority = 950;
-            messageTopConstraintTimestamp.priority = 200;
-            messageTopConstraint.priority = 200;
-            aliasLabelView.hidden = false;
-            timestampLabelView.hidden = true;
-        } else if (showTimestampLabel) {
-            aliasLabelTopConstraintTimestamp.priority = 200
-            messageTopConstraintAlias.priority = 200;
-            messageTopConstraintTimestamp.priority = 950;
-            messageTopConstraint.priority = 200;
-            aliasLabelView.hidden = true;
-            timestampLabelView.hidden = false;
+    func setShowAliasLabel(showAliasLabel: Bool, andTimestampLabel showTimestampLabel: Bool, andAvtivityIndicator showActivityIndicator: Bool) {
+        
+        if (showAliasLabel) {
+            aliasLabelView.hidden = false
         } else {
-            aliasLabelTopConstraintTimestamp.priority = 200
-            messageTopConstraintAlias.priority = 200;
-            messageTopConstraintTimestamp.priority = 200;
-            messageTopConstraint.priority = 950;
-            aliasLabelView.hidden = true;
-            timestampLabelView.hidden = true;
+            aliasLabelView.hidden = true
+        }
+        
+        if (showTimestampLabel) {
+            timestampLabelView.hidden = false
+        } else {
+            timestampLabelView.hidden = true
+        }
+        
+        if (showActivityIndicator) {
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.hidden = true
+            activityIndicator.startAnimating()
         }
     }
     
     func setIsFirstEvent(isFirstEvent: Bool) {
-        if (isFirstEvent) {
-            timestampLabelTopConstraint.constant = ChatCell.bufferSize
-        }
-        else {
-            timestampLabelTopConstraint.constant = 0
-        }
+//        if (isFirstEvent) {
+//            timestampLabelTopConstraint.constant = ChatCell.bufferSize
+//        }
+//        else {
+//            timestampLabelTopConstraint.constant = 0
+//        }
     }
     
     func setIsOutbound(isOutbound: Bool) {
@@ -162,6 +154,10 @@ class ChatCell: UITableViewCell {
         }
     }
     
+    func setBottomGapSize(size: CGFloat) {
+        messageBottomConstraint.constant = 2 + size
+    }
+    
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
     func setMessageOptions(options: [String:AnyObject]) {
         
@@ -184,8 +180,10 @@ class ChatCell: UITableViewCell {
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
         self.timestampLabel.text = Utilities.formatDate(options["date"] as! NSDate, withTrailingHours: true)
         self.timestampLabel.textColor = ColorConstants.timestampText
-        self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
+        self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool, andAvtivityIndicator: options["showActivityIndicator"] as! Bool)
         self.setIsFirstEvent(options["isFirstEvent"] as! Bool)
+        self.setBottomGapSize(options["bottomGapSize"] as! CGFloat)
+        
         
         let isOutbound = options["isOutbound"] as! Bool
         self.setIsOutbound(isOutbound)

@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
 //        initializeUser()
         if ( isUpdate() ) {
-            //            UIAlertView(title: "New In This Version", message: "-Fix the issue with missing text in some messages\n-Messages are selectable and recognize links\n-New loading animation\n-Shrink chat bar slightly\n-Keyboard hides when scrolling up messages (velocity threshold)\n-No longer scroll down on new messages, “new message” button appears instead\n", delegate: nil, cancelButtonTitle: "OK").show()
+            UIAlertView(title: "Heads up!", message: "Cheddar is still in beta! Help us improve by sharing your feedback inside the app.", delegate: nil, cancelButtonTitle: "OK").show()
         }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
@@ -151,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         let message = messagesToSend.first!
         
         CheddarRequest.sendMessage(message.messageId,
-                                   aliasId: message.alias.objectId!,
+                                   alias: message.alias,
                                    body: message.body,
             successCallback: { (object) in
                 
@@ -160,8 +160,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
                 
             }) { (error) in
                 
-                NSLog("%@",error);
-                Answers.logCustomEventWithName("Sent Message", customAttributes: ["chatRoomId": message.alias.chatRoomId, "lifeCycle":"FAILED"])
                 message.status = ChatEventStatus.Error.rawValue
                 self.saveContext()
                 let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
@@ -257,13 +255,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
-         NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
         
-        PFCloud.callFunctionInBackground("minimumIosBuildNumber", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            if (error != nil) {
-                return
-            }
+        CheddarRequest.getMinimumBuildNumber({ (object) in
             
             let minmumBuildNum = object as! Int
             
@@ -272,6 +266,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             if (minmumBuildNum > currentBuildNum) {
                 UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK").show()
             }
+            
+        }) { (error) in
+            return
         }
     }
 
@@ -361,12 +358,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         
-        NSLog("HERE1")
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        
-        NSLog("here")
         
         if #available(iOS 9.0, *) {
             let reply = responseInfo[UIUserNotificationActionResponseTypedTextKey]

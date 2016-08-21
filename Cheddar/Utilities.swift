@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Crashlytics
 
 class Utilities {
     class func IS_IPHONE_4_OR_LESS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height < 568.0) }
@@ -22,6 +23,11 @@ class Utilities {
     }
     
     class func removeAllUserData() {
+        for chatRoom in ChatRoom.fetchAll() {
+            Utilities.appDelegate().unsubscribeFromPubNubChannel(chatRoom.objectId)
+            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(chatRoom.objectId)
+        }
+        
         ChatEvent.removeAll()
         ChatRoom.removeAll()
         Alias.removeAll()
@@ -62,6 +68,30 @@ class Utilities {
         }
 
         return dateFor.stringFromDate(date)
+    }
+    
+    class func formattedLastMessageText(chatEvent: ChatEvent) -> String {
+        var lastMessageText: String = ""
+        if (chatEvent.type == ChatEventType.Message.rawValue) {
+            lastMessageText = chatEvent.alias.name + ": "
+        }
+        
+        lastMessageText = lastMessageText + chatEvent.body
+        
+        if (chatEvent.type == ChatEventType.NameChange.rawValue) {
+            lastMessageText = lastMessageText.substringToIndex(lastMessageText.endIndex.advancedBy((chatEvent.roomName.characters.count + 4) * -1)) // +4 for _to_ text
+        }
+
+        return lastMessageText
+    }
+    
+    class func sendAnswersEvent(eventName: String, alias:Alias, attributes:[String:AnyObject]) {
+        
+        var mutableAttrs = attributes
+        mutableAttrs["aliasId"] = alias.objectId
+        mutableAttrs["chatRoomId"] = alias.chatRoomId
+        
+        Answers.logCustomEventWithName(eventName, customAttributes: mutableAttrs)
     }
     
     class func getKeyConstant(name: String) -> String! {

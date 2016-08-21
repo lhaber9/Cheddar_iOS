@@ -12,12 +12,12 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
+    func didUpdateName(chatRoom: ChatRoom)
     func didUpdateUnreadMessages(chatRoom:ChatRoom, areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
     func didAddEvent(chatRoom:ChatRoom, chatEvent:ChatEvent, isMine: Bool)
     func didUpdateActiveAliases(chatRoom:ChatRoom, aliases:NSSet)
     func didReloadEvents(chatRoom:ChatRoom, eventCount:Int, firstLoad: Bool)
-    func endRefresh()
 }
 
 class ChatRoom: NSManagedObject {
@@ -52,6 +52,8 @@ class ChatRoom: NSManagedObject {
     var loadMessageCallInFlight = false
     var loadAliasCallInFlight = false
     
+    var pageSize = 25
+    
     class func removeAll() {
         let chatRooms = fetchAll()
         for chatRoom in chatRooms {
@@ -66,7 +68,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.currentStartToken = nil
         chatRoom.allMessagesLoaded = false
         chatRoom.setUnreadMessages(false)
-        chatRoom.name = "Unnamed"
+        chatRoom.setChatName("Group Message")
         return chatRoom
     }
     
@@ -101,7 +103,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.myAlias = alias
     
         if let name = jsonMessage["name"] as? String where name != "" {
-            chatRoom.name = name
+            chatRoom.setChatName(name)
         }
         
         return chatRoom
@@ -116,7 +118,7 @@ class ChatRoom: NSManagedObject {
         chatRoom.myAlias = alias
         
         if let name = pfObject.objectForKey("name") as? String where name != "" {
-            chatRoom.name = name
+            chatRoom.setChatName(name)
         }
         
         return chatRoom
@@ -170,6 +172,28 @@ class ChatRoom: NSManagedObject {
         } catch {
             return nil
         }
+    }
+    
+    func setChatName(name: String) {
+        self.name = name
+        delegate?.didUpdateName(self)
+    }
+    
+    func eventForIndex(index: Int) -> ChatEvent! {
+        if (index >= chatEvents.count) {
+            return nil
+        }
+        
+        return sortChatEvents()[index]
+    }
+    
+    func indexForEvent(event: ChatEvent) -> Int! {
+        for (index, chatEvent) in sortChatEvents().enumerate() {
+            if (chatEvent.objectId == event.objectId) {
+                return index;
+            }
+        }
+        return nil
     }
     
     func setUnreadMessages(areUnreadMessages: Bool) {
@@ -262,7 +286,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func isMyChatEvent(event: ChatEvent) -> Bool {
-        return (event.alias.objectId == myAlias.objectId)
+        return (event.alias.objectId == myAlias?.objectId)
     }
     
     func sendMessage(message: ChatEvent) {
@@ -298,7 +322,7 @@ class ChatRoom: NSManagedObject {
             return nil
         }
 
-        var message = sortedChatEvents[position]
+        var message = sortChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= chatEvents.count) { return nil }
@@ -315,7 +339,8 @@ class ChatRoom: NSManagedObject {
         loadMessageCallInFlight = true
         
         let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
-                                            "endTimeToken" : currentStartToken]
+                                            "endTimeToken" : currentStartToken,
+                                            "count": pageSize]
         
         CheddarRequest.replayEvents(params,
             successCallback: { (object) in
@@ -323,6 +348,11 @@ class ChatRoom: NSManagedObject {
                 var replayEvents = Set<ChatEvent>()
                 
                 let objectDict = object as! [NSObject:AnyObject]
+                
+                if let startToken = objectDict["startTimeToken"] as? String {
+                    self.currentStartToken = startToken
+                }
+                
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
                     for eventDict in events {
@@ -335,6 +365,10 @@ class ChatRoom: NSManagedObject {
                         }
                     }
                     
+                    if (self.chatEvents.count > replayEvents.count) {
+                        self.allMessagesLoaded = false
+                    }
+                    
                     if (self.chatEvents != nil) {
                         self.removeChatEvents(self.chatEvents)
                     }
@@ -343,6 +377,10 @@ class ChatRoom: NSManagedObject {
                     Utilities.appDelegate().saveContext()
                     
                     self.delegate?.didUpdateEvents(self)
+                    
+                    if (events.count < self.pageSize) {
+                        self.allMessagesLoaded = true
+                    }
                 }
                 
                 self.loadMessageCallInFlight = false
@@ -356,13 +394,10 @@ class ChatRoom: NSManagedObject {
     func loadNextPageMessages() {
         
         if (allMessagesLoaded.boolValue || loadMessageCallInFlight) {
-            self.delegate?.endRefresh()
             return
         }
         
-        let count = 25
-        
-        var params: [NSObject:AnyObject] = ["count":count, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
+        var params: [NSObject:AnyObject] = ["count":pageSize, "aliasId": myAlias.objectId!, "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }
@@ -380,13 +415,8 @@ class ChatRoom: NSManagedObject {
                 
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    if (events.count < count) {
-                        self.allMessagesLoaded = true
-                    }
-                    
                     if (events.count == 1 && self.chatEvents.count == 1) {
                         self.loadMessageCallInFlight = false
-                        self.delegate?.endRefresh()
                         return
                     }
                     
@@ -410,15 +440,17 @@ class ChatRoom: NSManagedObject {
                     Utilities.appDelegate().saveContext()
                     
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
+                    
+                    if (events.count < self.pageSize) {
+                        self.allMessagesLoaded = true
+                    }
                 }
                 
-                self.delegate?.endRefresh()
                 self.loadMessageCallInFlight = false
                 
             }) { (error) in
                 
                 self.loadMessageCallInFlight = false
-                self.delegate?.endRefresh()
         }
     }
     

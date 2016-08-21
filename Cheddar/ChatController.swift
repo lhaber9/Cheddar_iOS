@@ -96,7 +96,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         r.edges = UIRectEdge.Left
         view.addGestureRecognizer(r)
         
-        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "Leaving the chat will mean you lose your nickname", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
+        confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "You wont be able to rejoin this chat room once you leave", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
         
         confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
         
@@ -191,7 +191,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             Utilities.appDelegate().saveContext()
             Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
             Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
-            Answers.logCustomEventWithName("Joined Chat", customAttributes: nil)
+            
             self.chatListController.reloadRooms()
             chatRoom.loadNextPageMessages()
             if (animationComplete) {
@@ -411,7 +411,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     @IBAction func titleTap() {
         if (!isShowingList) {
-            chatViewController.showRename()
+            showRename(nil)
         }
     }
     
@@ -422,6 +422,11 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         titleTap()
     }
 
+    func showRename(object: AnyObject!) {
+        optionOverlayController?.shouldClose()
+        chatViewController.showRename()
+    }
+    
     // MARK: ChatViewControllerDelegate
     
     func subscribe(chatRoom:ChatRoom) {
@@ -434,9 +439,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
         optionOverlayController.delegate = self
         
-        optionOverlayController.buttonNames = ["Leave Group", "View Active Members", "Send Feedback"]
-        optionOverlayController.buttonData = [chatRoom,nil,chatViewController.myAlias()]
-        optionOverlayController.buttonActions = [tryLeaveChatRoom, showActiveMembers, selectedFeedback]
+        optionOverlayController.buttonNames = ["Leave Group", "Change Room Name", "View Active Members", "Send Feedback"]
+        optionOverlayController.buttonData = [chatRoom,nil,nil,chatViewController.myAlias()]
+        optionOverlayController.buttonActions = [tryLeaveChatRoom, showRename, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
@@ -469,10 +474,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         leavingChatRoom = nil
         delegate.showLoadingViewWithText("Leaving Chat...")
         
-        CheddarRequest.leaveChatroom(alias.objectId!,
+        CheddarRequest.leaveChatroom(alias,
         successCallback: { (object) in
-            
-            Answers.logCustomEventWithName("Left Chat", customAttributes: ["chatRoomId": alias.chatRoomId, "lengthOfStay":alias.joinedAt.timeIntervalSinceNow * -1 * 1000])
             
             self.chatViewController.chatRoom = nil
             self.forceLeaveChatRoom(alias)
@@ -553,8 +556,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         chatRoom.delegate = self
         chatViewController.chatRoom = chatRoom
         
-        self.chatViewController.scrollToBottom(false)
         view.layoutIfNeeded()
+        self.chatViewController.scrollToBottom(false)
         
         dispatch_async(dispatch_get_main_queue(), {
             UIView.animateWithDuration(0.333, animations:{
@@ -605,6 +608,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             chatListController.refreshRooms()
             return
         }
+        
+        chatViewController.invalidateHeightCache()
         
         chatViewController.reloadTable()
         chatListController.refreshRooms()
@@ -660,6 +665,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             return
         }
         
+        chatViewController.invalidateHeightCache()
+        
         chatViewController.reloadTable()
         chatListController.refreshRooms()
         if (firstLoad) {
@@ -668,14 +675,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             })
         }
         else {
-            dispatch_async(dispatch_get_main_queue(), {
-               self.chatViewController.scrollToEventIndex(eventCount - 3, animated: true)
-            })
+            chatViewController.scrollToTopEventForLoading()
         }
-    }
-    
-    func endRefresh() {
-        chatViewController.refreshControl.endRefreshing()
     }
     
     // MARK: UIAlertViewDelegate
