@@ -22,9 +22,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="381" height="35.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="wJG-bo-Aed">
-                        <rect key="frame" x="180.5" y="-37.5" width="20" height="20"/>
-                    </activityIndicatorView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4qN-wQ-8nS">
                         <rect key="frame" x="0.0" y="-15.5" width="381" height="15"/>
                         <subviews>
@@ -67,9 +64,7 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="iID-WJ-CDg" secondAttribute="trailing" id="8iN-ck-d8A"/>
                     <constraint firstAttribute="bottom" secondItem="iID-WJ-CDg" secondAttribute="bottom" id="LJJ-0k-Wwx"/>
-                    <constraint firstItem="wJG-bo-Aed" firstAttribute="centerX" secondItem="y5W-fa-Gg1" secondAttribute="centerX" id="U7r-Tt-pEK"/>
                     <constraint firstItem="4qN-wQ-8nS" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="WGG-zu-la3"/>
-                    <constraint firstItem="wJG-bo-Aed" firstAttribute="bottom" secondItem="4qN-wQ-8nS" secondAttribute="top" constant="-2" id="Xi1-3d-afO"/>
                     <constraint firstItem="iID-WJ-CDg" firstAttribute="leading" secondItem="y5W-fa-Gg1" secondAttribute="leading" id="ppK-IO-R4T"/>
                     <constraint firstItem="iID-WJ-CDg" firstAttribute="top" secondItem="y5W-fa-Gg1" secondAttribute="top" priority="900" id="q2a-zr-SJ1"/>
                     <constraint firstAttribute="trailing" secondItem="4qN-wQ-8nS" secondAttribute="trailing" id="sLq-wl-hzj"/>
@@ -82,7 +77,6 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="activityIndicator" destination="wJG-bo-Aed" id="hep-th-ACB"/>
                 <outlet property="aliasLabel" destination="Iyb-R8-Ebh" id="Snc-W8-5HS"/>
                 <outlet property="timestampLabel" destination="cEo-Ts-sDk" id="nQI-5X-hf6"/>
                 <outlet property="timestampLabelView" destination="4qN-wQ-8nS" id="GRU-4t-bCs"/>

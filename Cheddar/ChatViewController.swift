@@ -110,6 +110,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
         tableView.registerNib(UINib(nibName: "NameChangeCell", bundle: nil), forCellReuseIdentifier: "NameChangeCell")
+        tableView.registerNib(UINib(nibName: "ActivityIndicatorCell", bundle: nil), forCellReuseIdentifier: "ActivityIndicatorCell")
         
         textView.delegate = self
         
@@ -179,7 +180,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         tableView?.reloadData()
         
         if (isNearBottomNow) {
-            scrollToBottom()
+            scrollToBottom(false)
         }
     }
     
@@ -228,7 +229,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         
         let index = chatRoom.indexForEvent(topEventForLoading)
-        scrollToEventIndex(index, animated: false)
+        scrollToEventIndex(index - 1, animated: false)
         topEventForLoading = nil
     }
     
@@ -289,7 +290,12 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return;
         }
         
-        let indexPath = NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection:0)
+        var row = chatRoom.chatEvents.count - 1
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            row += 1
+        }
+        
+        let indexPath = NSIndexPath(forRow: row, inSection:0)
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:animated)
     }
     
@@ -341,7 +347,12 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return 0
         }
         
-        return chatRoom.chatEvents.count
+        var count = chatRoom.chatEvents.count
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+           count += 1
+        }
+        
+        return count
     }
     
     
@@ -350,46 +361,70 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return UITableViewCell()
         }
         
-        let event = chatRoom.sortedChatEvents[indexPath.row]
-        let isFirstEvent = (indexPath.row == 0)
-        if (event.type == ChatEventType.Message.rawValue) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            
-            var bottomGapSize:CGFloat = 0
-            let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
-            if (nextMessage?.alias.objectId != event.alias.objectId) {
-                bottomGapSize += ChatCell.largeBufferSize
-            } else if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
-                bottomGapSize += ChatCell.bufferSize
+        var index = indexPath.row
+        let isFirstEvent = (index == 0)
+        
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (isFirstEvent) {
+                let cell = tableView.dequeueReusableCellWithIdentifier("ActivityIndicatorCell", forIndexPath: indexPath) as! ActivityIndicatorCell
+                cell.activityIndicator.startAnimating()
+                return cell
             }
+            index -= 1
+        }
+        let event = chatRoom.sortedChatEvents[index]
+        
+        if (event.type == ChatEventType.Message.rawValue) {
+            return tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
+        }
+        else if (event.type == ChatEventType.Presence.rawValue) {
+            return tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
+        }
+        else if (event.type == ChatEventType.NameChange.rawValue) {
+            return tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
+        }
+        
+        return UITableViewCell()
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var index = indexPath.row
+        let isFirstEvent = (index == 0)
+        
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (isFirstEvent) {
+                return
+            }
+            index -= 1
+        }
+        let event = chatRoom.sortChatEvents()[index]
+        
+        if let messageCell = cell as? ChatCell {
+            
+            let viewSettings = chatRoom.getViewSettingsForMessageCellAtIndex(index)
+            let showAliasLabel = viewSettings.0
+            let showAliasIcon = viewSettings.1
+            let bottomGapSize = viewSettings.2
             
             let options: [String:AnyObject] = [ "text": event.body,
                                                 "date": event.createdAt,
                                                 "alias": event.alias,
                                                 "isOutbound": self.chatRoom.isMyChatEvent(event),
-                                                "showAliasLabel": self.chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row),
-                                                "showAliasIcon": self.chatRoom.shouldShowAliasIconForMessageIndex(indexPath.row),
-                                                "showTimestampLabel": self.chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row),
-                                                "showActivityIndicator": isFirstEvent && !chatRoom.allMessagesLoaded.boolValue,
+                                                "showAliasLabel": showAliasLabel,
+                                                "showAliasIcon": showAliasIcon,
+                                                "showTimestampLabel": self.chatRoom.shouldShowTimestampLabelForEventIndex(index),
                                                 "status": event.status,
-                                                "isFirstEvent": isFirstEvent,
-                                                "isAllLoaded": chatRoom.allMessagesLoaded,
-                                                "bottomGapSize": bottomGapSize]
-            cell.setMessageOptions(options)
-            return cell
+                                                "bottomGapSize": bottomGapSize ]
+            
+            messageCell.setMessageOptions(options)
         }
-        else if (event.type == ChatEventType.Presence.rawValue) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
-            return cell
+        else if let presenceCell = cell as? PresenceCell {
+            presenceCell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index))
         }
-        else if (event.type == ChatEventType.NameChange.rawValue) {
-            let cell = tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
-            cell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row), showBottomBuffer: indexPath.row == chatRoom.sortedChatEvents.count - 1, showActivityIndicator: isFirstEvent && !chatRoom.allMessagesLoaded.boolValue)
-            return cell
+        else if let nameChangeCell = cell as? NameChangeCell {
+            nameChangeCell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index), showBottomBuffer: index == chatRoom.chatEvents.count - 1)
         }
-        
-        return UITableViewCell()
     }
     
     func shouldUseHeightCacheForIndex(index: Int) -> Bool {
@@ -426,52 +461,55 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return 0
         }
         
-        if (getHeightFromCache(indexPath.row) != nil) {
-            return getHeightFromCache(indexPath.row)
+        var index = indexPath.row
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (index == 0) {
+                return ActivityIndicatorCell.activityIndicatorHeight
+            }
+            index -= 1
+        }
+        
+        if (getHeightFromCache(index) != nil) {
+            return getHeightFromCache(index)
         }
        
-        let event = chatRoom.sortedChatEvents[indexPath.row]
+        let event = chatRoom.sortedChatEvents[index]
         var height: CGFloat = 0
         if (event.type == ChatEventType.Message.rawValue) {
             
-            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: chatRoom.shouldShowAliasLabelForMessageIndex(indexPath.row), withTimestampLabel: chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) + 2
+            let viewSettings = chatRoom.getViewSettingsForMessageCellAtIndex(index)
+            let showAliasLabel = viewSettings.0
+            let bottomGapSize = viewSettings.2
             
-            let nextMessage = chatRoom.findFirstMessageAfterIndex(indexPath.row)
-            if (nextMessage?.alias.objectId != event.alias.objectId) {
-                cellHeight += ChatCell.largeBufferSize
-            } else if (chatRoom.shouldShowMessageEventBottomGap(indexPath.row)) {
-                cellHeight += ChatCell.bufferSize
-            }
+            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: showAliasLabel, withTimestampLabel: chatRoom.shouldShowTimestampLabelForEventIndex(index)) + 2
+            
+            cellHeight += bottomGapSize
             
             height = cellHeight
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
             var cellHeight:CGFloat = 36
-            if (chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) {
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(index)) {
                 cellHeight += ChatCell.timestampLabelHeight
             }
             height = cellHeight
         }
         else if (event.type == ChatEventType.NameChange.rawValue) {
             var cellHeight:CGFloat = 37
-            if (chatRoom.shouldShowTimestampLabelForEventIndex(indexPath.row)) {
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(index)) {
                 cellHeight += ChatCell.timestampLabelHeight
             }
-            if (indexPath.row == chatRoom.sortedChatEvents.count - 1) {
+            if (index == chatRoom.chatEvents.count - 1) {
                 cellHeight += NameChangeCell.bottomBufferSize
             }
             height = cellHeight
         }
         
-        if (indexPath.row == 0) {
+        if (index == 0 && chatRoom.allMessagesLoaded.boolValue) {
             height += ChatCell.bufferSize
-            
-            if (!chatRoom.allMessagesLoaded.boolValue) {
-                height += ChatCell.activityIndicatorBuffer
-            }
         }
         
-        setHeightToCache(indexPath.row, height: height)
+        setHeightToCache(index, height: height)
         
         return height
     }

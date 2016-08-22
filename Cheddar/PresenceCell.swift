@@ -14,12 +14,16 @@ class PresenceCell: UITableViewCell {
     @IBOutlet var timestampLabel: UILabel!
     @IBOutlet var timestampLabelView: UIView!
     
-    @IBOutlet var activityIndicator:UIActivityIndicatorView!
-    
     var alias: Alias!
     var body: String!
     
-    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool, showActivityIndicator: Bool) {
+    override func willMoveToSuperview(newSuperview: UIView?) {
+        backgroundView?.backgroundColor = ColorConstants.whiteColor
+        timestampLabel.backgroundColor = ColorConstants.whiteColor
+        aliasLabel.backgroundColor = ColorConstants.whiteColor
+    }
+    
+    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool) {
         if (presenceEvent.type != ChatEventType.Presence.rawValue) {
             return
         }
@@ -34,14 +38,6 @@ class PresenceCell: UITableViewCell {
             timestampLabelView.hidden = false;
         } else {
             timestampLabelView.hidden = true;
-        }
-        
-        if (showActivityIndicator) {
-            activityIndicator.hidden = false
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.hidden = true
-            activityIndicator.startAnimating()
         }
     }
 }

@@ -17,11 +17,16 @@ class NameChangeCell: UITableViewCell {
     @IBOutlet var timestampLabelView: UIView!
     @IBOutlet var bottomConstraint: NSLayoutConstraint!
     
-    @IBOutlet var activityIndicator:UIActivityIndicatorView!
-    
     static var bottomBufferSize:CGFloat = 4
     
-    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, showBottomBuffer:Bool, showActivityIndicator:Bool) {
+    override func willMoveToSuperview(newSuperview: UIView?) {
+        backgroundView?.backgroundColor = ColorConstants.whiteColor
+        timestampLabel.backgroundColor = ColorConstants.whiteColor
+        bodyLabel.backgroundColor = ColorConstants.whiteColor
+        nameLabel.backgroundColor = ColorConstants.whiteColor
+    }
+    
+    func setEvent(nameChangeEvent: ChatEvent, showTimestamp: Bool, showBottomBuffer:Bool) {
         if (nameChangeEvent.type != ChatEventType.NameChange.rawValue) {
             return
         }
@@ -45,14 +50,6 @@ class NameChangeCell: UITableViewCell {
         }
         else {
             bottomConstraint.constant = 0
-        }
-        
-        if (showActivityIndicator) {
-            activityIndicator.hidden = false
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.hidden = true
-            activityIndicator.startAnimating()
         }
     }
 }

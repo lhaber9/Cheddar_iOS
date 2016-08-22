@@ -681,6 +681,13 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         }
     }
     
+    func didChangeIsUnloadedMessages(chatRoom: ChatRoom) {
+        chatViewController.invalidateHeightCache()
+        
+        chatViewController.reloadTable()
+        chatListController.refreshRooms()
+    }
+    
     // MARK: UIAlertViewDelegate
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {

@@ -12,6 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatRoomDelegate: class {
+    func didChangeIsUnloadedMessages(chatRoom: ChatRoom)
     func didUpdateName(chatRoom: ChatRoom)
     func didUpdateUnreadMessages(chatRoom:ChatRoom, areUnreadMessages: Bool)
     func didUpdateEvents(chatRoom:ChatRoom)
@@ -66,7 +67,7 @@ class ChatRoom: NSManagedObject {
         let ent =  NSEntityDescription.entityForName("ChatRoom", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
         let chatRoom = ChatRoom(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
         chatRoom.currentStartToken = nil
-        chatRoom.allMessagesLoaded = false
+        chatRoom.setMessagesAllLoaded(false)
         chatRoom.setUnreadMessages(false)
         chatRoom.setChatName("Group Message")
         return chatRoom
@@ -172,6 +173,11 @@ class ChatRoom: NSManagedObject {
         } catch {
             return nil
         }
+    }
+    
+    func setMessagesAllLoaded(allLoaded:Bool) {
+        allMessagesLoaded = allLoaded
+        delegate?.didChangeIsUnloadedMessages(self)
     }
     
     func setChatName(name: String) {
@@ -322,7 +328,7 @@ class ChatRoom: NSManagedObject {
             return nil
         }
 
-        var message = sortChatEvents()[position]
+        var message = sortedChatEvents[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= chatEvents.count) { return nil }
@@ -366,7 +372,7 @@ class ChatRoom: NSManagedObject {
                     }
                     
                     if (self.chatEvents.count > replayEvents.count) {
-                        self.allMessagesLoaded = false
+                        self.setMessagesAllLoaded(false)
                     }
                     
                     if (self.chatEvents != nil) {
@@ -379,7 +385,7 @@ class ChatRoom: NSManagedObject {
                     self.delegate?.didUpdateEvents(self)
                     
                     if (events.count < self.pageSize) {
-                        self.allMessagesLoaded = true
+                        self.setMessagesAllLoaded(true)
                     }
                 }
                 
@@ -442,7 +448,7 @@ class ChatRoom: NSManagedObject {
                     self.delegate?.didReloadEvents(self, eventCount: events.count, firstLoad: isFirstLoad)
                     
                     if (events.count < self.pageSize) {
-                        self.allMessagesLoaded = true
+                        self.setMessagesAllLoaded(true)
                     }
                 }
                 
@@ -452,21 +458,6 @@ class ChatRoom: NSManagedObject {
                 
                 self.loadMessageCallInFlight = false
         }
-    }
-    
-    func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
-        let event = sortedChatEvents[messageIdx]
-        if (event.type == ChatEventType.Message.rawValue) {
-            let messageBefore = findFirstMessageBeforeIndex(messageIdx)
-            if (messageBefore != nil) {
-                return messageBefore.alias.objectId != event.alias.objectId
-            }
-            else {
-                return true
-            }
-        }
-        
-        return false
     }
     
     func shouldShowTimestampLabelForEventIndex(eventIdx: Int) -> Bool {
@@ -484,37 +475,46 @@ class ChatRoom: NSManagedObject {
         return false
     }
     
-    func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
+    // retruns should show (aliasLabel, aliasIcon, bottomGapSize)
+    func getViewSettingsForMessageCellAtIndex(messageIdx: Int) -> (Bool, Bool, CGFloat) {
         let event = sortedChatEvents[messageIdx]
+        
+        var shouldShowAliasLabel = false
+        var shouldShowAliasIcon = false
+        var bottomGapSize:CGFloat = 0
+        
+        
         if (event.type == ChatEventType.Message.rawValue) {
+            let messageBefore = findFirstMessageBeforeIndex(messageIdx)
             let messageAfter = findFirstMessageAfterIndex(messageIdx)
+            
+            if (messageBefore != nil) {
+                shouldShowAliasLabel = messageBefore.alias.objectId != event.alias.objectId
+            }
+            else {
+                shouldShowAliasLabel = true
+            }
+            
             if (messageAfter != nil) {
-                return messageAfter.alias.objectId != event.alias.objectId
-            }
-            else {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    func shouldShowMessageEventBottomGap(messageIdx: Int) -> Bool {
-        let event = sortedChatEvents[messageIdx]
-        if (event.type == ChatEventType.Message.rawValue) {
-            let messageAfter = findFirstMessageAfterIndex(messageIdx)
-            if (messageAfter != nil && messageAfter.alias.objectId == event.alias.objectId) {
-                let twoMinutesAhead = event.createdAt.dateByAddingTimeInterval(2 * 60)  // 2minutes 60seconds
-                if (twoMinutesAhead.compare(messageAfter.createdAt) == NSComparisonResult.OrderedAscending) {
-                    return true
+                if (messageAfter.alias.objectId == event.alias.objectId) {
+                    shouldShowAliasIcon = false
+                    
+                    let twoMinutesAhead = event.createdAt.dateByAddingTimeInterval(2 * 60)  // 2minutes 60seconds
+                    if (twoMinutesAhead.compare(messageAfter.createdAt) == NSComparisonResult.OrderedAscending) {
+                        bottomGapSize += ChatCell.bufferSize
+                    }
                 }
-                return false
+                else {
+                    shouldShowAliasIcon = true
+                    bottomGapSize += ChatCell.largeBufferSize
+                }
             }
             else {
-                return false
+                shouldShowAliasIcon = true
+                bottomGapSize += ChatCell.bufferSize
             }
         }
         
-        return false
+        return (shouldShowAliasLabel, shouldShowAliasIcon, bottomGapSize)
     }
 }

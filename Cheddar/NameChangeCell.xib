@@ -23,9 +23,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="36.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jEp-Aw-WBb">
-                        <rect key="frame" x="150" y="-37" width="20" height="20"/>
-                    </activityIndicatorView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FGI-ch-Deb">
                         <rect key="frame" x="0.0" y="-15" width="320" height="15"/>
                         <subviews>
@@ -86,9 +83,7 @@
                     <constraint firstAttribute="trailing" secondItem="FGI-ch-Deb" secondAttribute="trailing" id="97x-jk-pPe"/>
                     <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="5eh-vj-QT5" secondAttribute="top" priority="900" id="FL0-hg-7Xq"/>
                     <constraint firstAttribute="trailing" secondItem="ceo-jR-d2f" secondAttribute="trailing" id="jP0-sH-gKa"/>
-                    <constraint firstItem="jEp-Aw-WBb" firstAttribute="bottom" secondItem="FGI-ch-Deb" secondAttribute="top" constant="-2" id="kXb-M6-lTQ"/>
                     <constraint firstItem="FGI-ch-Deb" firstAttribute="leading" secondItem="5eh-vj-QT5" secondAttribute="leading" id="mdm-bf-6Ba"/>
-                    <constraint firstItem="jEp-Aw-WBb" firstAttribute="centerX" secondItem="5eh-vj-QT5" secondAttribute="centerX" id="pUZ-ld-cxa"/>
                     <constraint firstAttribute="bottom" secondItem="ceo-jR-d2f" secondAttribute="bottom" id="w7u-xm-jzd"/>
                     <constraint firstItem="ceo-jR-d2f" firstAttribute="top" secondItem="FGI-ch-Deb" secondAttribute="bottom" id="zoE-Up-8Rr"/>
                 </constraints>
@@ -99,7 +94,6 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
-                <outlet property="activityIndicator" destination="jEp-Aw-WBb" id="ro9-jM-8u5"/>
                 <outlet property="bodyLabel" destination="jLK-0G-smz" id="XNv-Ux-o2j"/>
                 <outlet property="bottomConstraint" destination="w7u-xm-jzd" id="Z4b-lT-2dh"/>
                 <outlet property="nameLabel" destination="cwA-zu-HJ5" id="las-uv-EFZ"/>
