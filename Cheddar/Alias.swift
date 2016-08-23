@@ -62,7 +62,10 @@ class Alias: NSManagedObject {
         newAlias.name = jsonMessage["name"] as? String
         newAlias.userId = jsonMessage["userId"] as? String
         newAlias.colorId = jsonMessage["colorId"] as? NSNumber
-        newAlias.deletedChatEventIds = jsonMessage["deletedChatEventIds"] as? [String]
+        
+        if let deletedChatEventIds = jsonMessage["deletedChatEventIds"] as? [String] {
+            newAlias.deletedChatEventIds = deletedChatEventIds
+        }
         
         let dateFor: NSDateFormatter = NSDateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
@@ -86,8 +89,11 @@ class Alias: NSManagedObject {
         newAlias.userId = pfObject.objectForKey("userId") as? String
         newAlias.leftAt = pfObject.objectForKey("leftAt") as? NSDate
         newAlias.colorId = pfObject.objectForKey("colorId") as? NSNumber
-        newAlias.deletedChatEventIds = pfObject.objectForKey("deletedChatEventIds") as? [String]
         newAlias.joinedAt = pfObject.createdAt
+        
+        if let deletedChatEventIds = pfObject.objectForKey("deletedChatEventIds") as? [String] {
+            newAlias.deletedChatEventIds = deletedChatEventIds
+        }
         
         return newAlias
     }
