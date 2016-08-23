@@ -176,7 +176,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func numberOfChatEvents() -> Int {
-        return sortedChatEvents.count
+        return getSortedChatEvents().count
     }
     
     func setMessagesAllLoaded(allLoaded:Bool) {
@@ -240,6 +240,13 @@ class ChatRoom: NSManagedObject {
         } catch {
             return nil
         }
+    }
+    
+    func getSortedChatEvents() -> [ChatEvent] {
+        if (sortedChatEvents == nil) {
+            return sortChatEvents()
+        }
+        return sortedChatEvents
     }
     
     func sortChatEvents() -> [ChatEvent] {
@@ -322,11 +329,11 @@ class ChatRoom: NSManagedObject {
             return nil
         }
         
-        var message = sortedChatEvents[position]
+        var message = getSortedChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position -= 1
             if (position < 0) { return nil }
-            message = sortedChatEvents[position]
+            message = getSortedChatEvents()[position]
         }
         return message
     }
@@ -337,11 +344,11 @@ class ChatRoom: NSManagedObject {
             return nil
         }
 
-        var message = sortedChatEvents[position]
+        var message = getSortedChatEvents()[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
             if (position >= numberOfChatEvents()) { return nil }
-            message = sortedChatEvents[position]
+            message = getSortedChatEvents()[position]
         }
         return message
     }
@@ -480,8 +487,8 @@ class ChatRoom: NSManagedObject {
             return true
         }
         
-        let event = sortedChatEvents[eventIdx]
-        let eventBefore = sortedChatEvents[eventIdx - 1]
+        let event = getSortedChatEvents()[eventIdx]
+        let eventBefore = getSortedChatEvents()[eventIdx - 1]
         
         let twentyMinutesAgo = event.createdAt.dateByAddingTimeInterval(-1 * 20 * 60)  // 20minutes 60seconds
         if (twentyMinutesAgo.compare(eventBefore.createdAt) == NSComparisonResult.OrderedDescending) {
@@ -492,7 +499,7 @@ class ChatRoom: NSManagedObject {
     
     // retruns should show (aliasLabel, aliasIcon, bottomGapSize)
     func getViewSettingsForMessageCellAtIndex(messageIdx: Int) -> (Bool, Bool, CGFloat) {
-        let event = sortedChatEvents[messageIdx]
+        let event = getSortedChatEvents()[messageIdx]
         
         var shouldShowAliasLabel = false
         var shouldShowAliasIcon = false

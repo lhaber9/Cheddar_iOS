@@ -144,7 +144,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                 row -= 1
             }
             
-            let chatEvent = chatRoom.sortedChatEvents[row]
+            let chatEvent = chatRoom.getSortedChatEvents()[row]
             if (chatEvent.type == ChatEventType.Message.rawValue) {
                 showDeleteMessageOptions(chatEvent)
             }
@@ -405,7 +405,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
             index -= 1
         }
-        let event = chatRoom.sortedChatEvents[index]
+        let event = chatRoom.getSortedChatEvents()[index]
         
         if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
@@ -506,7 +506,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return getHeightFromCache(index)
         }
        
-        let event = chatRoom.sortedChatEvents[index]
+        let event = chatRoom.getSortedChatEvents()[index]
         var height: CGFloat = 0
         if (event.type == ChatEventType.Message.rawValue) {
             
