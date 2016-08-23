@@ -9,9 +9,10 @@
 import Foundation
 
 protocol FrontPageViewDelegate: class {
-//    func goToNextPage()
-//    func goToPrevPage()
-    func joinChat(isOneOnOne: Bool)
+    func goToNextPage()
+    func goToPrevPage()
+//    func showChat()
+//    func showLogin()
     //    func animateScrollViewToRaised()
     //    func animateScrollViewToDefault()
 }
@@ -20,7 +21,4 @@ class FrontPageView: UIView {
     
     weak var delegate: FrontPageViewDelegate?
     
-//    func goToNextPageWithController(viewController: FrontPageView) {
-//        delegate?.goToNextPage()
-//    }
 }

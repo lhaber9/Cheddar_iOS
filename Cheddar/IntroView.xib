@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -22,23 +22,17 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheeseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZLQ-Ao-YBr">
-                    <rect key="frame" x="212" y="212" width="175" height="175"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="175" id="qfy-dd-0MA"/>
-                        <constraint firstAttribute="height" constant="175" id="rlq-sc-nDf"/>
-                    </constraints>
-                </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Make a friend. Find a date. Troll." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-lb-ceX" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                    <rect key="frame" x="166" y="140.5" width="266.5" height="24"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make a friend. Find a date. Troll." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K1m-lb-ceX" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                    <rect key="frame" x="166" y="140" width="266.5" height="24"/>
                     <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="20"/>
                     <color key="textColor" red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Anonymous group messaging for Northeastern" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xH-rv-sy9" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anonymous group messaging for Northeastern" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9xH-rv-sy9" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
                     <rect key="frame" x="150" y="439" width="300" height="57"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="9D5-qf-DyD"/>
+                        <constraint firstAttribute="width" priority="200" constant="200" id="EGD-47-q04"/>
                         <constraint firstAttribute="width" constant="235" id="xUH-Wp-YDu"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="24"/>
@@ -46,26 +40,37 @@
                     <nil key="highlightedColor"/>
                     <variation key="default">
                         <mask key="constraints">
+                            <exclude reference="EGD-47-q04"/>
                             <exclude reference="xUH-Wp-YDu"/>
                         </mask>
                     </variation>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddq-1x-2IU" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
-                    <rect key="frame" x="191" y="74" width="217" height="52"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cheddar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddq-1x-2IU" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                    <rect key="frame" x="191" y="73.5" width="217" height="52"/>
                     <fontDescription key="fontDescription" name="GothamRounded-Bold" family="Gotham Rounded" pointSize="52"/>
                     <color key="textColor" red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CheeseIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ZLQ-Ao-YBr">
+                    <rect key="frame" x="212" y="212" width="175" height="175"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="175" id="qfy-dd-0MA"/>
+                        <constraint firstAttribute="height" constant="175" id="rlq-sc-nDf"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="9xH-rv-sy9" firstAttribute="centerX" secondItem="ZLQ-Ao-YBr" secondAttribute="centerX" id="3Ca-JM-STR"/>
                 <constraint firstItem="ZLQ-Ao-YBr" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3HV-Xg-QUN"/>
+                <constraint firstItem="K1m-lb-ceX" firstAttribute="top" secondItem="ddq-1x-2IU" secondAttribute="bottom" priority="900" constant="15" id="8FG-Gg-PLE"/>
                 <constraint firstItem="K1m-lb-ceX" firstAttribute="centerX" secondItem="ZLQ-Ao-YBr" secondAttribute="centerX" id="DRd-6N-zZv"/>
                 <constraint firstItem="ddq-1x-2IU" firstAttribute="centerX" secondItem="ZLQ-Ao-YBr" secondAttribute="centerX" id="I4o-Z7-xoN"/>
-                <constraint firstItem="9xH-rv-sy9" firstAttribute="top" secondItem="ZLQ-Ao-YBr" secondAttribute="bottom" constant="52" id="PKN-Ws-DI4"/>
-                <constraint firstItem="ZLQ-Ao-YBr" firstAttribute="top" secondItem="K1m-lb-ceX" secondAttribute="bottom" constant="48" id="ULP-dg-OQ5"/>
-                <constraint firstItem="K1m-lb-ceX" firstAttribute="top" secondItem="ddq-1x-2IU" secondAttribute="bottom" constant="15" id="ad0-hl-GxQ"/>
+                <constraint firstItem="9xH-rv-sy9" firstAttribute="top" secondItem="ZLQ-Ao-YBr" secondAttribute="bottom" priority="900" constant="52" id="PKN-Ws-DI4"/>
+                <constraint firstItem="ZLQ-Ao-YBr" firstAttribute="top" secondItem="K1m-lb-ceX" secondAttribute="bottom" priority="900" constant="48" id="ULP-dg-OQ5"/>
+                <constraint firstItem="K1m-lb-ceX" firstAttribute="top" secondItem="ddq-1x-2IU" secondAttribute="bottom" priority="200" constant="5" id="ad0-hl-GxQ"/>
+                <constraint firstItem="9xH-rv-sy9" firstAttribute="top" secondItem="ZLQ-Ao-YBr" secondAttribute="bottom" priority="200" constant="26" id="gDG-D9-8wY"/>
+                <constraint firstItem="ZLQ-Ao-YBr" firstAttribute="top" secondItem="K1m-lb-ceX" secondAttribute="bottom" priority="200" constant="24" id="hLq-Cv-J0z"/>
                 <constraint firstItem="ZLQ-Ao-YBr" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vg9-Tg-4xd"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
@@ -73,6 +78,9 @@
             <nil key="simulatedBottomBarMetrics"/>
             <connections>
                 <outlet property="bottomTextLabel" destination="9xH-rv-sy9" id="Odi-Ac-WAt"/>
+                <outlet property="bottomTextSmallConstraint" destination="gDG-D9-8wY" id="TwW-qw-WSY"/>
+                <outlet property="cheddarTextSmallConstraint" destination="ad0-hl-GxQ" id="O7T-hV-ah7"/>
+                <outlet property="taglineTextSmallConstraint" destination="hLq-Cv-J0z" id="9gp-1z-8NX"/>
             </connections>
         </view>
     </objects>

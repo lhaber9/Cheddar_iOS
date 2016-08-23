@@ -10,12 +10,22 @@
 		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
 		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
 		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
+		A302FD471D52E89F00E62D24 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */; };
+		A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */; };
+		A32E97FB1D2421B400800546 /* LoginSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */; };
+		A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A333B9D61CB6E39700E5DC25 /* ChatController.swift */; };
+		A3377ADA1D08D17200DD09FC /* CheddarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3377AD91D08D17200DD09FC /* CheddarRequest.swift */; };
+		A344BA201CEA11A000DE6B0A /* NameChangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A344BA1F1CEA11A000DE6B0A /* NameChangeCell.swift */; };
+		A344BA221CEA11BF00DE6B0A /* NameChangeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A344BA211CEA11BF00DE6B0A /* NameChangeCell.xib */; };
 		A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */; };
-		A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A354E1A81CA17FC600E956AB /* ChatRoomController.swift */; };
+		A36173EE1CEE3E240095BE3A /* LockedBackgroundColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36173ED1CEE3E240095BE3A /* LockedBackgroundColorView.swift */; };
+		A363E8261CEDED4300885AE3 /* AliasCircleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A363E8251CEDED4300885AE3 /* AliasCircleView.xib */; };
+		A363E8281CEDED5300885AE3 /* AliasCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A363E8271CEDED5300885AE3 /* AliasCircleView.swift */; };
 		A36F3E0B1CAB857700F533FF /* CheddarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */; };
 		A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */; };
 		A36F3E0F1CAB91C800F533FF /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = A36F3E0E1CAB91C800F533FF /* loading.gif */; };
-		A37297D71C6BF5AF00625C7F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37297D61C6BF5AF00625C7F /* Message.swift */; };
+		A37213861D45A29E0046BA91 /* RegistrationCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37213851D45A29E0046BA91 /* RegistrationCodeViewController.swift */; };
+		A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A376797D1CBE7F0D00744899 /* ChatAlertController.swift */; };
 		A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896C81C60664A002017B9 /* AppDelegate.swift */; };
 		A38896CB1C60664A002017B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896CA1C60664A002017B9 /* ViewController.swift */; };
 		A38896CE1C60664A002017B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A38896CC1C60664A002017B9 /* Main.storyboard */; };
@@ -23,17 +33,28 @@
 		A38896D31C60664A002017B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A38896D11C60664A002017B9 /* LaunchScreen.storyboard */; };
 		A38896DE1C60664A002017B9 /* CheddarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896DD1C60664A002017B9 /* CheddarTests.swift */; };
 		A38896E91C60664A002017B9 /* CheddarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38896E81C60664A002017B9 /* CheddarUITests.swift */; };
+		A38FDA5B1D45719D00287035 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A38FDA5A1D45719D00287035 /* Keys.plist */; };
 		A393D6101C63BB5400EBB94C /* group.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60C1C63BB5400EBB94C /* group.png */; };
 		A393D6111C63BB5400EBB94C /* group_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60D1C63BB5400EBB94C /* group_selected.png */; };
 		A393D6121C63BB5400EBB94C /* single.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60E1C63BB5400EBB94C /* single.png */; };
 		A393D6131C63BB5400EBB94C /* single_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D60F1C63BB5400EBB94C /* single_selected.png */; };
 		A393D6161C63C1C400EBB94C /* cheese.png in Resources */ = {isa = PBXBuildFile; fileRef = A393D6151C63C1C400EBB94C /* cheese.png */; };
+		A39466321D6AAD840096F277 /* ActivityIndicatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39466311D6AAD840096F277 /* ActivityIndicatorCell.swift */; };
+		A39466341D6AADFB0096F277 /* ActivityIndicatorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A39466331D6AADFB0096F277 /* ActivityIndicatorCell.xib */; };
+		A395D7041CB57B78004D340E /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A395D7031CB57B78004D340E /* Chat.storyboard */; };
 		A3B12D491C6FC83900B75645 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B12D481C6FC83900B75645 /* User.swift */; };
+		A3BC4D9F1D399CCC0083A4BE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A3BC4D9E1D399CCC0083A4BE /* Reachability.m */; };
 		A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */; };
 		A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD41C61BE07009B82EE /* NSArray+PureLayout.m */; };
 		A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A3C59BD61C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m */; };
-		A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3C785501CACD32300AA1673 /* CheddarTextView.swift */; };
-		A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */; };
+		A3CE46FD1CE94BA5009A23D7 /* ActiveMembersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CE46FC1CE94BA5009A23D7 /* ActiveMembersController.swift */; };
+		A3CE46FF1CE94F6C009A23D7 /* ActiveMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3CE46FE1CE94F6C009A23D7 /* ActiveMemberCell.swift */; };
+		A3D3D4431D0644A800B9D83D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4421D0644A800B9D83D /* LoginViewController.swift */; };
+		A3D3D4451D074C8A00B9D83D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */; };
+		A3D3D4471D074DEA00B9D83D /* FullPageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */; };
+		A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F11CB86EFE0075B314 /* ChatListCell.swift */; };
+		A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3D822F31CB86F120075B314 /* ChatListCell.xib */; };
+		A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D822F51CBBD7A60075B314 /* ChatEvent.swift */; };
 		A3E05CAD1CA9887A005B9764 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CAC1CA9887A005B9764 /* IntroView.swift */; };
 		A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E05CB01CA988C4005B9764 /* FrontView.swift */; };
 		A3E05CB31CA988E0005B9764 /* IntroView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3E05CB21CA988E0005B9764 /* IntroView.xib */; };
@@ -45,17 +66,22 @@
 		A3E05CC41CAA3896005B9764 /* Effra-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3E05CC31CAA379D005B9764 /* Effra-Medium.ttf */; };
 		A3E05CC51CAA3896005B9764 /* GothamRounded-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3E05CC21CAA3799005B9764 /* GothamRounded-Bold.ttf */; };
 		A3E05CC61CAA38CE005B9764 /* MatchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3E05CB41CA98945005B9764 /* MatchView.xib */; };
+		A3E78C7E1CE6404900454BB2 /* RenameChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E78C7D1CE6404900454BB2 /* RenameChatController.swift */; };
 		A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE811C66E730003F981C /* ChatViewController.swift */; };
 		A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3ECAE951C67273C003F981C /* ChatCell.swift */; };
 		A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3ECAE971C673B8C003F981C /* ChatCell.xib */; };
+		A3F0B5891D2478FD00D6E9DC /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */; };
+		A3F0B58B1D2594B700D6E9DC /* CheddarTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */; };
+		A3F0B58D1D2CB46300D6E9DC /* VerifyEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */; };
+		A3F0B58F1D34175700D6E9DC /* ChangeSchoolViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */; };
+		A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */; };
+		A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3701B1CC0357500BF1977 /* CheddarView.swift */; };
 		A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920571C77ECBA003E0BC3 /* StringConstants.swift */; };
 		A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920591C783BE8003E0BC3 /* ColorConstants.swift */; };
 		A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */; };
 		A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920621C7AA2E9003E0BC3 /* Alias.swift */; };
 		A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */; };
 		A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */; };
-		A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */; };
-		A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920AE1C7F6077003E0BC3 /* Presence.swift */; };
 		A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */; };
 		A3F920B31C7F6B1C003E0BC3 /* PresenceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */; };
 		A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F920B41C8124A1003E0BC3 /* Utilities.swift */; };
@@ -85,12 +111,23 @@
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListController.swift; sourceTree = "<group>"; };
+		A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSignupViewController.swift; sourceTree = "<group>"; };
+		A333B9D61CB6E39700E5DC25 /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		A3377AD91D08D17200DD09FC /* CheddarRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarRequest.swift; sourceTree = "<group>"; };
+		A344BA1F1CEA11A000DE6B0A /* NameChangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NameChangeCell.swift; sourceTree = "<group>"; };
+		A344BA211CEA11BF00DE6B0A /* NameChangeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NameChangeCell.xib; sourceTree = "<group>"; };
 		A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
-		A354E1A81CA17FC600E956AB /* ChatRoomController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomController.swift; sourceTree = "<group>"; };
+		A36173ED1CEE3E240095BE3A /* LockedBackgroundColorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockedBackgroundColorView.swift; sourceTree = "<group>"; };
+		A363E8251CEDED4300885AE3 /* AliasCircleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AliasCircleView.xib; sourceTree = "<group>"; };
+		A363E8271CEDED5300885AE3 /* AliasCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AliasCircleView.swift; sourceTree = "<group>"; };
 		A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarLabel.swift; sourceTree = "<group>"; };
 		A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarButton.swift; sourceTree = "<group>"; };
 		A36F3E0E1CAB91C800F533FF /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
-		A37297D61C6BF5AF00625C7F /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A37213851D45A29E0046BA91 /* RegistrationCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationCodeViewController.swift; sourceTree = "<group>"; };
+		A376797A1CBDF6E600744899 /* ModelBeta1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelBeta1.xcdatamodel; sourceTree = "<group>"; };
+		A376797D1CBE7F0D00744899 /* ChatAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatAlertController.swift; sourceTree = "<group>"; };
 		A38896C51C60664A002017B9 /* Cheddar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cheddar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38896C81C60664A002017B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A38896CA1C60664A002017B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -104,12 +141,18 @@
 		A38896E41C60664A002017B9 /* CheddarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheddarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A38896E81C60664A002017B9 /* CheddarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheddarUITests.swift; sourceTree = "<group>"; };
 		A38896EA1C60664A002017B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A38FDA5A1D45719D00287035 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		A393D60C1C63BB5400EBB94C /* group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group.png; sourceTree = "<group>"; };
 		A393D60D1C63BB5400EBB94C /* group_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = group_selected.png; sourceTree = "<group>"; };
 		A393D60E1C63BB5400EBB94C /* single.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single.png; sourceTree = "<group>"; };
 		A393D60F1C63BB5400EBB94C /* single_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = single_selected.png; sourceTree = "<group>"; };
 		A393D6151C63C1C400EBB94C /* cheese.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cheese.png; sourceTree = "<group>"; };
+		A39466311D6AAD840096F277 /* ActivityIndicatorCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorCell.swift; sourceTree = "<group>"; };
+		A39466331D6AADFB0096F277 /* ActivityIndicatorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityIndicatorCell.xib; sourceTree = "<group>"; };
+		A395D7031CB57B78004D340E /* Chat.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chat.storyboard; sourceTree = "<group>"; };
 		A3B12D481C6FC83900B75645 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		A3BC4D9D1D399CCC0083A4BE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		A3BC4D9E1D399CCC0083A4BE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		A3C59BD01C61BE07009B82EE /* Cheddar-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cheddar-Bridging-Header.h"; sourceTree = "<group>"; };
 		A3C59BD11C61BE07009B82EE /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
 		A3C59BD21C61BE07009B82EE /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
@@ -120,8 +163,14 @@
 		A3C59BD71C61BE07009B82EE /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		A3C59BD81C61BE07009B82EE /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
 		A3C59BD91C61BE07009B82EE /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
-		A3C785501CACD32300AA1673 /* CheddarTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextView.swift; sourceTree = "<group>"; };
-		A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsMenuController.swift; sourceTree = "<group>"; };
+		A3CE46FC1CE94BA5009A23D7 /* ActiveMembersController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveMembersController.swift; sourceTree = "<group>"; };
+		A3CE46FE1CE94F6C009A23D7 /* ActiveMemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveMemberCell.swift; sourceTree = "<group>"; };
+		A3D3D4421D0644A800B9D83D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullPageScrollView.swift; sourceTree = "<group>"; };
+		A3D822F11CB86EFE0075B314 /* ChatListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListCell.swift; sourceTree = "<group>"; };
+		A3D822F31CB86F120075B314 /* ChatListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatListCell.xib; sourceTree = "<group>"; };
+		A3D822F51CBBD7A60075B314 /* ChatEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatEvent.swift; sourceTree = "<group>"; };
 		A3E05CAC1CA9887A005B9764 /* IntroView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
 		A3E05CB01CA988C4005B9764 /* FrontView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontView.swift; sourceTree = "<group>"; };
 		A3E05CB21CA988E0005B9764 /* IntroView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroView.xib; sourceTree = "<group>"; };
@@ -133,17 +182,22 @@
 		A3E05CC01CA99C31005B9764 /* AlphaWarningView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlphaWarningView.xib; sourceTree = "<group>"; };
 		A3E05CC21CAA3799005B9764 /* GothamRounded-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Bold.ttf"; sourceTree = "<group>"; };
 		A3E05CC31CAA379D005B9764 /* Effra-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Medium.ttf"; sourceTree = "<group>"; };
+		A3E78C7D1CE6404900454BB2 /* RenameChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenameChatController.swift; sourceTree = "<group>"; };
 		A3ECAE811C66E730003F981C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		A3ECAE951C67273C003F981C /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		A3ECAE971C673B8C003F981C /* ChatCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatCell.xib; sourceTree = "<group>"; };
+		A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarTextField.swift; sourceTree = "<group>"; };
+		A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyEmailViewController.swift; sourceTree = "<group>"; };
+		A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeSchoolViewController.swift; sourceTree = "<group>"; };
+		A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsOverlayViewController.swift; sourceTree = "<group>"; };
+		A3F3701B1CC0357500BF1977 /* CheddarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheddarView.swift; sourceTree = "<group>"; };
 		A3F920571C77ECBA003E0BC3 /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		A3F920591C783BE8003E0BC3 /* ColorConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorConstants.swift; sourceTree = "<group>"; };
 		A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayConstants.swift; sourceTree = "<group>"; };
 		A3F920621C7AA2E9003E0BC3 /* Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoom.swift; sourceTree = "<group>"; };
 		A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentConstants.swift; sourceTree = "<group>"; };
-		A3F920AE1C7F6077003E0BC3 /* Presence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presence.swift; sourceTree = "<group>"; };
 		A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresenceCell.swift; sourceTree = "<group>"; };
 		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
 		A3F920B41C8124A1003E0BC3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -187,11 +241,15 @@
 		A300583C1CAB202300725FC3 /* Reuse */ = {
 			isa = PBXGroup;
 			children = (
-				A3C785501CACD32300AA1673 /* CheddarTextView.swift */,
+				A3F0B58A1D2594B700D6E9DC /* CheddarTextField.swift */,
 				A36F3E0A1CAB857700F533FF /* CheddarLabel.swift */,
+				A36173ED1CEE3E240095BE3A /* LockedBackgroundColorView.swift */,
 				A36F3E0C1CAB86A800F533FF /* CheddarButton.swift */,
+				A3F3701B1CC0357500BF1977 /* CheddarView.swift */,
 				A300583F1CAB203B00725FC3 /* LoadingView.swift */,
 				A300583D1CAB203200725FC3 /* LoadingView.xib */,
+				A363E8271CEDED5300885AE3 /* AliasCircleView.swift */,
+				A363E8251CEDED4300885AE3 /* AliasCircleView.xib */,
 			);
 			name = Reuse;
 			sourceTree = "<group>";
@@ -199,6 +257,8 @@
 		A38896BC1C60664A002017B9 = {
 			isa = PBXGroup;
 			children = (
+				A3BC4D9D1D399CCC0083A4BE /* Reachability.h */,
+				A3BC4D9E1D399CCC0083A4BE /* Reachability.m */,
 				A393D6141C63BB5B00EBB94C /* Assets */,
 				A3C59BDD1C61BE12009B82EE /* Pure Layout */,
 				A38896C71C60664A002017B9 /* Cheddar */,
@@ -229,14 +289,14 @@
 				A393D6171C63C2BF00EBB94C /* Front Pages */,
 				A3F9205E1C783EA0003E0BC3 /* Chat */,
 				A3F920611C7AA2D2003E0BC3 /* Objects */,
+				A3D3D4481D074F5800B9D83D /* IntroViews */,
 				A38896C81C60664A002017B9 /* AppDelegate.swift */,
-				A3CB6D4B1C9F8B900073901F /* OptionsMenuController.swift */,
-				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
-				A38896CA1C60664A002017B9 /* ViewController.swift */,
+				A3377AD91D08D17200DD09FC /* CheddarRequest.swift */,
 				A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */,
 				A38896CC1C60664A002017B9 /* Main.storyboard */,
 				A38896D11C60664A002017B9 /* LaunchScreen.storyboard */,
 				A38896D41C60664A002017B9 /* Info.plist */,
+				A38FDA5A1D45719D00287035 /* Keys.plist */,
 				A38896CF1C60664A002017B9 /* Assets.xcassets */,
 			);
 			path = Cheddar;
@@ -260,6 +320,21 @@
 			path = CheddarUITests;
 			sourceTree = "<group>";
 		};
+		A38F85E61D02178A00F900B5 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A3E05CAC1CA9887A005B9764 /* IntroView.swift */,
+				A3E05CB21CA988E0005B9764 /* IntroView.xib */,
+				A3E05CB61CA9894E005B9764 /* MatchView.swift */,
+				A3E05CB41CA98945005B9764 /* MatchView.xib */,
+				A3E05CB81CA989C3005B9764 /* GroupView.swift */,
+				A3E05CBA1CA989D3005B9764 /* GroupView.xib */,
+				A3E05CBE1CA98B13005B9764 /* AlphaWarningView.swift */,
+				A3E05CC01CA99C31005B9764 /* AlphaWarningView.xib */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
 		A393D6141C63BB5B00EBB94C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,16 +355,27 @@
 			isa = PBXGroup;
 			children = (
 				A3E05CB01CA988C4005B9764 /* FrontView.swift */,
-				A3E05CAC1CA9887A005B9764 /* IntroView.swift */,
-				A3E05CB21CA988E0005B9764 /* IntroView.xib */,
-				A3E05CB61CA9894E005B9764 /* MatchView.swift */,
-				A3E05CB41CA98945005B9764 /* MatchView.xib */,
-				A3E05CB81CA989C3005B9764 /* GroupView.swift */,
-				A3E05CBA1CA989D3005B9764 /* GroupView.xib */,
-				A3E05CBE1CA98B13005B9764 /* AlphaWarningView.swift */,
-				A3E05CC01CA99C31005B9764 /* AlphaWarningView.xib */,
+				A38F85E61D02178A00F900B5 /* Onboarding */,
 			);
 			name = "Front Pages";
+			sourceTree = "<group>";
+		};
+		A3A84C3D1CBE84FA00D75E5A /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				A3CE46FE1CE94F6C009A23D7 /* ActiveMemberCell.swift */,
+				A3D822F11CB86EFE0075B314 /* ChatListCell.swift */,
+				A3D822F31CB86F120075B314 /* ChatListCell.xib */,
+				A3ECAE951C67273C003F981C /* ChatCell.swift */,
+				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
+				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
+				A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */,
+				A344BA1F1CEA11A000DE6B0A /* NameChangeCell.swift */,
+				A344BA211CEA11BF00DE6B0A /* NameChangeCell.xib */,
+				A39466311D6AAD840096F277 /* ActivityIndicatorCell.swift */,
+				A39466331D6AADFB0096F277 /* ActivityIndicatorCell.xib */,
+			);
+			name = TableCells;
 			sourceTree = "<group>";
 		};
 		A3C59BDD1C61BE12009B82EE /* Pure Layout */ = {
@@ -308,13 +394,29 @@
 			name = "Pure Layout";
 			sourceTree = "<group>";
 		};
+		A3D3D4481D074F5800B9D83D /* IntroViews */ = {
+			isa = PBXGroup;
+			children = (
+				A38896CA1C60664A002017B9 /* ViewController.swift */,
+				A3D3D4461D074DEA00B9D83D /* FullPageScrollView.swift */,
+				A3F0B5881D2478FD00D6E9DC /* IntroViewController.swift */,
+				A32E97FA1D2421B400800546 /* LoginSignupViewController.swift */,
+				A3D3D4421D0644A800B9D83D /* LoginViewController.swift */,
+				A3D3D4441D074C8A00B9D83D /* SignupViewController.swift */,
+				A3F0B58C1D2CB46300D6E9DC /* VerifyEmailViewController.swift */,
+				A3F0B58E1D34175700D6E9DC /* ChangeSchoolViewController.swift */,
+				A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */,
+				A37213851D45A29E0046BA91 /* RegistrationCodeViewController.swift */,
+			);
+			name = IntroViews;
+			sourceTree = "<group>";
+		};
 		A3F9205D1C783E77003E0BC3 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 				A3F9205B1C783E45003E0BC3 /* ArrayConstants.swift */,
 				A3F920571C77ECBA003E0BC3 /* StringConstants.swift */,
 				A3F920591C783BE8003E0BC3 /* ColorConstants.swift */,
-				A3F920AC1C7BFCF2003E0BC3 /* EnvironmentConstants.swift */,
 				A3F920B41C8124A1003E0BC3 /* Utilities.swift */,
 			);
 			name = Constants;
@@ -323,12 +425,16 @@
 		A3F9205E1C783EA0003E0BC3 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				A395D7031CB57B78004D340E /* Chat.storyboard */,
+				A333B9D61CB6E39700E5DC25 /* ChatController.swift */,
+				A31D8B1D1CB36CFD0076EF8A /* ChatListController.swift */,
 				A3ECAE811C66E730003F981C /* ChatViewController.swift */,
-				A354E1A81CA17FC600E956AB /* ChatRoomController.swift */,
-				A3ECAE951C67273C003F981C /* ChatCell.swift */,
-				A3ECAE971C673B8C003F981C /* ChatCell.xib */,
-				A3F920B01C7F6930003E0BC3 /* PresenceCell.swift */,
-				A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */,
+				A376797D1CBE7F0D00744899 /* ChatAlertController.swift */,
+				A3E78C7D1CE6404900454BB2 /* RenameChatController.swift */,
+				A3F370191CC0280D00BF1977 /* OptionsOverlayViewController.swift */,
+				A354E1A21CA06DC400E956AB /* FeedbackViewController.swift */,
+				A3CE46FC1CE94BA5009A23D7 /* ActiveMembersController.swift */,
+				A3A84C3D1CBE84FA00D75E5A /* TableCells */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -336,8 +442,7 @@
 		A3F920611C7AA2D2003E0BC3 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				A37297D61C6BF5AF00625C7F /* Message.swift */,
-				A3F920AE1C7F6077003E0BC3 /* Presence.swift */,
+				A3D822F51CBBD7A60075B314 /* ChatEvent.swift */,
 				A3F920621C7AA2E9003E0BC3 /* Alias.swift */,
 				A3F920641C7AA3B2003E0BC3 /* ChatRoom.swift */,
 				A3B12D481C6FC83900B75645 /* User.swift */,
@@ -473,8 +578,10 @@
 			files = (
 				A3E05CC61CAA38CE005B9764 /* MatchView.xib in Resources */,
 				A3E05CC41CAA3896005B9764 /* Effra-Medium.ttf in Resources */,
+				A363E8261CEDED4300885AE3 /* AliasCircleView.xib in Resources */,
 				A3E05CC51CAA3896005B9764 /* GothamRounded-Bold.ttf in Resources */,
 				A3ECAE981C673B8C003F981C /* ChatCell.xib in Resources */,
+				A39466341D6AADFB0096F277 /* ActivityIndicatorCell.xib in Resources */,
 				A38896D31C60664A002017B9 /* LaunchScreen.storyboard in Resources */,
 				A393D6101C63BB5400EBB94C /* group.png in Resources */,
 				A393D6161C63C1C400EBB94C /* cheese.png in Resources */,
@@ -488,7 +595,11 @@
 				A36F3E0F1CAB91C800F533FF /* loading.gif in Resources */,
 				A393D6131C63BB5400EBB94C /* single_selected.png in Resources */,
 				A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */,
+				A3D822F41CB86F120075B314 /* ChatListCell.xib in Resources */,
 				A3F920B71C825261003E0BC3 /* Effra-Regular.ttf in Resources */,
+				A395D7041CB57B78004D340E /* Chat.storyboard in Resources */,
+				A38FDA5B1D45719D00287035 /* Keys.plist in Resources */,
+				A344BA221CEA11BF00DE6B0A /* NameChangeCell.xib in Resources */,
 				A38896CE1C60664A002017B9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,34 +688,54 @@
 			files = (
 				A3C59BDB1C61BE07009B82EE /* NSArray+PureLayout.m in Sources */,
 				A36F3E0B1CAB857700F533FF /* CheddarLabel.swift in Sources */,
-				A3F920AF1C7F6077003E0BC3 /* Presence.swift in Sources */,
+				A3D3D4451D074C8A00B9D83D /* SignupViewController.swift in Sources */,
 				A3E05CB91CA989C3005B9764 /* GroupView.swift in Sources */,
 				A3ECAE821C66E730003F981C /* ChatViewController.swift in Sources */,
-				A354E1A91CA17FC600E956AB /* ChatRoomController.swift in Sources */,
+				A3F0B58D1D2CB46300D6E9DC /* VerifyEmailViewController.swift in Sources */,
 				A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */,
 				A3F920B51C8124A1003E0BC3 /* Utilities.swift in Sources */,
 				A3ECAE961C67273C003F981C /* ChatCell.swift in Sources */,
+				A3F3701C1CC0357500BF1977 /* CheddarView.swift in Sources */,
+				A3D822F61CBBD7A60075B314 /* ChatEvent.swift in Sources */,
 				A3E05CB71CA9894E005B9764 /* MatchView.swift in Sources */,
+				A3BC4D9F1D399CCC0083A4BE /* Reachability.m in Sources */,
+				A376797E1CBE7F0D00744899 /* ChatAlertController.swift in Sources */,
 				A3B12D491C6FC83900B75645 /* User.swift in Sources */,
+				A333B9D71CB6E39700E5DC25 /* ChatController.swift in Sources */,
 				A3C59BDC1C61BE07009B82EE /* NSLayoutConstraint+PureLayout.m in Sources */,
-				A3F920AD1C7BFCF2003E0BC3 /* EnvironmentConstants.swift in Sources */,
-				A3C785511CACD32300AA1673 /* CheddarTextView.swift in Sources */,
 				A3F920581C77ECBA003E0BC3 /* StringConstants.swift in Sources */,
-				A3CB6D4C1C9F8B900073901F /* OptionsMenuController.swift in Sources */,
+				A3377ADA1D08D17200DD09FC /* CheddarRequest.swift in Sources */,
+				A39466321D6AAD840096F277 /* ActivityIndicatorCell.swift in Sources */,
 				A3E05CBF1CA98B13005B9764 /* AlphaWarningView.swift in Sources */,
 				A3F920631C7AA2E9003E0BC3 /* Alias.swift in Sources */,
 				A3F9205A1C783BE8003E0BC3 /* ColorConstants.swift in Sources */,
+				A3F0B5891D2478FD00D6E9DC /* IntroViewController.swift in Sources */,
+				A3F3701A1CC0280D00BF1977 /* OptionsOverlayViewController.swift in Sources */,
+				A363E8281CEDED5300885AE3 /* AliasCircleView.swift in Sources */,
+				A31D8B1E1CB36CFD0076EF8A /* ChatListController.swift in Sources */,
+				A3D3D4471D074DEA00B9D83D /* FullPageScrollView.swift in Sources */,
 				A38896CB1C60664A002017B9 /* ViewController.swift in Sources */,
 				A3E05CB11CA988C4005B9764 /* FrontView.swift in Sources */,
-				A37297D71C6BF5AF00625C7F /* Message.swift in Sources */,
 				A3F9205C1C783E45003E0BC3 /* ArrayConstants.swift in Sources */,
+				A3F0B58B1D2594B700D6E9DC /* CheddarTextField.swift in Sources */,
+				A3E78C7E1CE6404900454BB2 /* RenameChatController.swift in Sources */,
 				A3E05CAD1CA9887A005B9764 /* IntroView.swift in Sources */,
+				A3CE46FD1CE94BA5009A23D7 /* ActiveMembersController.swift in Sources */,
 				A3C59BDA1C61BE07009B82EE /* ALView+PureLayout.m in Sources */,
 				A3F920B11C7F6930003E0BC3 /* PresenceCell.swift in Sources */,
+				A344BA201CEA11A000DE6B0A /* NameChangeCell.swift in Sources */,
+				A3D3D4431D0644A800B9D83D /* LoginViewController.swift in Sources */,
 				A3F920A71C7BA969003E0BC3 /* Model.xcdatamodeld in Sources */,
 				A38896C91C60664A002017B9 /* AppDelegate.swift in Sources */,
+				A3F0B58F1D34175700D6E9DC /* ChangeSchoolViewController.swift in Sources */,
 				A36F3E0D1CAB86A800F533FF /* CheddarButton.swift in Sources */,
+				A3D822F21CB86EFE0075B314 /* ChatListCell.swift in Sources */,
 				A354E1A31CA06DC400E956AB /* FeedbackViewController.swift in Sources */,
+				A302FD471D52E89F00E62D24 /* ResetPasswordViewController.swift in Sources */,
+				A3CE46FF1CE94F6C009A23D7 /* ActiveMemberCell.swift in Sources */,
+				A37213861D45A29E0046BA91 /* RegistrationCodeViewController.swift in Sources */,
+				A36173EE1CEE3E240095BE3A /* LockedBackgroundColorView.swift in Sources */,
+				A32E97FB1D2421B400800546 /* LoginSignupViewController.swift in Sources */,
 				A3F920651C7AA3B2003E0BC3 /* ChatRoom.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -660,10 +791,95 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		A38896EB1C60664A002017B9 /* Debug */ = {
+		A317195F1D6264D400A38FF3 /* Beta */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = Cheddar;
+				BUNDLE_ID = Cheddar.Cheddar;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		A31719601D6264D400A38FF3 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				INFOPLIST_FILE = Cheddar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Beta;
+		};
+		A31719611D6264D400A38FF3 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CheddarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.CheddarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cheddar.app/Cheddar";
+			};
+			name = Beta;
+		};
+		A31719621D6264D400A38FF3 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CheddarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.CheddarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Cheddar;
+				USES_XCTRUNNER = YES;
+			};
+			name = Beta;
+		};
+		A38896EB1C60664A002017B9 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = "Internal Cheddar";
+				BUNDLE_ID = Cheddar.Cheddar.Internal;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -703,12 +919,14 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = Development;
 		};
-		A38896EC1C60664A002017B9 /* Release */ = {
+		A38896EC1C60664A002017B9 /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = Cheddar;
+				BUNDLE_ID = Cheddar.Cheddar;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -741,9 +959,9 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Production;
 		};
-		A38896EE1C60664A002017B9 /* Debug */ = {
+		A38896EE1C60664A002017B9 /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 30639877EA11B07B2D842129 /* Pods.debug.xcconfig */;
 			buildSettings = {
@@ -752,17 +970,19 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = Cheddar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar;
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar.Internal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Debug;
+			name = Development;
 		};
-		A38896EF1C60664A002017B9 /* Release */ = {
+		A38896EF1C60664A002017B9 /* Production */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */;
 			buildSettings = {
@@ -770,16 +990,18 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = Cheddar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
-			name = Release;
+			name = Production;
 		};
-		A38896F11C60664A002017B9 /* Debug */ = {
+		A38896F11C60664A002017B9 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -789,9 +1011,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cheddar.app/Cheddar";
 			};
-			name = Debug;
+			name = Development;
 		};
-		A38896F21C60664A002017B9 /* Release */ = {
+		A38896F21C60664A002017B9 /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -801,9 +1023,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cheddar.app/Cheddar";
 			};
-			name = Release;
+			name = Production;
 		};
-		A38896F41C60664A002017B9 /* Debug */ = {
+		A38896F41C60664A002017B9 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = CheddarUITests/Info.plist;
@@ -813,9 +1035,9 @@
 				TEST_TARGET_NAME = Cheddar;
 				USES_XCTRUNNER = YES;
 			};
-			name = Debug;
+			name = Development;
 		};
-		A38896F51C60664A002017B9 /* Release */ = {
+		A38896F51C60664A002017B9 /* Production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = CheddarUITests/Info.plist;
@@ -825,7 +1047,99 @@
 				TEST_TARGET_NAME = Cheddar;
 				USES_XCTRUNNER = YES;
 			};
-			name = Release;
+			name = Production;
+		};
+		A38FDA561D4566CB00287035 /* InternalBeta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_NAME = "Internal Cheddar";
+				BUNDLE_ID = Cheddar.Cheddar.Internal;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = InternalBeta;
+		};
+		A38FDA571D4566CB00287035 /* InternalBeta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 30639877EA11B07B2D842129 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				INFOPLIST_FILE = Cheddar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar.Internal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = InternalBeta;
+		};
+		A38FDA581D4566CB00287035 /* InternalBeta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CheddarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.CheddarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Cheddar.app/Cheddar";
+			};
+			name = InternalBeta;
+		};
+		A38FDA591D4566CB00287035 /* InternalBeta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CheddarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.CheddarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Cheddar;
+				USES_XCTRUNNER = YES;
+			};
+			name = InternalBeta;
 		};
 /* End XCBuildConfiguration section */
 
@@ -833,38 +1147,46 @@
 		A38896C01C60664A002017B9 /* Build configuration list for PBXProject "Cheddar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A38896EB1C60664A002017B9 /* Debug */,
-				A38896EC1C60664A002017B9 /* Release */,
+				A38896EB1C60664A002017B9 /* Development */,
+				A38FDA561D4566CB00287035 /* InternalBeta */,
+				A38896EC1C60664A002017B9 /* Production */,
+				A317195F1D6264D400A38FF3 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Production;
 		};
 		A38896ED1C60664A002017B9 /* Build configuration list for PBXNativeTarget "Cheddar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A38896EE1C60664A002017B9 /* Debug */,
-				A38896EF1C60664A002017B9 /* Release */,
+				A38896EE1C60664A002017B9 /* Development */,
+				A38FDA571D4566CB00287035 /* InternalBeta */,
+				A38896EF1C60664A002017B9 /* Production */,
+				A31719601D6264D400A38FF3 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Production;
 		};
 		A38896F01C60664A002017B9 /* Build configuration list for PBXNativeTarget "CheddarTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A38896F11C60664A002017B9 /* Debug */,
-				A38896F21C60664A002017B9 /* Release */,
+				A38896F11C60664A002017B9 /* Development */,
+				A38FDA581D4566CB00287035 /* InternalBeta */,
+				A38896F21C60664A002017B9 /* Production */,
+				A31719611D6264D400A38FF3 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Production;
 		};
 		A38896F31C60664A002017B9 /* Build configuration list for PBXNativeTarget "CheddarUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A38896F41C60664A002017B9 /* Debug */,
-				A38896F51C60664A002017B9 /* Release */,
+				A38896F41C60664A002017B9 /* Development */,
+				A38FDA591D4566CB00287035 /* InternalBeta */,
+				A38896F51C60664A002017B9 /* Production */,
+				A31719621D6264D400A38FF3 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Production;
 		};
 /* End XCConfigurationList section */
 
@@ -872,9 +1194,10 @@
 		A3F920A51C7BA969003E0BC3 /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A376797A1CBDF6E600744899 /* ModelBeta1.xcdatamodel */,
 				A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */,
 			);
-			currentVersion = A3F920A61C7BA969003E0BC3 /* Model.xcdatamodel */;
+			currentVersion = A376797A1CBDF6E600744899 /* ModelBeta1.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
