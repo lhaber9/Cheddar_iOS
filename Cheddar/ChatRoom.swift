@@ -175,6 +175,10 @@ class ChatRoom: NSManagedObject {
         }
     }
     
+    func numberOfChatEvents() -> Int {
+        return sortChatEvents().count
+    }
+    
     func setMessagesAllLoaded(allLoaded:Bool) {
         allMessagesLoaded = allLoaded
         delegate?.didChangeIsUnloadedMessages(self)
@@ -186,7 +190,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func eventForIndex(index: Int) -> ChatEvent! {
-        if (index >= chatEvents.count) {
+        if (index >= numberOfChatEvents()) {
             return nil
         }
         
@@ -225,7 +229,12 @@ class ChatRoom: NSManagedObject {
         do {
             let results = (try moc.executeFetchRequest(dataFetch) as! [ChatEvent])
             if (results.count > 0) {
-                return results[0]
+                for chatEvent in results {
+                    if (!myAlias.deletedChatEventIdsArray().contains(chatEvent.objectId)) {
+                        return chatEvent
+                    }
+                }
+                return nil
             }
             return nil
         } catch {
@@ -234,7 +243,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func sortChatEvents() -> [ChatEvent] {
-        sortedChatEvents = chatEvents.sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
+        sortedChatEvents = chatEvents.filter({!myAlias.deletedChatEventIdsArray().contains($0.objectId)}).sort({ (event1: ChatEvent, event2: ChatEvent) -> Bool in
             
             var ascend = false
             
@@ -324,14 +333,14 @@ class ChatRoom: NSManagedObject {
 
     func findFirstMessageAfterIndex(index: Int) -> ChatEvent! {
         var position = index + 1
-        if (position >= chatEvents.count) {
+        if (position >= numberOfChatEvents()) {
             return nil
         }
 
         var message = sortedChatEvents[position]
         while (message.type != ChatEventType.Message.rawValue) {
             position += 1
-            if (position >= chatEvents.count) { return nil }
+            if (position >= numberOfChatEvents()) { return nil }
             message = sortedChatEvents[position]
         }
         return message
@@ -367,11 +376,14 @@ class ChatRoom: NSManagedObject {
                         let objectDict = eventDict["object"] as! [NSObject:AnyObject]
                         
                         if (objectType == "ChatEvent") {
-                            replayEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                            let replayEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject])
+                            if (!self.myAlias.deletedChatEventIdsArray().contains(replayEvent.objectId)) {
+                                replayEvents.insert(replayEvent)
+                            }
                         }
                     }
                     
-                    if (self.chatEvents.count > replayEvents.count) {
+                    if (self.numberOfChatEvents() > replayEvents.count) {
                         self.setMessagesAllLoaded(false)
                     }
                     
@@ -421,12 +433,12 @@ class ChatRoom: NSManagedObject {
                 
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
                     
-                    if (events.count == 1 && self.chatEvents.count == 1) {
+                    if (events.count == 1 && self.numberOfChatEvents() == 1) {
                         self.loadMessageCallInFlight = false
                         return
                     }
                     
-                    let originalMessageCount = self.chatEvents.count
+                    let originalMessageCount = self.numberOfChatEvents()
                     
                     for eventDict in events {
                         
@@ -434,7 +446,10 @@ class ChatRoom: NSManagedObject {
                         let objectDict = eventDict["object"] as! [NSObject:AnyObject]
                         
                         if (objectType == "ChatEvent") {
-                            self.chatEvents.insert(ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject]))
+                            let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject])
+                            if (!self.myAlias.deletedChatEventIdsArray().contains(chatEvent.objectId)) {
+                                self.chatEvents.insert(chatEvent)
+                            }
                         }
                     }
                     

@@ -290,6 +290,17 @@ class CheddarRequest: NSObject {
                      successCallback: successCallback,
                      errorCallback: errorCallback)
     }
+    
+    static func sendDeleteChatEvent(aliasId: String!, chatEventId: String!, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        let params = [  "aliasId": aliasId!,
+                        "chatEventId": chatEventId ]
+        
+        callFunction("deleteChatEventForAlias",
+                     params: params,
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
+    }
 
     
     static func sendSchoolChangeRequest(schoolName: String, email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {

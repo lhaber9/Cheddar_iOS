@@ -422,7 +422,35 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         chatViewController.showRename()
     }
     
+    func deleteEvent(object: AnyObject!) {
+        let deleteEvent = object as! ChatEvent
+        CheddarRequest.sendDeleteChatEvent(chatViewController.myAlias().objectId, chatEventId: deleteEvent.objectId
+            , successCallback: { (object) in
+            
+                let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
+                Utilities.appDelegate().saveContext()
+                
+                self.didUpdateEvents(ChatRoom.fetchById(alias.chatRoomId))
+                
+        }) { (error) in
+            
+        }
+    }
+    
     // MARK: ChatViewControllerDelegate
+    
+    func showDeleteMessageOptions(chatEvent:ChatEvent) {
+        optionOverlayController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("OptionsOverlayViewController") as! OptionsOverlayViewController
+        optionOverlayController.delegate = self
+        
+        optionOverlayController.buttonNames = ["Delete"]
+        optionOverlayController.buttonData = [chatEvent]
+        optionOverlayController.buttonActions = [deleteEvent]
+        
+        self.delegate!.showOverlay()
+        self.delegate!.showOverlayContents(optionOverlayController)
+        self.optionOverlayController.willShow()
+    }
     
     func reportAlias(alias: Alias) {
         reportedAlias = alias
@@ -647,7 +675,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         }
         
         didUpdateEvents(chatRoom)
-        let lastCellHeight = chatViewController.tableView(chatViewController.tableView, heightForRowAtIndexPath: NSIndexPath(forRow: chatRoom.chatEvents.count - 1, inSection: 0))
+        let lastCellHeight = chatViewController.tableView(chatViewController.tableView, heightForRowAtIndexPath: NSIndexPath(forRow: chatRoom.numberOfChatEvents() - 1, inSection: 0))
         
         if (chatViewController.isNearBottom(lastCellHeight + 55)) {
             chatViewController.scrollToBottom(true)

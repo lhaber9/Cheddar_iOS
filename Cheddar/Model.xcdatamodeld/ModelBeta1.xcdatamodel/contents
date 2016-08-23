@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
     <entity name="Alias" representedClassName=".Alias" syncable="YES">
         <attribute name="chatRoomId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="colorId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="deletedChatEventIds" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="joinedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="objectId" optional="YES" attributeType="String" syncable="YES"/>
@@ -36,7 +37,7 @@
         <relationship name="myAlias" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Alias" inverseName="chatRoom2" inverseEntity="Alias" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Alias" positionX="-54" positionY="27" width="128" height="180"/>
+        <element name="Alias" positionX="-54" positionY="27" width="128" height="195"/>
         <element name="ChatEvent" positionX="-54" positionY="63" width="128" height="195"/>
         <element name="ChatRoom" positionX="-63" positionY="-18" width="128" height="195"/>
     </elements>

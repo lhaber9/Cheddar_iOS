@@ -20,6 +20,7 @@ protocol ChatViewControllerDelegate: class {
     func hideOverlay()
     func showOverlayContents(viewController: UIViewController)
     func hideOverlayContents()
+    func showDeleteMessageOptions(chatEvent: ChatEvent)
 }
 
 class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
@@ -115,12 +116,39 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         textView.delegate = self
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ChatViewController.handleLongPress(_:)))
+        longPressRecognizer.minimumPressDuration = 1
+        tableView.addGestureRecognizer(longPressRecognizer)
+        
         initStyle()
         
         setupObervers()
         
         invalidateHeightCache()
         reloadTable()
+    }
+    
+    func handleLongPress(longPressRecognizer: UILongPressGestureRecognizer) {
+        let point = longPressRecognizer.locationInView(tableView)
+        
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        if (indexPath == nil) {
+            NSLog("long press on table view but not on a row");
+        } else if (longPressRecognizer.state == UIGestureRecognizerState.Began) {
+            var row = indexPath!.row
+            if (!chatRoom.allMessagesLoaded.boolValue) {
+                if (row == 0) {
+                    NSLog("long press on table view but on activity indicator cell");
+                    return
+                }
+                row -= 1
+            }
+            
+            let chatEvent = chatRoom.sortedChatEvents[row]
+            if (chatEvent.type == ChatEventType.Message.rawValue) {
+                delegate?.showDeleteMessageOptions(chatEvent)
+            }
+        }
     }
     
     func updateLayout() {
@@ -148,7 +176,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         CheddarRequest.findAlias((myAlias()?.objectId)!,
             successCallback: { (object) in
                 
-                if (self.chatRoom.chatEvents.count == 0) {
+                if (self.chatRoom.numberOfChatEvents() == 0) {
                     self.loadNextPageMessages()
                 }
                 else {
@@ -287,11 +315,11 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     }
     
     func scrollToBottom(animated: Bool) {
-        if (chatRoom.chatEvents.count == 0) {
+        if (chatRoom.numberOfChatEvents() == 0) {
             return;
         }
         
-        var row = chatRoom.chatEvents.count - 1
+        var row = chatRoom.numberOfChatEvents() - 1
         if (!chatRoom.allMessagesLoaded.boolValue) {
             row += 1
         }
@@ -348,7 +376,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return 0
         }
         
-        var count = chatRoom.chatEvents.count
+        var count = chatRoom.numberOfChatEvents()
         if (!chatRoom.allMessagesLoaded.boolValue) {
            count += 1
         }
@@ -424,12 +452,12 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             presenceCell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index))
         }
         else if let nameChangeCell = cell as? NameChangeCell {
-            nameChangeCell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index), showBottomBuffer: index == chatRoom.chatEvents.count - 1)
+            nameChangeCell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index), showBottomBuffer: index == chatRoom.numberOfChatEvents() - 1)
         }
     }
     
     func shouldUseHeightCacheForIndex(index: Int) -> Bool {
-        if (index == chatRoom.chatEvents.count - 1 || index == 0) {
+        if (index == chatRoom.numberOfChatEvents() - 1 || index == 0) {
             return false
         }
         
@@ -500,7 +528,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             if (chatRoom.shouldShowTimestampLabelForEventIndex(index)) {
                 cellHeight += ChatCell.timestampLabelHeight
             }
-            if (index == chatRoom.chatEvents.count - 1) {
+            if (index == chatRoom.numberOfChatEvents() - 1) {
                 cellHeight += NameChangeCell.bottomBufferSize
             }
             height = cellHeight

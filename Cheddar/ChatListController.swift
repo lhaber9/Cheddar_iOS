@@ -40,7 +40,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         reloadRooms()
         refreshRooms()
         
-        if (Utilities.envName() != "Production") {
+        if (Utilities.envName() == "InternalBeta" || Utilities.envName() == "Development" ) {
             let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
             let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
             
@@ -97,7 +97,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                             
                             if (chatRoom != nil && chatEvent != nil) {
                                 
-                                if (chatRoom.chatEvents.count > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
+                                if (chatRoom.numberOfChatEvents() > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
                                     chatRoom.setUnreadMessages(true)
                                 }
                             }
