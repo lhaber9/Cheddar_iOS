@@ -23,7 +23,7 @@ protocol ChatViewControllerDelegate: class {
     func showDeleteMessageOptions(chatEvent: ChatEvent)
 }
 
-class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, UITableViewDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, ChatCellDelegate, UITableViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -146,9 +146,13 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             
             let chatEvent = chatRoom.sortedChatEvents[row]
             if (chatEvent.type == ChatEventType.Message.rawValue) {
-                delegate?.showDeleteMessageOptions(chatEvent)
+                showDeleteMessageOptions(chatEvent)
             }
         }
+    }
+    
+    func showDeleteMessageOptions(chatEvent:ChatEvent) {
+        delegate?.showDeleteMessageOptions(chatEvent)
     }
     
     func updateLayout() {
@@ -404,7 +408,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         let event = chatRoom.sortedChatEvents[index]
         
         if (event.type == ChatEventType.Message.rawValue) {
-            return tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
+            cell.delegate = self
+            return cell
         }
         else if (event.type == ChatEventType.Presence.rawValue) {
             return tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
@@ -436,9 +442,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             let showAliasIcon = viewSettings.1
             let bottomGapSize = viewSettings.2
             
-            let options: [String:AnyObject] = [ "text": event.body,
-                                                "date": event.createdAt,
-                                                "alias": event.alias,
+            let options: [String:AnyObject] = [ "chatEvent": event,
                                                 "isOutbound": self.chatRoom.isMyChatEvent(event),
                                                 "showAliasLabel": showAliasLabel,
                                                 "showAliasIcon": showAliasIcon,

@@ -8,8 +8,13 @@
 
 import Foundation
 
+protocol ChatCellDelegate:class {
+    func showDeleteMessageOptions(chatEvent:ChatEvent)
+}
 
-class ChatCell: UITableViewCell {
+class ChatCell: UITableViewCell, UITextViewDelegate {
+    
+    weak var delegate:ChatCellDelegate!
     
     @IBOutlet var messageLabel: UITextView!
     @IBOutlet var messageBackground: UIView!
@@ -41,6 +46,8 @@ class ChatCell: UITableViewCell {
     var rightAliasIcon: AliasCircleView!
     var leftAliasIcon: AliasCircleView!
     
+    var chatEvent:ChatEvent!
+    
     static var verticalTextBuffer:CGFloat = 13
     static var bufferSize:CGFloat = 8
     static var largeBufferSize:CGFloat = 15
@@ -55,6 +62,10 @@ class ChatCell: UITableViewCell {
         messageLabel.textContainer.lineFragmentPadding = 0;
         messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         messageLabel.opaque = true
+        messageLabel.selectable = false
+        messageLabel.delegate = self
+        
+        messageBackground.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell)))
         
         backgroundView?.backgroundColor = ColorConstants.whiteColor
         timestampLabel.backgroundColor = ColorConstants.whiteColor
@@ -162,7 +173,9 @@ class ChatCell: UITableViewCell {
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
     func setMessageOptions(options: [String:AnyObject]) {
         
-        self.messageLabel.text = options["text"] as! String
+        self.chatEvent = options["chatEvent"] as! ChatEvent
+        
+        self.messageLabel.text = chatEvent.body
         let height = ChatCell.labelHeightForText( self.messageLabel.text )
         self.messageHeightConstraint.constant = height
         self.errorLabel.hidden = true
@@ -176,10 +189,10 @@ class ChatCell: UITableViewCell {
             self.messageLabel.textAlignment = NSTextAlignment.Left
         }
         
-        let alias = options["alias"] as! Alias
+        let alias = chatEvent.alias
         self.aliasLabel.text = alias.name.lowercaseString
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
-        self.timestampLabel.text = Utilities.formatDate(options["date"] as! NSDate, withTrailingHours: true)
+        self.timestampLabel.text = Utilities.formatDate(chatEvent.createdAt, withTrailingHours: true)
         self.timestampLabel.textColor = ColorConstants.timestampText
         self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
         self.setBottomGapSize(options["bottomGapSize"] as! CGFloat)
@@ -214,5 +227,81 @@ class ChatCell: UITableViewCell {
             self.rightIconContainer.hidden = true;
             self.leftIconContainer.hidden = true;
         }
+    }
+    
+    func links(text: String) -> [NSTextCheckingResult] {
+        let detector = try? NSDataDetector(types: NSTextCheckingType.Link.rawValue)
+        guard let detect = detector else {
+            return []
+        }
+        return detect.matchesInString(text, options: .ReportCompletion, range: NSMakeRange(0, text.characters.count))
+    }
+    
+    func didTapCell() {
+        messageLabel.userInteractionEnabled = false
+        becomeFirstResponder()
+        let theMenu = UIMenuController.sharedMenuController()
+        
+        var menuItems:[UIMenuItem] = []
+        menuItems.append(UIMenuItem(title:"Copy", action:#selector(ChatCell.copyCell)))
+        menuItems.append(UIMenuItem(title:"Delete", action:#selector(ChatCell.deleteMessage)))
+        
+        if (links(messageLabel.attributedText.string).count > 0) {
+            menuItems.append(UIMenuItem(title:"Go To Link", action:#selector(ChatCell.showLink)))
+        }
+        
+        theMenu.menuItems = menuItems
+        theMenu.setTargetRect(messageBackground.frame, inView:self)
+        theMenu.setMenuVisible(true, animated:true)
+    }
+    
+    func showLink() {
+        let link = messageLabel.attributedText.attributedSubstringFromRange(links(messageLabel.attributedText.string)[0].range).string
+        UIApplication.sharedApplication().openURL(NSURL(string: link)!)
+    }
+    
+    func deleteMessage() {
+        delegate?.showDeleteMessageOptions(chatEvent)
+    }
+    
+    override func canPerformAction(action: Selector, withSender sender: AnyObject?) -> Bool {
+        if  action == #selector(ChatCell.copyCell) ||
+            action == #selector(ChatCell.showLink) ||
+            action == #selector(ChatCell.deleteMessage)   {
+            return true
+        }
+        return false
+    }
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func becomeFirstResponder() -> Bool {
+        messageBackground.alpha = 0.8
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(UIResponder.resignFirstResponder), name: UIMenuControllerDidHideMenuNotification, object: nil)
+        return super.becomeFirstResponder()
+    }
+    
+    override func resignFirstResponder() -> Bool {
+        messageBackground.alpha = 1
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIMenuControllerDidHideMenuNotification, object: nil)
+        return super.resignFirstResponder()
+    }
+    
+    func copyCell() {
+        let board = UIPasteboard.generalPasteboard()
+        board.string = messageLabel.text
+        let menu = UIMenuController.sharedMenuController()
+        menu.setMenuVisible(false, animated: true)
+        messageBackground.alpha = 1
+    }
+    
+    override func copy(sender: AnyObject?) {
+        let board = UIPasteboard.generalPasteboard()
+        board.string = messageLabel.text
+        let menu = UIMenuController.sharedMenuController()
+        menu.setMenuVisible(false, animated: true)
+        messageBackground.alpha = 1
     }
 }

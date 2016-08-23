@@ -423,6 +423,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     }
     
     func deleteEvent(object: AnyObject!) {
+        optionOverlayController?.shouldClose()
         let deleteEvent = object as! ChatEvent
         CheddarRequest.sendDeleteChatEvent(chatViewController.myAlias().objectId, chatEventId: deleteEvent.objectId
             , successCallback: { (object) in

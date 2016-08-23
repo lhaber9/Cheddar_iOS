@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
 //        initializeUser()
         if ( isUpdate() ) {
-            UIAlertView(title: "Heads up!", message: "Cheddar is still in beta! Help us improve by sharing your feedback inside the app.", delegate: nil, cancelButtonTitle: "OK").show()
+            UIAlertView(title: "Heads Up!", message: "Before using this app you must agree to the following terms: \n\n antagonizing other users with deliberately offensive or inappropriate material is strictly prohibited. if you see anyone breaking  this rule, please report them from within the chat menu.", delegate: nil, cancelButtonTitle: "I Agree").show()
         }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]

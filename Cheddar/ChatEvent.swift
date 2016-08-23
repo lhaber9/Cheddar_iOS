@@ -90,7 +90,7 @@ class ChatEvent: NSManagedObject {
         chatEvent.updatedAt = object.updatedAt
         
         if let aliasObject = object.objectForKey("alias") as? PFObject {
-            chatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject)
+            chatEvent.alias = Alias.fetchById(aliasObject.objectId!)
         }
         
         chatEvent.status = ChatEventStatus.Success.rawValue
@@ -135,10 +135,10 @@ class ChatEvent: NSManagedObject {
         }
         
         if let aliasDict = jsonMessage["alias"] as? [String: AnyObject] {
-            chatEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict)
+            chatEvent.alias = Alias.fetchById(aliasDict["objectId"] as! String)
         }
         else if let aliasObject = jsonMessage["alias"] as? PFObject {
-            chatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject)
+            chatEvent.alias = Alias.fetchById(aliasObject.objectId!)
         }
         
         chatEvent.status = ChatEventStatus.Success.rawValue

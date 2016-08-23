@@ -176,7 +176,7 @@ class ChatRoom: NSManagedObject {
     }
     
     func numberOfChatEvents() -> Int {
-        return sortChatEvents().count
+        return sortedChatEvents.count
     }
     
     func setMessagesAllLoaded(allLoaded:Bool) {
