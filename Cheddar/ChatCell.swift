@@ -256,7 +256,11 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     }
     
     func showLink() {
-        let link = messageLabel.attributedText.attributedSubstringFromRange(links(messageLabel.attributedText.string)[0].range).string
+        var link = messageLabel.attributedText.attributedSubstringFromRange(links(messageLabel.attributedText.string)[0].range).string
+        if (!link.lowercaseString.hasPrefix("http://")) {
+            link = "http://" + link
+        }
+
         UIApplication.sharedApplication().openURL(NSURL(string: link)!)
     }
     
