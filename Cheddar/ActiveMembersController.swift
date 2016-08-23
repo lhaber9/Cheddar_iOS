@@ -10,9 +10,10 @@ import Foundation
 
 protocol ActiveMembersDelegate:class {
     func currentChatRoom() -> ChatRoom
+    func reportAlias(alias: Alias)
 }
 
-class ActiveMembersController: UIViewController {
+class ActiveMembersController: UIViewController, ActiveMembersCellDelegate {
     
     weak var delegate:ActiveMembersDelegate!
     @IBOutlet var titleLabel: UILabel!
@@ -42,11 +43,18 @@ class ActiveMembersController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("ActiveMemberCell", forIndexPath: indexPath) as! ActiveMemberCell
         let chatRoom = delegate.currentChatRoom()
         let alias = Array(chatRoom.activeAliases)[indexPath.row]
-        cell.setAlias(alias, chatRoom: chatRoom)     
+        cell.setAlias(alias, chatRoom: chatRoom)
+        cell.delegate = self
         return cell
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 58
+    }
+    
+    // MARK: ActiveMembersCellDelegate
+    
+    func reportAlias(alias: Alias) {
+        delegate.reportAlias(alias)
     }
 }

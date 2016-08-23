@@ -277,6 +277,21 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
+    static func sendReportUser(reportedAliasId: String!, chatRoomId: String!, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        let userId = CheddarRequest.currentUser()?.objectId
+        let params = [  "environment": Utilities.envName(),
+                        "userId": userId!,
+                        "reportedAliasId": reportedAliasId,
+                        "chatRoomId": chatRoomId]
+        
+        callFunction("sendReportUser",
+                     params: params,
+                     successCallback: successCallback,
+                     errorCallback: errorCallback)
+    }
+
+    
     static func sendSchoolChangeRequest(schoolName: String, email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         
         callFunction("sendChangeSchoolRequest",

@@ -12,6 +12,7 @@ import Parse
 import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
+    func reportAlias(alias: Alias)
     func subscribe(chatRoom:ChatRoom)
     func leaveChatRoom(alias: Alias)
     func forceLeaveChatRoom(alias: Alias)
@@ -606,6 +607,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
     
     func currentChatRoom() -> ChatRoom {
         return chatRoom
+    }
+    
+    func reportAlias(alias: Alias) {
+        delegate?.reportAlias(alias)
     }
     
     // MARK: UIPopoverPresentationControllerDelegate

@@ -57,6 +57,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     var confirmLeaveAlertView = UIAlertView()
     var confirmLogoutAlertView = UIAlertView()
+    var confirmReportUserAlertView = UIAlertView()
     
     var chatListController: ChatListController!
     var chatViewController: ChatViewController!
@@ -68,6 +69,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     var isShowingList = true
     var alertTimerId: String!
     var leavingChatRoom: ChatRoom!
+    var reportedAlias: Alias!
     var messageAlertTouchStartLocation:CGPoint!
     var notificationHeight: CGFloat!
     
@@ -99,6 +101,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         confirmLeaveAlertView = UIAlertView(title: "Are you sure?", message: "You wont be able to rejoin this chat room once you leave", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Leave")
         
         confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
+
+        confirmReportUserAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to report this user for inappropriate content", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Report")
         
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier()
@@ -323,15 +327,6 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         }
     }
     
-    
-    func linkToWebsite(object: AnyObject!) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "neucheddar.com")!)
-    }
-    
-    func showVersion(object: AnyObject!) {
-        
-    }
-    
     func showChatListButtons() {
         self.hamburgerButton.enabled = true
         self.hamburgerButton.alpha = 1
@@ -428,6 +423,24 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     }
     
     // MARK: ChatViewControllerDelegate
+    
+    func reportAlias(alias: Alias) {
+        reportedAlias = alias
+        optionOverlayController?.shouldClose()
+        dismissViewControllerAnimated(true, completion: nil)
+        confirmReportUserAlertView.show()
+    }
+    
+    func sendReportUserRequest(reportedAlias: Alias) {
+        
+        CheddarRequest.sendReportUser(reportedAlias.objectId,
+                                      chatRoomId: reportedAlias.chatRoomId,
+        successCallback: { (object) in
+            
+        }) { (error) in
+            
+        }
+    }
     
     func subscribe(chatRoom:ChatRoom) {
         Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
@@ -693,9 +706,10 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if (buttonIndex == 1 && alertView.isEqual(confirmLeaveAlertView)) {
             leaveChatRoom(leavingChatRoom.myAlias)
-        }
-        if (buttonIndex == 1 && alertView.isEqual(confirmLogoutAlertView)) {
+        } else if (buttonIndex == 1 && alertView.isEqual(confirmLogoutAlertView)) {
             logoutUser()
+        } else if (buttonIndex == 1 && alertView.isEqual(confirmReportUserAlertView)) {
+            sendReportUserRequest(reportedAlias)
         }
     }
 
