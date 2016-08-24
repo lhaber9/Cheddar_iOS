@@ -410,7 +410,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             if (buttonIndex == 0) {
                 self.setDeviceAgreeTos()
             } else if (buttonIndex == 1) {
-                let termsOfServiceLink = "http://google.com"
+                let termsOfServiceLink = "http://neucheddar.com/tos"
                 UIApplication.sharedApplication().openURL(NSURL(string: termsOfServiceLink)!)
             }
         }
