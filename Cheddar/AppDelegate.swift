@@ -22,11 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     
     var userIdFieldName = "cheddarUserId"
     var deviceDidOnboardFieldName = "cheddarDeviceHasOnboarded"
+    var deviceDidAgreeTosFieldName = "deviceDidAgreeTos"
     var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
     var messagesToSend: [ChatEvent] = []
     var sendingMessages: Bool = false
+    
+    var termsOfServiceAlert: UIAlertView!
+    var mustUpdateAlert: UIAlertView!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -37,10 +41,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         Parse.setApplicationId( Utilities.getKeyConstant("ParseAppId"), clientKey: Utilities.getKeyConstant("ParseClientKey"))
         
-//        initializeUser()
-        if ( isUpdate() ) {
-            UIAlertView(title: "Heads Up!", message: "Before using this app you must agree to the following terms: \n\n antagonizing other users with deliberately offensive or inappropriate material is strictly prohibited. if you see anyone breaking  this rule, please report them from within the chat menu.", delegate: nil, cancelButtonTitle: "I Agree").show()
-        }
+        mustUpdateAlert = UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK")
+        
+        termsOfServiceAlert = UIAlertView(title: "Terms of Service", message: "Using this app means agree to Cheddar’s terms of service, found at neucheddar.com/tos", delegate: nil, cancelButtonTitle: "I Accept", otherButtonTitles: "View Terms")
+        
+        mustUpdateAlert.delegate = self
+        termsOfServiceAlert.delegate = self
+        
+//        if ( isUpdate() ) {
+//            termsOfServiceAlert.show()
+//        }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -85,6 +95,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     func setDeviceOnboarded() {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setValue(true, forKey: self.deviceDidOnboardFieldName)
+        defaults.synchronize()
+    }
+    
+    func deviceDidAgreeTos() -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let didAgree = defaults.boolForKey(deviceDidAgreeTosFieldName)
+        if (didAgree) {
+            return true
+        }
+        return false
+    }
+    
+    func setDeviceAgreeTos() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue(true, forKey: self.deviceDidAgreeTosFieldName)
         defaults.synchronize()
     }
     
@@ -264,11 +289,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             let currentBuildNum = Int(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String)
             
             if (minmumBuildNum > currentBuildNum) {
-                UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK").show()
+                self.mustUpdateAlert.show()
             }
             
         }) { (error) in
             return
+        }
+        
+        if (!deviceDidAgreeTos()) {
+            termsOfServiceAlert.show()
         }
     }
 
@@ -374,9 +403,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        let iTunesLink = "itms://itunes.apple.com/us/app/cheddar-anonymous-group-messaging/id1086160475?ls=1&mt=8"
-        UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
+        if (alertView.isEqual(mustUpdateAlert)) {
+            let iTunesLink = "itms://itunes.apple.com/us/app/cheddar-anonymous-group-messaging/id1086160475?ls=1&mt=8"
+            UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
+        } else if (alertView.isEqual(termsOfServiceAlert)) {
+            if (buttonIndex == 0) {
+                self.setDeviceAgreeTos()
+            } else if (buttonIndex == 1) {
+                let termsOfServiceLink = "http://google.com"
+                UIApplication.sharedApplication().openURL(NSURL(string: termsOfServiceLink)!)
+            }
+        }
     }
-
 }
 
