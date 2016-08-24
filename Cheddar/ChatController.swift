@@ -102,7 +102,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         confirmLogoutAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to logout", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Logout")
 
-        confirmReportUserAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to report this user for inappropriate content", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Report")
+        confirmReportUserAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to report this user for inappropriate content. Addtional content reports may be sent to support@neucheddar.com", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Report")
         
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier()
