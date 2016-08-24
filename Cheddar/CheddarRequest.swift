@@ -298,8 +298,12 @@ class CheddarRequest: NSObject {
         
         callFunction("deleteChatEventForAlias",
                      params: params,
-                     successCallback: successCallback,
-                     errorCallback: errorCallback)
+                     successCallback: { (object) in
+                        
+                        successCallback(object: object)
+                        Answers.logCustomEventWithName("Delete Message", customAttributes: ["aliasId":aliasId, "chatEventId":chatEventId])
+                        
+            }, errorCallback: errorCallback)
     }
 
     
