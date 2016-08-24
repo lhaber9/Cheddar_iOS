@@ -19,6 +19,7 @@ class ActiveMemberCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var joinedAtLabel: UILabel!
     @IBOutlet var aliasIconContainer: UIView!
+    @IBOutlet var reportUserButton: UIButton!
     
     var alias: Alias!
     var aliasIcon: AliasCircleView!
@@ -39,6 +40,12 @@ class ActiveMemberCell: UITableViewCell {
             aliasIconContainer.addSubview(aliasIcon)
             aliasIcon.autoPinEdgesToSuperviewEdges()
         }
+        
+        if (chatRoom.myAlias.objectId == alias.objectId) {
+            reportUserButton.hidden = true
+        }
+        
+        reportUserButton.titleLabel?.textColor = ColorConstants.textSecondary
         
         nameLabel.text = alias.name
         joinedAtLabel.text = "Joined on " + Utilities.formatDate(alias.joinedAt, withTrailingHours: true)

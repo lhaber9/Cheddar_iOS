@@ -31,6 +31,7 @@
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
             <string>Effra-Regular</string>
+            <string>Effra-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -743,12 +744,20 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Du-nC-0Qa">
-                                                                    <rect key="frame" x="186" y="0.0" width="42" height="42"/>
+                                                                    <rect key="frame" x="39" y="23" width="56" height="19"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="9Du-nC-0Qa" secondAttribute="height" multiplier="1:1" id="JTr-Gg-ioz"/>
                                                                     </constraints>
+                                                                    <fontDescription key="fontDescription" name="Effra-Regular" family="Effra" pointSize="12"/>
                                                                     <inset key="contentEdgeInsets" minX="12" minY="10" maxX="8" maxY="10"/>
-                                                                    <state key="normal" title="Button" image="Hamburger"/>
+                                                                    <state key="normal" title="Report">
+                                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    </state>
+                                                                    <variation key="default">
+                                                                        <mask key="constraints">
+                                                                            <exclude reference="JTr-Gg-ioz"/>
+                                                                        </mask>
+                                                                    </variation>
                                                                     <connections>
                                                                         <action selector="reportAlias" destination="1lc-xp-U14" eventType="touchUpInside" id="0Zg-z2-qUp"/>
                                                                     </connections>
@@ -757,15 +766,23 @@
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="9Du-nC-0Qa" secondAttribute="trailing" id="97Q-QO-azf"/>
+                                                                <constraint firstItem="9Du-nC-0Qa" firstAttribute="leading" secondItem="UQj-vu-ofy" secondAttribute="trailing" id="E7w-Dd-5X1"/>
                                                                 <constraint firstItem="x3G-Gl-b8K" firstAttribute="top" secondItem="uWE-KJ-SgI" secondAttribute="top" constant="2" id="Len-C9-kAc"/>
                                                                 <constraint firstAttribute="height" constant="42" id="Mel-m2-O7y"/>
                                                                 <constraint firstItem="UQj-vu-ofy" firstAttribute="top" secondItem="x3G-Gl-b8K" secondAttribute="bottom" id="OqV-7R-3Dk"/>
                                                                 <constraint firstItem="x3G-Gl-b8K" firstAttribute="leading" secondItem="uWE-KJ-SgI" secondAttribute="leading" constant="8" id="SG4-2x-RYF"/>
                                                                 <constraint firstItem="9Du-nC-0Qa" firstAttribute="top" secondItem="uWE-KJ-SgI" secondAttribute="top" id="Upa-1I-5GG"/>
+                                                                <constraint firstItem="9Du-nC-0Qa" firstAttribute="top" secondItem="UQj-vu-ofy" secondAttribute="top" id="cXb-ci-unw"/>
                                                                 <constraint firstItem="UQj-vu-ofy" firstAttribute="leading" secondItem="x3G-Gl-b8K" secondAttribute="leading" id="rSK-Nz-kZu"/>
                                                                 <constraint firstAttribute="bottom" secondItem="UQj-vu-ofy" secondAttribute="bottom" constant="2" id="rxT-Tb-YJ2"/>
                                                                 <constraint firstAttribute="bottom" secondItem="9Du-nC-0Qa" secondAttribute="bottom" id="tS5-Hm-tc7"/>
                                                             </constraints>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="97Q-QO-azf"/>
+                                                                    <exclude reference="Upa-1I-5GG"/>
+                                                                </mask>
+                                                            </variation>
                                                         </view>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -805,6 +822,7 @@
                                             <outlet property="aliasIconContainer" destination="gaf-Tl-FzF" id="zzf-ZH-zF1"/>
                                             <outlet property="joinedAtLabel" destination="UQj-vu-ofy" id="cPn-s4-vnw"/>
                                             <outlet property="nameLabel" destination="x3G-Gl-b8K" id="otd-rE-S2c"/>
+                                            <outlet property="reportUserButton" destination="9Du-nC-0Qa" id="G47-7T-Bpz"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
