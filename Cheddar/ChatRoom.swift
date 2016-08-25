@@ -390,21 +390,20 @@ class ChatRoom: NSManagedObject {
                         }
                     }
                     
-                    if (self.numberOfChatEvents() > replayEvents.count) {
-                        self.setMessagesAllLoaded(false)
-                    }
+                    let startingNumberOfChatEvents = self.numberOfChatEvents()
                     
-                    if (self.chatEvents != nil) {
+                    if (self.chatEvents != nil && replayEvents.count > 0) {
                         self.removeChatEvents(self.chatEvents)
                     }
                     self.addChatEvents(replayEvents)
-                    
                     Utilities.appDelegate().saveContext()
                     
                     self.delegate?.didUpdateEvents(self)
                     
-                    if (events.count < self.pageSize) {
+                    if (replayEvents.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
+                    } else if (startingNumberOfChatEvents > replayEvents.count) {
+                        self.setMessagesAllLoaded(false)
                     }
                 }
                 
