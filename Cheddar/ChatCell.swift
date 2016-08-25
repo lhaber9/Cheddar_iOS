@@ -54,7 +54,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     static var aliasLabelHeight:CGFloat = 15
     static var timestampLabelHeight:CGFloat = 15
     static var singleRowHeight:CGFloat = 32
-    static var messageMaxWidth:CGFloat = 250
+    static var messageMaxWidth:CGFloat = 225
     
     override func willMoveToSuperview(newSuperview: UIView?) {
         messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
@@ -73,15 +73,13 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         
         rightIconContainer.opaque = true
         leftIconContainer.opaque = true
-        
-        ChatCell.messageMaxWidth = messageBackgroundWidthConstraint.constant
     }
     
     class func labelHeightForText(text: String) -> CGFloat {
         
         var height = round(text.boundingRectWithSize(CGSizeMake(messageMaxWidth, CGFloat(FLT_MAX)),
             options: NSStringDrawingOptions.UsesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: UIFont(name: "Effra", size: 16)!],
+            attributes: [NSFontAttributeName: UIFont(name: "Effra-Regular", size: 16)!],
             context: nil).height) + verticalTextBuffer
         
         if (height > ChatCell.singleRowHeight) {

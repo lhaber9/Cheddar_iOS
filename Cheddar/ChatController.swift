@@ -105,7 +105,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
 
         confirmReportUserAlertView = UIAlertView(title: "Are you sure?", message: "Are you sure you want to report this user for inappropriate content. Additional content reports may be sent to cheddar@neucheddar.com", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Report")
         
-        confirmBlockUserAlertView = UIAlertView(title: "Block User?", message: "Do you want to block this user? Choosing yes will immediatly remove you from this chat room, and ensure you are never placed in another chat room with this user", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
+        confirmBlockUserAlertView = UIAlertView(title: "Block User?", message: "Do you want to block this user? You will be immediately removed from this chatroom and never be matched with this user again.", delegate: self, cancelButtonTitle: "No", otherButtonTitles: "Yes")
         
         reachability = Reachability.reachabilityForInternetConnection()
         reachability!.startNotifier()
