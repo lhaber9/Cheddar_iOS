@@ -115,6 +115,11 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
             
                 NSLog("%@",error)
                 //devalidate user
+                CheddarRequest.logoutUser({ 
+                    
+                    }, errorCallback: { (error) in
+                        
+                })
                 self.delegate.forceCloseChat()
                 return
         }

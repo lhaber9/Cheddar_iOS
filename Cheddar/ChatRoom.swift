@@ -85,7 +85,7 @@ class ChatRoom: NSManagedObject {
     }
     
     class func createWithMyAlias(alias: Alias) -> ChatRoom {
-        let newRoom = ChatRoom.newChatRoom()
+        let newRoom = ChatRoom.createOrRetrieve(alias.chatRoomId)
         
         newRoom.objectId = alias.chatRoomId
         newRoom.myAlias = alias
