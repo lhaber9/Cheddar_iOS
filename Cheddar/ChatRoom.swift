@@ -194,11 +194,11 @@ class ChatRoom: NSManagedObject {
             return nil
         }
         
-        return sortChatEvents()[index]
+        return getSortedChatEvents()[index]
     }
     
     func indexForEvent(event: ChatEvent) -> Int! {
-        for (index, chatEvent) in sortChatEvents().enumerate() {
+        for (index, chatEvent) in getSortedChatEvents().enumerate() {
             if (chatEvent.objectId == event.objectId) {
                 return index;
             }
@@ -318,6 +318,7 @@ class ChatRoom: NSManagedObject {
     
     func addChatEvent(event: ChatEvent) {
         chatEvents.insert(event)
+        sortChatEvents()
         Utilities.appDelegate().saveContext()
         if (event.type == ChatEventType.NameChange.rawValue) { name = event.roomName }
         self.delegate?.didAddEvent(self, chatEvent: event, isMine: isMyChatEvent(event))
@@ -354,15 +355,14 @@ class ChatRoom: NSManagedObject {
     }
     
     func reloadMessages() {
-        if (currentStartToken == nil || loadMessageCallInFlight) {
+        if (loadMessageCallInFlight) {
             return
         }
         
         loadMessageCallInFlight = true
         
         let params: [NSObject:AnyObject] = ["aliasId": myAlias.objectId!,
-                                            "endTimeToken" : currentStartToken,
-                                            "count": pageSize]
+                                              "count": pageSize]
         
         CheddarRequest.replayEvents(params,
             successCallback: { (object) in
@@ -371,8 +371,8 @@ class ChatRoom: NSManagedObject {
                 
                 let objectDict = object as! [NSObject:AnyObject]
                 
-                if let startToken = objectDict["startTimeToken"] as? String {
-                    self.currentStartToken = startToken
+                if let startToken = objectDict["startTimeToken"] as? Int {
+                    self.currentStartToken = String(startToken)
                 }
                 
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
@@ -380,10 +380,10 @@ class ChatRoom: NSManagedObject {
                     for eventDict in events {
                         
                         let objectType = eventDict["objectType"] as! String
-                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        let objectDict = eventDict["object"] as! PFObject
                         
                         if (objectType == "ChatEvent") {
-                            let replayEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject])
+                            let replayEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
                             if (!self.myAlias.deletedChatEventIdsArray().contains(replayEvent.objectId)) {
                                 replayEvents.insert(replayEvent)
                             }
@@ -433,8 +433,8 @@ class ChatRoom: NSManagedObject {
                 
                 let objectDict = object as! [NSObject: AnyObject]
                 
-                if let startToken = objectDict["startTimeToken"] as? String {
-                    self.currentStartToken = startToken
+                if let startToken = objectDict["startTimeToken"] as? Int {
+                    self.currentStartToken = String(startToken)
                 }
                 
                 if let events = objectDict["events"] as? [[NSObject:AnyObject]] {
@@ -449,10 +449,11 @@ class ChatRoom: NSManagedObject {
                     for eventDict in events {
                         
                         let objectType = eventDict["objectType"] as! String
-                        let objectDict = eventDict["object"] as! [NSObject:AnyObject]
+                        let objectDict = eventDict["object"] as! PFObject
                         
                         if (objectType == "ChatEvent") {
-                            let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict as! [String:AnyObject])
+                            
+                            let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
                             if (!self.myAlias.deletedChatEventIdsArray().contains(chatEvent.objectId)) {
                                 self.chatEvents.insert(chatEvent)
                             }
