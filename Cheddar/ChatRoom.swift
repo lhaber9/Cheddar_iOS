@@ -53,7 +53,7 @@ class ChatRoom: NSManagedObject {
     var loadMessageCallInFlight = false
     var loadAliasCallInFlight = false
     
-    var pageSize = 25
+    var pageSize = 20
     
     class func removeAll() {
         let chatRooms = fetchAll()
