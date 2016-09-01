@@ -11,26 +11,33 @@ import Foundation
 class PresenceCell: UITableViewCell {
 
     @IBOutlet var aliasLabel: UILabel!
+    @IBOutlet var timestampLabel: UILabel!
+    @IBOutlet var timestampLabelView: UIView!
+    
     var alias: Alias!
-    var action: String!
+    var body: String!
     
-    func setAlias(alias: Alias, andAction action: String) {
-        self.alias = alias
-        self.action = action
-        aliasLabel.text = alias.name + " " + getActionString(action)
+    override func willMoveToSuperview(newSuperview: UIView?) {
+        backgroundView?.backgroundColor = ColorConstants.whiteColor
+        timestampLabel.backgroundColor = ColorConstants.whiteColor
+        aliasLabel.backgroundColor = ColorConstants.whiteColor
+    }
+    
+    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool) {
+        if (presenceEvent.type != ChatEventType.Presence.rawValue) {
+            return
+        }
+        
+        self.alias = presenceEvent.alias
+        aliasLabel.text = presenceEvent.body.uppercaseString
         aliasLabel.textColor = ColorConstants.presenceText
-    }
-    
-    func getActionString(action: String!) -> String! {
-        if (action == "join") {
-            return "Joined"
-        }
-        else if (action == "leave") {
-            return "Left"
-        }
-        else {
-            return nil
+        
+        if (showTimestamp) {
+            timestampLabel.text = Utilities.formatDate(presenceEvent.createdAt, withTrailingHours: true)
+            timestampLabel.textColor = ColorConstants.timestampText
+            timestampLabelView.hidden = false;
+        } else {
+            timestampLabelView.hidden = true;
         }
     }
-    
 }

@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  Cheddar
@@ -14,34 +15,42 @@ import Fabric
 import Crashlytics
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
+class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UIAlertViewDelegate {
 
     var window: UIWindow?
     var pnClient: PubNub!
     
     var userIdFieldName = "cheddarUserId"
+    var deviceDidOnboardFieldName = "cheddarDeviceHasOnboarded"
+    var deviceDidAgreeTosFieldName = "deviceDidAgreeTos"
+    var appVersionFieldName = "cheddarAppVersion"
     var thisDeviceToken: NSData!
     
-    var messagesToSend: [Message] = []
+    var messagesToSend: [ChatEvent] = []
     var sendingMessages: Bool = false
+    
+    var termsOfServiceAlert: UIAlertView!
+    var mustUpdateAlert: UIAlertView!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
         
-//        [self.client publish: @"Hello from PubNub iOS!" toChannel: @"my_channel" storeInHistory:YES
-//        withCompletion:^(PNPublishStatus *status)
-        
-        let configuration = PNConfiguration(publishKey: EnvironmentConstants.pubNubPublishKey,
-                                          subscribeKey: EnvironmentConstants.pubNubSubscribeKey)
+        let configuration = PNConfiguration(publishKey:  Utilities.getKeyConstant("PubnubPublishKey"),
+                                          subscribeKey:  Utilities.getKeyConstant("PubnubSubscribeKey"))
         pnClient = PubNub.clientWithConfiguration(configuration)
         pnClient.addListener(self)
         
-        Parse.setApplicationId(EnvironmentConstants.parseApplicationId, clientKey:EnvironmentConstants.parseClientKey)
+        Parse.setApplicationId( Utilities.getKeyConstant("ParseAppId"), clientKey: Utilities.getKeyConstant("ParseClientKey"))
         
-        Fabric.sharedSDK().debug = true
-        Fabric.with([Crashlytics.self])
+        mustUpdateAlert = UIAlertView(title: "Unsupported Version", message: "This version of Cheddar is no longer supported. Visit our app store page to update!", delegate: self, cancelButtonTitle: "OK")
         
-        initializeUser()
+        termsOfServiceAlert = UIAlertView(title: "Terms of Service", message: "Using this app means agree to Cheddar’s terms of service, found at neucheddar.com/tos", delegate: nil, cancelButtonTitle: "I Accept", otherButtonTitles: "View Terms")
+        
+        mustUpdateAlert.delegate = self
+        termsOfServiceAlert.delegate = self
+        
+//        if ( isUpdate() ) {
+//            termsOfServiceAlert.show()
+//        }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
@@ -68,25 +77,89 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         UIApplication.sharedApplication().registerForRemoteNotifications()
         
+//        Fabric.sharedSDK().debug = true
+        Fabric.with([Crashlytics.self])
+        
         return true
     }
     
-    func initializeUser() {
+    func deviceDidOnboard() -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let userId = defaults.stringForKey(userIdFieldName) {
-            User.theUser.objectId = userId
-            return
+        let didOnboard = defaults.boolForKey(deviceDidOnboardFieldName)
+        if (didOnboard) {
+            return true
         }
-        
-        PFCloud.callFunctionInBackground("registerNewUser", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
-            let user = object as! PFUser
-            User.theUser.objectId = user.objectId
-            defaults.setValue(user.objectId, forKey: self.userIdFieldName)
-            defaults.synchronize()
-        }
+        return false
     }
     
-    func sendMessage(message: Message) {
+    func setDeviceOnboarded() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue(true, forKey: self.deviceDidOnboardFieldName)
+        defaults.synchronize()
+    }
+    
+    func deviceDidAgreeTos() -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let didAgree = defaults.boolForKey(deviceDidAgreeTosFieldName)
+        if (didAgree) {
+            return true
+        }
+        return false
+    }
+    
+    func setDeviceAgreeTos() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setValue(true, forKey: self.deviceDidAgreeTosFieldName)
+        defaults.synchronize()
+    }
+    
+//    func initializeUser() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        if let userId = defaults.stringForKey(userIdFieldName) {
+//            User.theUser.objectId = userId
+//            return
+//        }
+//        
+//        PFCloud.callFunctionInBackground("registerNewUser", withParameters: nil) { (object: AnyObject?, error: NSError?) -> Void in
+//            let user = object as! PFUser
+//            User.theUser.objectId = user.objectId
+//            defaults.setValue(user.objectId, forKey: self.userIdFieldName)
+//            defaults.setValue(false, forKey: self.userDidOnboardFieldName)
+//            defaults.synchronize()
+//        }
+//    }
+    
+//    func reinitalizeUser() {
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        User.theUser.objectId = nil
+//        defaults.setValue(nil, forKey: self.userIdFieldName)
+//        defaults.setValue(false, forKey: self.userDidOnboardFieldName)
+//        defaults.synchronize()
+//        initializeUser()
+//    }
+    
+    func isUpdate() -> Bool {
+        let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+        var isUpdated = false
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let appVersion = defaults.stringForKey(appVersionFieldName) {
+            if (appVersion != build) {
+                isUpdated = true
+                defaults.setValue(build, forKey: appVersionFieldName)
+                defaults.synchronize()
+            }
+        }
+        else {
+            isUpdated = true
+            defaults.setValue(build, forKey: appVersionFieldName)
+            defaults.synchronize()
+        }
+        
+        return isUpdated
+    }
+    
+    func sendMessage(message: ChatEvent) {
         messagesToSend.append(message)
         if (!sendingMessages) {
             sendingMessages = true
@@ -102,12 +175,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         let message = messagesToSend.first!
         
-        PFCloud.callFunctionInBackground("sendMessage", withParameters: ["aliasId":message.alias.objectId!, "body":message.body, "pubkey":EnvironmentConstants.pubNubPublishKey, "subkey":EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            self.messagesToSend.removeAtIndex(0)
-            self.pushPubNubMessages()
+        CheddarRequest.sendMessage(message.messageId,
+                                   alias: message.alias,
+                                   body: message.body,
+            successCallback: { (object) in
+                
+                self.messagesToSend.removeAtIndex(0)
+                self.pushPubNubMessages()
+                
+            }) { (error) in
+                
+                message.status = ChatEventStatus.Error.rawValue
+                self.saveContext()
+                let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
+                chatRoom.delegate?.didUpdateEvents(chatRoom)
         }
-        
     }
     
     func subscribeToPubNubChannel(channelId: String) {
@@ -142,12 +224,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
             
             // Check whether request successfully completed or not.
             if (!status.error) {
-                
                 // Handle successful push notification enabling on passed channels.
             }
                 // Request processing failed.
             else {
-                
                 // Handle modification error. Check 'category' property to find out possible issue because
                 // of which request did fail.
                 //
@@ -159,14 +239,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     func client(client: PubNub!, didReceiveMessage message: PNMessageResult!) {
         let jsonMessage = message.data.message as! [NSObject:AnyObject]
         let objectType = jsonMessage["objectType"] as! String
-        let objectDict = jsonMessage["object"] as! [NSObject:AnyObject]
+        let objectDict = jsonMessage["object"] as! [String:AnyObject]
         
-        if (objectType == "messageEvent") {
-            NSNotificationCenter.defaultCenter().postNotificationName("newMessage", object: Message.createMessage(objectDict))
+        if (objectType == "ChatEvent") {
+            let chatEvent = ChatEvent.createOrUpdateEventFromServerJSON(objectDict)
+            chatEvent.status = ChatEventStatus.Success.rawValue
+            
+            if let chatRoom = ChatRoom.fetchById(chatEvent.alias.chatRoomId) {
+                chatRoom.addChatEvent(chatEvent)
+                
+                if (chatEvent.type == ChatEventType.Presence.rawValue) {
+                    chatRoom.reloadActiveAlaises()
+                }
+            }
         }
-        else if (objectType == "presenceEvent") {
-             NSNotificationCenter.defaultCenter().postNotificationName("newPresenceEvent", object: Presence.createPresenceEvent(objectDict))
-        }
+        
+        saveContext()
     }
     
     func client(client: PubNub!, didReceivePresenceEvent event: PNPresenceEventResult!) {
@@ -191,6 +279,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("applicationDidBecomeActive", object: nil)
+        
+        CheddarRequest.getMinimumBuildNumber({ (object) in
+            
+            let minmumBuildNum = object as! Int
+            
+            let currentBuildNum = Int(NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String)
+            
+            if (minmumBuildNum > currentBuildNum) {
+                self.mustUpdateAlert.show()
+            }
+            
+        }) { (error) in
+            return
+        }
+        
+        if (!deviceDidAgreeTos()) {
+            termsOfServiceAlert.show()
+        }
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -219,7 +327,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Model.sqlite")
         var failureReason = "There was an error creating or loading the application's saved data."
         do {
-            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+            let mOptions = [NSMigratePersistentStoresAutomaticallyOption: true,
+                            NSInferMappingModelAutomaticallyOption: true]
+            try coordinator.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: mOptions)
         } catch {
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -277,12 +387,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
         
-        NSLog("HERE1")
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
-        
-        NSLog("here")
         
         if #available(iOS 9.0, *) {
             let reply = responseInfo[UIUserNotificationActionResponseTypedTextKey]
@@ -294,6 +401,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener {
         
         completionHandler()
     }
-
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if (alertView.isEqual(mustUpdateAlert)) {
+            let iTunesLink = "itms://itunes.apple.com/us/app/cheddar-anonymous-group-messaging/id1086160475?ls=1&mt=8"
+            UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
+        } else if (alertView.isEqual(termsOfServiceAlert)) {
+            if (buttonIndex == 0) {
+                self.setDeviceAgreeTos()
+            } else if (buttonIndex == 1) {
+                let termsOfServiceLink = "http://neucheddar.com/tos"
+                UIApplication.sharedApplication().openURL(NSURL(string: termsOfServiceLink)!)
+            }
+        }
+    }
 }
 

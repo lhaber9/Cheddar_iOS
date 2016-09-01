@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="GroupView" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uos-Pd-lvO" customClass="CheddarLabel" customModule="Cheddar" customModuleProvider="target">
+                    <rect key="frame" x="167.5" y="447" width="265" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="235" id="Pe2-MT-1w0"/>
+                        <constraint firstAttribute="width" constant="265" id="esj-9x-e7E"/>
+                    </constraints>
+                    <string key="text">Get placed in up to
+5 group chats at once</string>
+                    <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="22"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Pe2-MT-1w0"/>
+                        </mask>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="OnboardGroup" translatesAutoresizingMaskIntoConstraints="NO" id="mKw-sy-suI">
+                    <rect key="frame" x="211" y="65" width="178.5" height="330"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="mKw-sy-suI" secondAttribute="height" multiplier="475:881" id="UbL-C7-hPc"/>
+                        <constraint firstAttribute="height" priority="200" constant="275" id="jDi-Tl-09f"/>
+                        <constraint firstAttribute="height" priority="900" constant="330" id="wuq-g3-nAf"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="uos-Pd-lvO" firstAttribute="top" secondItem="mKw-sy-suI" secondAttribute="bottom" priority="900" constant="52" id="C9T-dU-vRe"/>
+                <constraint firstItem="mKw-sy-suI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="200" constant="-50" id="E3H-xa-FXv"/>
+                <constraint firstItem="uos-Pd-lvO" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="G4m-mo-Bdu"/>
+                <constraint firstItem="mKw-sy-suI" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="height" multiplier="475:881" id="MnD-1p-m5S"/>
+                <constraint firstItem="mKw-sy-suI" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WXi-RY-Abh"/>
+                <constraint firstItem="uos-Pd-lvO" firstAttribute="top" secondItem="mKw-sy-suI" secondAttribute="bottom" priority="200" constant="26" id="eRq-yy-JPb"/>
+                <constraint firstItem="mKw-sy-suI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="900" constant="-70" id="mEd-KV-Qdk"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="MnD-1p-m5S"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="bottomTextLabel" destination="uos-Pd-lvO" id="tHc-lx-f2S"/>
+                <outlet property="imageBottomSmallConstraint" destination="eRq-yy-JPb" id="cLB-B0-3Db"/>
+                <outlet property="imageHeightSmallConstraint" destination="jDi-Tl-09f" id="bWq-OG-C9n"/>
+                <outlet property="imageOffsetSmallConstraint" destination="E3H-xa-FXv" id="jB6-sg-Q4b"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="OnboardGroup" width="150" height="279"/>
+    </resources>
+</document>

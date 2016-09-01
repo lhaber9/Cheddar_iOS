@@ -83,13 +83,25 @@ strip_invalid_archs() {
 }
 
 
-if [[ "$CONFIGURATION" == "Debug" ]]; then
+if [[ "$CONFIGURATION" == "Development" ]]; then
   install_framework "Pods/Bolts.framework"
   install_framework "Pods/CocoaLumberjack.framework"
   install_framework "Pods/Parse.framework"
   install_framework "Pods/PubNub.framework"
 fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
+if [[ "$CONFIGURATION" == "InternalBeta" ]]; then
+  install_framework "Pods/Bolts.framework"
+  install_framework "Pods/CocoaLumberjack.framework"
+  install_framework "Pods/Parse.framework"
+  install_framework "Pods/PubNub.framework"
+fi
+if [[ "$CONFIGURATION" == "Production" ]]; then
+  install_framework "Pods/Bolts.framework"
+  install_framework "Pods/CocoaLumberjack.framework"
+  install_framework "Pods/Parse.framework"
+  install_framework "Pods/PubNub.framework"
+fi
+if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_framework "Pods/Bolts.framework"
   install_framework "Pods/CocoaLumberjack.framework"
   install_framework "Pods/Parse.framework"

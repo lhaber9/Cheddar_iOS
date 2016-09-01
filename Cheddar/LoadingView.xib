@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Effra-Medium.ttf">
+            <string>Effra-Medium</string>
+        </mutableArray>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view userInteractionEnabled="NO" contentMode="scaleToFill" id="iN0-l3-epB" customClass="LoadingView" customModule="Cheddar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view alpha="0.33000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hch-bL-auj">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6b-yG-x79">
+                    <rect key="frame" x="217" y="229" width="165" height="142.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Joining chat..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXu-1t-j5b">
+                            <rect key="frame" x="24" y="110" width="118" height="22.5"/>
+                            <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="19"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HB5-as-FaY">
+                            <rect key="frame" x="32" y="5" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="4iq-Ui-DYC"/>
+                                <constraint firstAttribute="width" secondItem="HB5-as-FaY" secondAttribute="height" multiplier="1:1" id="qCW-OD-DeC"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="zXu-1t-j5b" firstAttribute="top" secondItem="HB5-as-FaY" secondAttribute="bottom" constant="5" id="2em-0z-aKe"/>
+                        <constraint firstItem="HB5-as-FaY" firstAttribute="centerX" secondItem="R6b-yG-x79" secondAttribute="centerX" id="9wh-V8-WAn"/>
+                        <constraint firstItem="zXu-1t-j5b" firstAttribute="centerX" secondItem="R6b-yG-x79" secondAttribute="centerX" id="AHy-lX-PLA"/>
+                        <constraint firstAttribute="width" constant="165" id="IIu-1g-Awo"/>
+                        <constraint firstAttribute="height" constant="100" id="jy9-qu-WcI"/>
+                        <constraint firstItem="HB5-as-FaY" firstAttribute="top" secondItem="R6b-yG-x79" secondAttribute="top" constant="5" id="wJJ-gH-g8a"/>
+                        <constraint firstAttribute="bottom" secondItem="zXu-1t-j5b" secondAttribute="bottom" constant="10" id="zFA-FR-amb"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="jy9-qu-WcI"/>
+                        </mask>
+                    </variation>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="Hch-bL-auj" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Lu9-1X-P0L"/>
+                <constraint firstItem="Hch-bL-auj" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="MSb-wT-piz"/>
+                <constraint firstItem="R6b-yG-x79" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="aWc-zr-Gtp"/>
+                <constraint firstItem="R6b-yG-x79" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="atC-hf-bj2"/>
+                <constraint firstAttribute="bottom" secondItem="Hch-bL-auj" secondAttribute="bottom" id="cpU-6d-zkm"/>
+                <constraint firstAttribute="trailing" secondItem="Hch-bL-auj" secondAttribute="trailing" id="s88-dR-MVA"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="loadingImageView" destination="HB5-as-FaY" id="71D-bf-Xqe"/>
+                <outlet property="loadingTextLabel" destination="zXu-1t-j5b" id="duU-WV-0Vf"/>
+            </connections>
+        </view>
+    </objects>
+</document>

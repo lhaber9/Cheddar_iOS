@@ -1,3 +1,4 @@
+
 //
 //  ChatViewController.swift
 //  Cheddar
@@ -8,46 +9,64 @@
 
 import Foundation
 import Parse
+import Crashlytics
 
 protocol ChatViewControllerDelegate: class {
-    func closeChat()
+    func reportAlias(alias: Alias)
+    func subscribe(chatRoom:ChatRoom)
+    func leaveChatRoom(alias: Alias)
+    func forceLeaveChatRoom(alias: Alias)
+    func showOverlay()
+    func hideOverlay()
+    func showOverlayContents(viewController: UIViewController)
+    func hideOverlayContents()
+    func showDeleteMessageOptions(chatEvent: ChatEvent)
 }
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, ChatCellDelegate, UITableViewDelegate {
     
     weak var delegate: ChatViewControllerDelegate?
     
     @IBOutlet var textView: UITextView!
     @IBOutlet var placeholderLabel: UILabel!
-    @IBOutlet var topBar: UIView!
-    @IBOutlet var topBarDivider: UIView!
     @IBOutlet var chatBarDivider: UIView!
     @IBOutlet var chatBar: UIView!
+    @IBOutlet var unreadMessagesView: UIView!
     
     @IBOutlet var chatBarBottomConstraint: NSLayoutConstraint!
     @IBOutlet var chatBarHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var chatBarTextTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var tableViewTopFixedConstraint: NSLayoutConstraint!
+    @IBOutlet var tableViewTopVariableConstraint: NSLayoutConstraint!
     
     @IBOutlet var sendButton: UIButton!
-    
     @IBOutlet var tableView: UITableView!
     
+//    var refreshControl: UIRefreshControl!
+    
+    var topEventForLoading: ChatEvent!
     var messageVerticalBuffer:CGFloat = 15
-    var chatBarHeightDefault:CGFloat = 50
-    
-    var allMessagesLoaded = false
-    var loadMessageCallInFlight = false
-    var leaveChatRoomCalInFlight = false
-    var currentStartToken: String! = nil
-    
+    var chatBarHeightDefault:CGFloat = 56
     var previousTextRect = CGRectZero
+    var dragPosition: CGFloat!
     
-    var chatRoomId: String!
-    var myAlias: Alias!
-    var allActions: [AnyObject] = []
+    var cellHeightCache = [Int:CGFloat]()
+    
+    var chatRoom: ChatRoom! {
+        didSet {
+            if (chatRoom == nil) {
+                return
+            }
+        
+            self.reloadTable()
+            self.didUpdateChatRoom()
+        }
+    }
     
     var numberInputTextLines = 1 {
         didSet {
-            
             var offsetFromDefault:CGFloat = 0
             
             if (numberInputTextLines == 3){
@@ -58,6 +77,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             UIView.animateWithDuration(0.333) { () -> Void in
+                if (self.numberInputTextLines > 1) {
+                    self.textView.textContainerInset.top = 4
+                    self.chatBarTextTopConstraint.constant = 6
+                }
+                else {
+                    self.textView.textContainerInset.top = 8
+                    self.chatBarTextTopConstraint.constant = 12
+                }
+                
                 self.chatBarHeightConstraint.constant = self.chatBarHeightDefault + offsetFromDefault
                 self.view.layoutIfNeeded()
                 if (self.numberInputTextLines <= 4) {
@@ -83,93 +111,197 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         tableView.registerNib(UINib(nibName: "ChatCell", bundle: nil), forCellReuseIdentifier: "ChatCell")
         tableView.registerNib(UINib(nibName: "PresenceCell", bundle: nil), forCellReuseIdentifier: "PresenceCell")
+        tableView.registerNib(UINib(nibName: "NameChangeCell", bundle: nil), forCellReuseIdentifier: "NameChangeCell")
+        tableView.registerNib(UINib(nibName: "ActivityIndicatorCell", bundle: nil), forCellReuseIdentifier: "ActivityIndicatorCell")
         
         textView.delegate = self
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ChatViewController.handleLongPress(_:)))
+        longPressRecognizer.minimumPressDuration = 1
+        tableView.addGestureRecognizer(longPressRecognizer)
+        
         initStyle()
-        subscribe()
         
         setupObervers()
-        loadNextPageMessages()
+        
+        invalidateHeightCache()
+        reloadTable()
+    }
+    
+    func handleLongPress(longPressRecognizer: UILongPressGestureRecognizer) {
+        let point = longPressRecognizer.locationInView(tableView)
+        
+        let indexPath = tableView.indexPathForRowAtPoint(point)
+        if (indexPath == nil) {
+            NSLog("long press on table view but not on a row");
+        } else if (longPressRecognizer.state == UIGestureRecognizerState.Began) {
+            var row = indexPath!.row
+            if (!chatRoom.allMessagesLoaded.boolValue) {
+                if (row == 0) {
+                    NSLog("long press on table view but on activity indicator cell");
+                    return
+                }
+                row -= 1
+            }
+            
+            let chatEvent = chatRoom.getSortedChatEvents()[row]
+            if (chatEvent.type == ChatEventType.Message.rawValue) {
+                showDeleteMessageOptions(chatEvent)
+            }
+        }
+    }
+    
+    func showDeleteMessageOptions(chatEvent:ChatEvent) {
+        delegate?.showDeleteMessageOptions(chatEvent)
+    }
+    
+    func updateLayout() {
+        UIView.animateWithDuration(0.333) {
+            if (self.chatRoom != nil && self.chatRoom.areUnreadMessages.boolValue) {
+                self.unreadMessagesView.alpha = 1
+            }
+            else {
+                self.unreadMessagesView.alpha = 0
+            }
+        }
+    }
+    
+    func loadNextPageMessages() {
+        if (topEventForLoading == nil) {
+            topEventForLoading = chatRoom.eventForIndex(0)
+        }
+        self.chatRoom?.loadNextPageMessages()
+    }
+    
+    func didUpdateChatRoom() {
+        chatRoom?.reloadActiveAlaises()
+        invalidateHeightCache()
+        
+        CheddarRequest.findAlias((myAlias()?.objectId)!,
+            successCallback: { (object) in
+                
+                if (self.chatRoom.numberOfChatEvents() == 0) {
+                    self.loadNextPageMessages()
+                }
+                else {
+                    self.chatRoom.reloadMessages()
+                }
+                
+                self.delegate?.subscribe(self.chatRoom)
+                
+            }) { (error) in
+                NSLog("%@",error)
+                let alias = self.myAlias()
+                self.chatRoom = nil
+                self.delegate?.forceLeaveChatRoom(alias)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newMessage", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "newPresenceEvent", object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "didSetDeviceToken", object: nil)
     }
     
-    func initStyle() {
-        topBar.backgroundColor = ColorConstants.headerBackground
-        chatBar.backgroundColor = ColorConstants.sendBackground
-        topBarDivider.backgroundColor = ColorConstants.headerBorder
-        chatBarDivider.backgroundColor = ColorConstants.sendBorder
-
-        sendEnabled = false
-    }
-    
-    func subscribe() {
-        Utilities.appDelegate().subscribeToPubNubChannel(chatRoomId)
-        Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoomId)
-    }
-    
-    func setupObervers() {
-        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "deselectTextView"))
-        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "selectTextView"))
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserverForName("newMessage", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.receiveMessage(notification.object as! Message)
-        }
-        NSNotificationCenter.defaultCenter().addObserverForName("newPresenceEvent", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.receivePresenceEvent(notification.object as! Presence)
-        }
-        NSNotificationCenter.defaultCenter().addObserverForName("didSetDeviceToken", object: nil, queue: nil) { (notification: NSNotification) -> Void in
-            self.subscribe()
-        }
-    }
-    
-    @IBAction func backTap() {
-        if (leaveChatRoomCalInFlight) {
+    func reloadTable() {
+        if (chatRoom == nil) {
             return
         }
         
-        leaveChatRoomCalInFlight = true
-        PFCloud.callFunctionInBackground("leaveChatRoom", withParameters: ["aliasId": myAlias.objectId!, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            self.leaveChatRoomCalInFlight = false
-            
-            if (error != nil) {
-                return
-            }
-            
-            if let chatRoom = ChatRoom.fetchSingleRoom() {
-                Utilities.appDelegate().managedObjectContext.deleteObject(chatRoom)
-                Utilities.appDelegate().saveContext()
-            }
-            Utilities.appDelegate().unsubscribeFromPubNubChannel(self.myAlias.chatRoomId)
-            Utilities.appDelegate().unsubscribeFromPubNubPushChannel(self.myAlias.chatRoomId)
-            self.delegate?.closeChat()
+        let isNearBottomNow = isNearBottom(5)
+        
+        chatRoom.sortChatEvents()
+        tableView?.reloadData()
+        
+        if (isNearBottomNow) {
+            scrollToBottom(false)
         }
     }
     
+    func initStyle() {
+        chatBar.backgroundColor = ColorConstants.chatNavBackground
+        chatBarDivider.backgroundColor = ColorConstants.chatNavBorder
+        
+        unreadMessagesView.backgroundColor = ColorConstants.textPrimary
+        unreadMessagesView.layer.cornerRadius = 11
+        
+        sendEnabled = false
+        
+        textView.textColor = ColorConstants.textPrimary
+        
+//        unreadMessagesView.layer.shadowRadius = 5
+        
+    }
+    
+    func setupObervers() {
+        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.deselectTextView)))
+        chatBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(ChatViewController.selectTextView)))
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func isNearBottom(distance: CGFloat) -> Bool {
+        let scrollViewHeight = tableView.frame.size.height;
+        let scrollContentSizeHeight = tableView.contentSize.height;
+        let scrollOffset = tableView.contentOffset.y;
+        
+        if (scrollOffset + scrollViewHeight >= scrollContentSizeHeight - distance) {
+            return true
+        }
+        
+        return false
+    }
+    
+    func myAlias() -> Alias! {
+        return chatRoom?.myAlias
+    }
+    
+    func scrollToTopEventForLoading() {
+        if (topEventForLoading == nil) {
+            return
+        }
+        
+        let index = chatRoom.indexForEvent(topEventForLoading)
+        scrollToEventIndex(index - 1, animated: false)
+        topEventForLoading = nil
+    }
+    
+    // MARK: Button Action
+    
     @IBAction func sendPress() {
+        if (!sendEnabled) {
+            return
+        }
+        
         let text = textView.text!
         clearTextView()
         
         sendText(text)
+        scrollToBottom(true)
     }
     
-    @IBAction func dotsPress() {
-        
+    @IBAction func scrollToBottom() {
+        scrollToBottom(true)
     }
+    
+    func showRename() {
+        self.delegate?.showOverlay()
+        self.performSegueWithIdentifier("showRenameSegue", sender: self)
+    }
+    
+    func showActiveMembers() {
+        
+        Utilities.sendAnswersEvent("View Active Members", alias: myAlias(), attributes: [:])
+        
+        self.delegate?.showOverlay()
+        self.performSegueWithIdentifier("showActiveMembersSegue", sender: self)
+    }
+    
+    // MARK: Actions
     
     func sendText(text: String) {
-        let message = Message.createMessage(text, alias: myAlias, timestamp: nil, status:MessageStatus.Sent)
-        sendMessage(message)
-        addMessage(message)
+        let message = ChatEvent.createEvent(text, alias: myAlias(), createdAt: NSDate(), type: ChatEventType.Message.rawValue, status: ChatEventStatus.Sent)
+        chatRoom.sendMessage(message)
     }
     
     func clearTextView() {
@@ -178,218 +310,60 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         numberInputTextLines = 0
     }
     
-    func loadNextPageMessages() {
-        
-        var params: [NSObject:AnyObject] = ["count":25, "aliasId": myAlias.objectId!, "subkey":EnvironmentConstants.pubNubSubscribeKey]
-        if (currentStartToken != nil) {
-            params["startTimeToken"] = currentStartToken
-        }
-        
-        loadMessageCallInFlight = true
-        PFCloud.callFunctionInBackground("replayEvents", withParameters: params) { (object: AnyObject?, error: NSError?) -> Void in
-            
-            var replayEvents = [AnyObject]()
-            
-            if let startToken = object?["startTimeToken"] as? String {
-                self.currentStartToken = startToken
-            }
-            
-            if let events = object?["events"] as? [[NSObject:AnyObject]] {
-                
-                if (events.count < 25) {
-                    self.allMessagesLoaded = true
-                }
-                
-                for eventDict in events {
-                    
-                    let objectType = eventDict["objectType"] as! String
-                    let objectDict = eventDict["object"] as! [NSObject:AnyObject]
-                    
-                    if (objectType == "messageEvent") {
-                        replayEvents.append(Message.createMessage(objectDict))
-                    }
-                    else if (objectType == "presenceEvent") {
-                        replayEvents.append(Presence.createPresenceEvent(objectDict))
-                    }
-                }
-                
-                self.allActions = replayEvents + self.allActions
-                self.tableView.reloadData()
-                self.view.setNeedsDisplay()
-                
-                if (replayEvents.count == self.allActions.count) {
-                    self.scrollToBottom(false)
-                }
-                else {
-                    self.scrollToEventIndex(replayEvents.count, animated: false)
-                }
-            }
-            
-            self.loadMessageCallInFlight = false
-        }
-    }
-    
-    func isMyMessage(message: Message) -> Bool {
-        return (message.alias.objectId == myAlias.objectId)
-    }
-    
-    func isMyPresenceEvent(presenceEvent: Presence) -> Bool {
-        return (presenceEvent.alias.objectId == myAlias.objectId)
-    }
-    
-    func findFirstMessageBeforeIndex(index: Int) -> Message! {
-        var position = index - 1
-        if (position < 0) {
-            return nil
-        }
-        
-        var message = allActions[position]
-        while (!message.isKindOfClass(Message)) {
-            position--
-            if (position < 0) { return nil }
-            message = allActions[position]
-        }
-        return message as! Message
-    }
-    
-    func findFirstMessageAfterIndex(index: Int) -> Message! {
-        var position = index + 1
-        if (position >= allActions.count) {
-            return nil
-        }
-        
-        var message = allActions[position]
-        while (!message.isKindOfClass(Message)) {
-            position++
-            if (position >= allActions.count) { return nil }
-            message = allActions[position]
-        }
-        return message as! Message
-    }
-    
-    func findMyFirstSentMessageIndexMatchingText(text: String) -> Int! {
-        if (allActions.count == 0) {
-            return nil
-        }
-        
-        var position = 0
-        var retunIndex: Int! = nil
-        
-        while (retunIndex == nil && position < allActions.count) {
-            
-            if let thisMessage = allActions[position] as? Message {
-                if (isMyMessage(thisMessage) && thisMessage.body == text && thisMessage.status == MessageStatus.Sent) {
-                    retunIndex = position
-                }
-            }
-            
-            position++
-        }
-        return retunIndex
-    }
-    
     func deselectTextView() {
-        textView.resignFirstResponder()
+        textView?.resignFirstResponder()
     }
     
     func selectTextView() {
-        textView.becomeFirstResponder()
-    }
-    
-    func sendMessage(message: Message) {
-        Utilities.appDelegate().sendMessage(message)
-    }
-    
-    func receiveMessage(message: Message) {
-        if (isMyMessage(message)) {
-            let messageIndex = findMyFirstSentMessageIndexMatchingText(message.body)
-            (allActions[messageIndex] as! Message).status = MessageStatus.Success
-            tableView.reloadData()
-            return;
-        }
-        
-        addMessage(message)
-    }
-    
-    func receivePresenceEvent(presenceEvent: Presence) {
-//        if (isMyPresenceEvent(presenceEvent)) {
-//            return;
-//        }
-        
-        addPresenceEvent(presenceEvent)
+        textView?.becomeFirstResponder()
     }
     
     func scrollToBottom(animated: Bool) {
-        if (allActions.count == 0) {
+        if (chatRoom.numberOfChatEvents() == 0) {
             return;
         }
         
-        let indexPath = NSIndexPath(forRow: allActions.count - 1, inSection:0)
+        var row = chatRoom.numberOfChatEvents() - 1
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            row += 1
+        }
+        
+        let indexPath = NSIndexPath(forRow: row, inSection:0)
         self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom, animated:animated)
     }
     
     func scrollToEventIndex(index: Int, animated: Bool) {
-        let indexPath = NSIndexPath(forRow: index, inSection:0)
-        self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
+//        dispatch_async(dispatch_get_main_queue(), {
+            let indexPath = NSIndexPath(forRow: index, inSection:0)
+            self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Top, animated:animated)
+//        })
     }
     
-    func addMessage(message: Message) {
-        allActions.append(message)
-        
-        tableView.reloadData()
-        view.setNeedsDisplay()
-        scrollToBottom(true)
-    }
-    
-    func addPresenceEvent(presenceEvent: Presence) {
-        allActions.append(presenceEvent)
-        
-        tableView.reloadData()
-        view.setNeedsDisplay()
-        scrollToBottom(true)
-    }
-    
-    func shouldShowAliasLabelForMessageIndex(messageIdx: Int) -> Bool {
-        if let thisMessage = allActions[messageIdx] as? Message {
-            let messageBefore = findFirstMessageBeforeIndex(messageIdx)
-            if (messageBefore != nil) {
-                return messageBefore.alias.objectId != thisMessage.alias.objectId
-            }
-            else {
-                return true
-            }
-        }
-        else {
-            return false
-        }
-    }
-    
-    func shouldShowAliasIconForMessageIndex(messageIdx: Int) -> Bool {
-        if let thisMessage = allActions[messageIdx] as? Message {
-            let messageAfter = findFirstMessageAfterIndex(messageIdx)
-            if (messageAfter != nil) {
-                return messageAfter.alias.objectId != thisMessage.alias.objectId
-            }
-            else {
-                return true
-            }
-        }
-        else {
-            return false
-        }
-    }
-    
-    // Keyboard Delegate Methods
+    // MARK: Keyboard Delegate Methods
     
     func keyboardWillShow(notification: NSNotification) {
         
+        if (!textView.isFirstResponder()) {
+            return
+        }
+        
+        if (tableView?.contentSize.height > tableView?.frame.size.height) {
+            tableViewHeightConstraint?.priority = 900
+            tableViewTopVariableConstraint?.priority = 900
+            tableViewTopFixedConstraint?.priority = 200
+        }
+        else {
+            tableViewHeightConstraint?.priority = 200
+            tableViewTopVariableConstraint?.priority = 200
+            tableViewTopFixedConstraint?.priority = 900
+        }
+        self.view.layoutIfNeeded()
+        
         let keyboardHeight: CGFloat = (notification.userInfo![UIKeyboardFrameEndUserInfoKey]?.CGRectValue.height)!
         
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.chatBarBottomConstraint.constant = keyboardHeight
-            self.view.layoutIfNeeded()
-            self.scrollToBottom(true)
-        }
+        self.chatBarBottomConstraint.constant = keyboardHeight
+        self.view.layoutIfNeeded()
+        self.scrollToBottom(true)
     }
     
     func keyboardWillHide(notification: NSNotification) {
@@ -399,58 +373,219 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    // TableView Delegate Methods
+    // MARK: TableView Delegate Methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allActions.count
+        if (chatRoom == nil) {
+            return 0
+        }
+        
+        var count = chatRoom.numberOfChatEvents()
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+           count += 1
+        }
+        
+        return count
     }
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if (chatRoom == nil) {
+            return UITableViewCell()
+        }
         
-        let event = allActions[indexPath.row]
-        if let message = event as? Message {
+        var index = indexPath.row
+        let isFirstEvent = (index == 0)
+        
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (isFirstEvent) {
+                let cell = tableView.dequeueReusableCellWithIdentifier("ActivityIndicatorCell", forIndexPath: indexPath) as! ActivityIndicatorCell
+                cell.activityIndicator.startAnimating()
+                return cell
+            }
+            index -= 1
+        }
+        let event = chatRoom.getSortedChatEvents()[index]
+        
+        if (event.type == ChatEventType.Message.rawValue) {
             let cell = tableView.dequeueReusableCellWithIdentifier("ChatCell", forIndexPath: indexPath) as! ChatCell
-            cell.setMessageText(message.body, alias: message.alias, isOutbound: isMyMessage(message), showAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row), showAliasIcon: shouldShowAliasIconForMessageIndex(indexPath.row), status: message.status)
+            cell.delegate = self
             return cell
         }
-        else if let presenceEvent = event as? Presence {
-            let cell = tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
-            cell.setAlias(presenceEvent.alias, andAction: presenceEvent.action)
-            return cell
+        else if (event.type == ChatEventType.Presence.rawValue) {
+            return tableView.dequeueReusableCellWithIdentifier("PresenceCell", forIndexPath: indexPath) as! PresenceCell
+        }
+        else if (event.type == ChatEventType.NameChange.rawValue) {
+            return tableView.dequeueReusableCellWithIdentifier("NameChangeCell", forIndexPath: indexPath) as! NameChangeCell
         }
         
         return UITableViewCell()
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let action = allActions[indexPath.row]
-        if let message = action as? Message {
-            
-            var cellHeight = ChatCell.rowHeightForText(message.body, withAliasLabel: shouldShowAliasLabelForMessageIndex(indexPath.row)) + 4
-            
-            let nextMessage = findFirstMessageAfterIndex(indexPath.row)
-            if (nextMessage?.alias.objectId != message.alias.objectId) {
-                cellHeight += messageVerticalBuffer
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var index = indexPath.row
+        let isFirstEvent = (index == 0)
+        
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (isFirstEvent) {
+                return
             }
+            index -= 1
+        }
+        let event = chatRoom.sortChatEvents()[index]
+        
+        if let messageCell = cell as? ChatCell {
             
-            return cellHeight
+            let viewSettings = chatRoom.getViewSettingsForMessageCellAtIndex(index)
+            let showAliasLabel = viewSettings.0
+            let showAliasIcon = viewSettings.1
+            let bottomGapSize = viewSettings.2
+            
+            let options: [String:AnyObject] = [ "chatEvent": event,
+                                                "isOutbound": self.chatRoom.isMyChatEvent(event),
+                                                "showAliasLabel": showAliasLabel,
+                                                "showAliasIcon": showAliasIcon,
+                                                "showTimestampLabel": self.chatRoom.shouldShowTimestampLabelForEventIndex(index),
+                                                "status": event.status,
+                                                "bottomGapSize": bottomGapSize ]
+            
+            messageCell.setMessageOptions(options)
         }
-        else if let _ = action as? Presence {
-            return 33
+        else if let presenceCell = cell as? PresenceCell {
+            presenceCell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index))
         }
-        return 0
+        else if let nameChangeCell = cell as? NameChangeCell {
+            nameChangeCell.setEvent(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index), showBottomBuffer: index == chatRoom.numberOfChatEvents() - 1)
+        }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if (allMessagesLoaded || loadMessageCallInFlight) {
+    func shouldUseHeightCacheForIndex(index: Int) -> Bool {
+        if (index == chatRoom.numberOfChatEvents() - 1 || index == 0) {
+            return false
+        }
+        
+        return true
+    }
+    
+    func setHeightToCache(index: Int, height: CGFloat) {
+        if (!shouldUseHeightCacheForIndex(index)) {
             return
         }
         
-        if (tableView.contentOffset.y <= 50) {
-            loadNextPageMessages()
+        cellHeightCache[index] = height
+    }
+    
+    func getHeightFromCache(index: Int) -> CGFloat! {
+        if (!shouldUseHeightCacheForIndex(index)) {
+            return nil
+        }
+        
+        return cellHeightCache[index]
+    }
+    
+    func invalidateHeightCache() {
+        cellHeightCache = [Int:CGFloat]()
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if (chatRoom == nil) {
+            return 0
+        }
+        
+        var index = indexPath.row
+        if (!chatRoom.allMessagesLoaded.boolValue) {
+            if (index == 0) {
+                return ActivityIndicatorCell.activityIndicatorHeight
+            }
+            index -= 1
+        }
+        
+        if (getHeightFromCache(index) != nil) {
+            return getHeightFromCache(index)
+        }
+       
+        let event = chatRoom.getSortedChatEvents()[index]
+        var height: CGFloat = 0
+        if (event.type == ChatEventType.Message.rawValue) {
+            
+            let viewSettings = chatRoom.getViewSettingsForMessageCellAtIndex(index)
+            let showAliasLabel = viewSettings.0
+            let bottomGapSize = viewSettings.2
+            
+            var cellHeight = ChatCell.rowHeightForText(event.body, withAliasLabel: showAliasLabel, withTimestampLabel: chatRoom.shouldShowTimestampLabelForEventIndex(index)) + 2
+            
+            cellHeight += bottomGapSize
+            
+            height = cellHeight
+        }
+        else if (event.type == ChatEventType.Presence.rawValue) {
+            var cellHeight:CGFloat = 36
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(index)) {
+                cellHeight += ChatCell.timestampLabelHeight
+            }
+            height = cellHeight
+        }
+        else if (event.type == ChatEventType.NameChange.rawValue) {
+            var cellHeight:CGFloat = 37
+            if (chatRoom.shouldShowTimestampLabelForEventIndex(index)) {
+                cellHeight += ChatCell.timestampLabelHeight
+            }
+            if (index == chatRoom.numberOfChatEvents() - 1) {
+                cellHeight += NameChangeCell.bottomBufferSize
+            }
+            height = cellHeight
+        }
+        
+        if (index == 0 && chatRoom.allMessagesLoaded.boolValue) {
+            height += ChatCell.bufferSize
+        }
+        
+        setHeightToCache(index, height: height)
+        
+        return height
+    }
+    
+    // MARK: Scroll View Delegate Methods
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        dragPosition = scrollView.contentOffset.y
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        dragPosition = nil
+//        reloadTable()
+//        scrollToTopEventForLoading()
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (scrollView.isEqual(textView) && numberInputTextLines <= 4) {
+            textView.contentOffset.y = 0
+            return
+        }
+        
+        if (dragPosition != nil) {
+            if (tableView.contentOffset.y <= 75 && scrollView.contentOffset.y < dragPosition) {
+                if (!chatRoom.allMessagesLoaded.boolValue) {
+//                    refreshControl.beginRefreshing()
+                    loadNextPageMessages()
+                }
+            }
+            
+            if (scrollView.contentOffset.y < dragPosition - 15) {
+                deselectTextView()
+            }
+            
+            dragPosition = scrollView.contentOffset.y
+        }
+        
+        if (isNearBottom(5)) {
+            chatRoom?.setUnreadMessages(false)
         }
     }
+    
+    // MARK: TextViewDelegate
     
     func textViewDidChange(textView: UITextView) {
         sendEnabled = (textView.text != "")
@@ -469,5 +604,79 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         return true;
+    }
+    
+    // MARK: OptionsOverlayViewDelegate
+    
+    func shouldClosePopover() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func shouldCloseOverlayContents() {
+        self.delegate!.hideOverlayContents()
+    }
+    
+    func shouldCloseOverlay() {
+        self.delegate!.hideOverlay()
+    }
+    
+    
+    // MARK: FeedbackViewDelegate
+    
+    func shouldCloseAll() {
+        shouldClosePopover()
+        shouldCloseOverlay()
+        shouldCloseOverlayContents()
+    }
+    
+    // MARK: RenameChatDelegate
+    
+    func currentChatRoomName() -> String! {
+        return chatRoom?.name
+    }
+    
+    // MARK: ActiveMembersDelegate
+    
+    func currentChatRoom() -> ChatRoom {
+        return chatRoom
+    }
+    
+    func reportAlias(alias: Alias) {
+        delegate?.reportAlias(alias)
+    }
+    
+    // MARK: UIPopoverPresentationControllerDelegate
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showFeedbackSegue" {
+            let popoverViewController = segue.destinationViewController as! FeedbackViewController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+        else if segue.identifier == "showRenameSegue" {
+            let popoverViewController = segue.destinationViewController as! RenameChatController
+            popoverViewController.delegate = self
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+        else if segue.identifier == "showActiveMembersSegue" {
+            let popoverViewController = segue.destinationViewController as! ActiveMembersController
+            popoverViewController.delegate = self
+            popoverViewController.preferredContentSize = CGSizeMake(300, popoverViewController.bottomBuffer() + popoverViewController.headerHeight() +
+                (popoverViewController.tableView(UITableView(), heightForRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0)) * CGFloat(chatRoom.activeAliases.count)))
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
+    }
+    
+    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+        shouldCloseAll()
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        
+        // Force popover style
+        return UIModalPresentationStyle.None
     }
 }

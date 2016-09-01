@@ -10,85 +10,68 @@ import UIKit
 import Parse
 import Crashlytics
 
-class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatViewControllerDelegate {
-
+class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, ChatDelegate, VerifyEmailDelegate {
+    
+    @IBOutlet var loadingView: UIView!
+    var loadOverlay: LoadingView!
+    
     @IBOutlet var backgroundView: UIView!
-    @IBOutlet var shadowBackgroundView: UIView!
-    @IBOutlet var spinnerView: UIView!
-    @IBOutlet var spinnerImageView: UIImageView!
-    @IBOutlet var container0: UIView!
-    @IBOutlet var page0: UIView!
+    @IBOutlet var backgroundCheeseLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var huskyImageLeftConstraint: NSLayoutConstraint!
+    var backgroundCheeseInitalLeftConstraint: CGFloat!
+    var backgroundCheeseInitalRightConstraint: CGFloat!
+    var huskyImageInitialLeftConstraint: CGFloat!
+    var backgroundParalaxScaleFactor: CGFloat = 5
+//    var huskyParalaxScaleFactor: CGFloat = 22
     
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var scrollViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var overlayContainer: UIView!
+    @IBOutlet var overlayContentsContainer: UIView!
+    var overlayContentsController: UIViewController!
     
-    @IBOutlet var scrollViewHeightConstrait: NSLayoutConstraint!
-    @IBOutlet var containerHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var chatContainer: UIView!
+    @IBOutlet var introContainer: UIView!
+    var chatController: ChatController!
+    var introController: IntroViewController!
     
-    @IBOutlet var scrollViewPositionConstrait: NSLayoutConstraint!
-    @IBOutlet var backgroundViewHeightConstrait: NSLayoutConstraint!
-    
-    @IBOutlet var textLeftConstrait: NSLayoutConstraint!
-    @IBOutlet var welcomeTextLeftConstrait: NSLayoutConstraint!
-    @IBOutlet var pageLeftConstraint: NSLayoutConstraint!
-    @IBOutlet var pageRightConstraint: NSLayoutConstraint!
-    
-    var scrollViewHeightRaisedConstant: CGFloat = -130
-    var scrollViewHeightMiddleConstant: CGFloat = -70
-    var scrollViewHeightDefaultConstant: CGFloat = 0
-    var scrollViewHeightLoweredConstant: CGFloat = 400
-    var scrollViewHeightOffScreenConstant: CGFloat = 550
-    
-    var backgroundViewHeightDefaultConstant: CGFloat = 300
-    var backgroundViewHeightLoweredConstant: CGFloat = 50
-    
-    var frontPageViewWidthDefault: CGFloat = 320
-    var frontPageViewWidthSmall: CGFloat = 240
-    
-    var containers: [UIView]!
-    var pages: [UIView]!
-    var currentPage: Int = 0
-    
-    let kRotationAnimationKey = "cheddar.spinnerrotationanimationkey"
+    var shouldShowVerifyEmailScreen = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        spinnerView.alpha = 0
+        backgroundCheeseInitalLeftConstraint = backgroundCheeseLeftConstraint.constant
+        huskyImageInitialLeftConstraint = huskyImageLeftConstraint.constant
         
-        backgroundView.backgroundColor = ColorConstants.colorAccent
+        loadOverlay = LoadingView.instanceFromNib()
+        loadingView.addSubview(loadOverlay)
+        loadOverlay.autoPinEdgesToSuperviewEdges()
         
-        spinnerImageView.image = UIImage(named: "VectorIcon")
+        introController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("IntroViewController") as! IntroViewController
         
-        setShawdowForView(shadowBackgroundView)
-        shadowBackgroundView.layer.shadowRadius = 5;
-        shadowBackgroundView.layer.shadowOpacity = 0.8;
-        shadowBackgroundView.backgroundColor = ColorConstants.solidGray
-        
-        containers = [container0]
-        pages = [page0]
-        let introViewController = IntroViewController()
-        addViewControllerPageToLastContainer(introViewController)
-        
-        if (Utilities.IS_IPHONE_6_PLUS() || Utilities.IS_IPHONE_6()) {
-            insetContainerEdges(10)
+        introController.delegate = self
+        addChildViewController(introController)
+        introContainer.addSubview(introController.view)
+        introController.view.autoPinEdgesToSuperviewEdges()
+
+        view.layoutIfNeeded()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if (CheddarRequest.currentUser() != nil) {
+            didCompleteLogin()
         }
-        else if (Utilities.IS_IPHONE_5()) {
-            backgroundViewHeightDefaultConstant -= 60
+        else {
+            if (Utilities.appDelegate().deviceDidOnboard()) {
+                introController.setOnboardingHidden()
+            }
         }
-        else if (Utilities.IS_IPHONE_4_OR_LESS()) {
-            backgroundViewHeightDefaultConstant -= 110
-            scrollViewHeightConstrait.constant -= 35
-            containerHeightConstraint.constant -= 35
-        }
-        
-        backgroundViewHeightConstrait = shadowBackgroundView.autoSetDimension(ALDimension.Height, toSize: backgroundViewHeightDefaultConstant)
-        
-        view.setNeedsDisplay()
     }
     
     override func viewDidAppear(animated: Bool) {
-        checkInChatRoom()
+        super.viewDidAppear(animated)
+        if (shouldShowVerifyEmailScreen) {
+            self.showVerifyEmailScreen()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -96,221 +79,187 @@ class ViewController: UIViewController, FrontPageViewControllerDelegate, ChatVie
         // Dispose of any resources that can be recreated.
     }
     
+    override func shouldAutorotate() -> Bool {
+        return chatController != nil
+    }
+    
     func useSmallerViews() -> Bool {
-        return Utilities.IS_IPHONE_5() || Utilities.IS_IPHONE_4_OR_LESS()
+        return Utilities.IS_IPHONE_4_OR_LESS()
     }
     
-    func insetContainerEdges(inset: CGFloat) {
-        textLeftConstrait.constant += inset
-        welcomeTextLeftConstrait.constant += inset
-        pageLeftConstraint.constant += inset
-        pageRightConstraint.constant += inset
+    func showVerifyEmailScreen() {
+        shouldShowVerifyEmailScreen = true
+        performSegueWithIdentifier("showVerifyEmail", sender: self)
     }
     
-    func checkInChatRoom() {
-        let chatRoom = ChatRoom.fetchSingleRoom()
-        if (chatRoom != nil) {
-            self.showChatRoom(chatRoom)
+    func didCompleteLogin() {
+        introController.loginSignupViewController.reset()
+        introController.setOnboardingHidden()
+        hideLoadingView()
+        if let isVerified = CheddarRequest.currentUser()?["emailVerified"] as? Bool {
+            self.hideLoadingView()
+            if (isVerified) {
+                self.showChat(false)
+            } else {
+                self.showVerifyEmailScreen()
+            }
         }
     }
     
-    func goToNext() {
-        scrollToPage(currentPage + 1, animated: true)
+    func didCompleteSignup(user: PFUser) {
+        showVerifyEmailScreen()
+        introController.setOnboardingHidden()
     }
     
-    func scrollToPage(pageIdx: Int, animated: Bool) {
-        scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(pageIdx), 0.0), animated:animated)
-        currentPage = pageIdx
+    func goToLogin() {
+        introController.goToLastPageNoAnimation()
     }
     
-    func setShawdowForView(view: UIView) {
-        view.layer.masksToBounds = false;
-        view.layer.shadowOffset = CGSizeMake(0, 0);
-        view.layer.shadowRadius = 3;
-        view.layer.shadowOpacity = 0.5;
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showVerifyEmail" {
+            let popoverViewController = segue.destinationViewController as! VerifyEmailViewController
+            popoverViewController.delegate = self
+            popoverViewController.errorDelegate = introController.loginSignupViewController
+            
+            UIView.animateWithDuration(0.1, animations: {
+                self.introController.loginSignupViewController.hideErrorLabel()
+                self.introController.loginSignupViewController.viewContents.alpha = 0
+                self.view.layoutIfNeeded()
+            })
+        }
     }
-    
-    func goToNextPageWithController(viewController: FrontPageViewController) {
-        addContainerAndPage()
-        addViewControllerPageToLastContainer(viewController)
-        goToNext()
-    }
-    
-    func addContainerAndPage() {
-        let lastPage = pages.last!
-        lastPage.removeConstraint(scrollViewWidthConstraint)
-        scrollViewWidthConstraint = nil
-        let pageView = UIView()
-        scrollView.addSubview(pageView)
-        
-        pageView.autoMatchDimension(ALDimension.Width, toDimension:ALDimension.Width, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastPage)
-        pageView.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: lastPage)
-        
-        scrollViewWidthConstraint = NSLayoutConstraint(item: lastPage, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
-        scrollViewWidthConstraint.priority = 900
-        
-        view.addConstraint(scrollViewWidthConstraint)
 
-        pages.append(pageView)
-        
-        let lastContainer = containers.last!
-        let containerView = UIView()
-        pageView.addSubview(containerView)
-        
-        containerView.autoMatchDimension(ALDimension.Width, toDimension: ALDimension.Width, ofView: lastContainer)
-        containerView.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top,ofView: lastContainer)
-        containerView.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastContainer)
-        containerView.autoAlignAxisToSuperviewAxis(ALAxis.Vertical)
-        
-        containers.append(containerView)
+    // MARK: FullPageScrollDelegate
+    
+    func changeBackgroundColor(color: UIColor){
+        backgroundView.backgroundColor = color
+        view.layoutIfNeeded()
     }
     
-    func addViewControllerPageToLastContainer(viewController: FrontPageViewController) {
+    func showChat(shouldForceJoin: Bool) {
+        if (CheddarRequest.currentUser() == nil) {
+            return
+        }
         
-        viewController.delegate = self
+        chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
+        
+        chatController.delegate = self
+        addChildViewController(chatController)
+        chatContainer.addSubview(chatController.view)
+        chatController.view.autoPinEdgesToSuperviewEdges()
+        
+        chatContainer.hidden = false
+        
+        if (shouldForceJoin) {
+            chatController.joinNextAndAnimate()
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let backgrounParalaxOffset = scrollView.contentOffset.x / backgroundParalaxScaleFactor;
+        backgroundCheeseLeftConstraint.constant  = backgroundCheeseInitalLeftConstraint - backgrounParalaxOffset
+        
+//        turn off husky scrolling
+//
+//        let huskyParalaxOffset = scrollView.contentOffset.x / huskyParalaxScaleFactor;
+//        huskyImageLeftConstraint.constant = huskyImageInitialLeftConstraint - huskyParalaxOffset
+        
+        view.layoutIfNeeded()
+    }
+    
+    // MARK: ChatDelegate
+    
+    func showLoadingViewWithText(text: String) {
+        loadOverlay.loadingTextLabel.text = text
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.loadingView.alpha = 1
+            self.loadingView.hidden = false
+        }
+    }
+    
+    func hideLoadingView() {
+        UIView.animateWithDuration(0.333) { () -> Void in
+            self.loadingView.alpha = 0
+            self.loadingView.hidden = true
+        }
+    }
+    
+    func showOverlay() {
+        UIView.animateWithDuration(0.33, animations: {
+            self.overlayContainer.hidden = false
+            self.overlayContainer.alpha = 1
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func hideOverlay() {
+        UIView.animateWithDuration(0.33, animations: {
+            self.overlayContainer.alpha = 0
+            self.view.layoutIfNeeded()
+        }) { (completed: Bool) in
+            self.overlayContainer.hidden = true
+        }
+    }
+    
+    func showOverlayContents(viewController: UIViewController) {
         addChildViewController(viewController)
-        let view = viewController.view
-        
-        let containerView = containers.last!
-        containerView.addSubview(view)
-        
-        view.autoPinEdgesToSuperviewEdges()
-        
-        setShawdowForView(view)
-    }
-    
-    // FrontPageViewControllerDelegate
-    
-    func joinChat(isSingle: Bool) {
-        if (isSingle) {
-            Answers.logCustomEventWithName("Selected On on One Chat", customAttributes: nil)
-            UIAlertView(title: "Oops", message: "One on One Chat Not Available Yet", delegate: self, cancelButtonTitle: "ok").show()
-        }
-        else {
-            let chatRoom = ChatRoom.fetchSingleRoom()
-            if (chatRoom == nil) {
-                joinNextAndAnimate()
-            }
-            else {
-                self.showChatRoom(chatRoom)
-            }
-        }
-    }
-    
-    func joinNextAndAnimate() {
-        
-        var chatRoom: ChatRoom!
-        var animationComplete = false
-        
-        PFCloud.callFunctionInBackground("joinNextAvailableChatRoom", withParameters: ["userId": User.theUser.objectId, "maxOccupancy": 1, "pubkey": EnvironmentConstants.pubNubPublishKey, "subkey": EnvironmentConstants.pubNubSubscribeKey]) { (object: AnyObject?, error: NSError?) -> Void in
-            let alias = Alias.createAliasFromParseObject(object as! PFObject, isTemporary: false)
-            chatRoom = ChatRoom.createWithMyAlias(alias)
-            Utilities.appDelegate().saveContext()
-            Utilities.appDelegate().subscribeToPubNubChannel(chatRoom.objectId)
-            Utilities.appDelegate().subscribeToPubNubPushChannel(chatRoom.objectId)
-            if (animationComplete) {
-                self.showChatRoom(chatRoom)
-            }
-        }
-        
-        performJoinChatAnimation { () -> Void in
-            animationComplete = true
-            if (chatRoom != nil) {
-                self.showChatRoom(chatRoom)
-            }
-        }
-    }
-    
-    func showChatRoom(chatRoom: ChatRoom) {
-        let chatViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-        chatViewController.delegate = self
-        chatViewController.chatRoomId = chatRoom.objectId
-        chatViewController.myAlias = chatRoom.myAlias
-        NSLog("Joining ChatRoom: " + chatRoom.objectId)
-        self.presentViewController(chatViewController, animated: true) { () -> Void in
-            self.scrollViewToDefault()
-            self.scrollBackgroundViewToDefault()
-            self.spinnerView.alpha = 0
-            self.spinnerView.layer.removeAllAnimations()
-        }
-    }
-    
-    func animateScrollViewToRaised() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewPositionConstrait.constant = self.scrollViewHeightRaisedConstant;
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func animateScrollViewToDefault() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewToDefault()
-        }
-    }
-    
-    func scrollViewToDefault() {
-        self.scrollViewPositionConstrait.constant = self.scrollViewHeightDefaultConstant;
+        overlayContentsContainer.addSubview(viewController.view)
+        viewController.view.autoPinEdgesToSuperviewEdges()
+        overlayContentsController = viewController
         self.view.layoutIfNeeded()
-    }
-    
-    func scrollBackgroundViewToDefault() {
-        self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightDefaultConstant;
-        self.view.layoutIfNeeded()
-    }
-    
-    func animateScrollViewToLowered() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewPositionConstrait.constant = self.scrollViewHeightLoweredConstant;
+        
+        UIView.animateWithDuration(0.33, animations: {
+            self.overlayContentsContainer.hidden = false
+            self.overlayContentsContainer.alpha = 1
             self.view.layoutIfNeeded()
+        })
+    }
+    
+    func hideOverlayContents() {
+        UIView.animateWithDuration(0.33, animations: {
+            self.overlayContentsContainer.alpha = 0
+            self.view.layoutIfNeeded()
+        }) { (completed: Bool) in
+            self.overlayContentsContainer.hidden = true
+            self.overlayContentsController?.view.removeFromSuperview()
+            self.overlayContentsController?.removeFromParentViewController()
+            self.overlayContentsController = nil
         }
     }
     
-    func animateScrollViewToOffScreen() {
-        UIView.animateWithDuration(0.333) { () -> Void in
-            self.scrollViewPositionConstrait.constant = self.scrollViewHeightOffScreenConstant;
+    func removeChat() {
+        let value = UIInterfaceOrientation.Portrait.rawValue
+        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+        goToLogin()
+        introController.loginSignupViewController.reset()
+        
+        chatController.view.removeFromSuperview()
+        chatController.removeFromParentViewController()
+        chatController = nil
+        
+        chatContainer.hidden = true
+    }
+    
+    // MARK: VerifyEmailDelegate
+    
+    func didLogout() {
+        shouldShowVerifyEmailScreen = false
+        UIView.animateWithDuration(0.1, animations: {
+            self.introController.loginSignupViewController.viewContents.alpha = 1
             self.view.layoutIfNeeded()
+        })
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func emailVerified() {
+        shouldShowVerifyEmailScreen = false
+        dismissViewControllerAnimated(true) {
+            UIView.animateWithDuration(0.1, animations: {
+                self.introController.loginSignupViewController.viewContents.alpha = 1
+                self.view.layoutIfNeeded()
+            })
+            self.showChat(true)
         }
-    }
-    
-    func startSpinner() {
-        self.spinnerView.alpha = 1
-        
-        let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation")
-        
-        rotationAnimation.fromValue = 0.0
-        rotationAnimation.toValue = Float(M_PI * 2.0)
-        rotationAnimation.duration = 1
-        rotationAnimation.repeatCount = Float.infinity
-        
-        spinnerView.layer.addAnimation(rotationAnimation, forKey: kRotationAnimationKey)
-    }
-    
-    func performJoinChatAnimation(callback: () -> Void) {
-        UIView.animateWithDuration(0.333, animations: { () -> Void in
-            self.scrollViewPositionConstrait.constant = self.scrollViewHeightMiddleConstant
-            self.view.layoutIfNeeded()
-            self.startSpinner()
-            }) { (success: Bool) -> Void in
-                UIView.animateWithDuration(0.666, animations: { () -> Void in
-                    self.scrollViewPositionConstrait.constant = self.scrollViewHeightOffScreenConstant
-                    self.backgroundViewHeightConstrait.constant = self.backgroundViewHeightLoweredConstant
-                    self.view.layoutIfNeeded()
-                    }) { (success: Bool) -> Void in
-                        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * Double(NSEC_PER_SEC)))
-                        dispatch_after(delayTime, dispatch_get_main_queue()) {
-                            callback()
-                        }
-                }
-        }
-    }
-    
-    // ChatViewContollerDelegate
-    
-    func closeChat() {
-        self.scrollToPage(self.currentPage, animated: false)
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
