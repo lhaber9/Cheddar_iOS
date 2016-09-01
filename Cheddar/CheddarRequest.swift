@@ -298,10 +298,29 @@ class CheddarRequest: NSObject {
         
         callFunction("deleteChatEventForAlias",
                      params: params,
-                     successCallback: successCallback,
-                     errorCallback: errorCallback)
+                     successCallback: { (object) in
+                        
+                        successCallback(object: object)
+                        Answers.logCustomEventWithName("Delete Message", customAttributes: ["aliasId":aliasId, "chatEventId":chatEventId])
+                        
+            }, errorCallback: errorCallback)
     }
-
+    
+    static func sendBlockUser(blockedUserId: String!, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
+        
+        let userId = CheddarRequest.currentUser()?.objectId
+        let params = [  "userId": userId!,
+                        "blockedUserId": blockedUserId ]
+        
+        callFunction("blockUserForUser",
+                     params: params,
+                     successCallback: { (object) in
+                        
+                        successCallback(object: object)
+                        Answers.logCustomEventWithName("Block User", customAttributes: ["userId":userId!, "blockedUserId":blockedUserId])
+                        
+            }, errorCallback: errorCallback)
+    }
     
     static func sendSchoolChangeRequest(schoolName: String, email: String, successCallback: (object: AnyObject) -> (), errorCallback: (error: NSError) -> ()) {
         

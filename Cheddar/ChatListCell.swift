@@ -39,10 +39,7 @@ class ChatListCell: UITableViewCell {
             aliasIcon.autoPinEdgesToSuperviewEdges()
         }
         
-        if (self.alias.objectId != alias.objectId) {
-            aliasIcon.setCellAlias(alias, color: color)
-        }
-        
+        aliasIcon.setCellAlias(alias, color: color)
         self.alias = alias
         layoutIfNeeded()
     }
