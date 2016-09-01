@@ -97,7 +97,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                             
                             if (chatRoom != nil && chatEvent != nil) {
                                 
-                                if (chatRoom.numberOfChatEvents() > 0 && chatEvent.objectId != chatRoom.sortChatEvents().last?.objectId) {
+                                if (chatRoom.numberOfChatEvents() > 0 && chatEvent.objectId != chatRoom.getSortedChatEvents().last?.objectId) {
                                     chatRoom.setUnreadMessages(true)
                                 }
                             }

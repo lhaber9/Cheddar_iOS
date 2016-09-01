@@ -433,7 +433,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
             index -= 1
         }
-        let event = chatRoom.sortChatEvents()[index]
+        let event = chatRoom.sortedChatEvents[index]
         
         if let messageCell = cell as? ChatCell {
             

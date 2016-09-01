@@ -509,7 +509,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             
             self.showChatListButtons()
             
-            self.titleLabel.text = "Groups"
+            self.titleLabel.text = "Messages"
             self.view.layoutIfNeeded()
         })
     }
@@ -671,8 +671,6 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             chatListController.refreshRooms()
             return
         }
-        
-        chatViewController.invalidateHeightCache()
         
         if (chatEvent.type == ChatEventType.NameChange.rawValue) {
             didUpdateName(chatRoom)
