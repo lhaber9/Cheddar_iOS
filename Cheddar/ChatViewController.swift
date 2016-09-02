@@ -261,8 +261,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return
         }
         
-        let index = chatRoom.indexForEvent(topEventForLoading)
-        scrollToEventIndex(index - 1, animated: false)
+        if let index = chatRoom.indexForEvent(topEventForLoading) {
+            scrollToEventIndex(index - 1, animated: false)
+        }
         topEventForLoading = nil
     }
     
@@ -433,7 +434,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             }
             index -= 1
         }
-        let event = chatRoom.sortedChatEvents[index]
+        let event = chatRoom.getSortedChatEvents()[index]
         
         if let messageCell = cell as? ChatCell {
             
