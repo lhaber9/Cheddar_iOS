@@ -48,9 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         mustUpdateAlert.delegate = self
         termsOfServiceAlert.delegate = self
         
-//        if ( isUpdate() ) {
-//            termsOfServiceAlert.show()
-//        }
+        if ( isUpdate() ) {
+            UIAlertView(title: "New in this version", message: "This update contains bug fixes and speed improvements to help make Cheddar even better! \n \n Thank you to everyone for your feedback, keep it coming!", delegate: nil, cancelButtonTitle: "Ok").show()
+        }
         
         let types: UIUserNotificationType = [.Badge, .Sound, .Alert]
         
