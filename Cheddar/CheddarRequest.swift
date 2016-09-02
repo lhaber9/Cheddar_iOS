@@ -206,7 +206,7 @@ class CheddarRequest: NSObject {
         var mutableParams = params
         mutableParams["subkey"] = Utilities.getKeyConstant("PubnubSubscribeKey")
         
-        callFunction("replayEvents",
+        callFunction("replayParseEvents",
                      params: mutableParams,
                      successCallback: successCallback,
                      errorCallback: errorCallback)
