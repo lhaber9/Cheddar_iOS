@@ -7,17 +7,17 @@
 ////
 
 import Foundation
-import Parse
+//import Parse
 
 protocol SignupDelegate: class {
-    func didCompleteSignup(user: PFUser)
-    func showErrorText(text: String)
+    func didCompleteSignup(_ user: PFUser)
+    func showErrorText(_ text: String)
     func showLogin()
-    func showLoadingViewWithText(text: String)
+    func showLoadingViewWithText(_ text: String)
     func hideLoadingView()
     func showChangeSchoolView()
     func showRegistrationCodeView()
-    func registerNewUser(registrationCode:String!)
+    func registerNewUser(_ registrationCode:String!)
 }
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
@@ -48,8 +48,8 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         
         registerButton.setPrimaryButton()
         
-        goToLoginButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
-        changeSchoolButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
+        goToLoginButton.setTitleColor(ColorConstants.textPrimary, for: UIControlState.normal)
+        changeSchoolButton.setTitleColor(ColorConstants.textPrimary, for: UIControlState.normal)
     }
     
     @IBAction func showLogin() {
@@ -63,7 +63,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     @IBAction func tapRegister() {
         let entryErrors = getEntryErrors()
         if (entryErrors.isEmpty) {
-            if (emailField.text!.containsString("@husky.neu.edu")) {
+            if (emailField.text!.contains("@husky.neu.edu")) {
                 delegate.showLoadingViewWithText("Registering...")
                 registerNewUser(emailField.text!, password: passwordField.text!)
             } else {
@@ -102,11 +102,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         confirmPasswordField.text = ""
     }
     
-    func showErrorText(text: String) {
+    func showErrorText(_ text: String) {
         delegate.showErrorText(text)
     }
     
-    func registerNewUser(email: String, password: String) {
+    func registerNewUser(_ email: String, password: String) {
         delegate.registerNewUser(nil)
     }
     
@@ -130,7 +130,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: TextFieldDelegate
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
         textField.layoutIfNeeded()
     }

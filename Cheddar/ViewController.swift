@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Parse
+//import Parse
 import Crashlytics
 
 class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, ChatDelegate, VerifyEmailDelegate {
@@ -45,7 +45,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         loadingView.addSubview(loadOverlay)
         loadOverlay.autoPinEdgesToSuperviewEdges()
         
-        introController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("IntroViewController") as! IntroViewController
+        introController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "IntroViewController") as! IntroViewController
         
         introController.delegate = self
         addChildViewController(introController)
@@ -55,7 +55,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         view.layoutIfNeeded()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (CheddarRequest.currentUser() != nil) {
             didCompleteLogin()
@@ -67,7 +67,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (shouldShowVerifyEmailScreen) {
             self.showVerifyEmailScreen()
@@ -79,8 +79,10 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         // Dispose of any resources that can be recreated.
     }
     
-    override func shouldAutorotate() -> Bool {
-        return chatController != nil
+    override var shouldAutorotate: Bool {
+        get {
+            return chatController != nil
+        }
     }
     
     func useSmallerViews() -> Bool {
@@ -89,7 +91,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     func showVerifyEmailScreen() {
         shouldShowVerifyEmailScreen = true
-        performSegueWithIdentifier("showVerifyEmail", sender: self)
+        performSegue(withIdentifier: "showVerifyEmail", sender: self)
     }
     
     func didCompleteLogin() {
@@ -106,7 +108,7 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         }
     }
     
-    func didCompleteSignup(user: PFUser) {
+    func didCompleteSignup(_ user: PFUser) {
         showVerifyEmailScreen()
         introController.setOnboardingHidden()
     }
@@ -115,13 +117,13 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         introController.goToLastPageNoAnimation()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showVerifyEmail" {
-            let popoverViewController = segue.destinationViewController as! VerifyEmailViewController
+            let popoverViewController = segue.destination as! VerifyEmailViewController
             popoverViewController.delegate = self
             popoverViewController.errorDelegate = introController.loginSignupViewController
             
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.introController.loginSignupViewController.hideErrorLabel()
                 self.introController.loginSignupViewController.viewContents.alpha = 0
                 self.view.layoutIfNeeded()
@@ -131,31 +133,31 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
 
     // MARK: FullPageScrollDelegate
     
-    func changeBackgroundColor(color: UIColor){
+    func changeBackgroundColor(_ color: UIColor){
         backgroundView.backgroundColor = color
         view.layoutIfNeeded()
     }
     
-    func showChat(shouldForceJoin: Bool) {
+    func showChat(_ shouldForceJoin: Bool) {
         if (CheddarRequest.currentUser() == nil) {
             return
         }
         
-        chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewControllerWithIdentifier("ChatController") as! ChatController
+        chatController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatController") as! ChatController
         
         chatController.delegate = self
         addChildViewController(chatController)
         chatContainer.addSubview(chatController.view)
         chatController.view.autoPinEdgesToSuperviewEdges()
         
-        chatContainer.hidden = false
+        chatContainer.isHidden = false
         
         if (shouldForceJoin) {
             chatController.joinNextAndAnimate()
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let backgrounParalaxOffset = scrollView.contentOffset.x / backgroundParalaxScaleFactor;
         backgroundCheeseLeftConstraint.constant  = backgroundCheeseInitalLeftConstraint - backgrounParalaxOffset
         
@@ -169,58 +171,58 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     
     // MARK: ChatDelegate
     
-    func showLoadingViewWithText(text: String) {
+    func showLoadingViewWithText(_ text: String) {
         loadOverlay.loadingTextLabel.text = text
-        UIView.animateWithDuration(0.333) { () -> Void in
+        UIView.animate(withDuration: 0.333) { () -> Void in
             self.loadingView.alpha = 1
-            self.loadingView.hidden = false
+            self.loadingView.isHidden = false
         }
     }
     
     func hideLoadingView() {
-        UIView.animateWithDuration(0.333) { () -> Void in
+        UIView.animate(withDuration: 0.333) { () -> Void in
             self.loadingView.alpha = 0
-            self.loadingView.hidden = true
+            self.loadingView.isHidden = true
         }
     }
     
     func showOverlay() {
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContainer.hidden = false
+        UIView.animate(withDuration: 0.33, animations: {
+            self.overlayContainer.isHidden = false
             self.overlayContainer.alpha = 1
             self.view.layoutIfNeeded()
         })
     }
     
     func hideOverlay() {
-        UIView.animateWithDuration(0.33, animations: {
+        UIView.animate(withDuration: 0.33, animations: {
             self.overlayContainer.alpha = 0
             self.view.layoutIfNeeded()
         }) { (completed: Bool) in
-            self.overlayContainer.hidden = true
+            self.overlayContainer.isHidden = true
         }
     }
     
-    func showOverlayContents(viewController: UIViewController) {
+    func showOverlayContents(_ viewController: UIViewController) {
         addChildViewController(viewController)
         overlayContentsContainer.addSubview(viewController.view)
         viewController.view.autoPinEdgesToSuperviewEdges()
         overlayContentsController = viewController
         self.view.layoutIfNeeded()
         
-        UIView.animateWithDuration(0.33, animations: {
-            self.overlayContentsContainer.hidden = false
+        UIView.animate(withDuration: 0.33, animations: {
+            self.overlayContentsContainer.isHidden = false
             self.overlayContentsContainer.alpha = 1
             self.view.layoutIfNeeded()
         })
     }
     
     func hideOverlayContents() {
-        UIView.animateWithDuration(0.33, animations: {
+        UIView.animate(withDuration: 0.33, animations: {
             self.overlayContentsContainer.alpha = 0
             self.view.layoutIfNeeded()
         }) { (completed: Bool) in
-            self.overlayContentsContainer.hidden = true
+            self.overlayContentsContainer.isHidden = true
             self.overlayContentsController?.view.removeFromSuperview()
             self.overlayContentsController?.removeFromParentViewController()
             self.overlayContentsController = nil
@@ -228,8 +230,8 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
     }
     
     func removeChat() {
-        let value = UIInterfaceOrientation.Portrait.rawValue
-        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+        let value = UIInterfaceOrientation.portrait.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
         goToLogin()
         introController.loginSignupViewController.reset()
         
@@ -237,24 +239,24 @@ class ViewController: UIViewController, UIScrollViewDelegate, IntroDelegate, Cha
         chatController.removeFromParentViewController()
         chatController = nil
         
-        chatContainer.hidden = true
+        chatContainer.isHidden = true
     }
     
     // MARK: VerifyEmailDelegate
     
     func didLogout() {
         shouldShowVerifyEmailScreen = false
-        UIView.animateWithDuration(0.1, animations: {
+        UIView.animate(withDuration: 0.1, animations: {
             self.introController.loginSignupViewController.viewContents.alpha = 1
             self.view.layoutIfNeeded()
         })
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func emailVerified() {
         shouldShowVerifyEmailScreen = false
-        dismissViewControllerAnimated(true) {
-            UIView.animateWithDuration(0.1, animations: {
+        dismiss(animated: true) {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.introController.loginSignupViewController.viewContents.alpha = 1
                 self.view.layoutIfNeeded()
             })

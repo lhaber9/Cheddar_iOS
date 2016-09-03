@@ -19,7 +19,7 @@ class IntroView: FrontPageView {
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
-        paragraphStyle.alignment = NSTextAlignment.Center;
+        paragraphStyle.alignment = NSTextAlignment.center;
         let attributes = [NSParagraphStyleAttributeName: paragraphStyle]
         let attributedText = NSAttributedString(string: bottomTextLabel.text!, attributes: attributes)
         bottomTextLabel.attributedText = attributedText
@@ -35,6 +35,6 @@ class IntroView: FrontPageView {
     }
     
     class func instanceFromNib() -> IntroView {
-        return UINib(nibName: "IntroView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! IntroView
+        return UINib(nibName: "IntroView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! IntroView
     }
 }

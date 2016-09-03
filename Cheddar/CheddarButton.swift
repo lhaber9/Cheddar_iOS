@@ -19,7 +19,7 @@ class CheddarButton: UIButton {
     var buttonHighlighted = false
     
     class func newCheddarButton() -> CheddarButton {
-        let newButton = CheddarButton(type: UIButtonType.Custom)
+        let newButton = CheddarButton(type: UIButtonType.custom)
         newButton.setup()
         return newButton
     }
@@ -28,7 +28,7 @@ class CheddarButton: UIButton {
         setup()
     }
     
-    override func rounded(corners: UIRectCorner, radius: CGFloat) {
+    override func rounded(_ corners: UIRectCorner, radius: CGFloat) {
         layer.cornerRadius = 0
         super.rounded(corners, radius: radius)
     }
@@ -41,7 +41,7 @@ class CheddarButton: UIButton {
         layer.masksToBounds = false
         layer.cornerRadius = 3
         layer.shadowOpacity = 0.35
-        layer.shadowColor = UIColor.blackColor().CGColor
+        layer.shadowColor = UIColor.black.cgColor
         
         adjustsImageWhenHighlighted = false
         
@@ -53,14 +53,14 @@ class CheddarButton: UIButton {
         setStandardShadow()
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesBegan(touches, withEvent: event)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
         setActiveShadow()
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesMoved(touches, withEvent: event)
-        if (self.pointInside(touches.first!.locationInView(self), withEvent: nil)) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        if (self.point(inside: touches.first!.location(in: self), with: nil)) {
             setActiveShadow()
         }
         else {
@@ -68,26 +68,26 @@ class CheddarButton: UIButton {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        super.touchesEnded(touches, withEvent: event)
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
         setStandardShadow()
     }
     
-    func alterBackgroundColor(change: CGFloat) {
-        let components = CGColorGetComponents(backgroundColor?.CGColor)
-        let red = components[0]
-        let green = components[1]
-        let blue = components[2]
+    func alterBackgroundColor(_ change: CGFloat) {
+        let components = (backgroundColor?.cgColor)?.components
+        let red = components?[0]
+        let green = components?[1]
+        let blue = components?[2]
         
-        backgroundColor = UIColor(red: red + change,
-                                  green: green + change,
-                                  blue: blue + change,
+        backgroundColor = UIColor(red: red! + change,
+                                  green: green! + change,
+                                  blue: blue! + change,
                                   alpha: 1)
     }
     
     func setStandardShadow() {
-        layer.shadowOffset = CGSizeMake(1, 1);
-        layer.shadowRadius = 1;
+        layer.shadowOffset = CGSize(width: 1,height: 1)
+        layer.shadowRadius = 1
         
         if (buttonHighlighted) {
             alterBackgroundColor(colorHighlightChange)
@@ -96,8 +96,8 @@ class CheddarButton: UIButton {
     }
     
     func setActiveShadow() {
-        layer.shadowOffset = CGSizeMake(1, 2.5);
-        layer.shadowRadius = 2.5;
+        layer.shadowOffset = CGSize(width: 1,height: 2.5)
+        layer.shadowRadius = 2.5
         
         if (!buttonHighlighted) {
             alterBackgroundColor(-1 * colorHighlightChange)
@@ -107,24 +107,24 @@ class CheddarButton: UIButton {
     
     func setPrimaryButton() {
         backgroundColor = ColorConstants.colorAccent
-        setTitleColor(ColorConstants.whiteColor, forState: UIControlState.Normal)
+        setTitleColor(ColorConstants.whiteColor, for: UIControlState.normal)
     }
     
     func setInversePrimaryButton() {
         backgroundColor = ColorConstants.whiteColor
-        setTitleColor(ColorConstants.colorAccent, forState: UIControlState.Normal)
+        setTitleColor(ColorConstants.colorAccent, for: UIControlState.normal)
     }
     
     func setSecondaryButton() {
         backgroundColor = ColorConstants.solidGray
-        setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
+        setTitleColor(ColorConstants.textPrimary, for: UIControlState.normal)
     }
     
     func displaySpinner() {
-        enabled = false
+        isEnabled = false
         spinner.startAnimating()
     
-        UIView.animateWithDuration(0.33) {
+        UIView.animate(withDuration: 0.33) {
             self.spinner.alpha = 1
             self.titleLabel?.alpha = 0
             self.layoutIfNeeded()
@@ -132,8 +132,8 @@ class CheddarButton: UIButton {
     }
     
     func removeSpinner() {
-        enabled = true
-        UIView.animateWithDuration(0.33) {
+        isEnabled = true
+        UIView.animate(withDuration: 0.33) {
             self.spinner.alpha = 0
             self.titleLabel?.alpha = 1
             self.spinner.stopAnimating()

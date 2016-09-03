@@ -19,7 +19,7 @@ class MatchView: FrontPageView {
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
-        paragraphStyle.alignment = NSTextAlignment.Center;
+        paragraphStyle.alignment = NSTextAlignment.center;
         let attributes = [NSParagraphStyleAttributeName: paragraphStyle]
         let attributedText = NSAttributedString(string: bottomTextLabel.text!, attributes: attributes)
         bottomTextLabel.attributedText = attributedText
@@ -32,6 +32,6 @@ class MatchView: FrontPageView {
     }
     
     class func instanceFromNib() -> MatchView {
-        return UINib(nibName: "MatchView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! MatchView
+        return UINib(nibName: "MatchView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! MatchView
     }
 }

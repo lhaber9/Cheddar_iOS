@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import Parse
+//import Parse
 
 enum ChatEventStatus:String {
     case Sent = "Sent"
@@ -29,27 +29,27 @@ class ChatEvent: NSManagedObject {
     @NSManaged var body: String!
     @NSManaged var type: String!
     @NSManaged var alias: Alias!
-    @NSManaged var createdAt: NSDate!
-    @NSManaged var updatedAt: NSDate!
+    @NSManaged var createdAt: Date!
+    @NSManaged var updatedAt: Date!
     @NSManaged var status: String!
     @NSManaged var roomName: String!
     
     class func removeAll() {
         let chatEvents = fetchAll()
         for chatEvent in chatEvents {
-            Utilities.appDelegate().managedObjectContext.deleteObject(chatEvent)
+            Utilities.appDelegate().managedObjectContext.delete(chatEvent)
         }
         Utilities.appDelegate().saveContext()
     }
     
     class func newChatEvent() -> ChatEvent {
-        let ent =  NSEntityDescription.entityForName("ChatEvent", inManagedObjectContext: Utilities.appDelegate().managedObjectContext)!
-        let chatevent = ChatEvent(entity: ent, insertIntoManagedObjectContext: Utilities.appDelegate().managedObjectContext)
-        chatevent.messageId = NSUUID.init().UUIDString
+        let ent =  NSEntityDescription.entity(forEntityName: "ChatEvent", in: Utilities.appDelegate().managedObjectContext)!
+        let chatevent = ChatEvent(entity: ent, insertInto: Utilities.appDelegate().managedObjectContext)
+        chatevent.messageId = UUID.init().uuidString
         return chatevent
     }
     
-    class func createOrRetrieve(objectId:String, type:ChatEventType) -> ChatEvent! {
+    class func createOrRetrieve(_ objectId:String, type:ChatEventType) -> ChatEvent! {
         
         var chatEvent: ChatEvent!
         chatEvent = fetchById(objectId)
@@ -60,14 +60,14 @@ class ChatEvent: NSManagedObject {
         return chatEvent
     }
     
-    class func createOrUpdateEventFromParseObject(object: PFObject) -> ChatEvent! {
+    class func createOrUpdateEventFromParseObject(_ object: PFObject) -> ChatEvent! {
         
         let objectId = object.objectId
         var chatEvent: ChatEvent!
         
-        if let type = object.objectForKey("type") as? String {
+        if let type = object.object(forKey: "type") as? String {
             if (type == ChatEventType.Message.rawValue) {
-                if let messageId = object.objectForKey("messageId") as? String {
+                if let messageId = object.object(forKey: "messageId") as? String {
                     chatEvent = ChatEvent.fetchByMessageId(messageId)
                 }
             }
@@ -81,15 +81,15 @@ class ChatEvent: NSManagedObject {
         }
         
         chatEvent.objectId = object.objectId
-        chatEvent.messageId = object.objectForKey("messageId") as? String
-        chatEvent.body = object.objectForKey("body") as? String
-        chatEvent.type = object.objectForKey("type") as? String
-        chatEvent.roomName = object.objectForKey("roomName") as? String
+        chatEvent.messageId = object.object(forKey: "messageId") as? String
+        chatEvent.body = object.object(forKey: "body") as? String
+        chatEvent.type = object.object(forKey: "type") as? String
+        chatEvent.roomName = object.object(forKey: "roomName") as? String
         
         chatEvent.createdAt = object.createdAt
         chatEvent.updatedAt = object.updatedAt
         
-        if let aliasObject = object.objectForKey("alias") as? PFObject {
+        if let aliasObject = object.object(forKey: "alias") as? PFObject {
             chatEvent.alias = Alias.createOrUpdateAliasFromParseObject(aliasObject)
         }
         
@@ -98,7 +98,7 @@ class ChatEvent: NSManagedObject {
         return chatEvent
     }
     
-    class func createOrUpdateEventFromServerJSON(jsonMessage: [NSObject: AnyObject]) -> ChatEvent! {
+    class func createOrUpdateEventFromServerJSON(_ jsonMessage: NSDictionary) -> ChatEvent! {
         
         let objectId = jsonMessage["objectId"] as! String
         var chatEvent: ChatEvent!
@@ -124,17 +124,17 @@ class ChatEvent: NSManagedObject {
         chatEvent.type = jsonMessage["type"] as? String
         chatEvent.roomName = jsonMessage["roomName"] as? String
         
-        let dateFor: NSDateFormatter = NSDateFormatter()
+        let dateFor: DateFormatter = DateFormatter()
         dateFor.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
         
         if let updatedAt = jsonMessage["updatedAt"] as? String {
-            chatEvent.updatedAt = dateFor.dateFromString(updatedAt)
+            chatEvent.updatedAt = dateFor.date(from: updatedAt)
         }
         if let createdAt = jsonMessage["createdAt"] as? String {
-            chatEvent.createdAt = dateFor.dateFromString(createdAt)
+            chatEvent.createdAt = dateFor.date(from: createdAt)
         }
         
-        if let aliasDict = jsonMessage["alias"] as? [String: AnyObject] {
+        if let aliasDict = jsonMessage["alias"] as? NSDictionary {
             chatEvent.alias = Alias.createOrUpdateAliasFromJson(aliasDict)
         }
         else if let aliasObject = jsonMessage["alias"] as? PFObject {
@@ -145,7 +145,7 @@ class ChatEvent: NSManagedObject {
         return chatEvent
     }
     
-    class func isNewEvent(objectId:String, messageId:String) -> Bool {
+    class func isNewEvent(_ objectId:String, messageId:String) -> Bool {
         if (ChatEvent.fetchByMessageId(messageId) == nil &&
             ChatEvent.fetchById(objectId) == nil) {
             return true
@@ -156,21 +156,21 @@ class ChatEvent: NSManagedObject {
     
     class func fetchAll() -> [ChatEvent] {
         let moc = Utilities.appDelegate().managedObjectContext
-        let dataFetch = NSFetchRequest(entityName: "ChatEvent")
+        let dataFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatEvent")
         
         do {
-            return try moc.executeFetchRequest(dataFetch) as! [ChatEvent]
+            return try moc.fetch(dataFetch) as! [ChatEvent]
         } catch {
             return []
         }
     }
     
-    class func fetchById(eventId:String) -> ChatEvent! {
+    class func fetchById(_ eventId:String) -> ChatEvent! {
         let moc = Utilities.appDelegate().managedObjectContext
-        let dataFetch = NSFetchRequest(entityName: "ChatEvent")
+        let dataFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatEvent")
         dataFetch.predicate = NSPredicate(format: "objectId == %@", eventId)
         do {
-            let results = (try moc.executeFetchRequest(dataFetch) as! [ChatEvent])
+            let results = (try moc.fetch(dataFetch) as! [ChatEvent])
             if (results.count > 0) {
                 return results[0]
             }
@@ -180,12 +180,12 @@ class ChatEvent: NSManagedObject {
         }
     }
     
-    class func fetchByMessageId(messageId:String) -> ChatEvent! {
+    class func fetchByMessageId(_ messageId:String) -> ChatEvent! {
         let moc = Utilities.appDelegate().managedObjectContext
-        let dataFetch = NSFetchRequest(entityName: "ChatEvent")
+        let dataFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatEvent")
         dataFetch.predicate = NSPredicate(format: "messageId == %@", messageId)
         do {
-            let results = (try moc.executeFetchRequest(dataFetch) as! [ChatEvent])
+            let results = (try moc.fetch(dataFetch) as! [ChatEvent])
             if (results.count > 0) {
                 return results[0]
             }
@@ -195,7 +195,7 @@ class ChatEvent: NSManagedObject {
         }
     }
     
-    class func createEvent(body: String, alias: Alias, createdAt: NSDate!, type:String, status:ChatEventStatus!) -> ChatEvent {
+    class func createEvent(_ body: String, alias: Alias, createdAt: Date!, type:String, status:ChatEventStatus!) -> ChatEvent {
         let newChatEvent = ChatEvent.newChatEvent()
         newChatEvent.body = body
         newChatEvent.alias = alias

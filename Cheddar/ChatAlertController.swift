@@ -10,7 +10,7 @@ import Foundation
 
 protocol ChatAlertDelegate: class {
     func hideNewMessageAlert()
-    func showChatRoom(chatRoom: ChatRoom)
+    func showChatRoom(_ chatRoom: ChatRoom)
 }
 
 class ChatAlertController: UIViewController {
@@ -27,10 +27,10 @@ class ChatAlertController: UIViewController {
     var aliasIcon: AliasCircleView!
     
     override func viewDidLoad() {
-        alertView.layer.shadowOffset = CGSizeMake(-2, 0);
+        alertView.layer.shadowOffset = CGSize(width: -2, height: 0);
         alertView.layer.shadowRadius = 2;
         alertView.layer.shadowOpacity = 0.45;
-        alertView.layer.shadowColor = UIColor.blackColor().CGColor
+        alertView.layer.shadowColor = UIColor.black.cgColor
         
         mainLabel.adjustsFontSizeToFitWidth = true
     }

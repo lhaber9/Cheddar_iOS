@@ -10,7 +10,7 @@ import Foundation
 
 protocol RegistrationCodeDelegate: class {
     func hidePopup()
-    func registerNewUser(registrationCode:String!)
+    func registerNewUser(_ registrationCode:String!)
 }
 
 class RegistrationCodeViewController: UIViewController {
@@ -24,7 +24,7 @@ class RegistrationCodeViewController: UIViewController {
     
     @IBOutlet var sendButton: CheddarButton!
     
-    var errorLabelTimer: NSTimer!
+    var errorLabelTimer: Timer!
     
     override func viewDidLoad() {
         sendButton.setPrimaryButton()
@@ -52,9 +52,9 @@ class RegistrationCodeViewController: UIViewController {
         }
     }
     
-    func displayError(text: String) {
+    func displayError(_ text: String) {
         errorLabel.text = text
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()
         }
@@ -64,11 +64,11 @@ class RegistrationCodeViewController: UIViewController {
             errorLabelTimer = nil
         }
         
-        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
+        errorLabelTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(ChangeSchoolViewController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 0
             self.view.layoutIfNeeded()
         }

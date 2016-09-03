@@ -15,7 +15,7 @@ class ActivityIndicatorCell: UITableViewCell {
     static var activityIndicatorHeight:CGFloat = 32
     
     
-    override func willMoveToSuperview(newSuperview: UIView?) {
+    override func willMove(toSuperview newSuperview: UIView?) {
         activityIndicator.startAnimating()
         backgroundView?.backgroundColor = ColorConstants.whiteColor
     }

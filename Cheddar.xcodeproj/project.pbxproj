@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */; };
+		4F3E35A4AE3572869D53574D /* libPods-Cheddar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12AF1DBAC50CDCE12357CBCD /* libPods-Cheddar.a */; };
 		A300583E1CAB203200725FC3 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A300583D1CAB203200725FC3 /* LoadingView.xib */; };
 		A30058401CAB203B00725FC3 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A300583F1CAB203B00725FC3 /* LoadingView.swift */; };
 		A302FD471D52E89F00E62D24 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */; };
@@ -106,9 +106,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		30639877EA11B07B2D842129 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		12AF1DBAC50CDCE12357CBCD /* libPods-Cheddar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Cheddar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		47FE934BEE4A88FE44DF2835 /* Pods-Cheddar.internalbeta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cheddar.internalbeta.xcconfig"; path = "Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar.internalbeta.xcconfig"; sourceTree = "<group>"; };
+		831F3F143BE120B30E0C997F /* Pods-Cheddar.production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cheddar.production.xcconfig"; path = "Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar.production.xcconfig"; sourceTree = "<group>"; };
 		8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94E731C8FF77B53B0931EA33 /* Pods-Cheddar.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cheddar.development.xcconfig"; path = "Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar.development.xcconfig"; sourceTree = "<group>"; };
 		A300583D1CAB203200725FC3 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		A300583F1CAB203B00725FC3 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		A302FD461D52E89F00E62D24 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 		A3F920B21C7F6B1C003E0BC3 /* PresenceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresenceCell.xib; sourceTree = "<group>"; };
 		A3F920B41C8124A1003E0BC3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		A3F920B61C8249F9003E0BC3 /* Effra-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Effra-Regular.ttf"; sourceTree = "<group>"; };
+		E08A0584ACC055846F203D77 /* Pods-Cheddar.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cheddar.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,7 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				58589B23A3A5CCFD14A85B8B /* Pods.framework in Frameworks */,
+				4F3E35A4AE3572869D53574D /* libPods-Cheddar.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,10 +233,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01EB8EF7821894F4A76C077C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				94E731C8FF77B53B0931EA33 /* Pods-Cheddar.development.xcconfig */,
+				47FE934BEE4A88FE44DF2835 /* Pods-Cheddar.internalbeta.xcconfig */,
+				831F3F143BE120B30E0C997F /* Pods-Cheddar.production.xcconfig */,
+				E08A0584ACC055846F203D77 /* Pods-Cheddar.beta.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9FC8C1A67B3168827422F565 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				8B9BD2BF7F67FC0FA02CDC26 /* Pods.framework */,
+				12AF1DBAC50CDCE12357CBCD /* libPods-Cheddar.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -266,8 +281,8 @@
 				A38896E71C60664A002017B9 /* CheddarUITests */,
 				A38896C61C60664A002017B9 /* Products */,
 				A3C59BD01C61BE07009B82EE /* Cheddar-Bridging-Header.h */,
-				FD5D000EB21F8744CEE9A8F4 /* Pods */,
 				9FC8C1A67B3168827422F565 /* Frameworks */,
+				01EB8EF7821894F4A76C077C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -450,15 +465,6 @@
 			name = Objects;
 			sourceTree = "<group>";
 		};
-		FD5D000EB21F8744CEE9A8F4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				30639877EA11B07B2D842129 /* Pods.debug.xcconfig */,
-				74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -466,13 +472,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A38896ED1C60664A002017B9 /* Build configuration list for PBXNativeTarget "Cheddar" */;
 			buildPhases = (
-				E904871603C4D01660EF8BBF /* Check Pods Manifest.lock */,
+				68EA285989946E051ECA4665 /* [CP] Check Pods Manifest.lock */,
 				A38896C11C60664A002017B9 /* Sources */,
 				A38896C21C60664A002017B9 /* Frameworks */,
 				A38896C31C60664A002017B9 /* Resources */,
-				9ADFBD2BF4848F72FD7786A8 /* Embed Pods Frameworks */,
-				03C11E74F26A16170CA46B07 /* Copy Pods Resources */,
 				A379EFB21C84A3F200F5153A /* ShellScript */,
+				09AFC2616A196CF869453094 /* [CP] Embed Pods Frameworks */,
+				CB5D20DD3692620214FBE69F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -535,6 +541,7 @@
 					A38896C41C60664A002017B9 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 7DAS5PPLAD;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -621,34 +628,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03C11E74F26A16170CA46B07 /* Copy Pods Resources */ = {
+		09AFC2616A196CF869453094 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9ADFBD2BF4848F72FD7786A8 /* Embed Pods Frameworks */ = {
+		68EA285989946E051ECA4665 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A379EFB21C84A3F200F5153A /* ShellScript */ = {
@@ -664,19 +671,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" 47a9ef735d967a68bda8754853d46ad093106fb2 c4e48227a0a6b7f67c95e9a15befd096100dd090e286893841a49e6d3a83ca26";
 		};
-		E904871603C4D01660EF8BBF /* Check Pods Manifest.lock */ = {
+		CB5D20DD3692620214FBE69F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Cheddar/Pods-Cheddar-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -833,7 +840,7 @@
 		};
 		A31719601D6264D400A38FF3 /* Beta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */;
+			baseConfigurationReference = E08A0584ACC055846F203D77 /* Pods-Cheddar.beta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -846,6 +853,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c4d06978-9fd7-4ee2-b92e-76c51a7010cb";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Beta;
@@ -963,7 +971,7 @@
 		};
 		A38896EE1C60664A002017B9 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30639877EA11B07B2D842129 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 94E731C8FF77B53B0931EA33 /* Pods-Cheddar.development.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -978,13 +986,14 @@
 				PROVISIONING_PROFILE = "83fd41ec-27e0-4319-aa5d-e91f1d5837bd";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Development;
 		};
 		A38896EF1C60664A002017B9 /* Production */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74FC71AECB4A88748DC6847B /* Pods.release.xcconfig */;
+			baseConfigurationReference = 831F3F143BE120B30E0C997F /* Pods-Cheddar.production.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -997,6 +1006,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "83fd41ec-27e0-4319-aa5d-e91f1d5837bd";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Production;
@@ -1098,7 +1108,7 @@
 		};
 		A38FDA571D4566CB00287035 /* InternalBeta */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 30639877EA11B07B2D842129 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 47FE934BEE4A88FE44DF2835 /* Pods-Cheddar.internalbeta.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -1113,6 +1123,7 @@
 				PROVISIONING_PROFILE = "83fd41ec-27e0-4319-aa5d-e91f1d5837bd";
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = InternalBeta;

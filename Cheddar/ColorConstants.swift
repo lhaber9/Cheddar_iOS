@@ -45,23 +45,23 @@ class ColorConstants {
                                 UIColor(hex: 0xffc827),
                                 UIColor(hex: 0xffe327)]
     
-    static func iconColorForFloat(number: CGFloat) -> UIColor {
+    static func iconColorForFloat(_ number: CGFloat) -> UIColor {
         
-        let components0 = CGColorGetComponents(iconColors[Int(floor(number))].CGColor)
-        let red0 = components0[0];
-        let green0 = components0[1];
-        let blue0 = components0[2];
+        let components0 = iconColors[Int(floor(number))].cgColor.components
+        let red0 = components0?[0];
+        let green0 = components0?[1];
+        let blue0 = components0?[2];
         
-        let components1 = CGColorGetComponents(iconColors[Int(ceil(number))].CGColor)
-        let red1 = components1[0];
-        let green1 = components1[1];
-        let blue1 = components1[2];
+        let components1 = iconColors[Int(ceil(number))].cgColor.components
+        let red1 = components1?[0];
+        let green1 = components1?[1];
+        let blue1 = components1?[2];
         
         let percentBetween = number - floor(number)
         
-        let red = red0 + ((red1 - red0) * percentBetween)
-        let green = green0 + ((green1 - green0) * percentBetween)
-        let blue = blue0 + ((blue1 - blue0) * percentBetween)
+        let red = red0! + ((red1! - red0!) * percentBetween)
+        let green = green0! + ((green1! - green0!) * percentBetween)
+        let blue = blue0! + ((blue1! - blue0!) * percentBetween)
         
         return UIColor(colorLiteralRed: Float(red), green: Float(green), blue: Float(blue), alpha: 1)
     }

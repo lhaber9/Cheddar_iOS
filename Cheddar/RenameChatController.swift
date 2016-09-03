@@ -8,7 +8,7 @@
 
 import Foundation
 import Crashlytics
-import Parse
+//import Parse
 
 protocol RenameChatDelegate:class {
     func currentChatRoomName() -> String!
@@ -27,7 +27,7 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
     @IBOutlet var errorLabel: UILabel!
     @IBOutlet var charCountLabel: UILabel!
     
-    var errorLabelTimer: NSTimer!
+    var errorLabelTimer: Timer!
     var roomNameCharacterLimit = 30
     
     override func viewDidLoad() {
@@ -43,7 +43,7 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
         chatRoomTitleText.addTarget(
             self,
             action: #selector(RenameChatController.textFieldDidChange),
-            forControlEvents: UIControlEvents.EditingChanged
+            for: UIControlEvents.editingChanged
         )
         
         textFieldDidChange()
@@ -75,9 +75,9 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func displayError(text: String) {
+    func displayError(_ text: String) {
         errorLabel.text = text
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()
         }
@@ -87,17 +87,17 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
             errorLabelTimer = nil
         }
         
-        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RenameChatController.hideError), userInfo: nil, repeats: false)
+        errorLabelTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(RenameChatController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 0
             self.view.layoutIfNeeded()
         }
     }
     
-    func setText(text: String) {
+    func setText(_ text: String) {
         titleLabel.text = text
         textFieldDidChange()
     }
@@ -106,7 +106,7 @@ class RenameChatController: UIViewController, UITextFieldDelegate {
         charCountLabel.text = String((chatRoomTitleText.text?.characters.count)! as Int) + " of " + String(roomNameCharacterLimit)
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
         let oldLength = textField.text?.characters.count
         let replacementLength = string.characters.count

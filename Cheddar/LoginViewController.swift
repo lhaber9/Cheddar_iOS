@@ -11,9 +11,9 @@ import Crashlytics
 
 protocol LoginDelegate: class {
     func didCompleteLogin()
-    func showErrorText(text: String)
+    func showErrorText(_ text: String)
     func showRegister()
-    func showLoadingViewWithText(text: String)
+    func showLoadingViewWithText(_ text: String)
     func showResetPasswordView()
     func hideLoadingView()
 }
@@ -41,8 +41,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         loginButton.setSecondaryButton()
         
-        registerButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
-        resetPasswordButton.setTitleColor(ColorConstants.textPrimary, forState: UIControlState.Normal)
+        registerButton.setTitleColor(ColorConstants.textPrimary, for: UIControlState.normal)
+        resetPasswordButton.setTitleColor(ColorConstants.textPrimary, for: UIControlState.normal)
     }
     
     @IBAction func showRegister() {
@@ -96,7 +96,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: TextFieldDelegate
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
         textField.layoutIfNeeded()
     }

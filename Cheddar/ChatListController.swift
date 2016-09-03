@@ -7,17 +7,17 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 import Crashlytics
 
 protocol ChatListControllerDelegate: class {
     func forceCloseChat()
-    func showChatRoom(chatRoom: ChatRoom)
-    func subscribe(chatRoom:ChatRoom)
-    func tryLeaveChatRoom(object: AnyObject!)
+    func showChatRoom(_ chatRoom: ChatRoom)
+    func subscribe(_ chatRoom:ChatRoom)
+    func tryLeaveChatRoom(_ object: AnyObject!)
     func showOverlay()
     func hideOverlay()
-    func showOverlayContents(viewController: UIViewController)
+    func showOverlayContents(_ viewController: UIViewController)
     func hideOverlayContents()
     func checkMaxRooms()
 }
@@ -34,19 +34,19 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
 
     override func viewDidLoad() {
         tableView.tableFooterView = UIView(frame: CGRect.zero)
-        tableView.registerNib(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
+        tableView.register(UINib(nibName: "ChatListCell", bundle: nil), forCellReuseIdentifier: "ChatListCell")
         tableView.allowsMultipleSelectionDuringEditing = false
         
         reloadRooms()
         refreshRooms()
         
         if (Utilities.envName() == "InternalBeta" || Utilities.envName() == "Development" ) {
-            let version = NSBundle.mainBundle().objectForInfoDictionaryKey("CFBundleShortVersionString") as! String
-            let build = NSBundle.mainBundle().infoDictionary?[kCFBundleVersionKey as String] as! String
+            let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+            let build = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as! String
             
             developmentOnlyVersionLabel.text = "Version: " + version + " / Build: " + build + " / " + Utilities.envName()
             developmentOnlyVersionLabel.textColor = ColorConstants.textSecondary
-            developmentOnlyVersionLabel.hidden = false
+            developmentOnlyVersionLabel.isHidden = false
         }
         
         view.layoutIfNeeded()
@@ -72,7 +72,7 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                             return chatRoom.objectId!
                         })
                         
-                        let toDelete = Array(Set(currentChatRoomIds).subtract(Set(serverChatRoomIds)))
+                        let toDelete = Array(Set(currentChatRoomIds).subtracting(Set(serverChatRoomIds)))
                         
                         for chatRoomId in toDelete {
                             ChatRoom.removeChatRoom(chatRoomId)
@@ -130,9 +130,9 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
         for chatRoom in chatRooms {
             delegate.subscribe(chatRoom)
         }
-        chatRooms = chatRooms.sort { (room1: ChatRoom, room2: ChatRoom) -> Bool in
+        chatRooms = chatRooms.sorted { (room1: ChatRoom, room2: ChatRoom) -> Bool in
             if (room1.mostRecentChat() != nil && room2.mostRecentChat() != nil) {
-                if (room1.mostRecentChat().createdAt.compare(room2.mostRecentChat().createdAt) == NSComparisonResult.OrderedAscending) {
+                if (room1.mostRecentChat().createdAt.compare(room2.mostRecentChat().createdAt as Date) == ComparisonResult.orderedAscending) {
                     return false
                 }
             }
@@ -144,41 +144,41 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: UITableViewDelegate
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return chatRooms.count
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let chatRoom = chatRooms[indexPath.row]
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chatRoom = chatRooms[(indexPath as NSIndexPath).row]
         delegate?.showChatRoom(chatRoom)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ChatListCell", forIndexPath: indexPath) as! ChatListCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListCell
 //        dispatch_async(dispatch_get_main_queue(), {
-            let chatRoom = self.chatRooms[indexPath.row]
+            let chatRoom = self.chatRooms[(indexPath as NSIndexPath).row]
             cell.setMostRecentChatEvent(chatRoom.mostRecentChat(), chatRoom: chatRoom)
             cell.showUnreadIndicator(chatRoom.areUnreadMessages.boolValue)
 //        })
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
     
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            let chatRoom = self.chatRooms[indexPath.row]
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if (editingStyle == UITableViewCellEditingStyle.delete) {
+            let chatRoom = self.chatRooms[(indexPath as NSIndexPath).row]
             delegate.tryLeaveChatRoom(chatRoom)
         }
     }
     
-    func tableView(tableView: UITableView, titleForDeleteConfirmationButtonForRowAtIndexPath indexPath: NSIndexPath) -> String? {
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Leave Chatroom"
     }
     
@@ -189,29 +189,30 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func shouldCloseAll() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
         self.delegate!.hideOverlayContents()
         self.delegate!.hideOverlay()
     }
     
     // MARK: UIPopoverPresentationControllerDelegate
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFeedbackSegue" {
-            let popoverViewController = segue.destinationViewController as! FeedbackViewController
+            let popoverViewController = segue.destination as! FeedbackViewController
             popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
             popoverViewController.popoverPresentationController!.delegate = self
         }
     }
     
-    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         shouldCloseAll()
+        return true
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         
         // Force popover style
-        return UIModalPresentationStyle.None
+        return UIModalPresentationStyle.none
     }
 }

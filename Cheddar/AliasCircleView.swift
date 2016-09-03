@@ -26,8 +26,8 @@ class AliasCircleView: LockedBackgroundColorView {
     
     var height: CGFloat!
     
-    override func willMoveToSuperview(newSuperview: UIView?) {
-        super.willMoveToSuperview(newSuperview)
+    override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
         if (newSuperview == nil || color == nil || alias == nil) {
             return
         }
@@ -50,28 +50,28 @@ class AliasCircleView: LockedBackgroundColorView {
         layoutIfNeeded()
     }
     
-    class func instanceFromNibWithAlias(alias: Alias, color: UIColor, sizeFactor: CGFloat) -> AliasCircleView {
-        let aliasCircleView = UINib(nibName: "AliasCircleView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! AliasCircleView
+    class func instanceFromNibWithAlias(_ alias: Alias, color: UIColor, sizeFactor: CGFloat) -> AliasCircleView {
+        let aliasCircleView = UINib(nibName: "AliasCircleView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! AliasCircleView
         aliasCircleView.alias = alias
         aliasCircleView.color = color
         aliasCircleView.sizeFactor = sizeFactor
         return aliasCircleView
     }
     
-    func setCellAlias(alias: Alias, color:UIColor) {
+    func setCellAlias(_ alias: Alias, color:UIColor) {
         self.alias = alias
         initalsLabel.text = alias.initials()
         lockedBackgroundColor = color
     }
     
-    func setTextSize(size: CGFloat) {
+    func setTextSize(_ size: CGFloat) {
         initalsLabel.adjustsFontSizeToFitWidth = false
         initalsLabel.font = UIFont(name: "Effra-Medium", size: size)
         initalsLabel.removeConstraint(initialsWidthConstraint)
         layoutIfNeeded()
     }
     
-    func showUnreadIndicator(show: Bool) {
+    func showUnreadIndicator(_ show: Bool) {
         let radius = height / 2
         let indicatorRadius = indicatorStrokeView.frame.height / 2
         let indicatorOffset = radius - (radius * 0.70710) - indicatorRadius
@@ -80,10 +80,10 @@ class AliasCircleView: LockedBackgroundColorView {
         indicatorLeftConstraint.constant = indicatorOffset
         
         if (show) {
-            indicatorStrokeView.hidden = false
+            indicatorStrokeView.isHidden = false
         }
         else {
-            indicatorStrokeView.hidden = true
+            indicatorStrokeView.isHidden = true
         }
     }
 }

@@ -10,16 +10,16 @@ import Foundation
 import Crashlytics
 
 class Utilities {
-    class func IS_IPHONE_4_OR_LESS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height < 568.0) }
+    class func IS_IPHONE_4_OR_LESS() -> Bool { return IS_IPHONE() && (UIScreen.main.bounds.size.height < 568.0) }
     class func IS_IPHONE_5_OR_LESS() -> Bool { return IS_IPHONE_4_OR_LESS() || IS_IPHONE_5() }
-    class func IS_IPHONE_5() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height == 568.0) }
-    class func IS_IPHONE_6() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height == 667.0) }
-    class func IS_IPHONE_6_PLUS() -> Bool { return IS_IPHONE() && (UIScreen.mainScreen().bounds.size.height == 736.0) }
-    class func IS_IPAD() -> Bool { return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Pad) }
-    class func IS_IPHONE() -> Bool { return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone) }
+    class func IS_IPHONE_5() -> Bool { return IS_IPHONE() && (UIScreen.main.bounds.size.height == 568.0) }
+    class func IS_IPHONE_6() -> Bool { return IS_IPHONE() && (UIScreen.main.bounds.size.height == 667.0) }
+    class func IS_IPHONE_6_PLUS() -> Bool { return IS_IPHONE() && (UIScreen.main.bounds.size.height == 736.0) }
+    class func IS_IPAD() -> Bool { return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad) }
+    class func IS_IPHONE() -> Bool { return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone) }
     
     class func appDelegate() -> AppDelegate {
-        return UIApplication.sharedApplication().delegate as! AppDelegate
+        return UIApplication.shared.delegate as! AppDelegate
     }
     
     class func removeAllUserData() {
@@ -34,21 +34,21 @@ class Utilities {
     }
     
     class func envName() -> String {
-        return NSBundle.mainBundle().infoDictionary!["SchemeName"] as! String
+        return Bundle.main.infoDictionary!["SchemeName"] as! String
     }
     
-    class func formatDate(date: NSDate, withTrailingHours: Bool) -> String {
-        let dateFor: NSDateFormatter = NSDateFormatter()
+    class func formatDate(_ date: Date, withTrailingHours: Bool) -> String {
+        let dateFor: DateFormatter = DateFormatter()
         
-        let midnight = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
-        let sixHoursAgo = NSDate().dateByAddingTimeInterval(-1 * 6 * 3600)  // 6hours 3600seconds
-        if (midnight.compare(date) == NSComparisonResult.OrderedAscending ||
-            sixHoursAgo.compare(date) == NSComparisonResult.OrderedAscending) {
+        let midnight = NSCalendar.current.startOfDay(for: Date())
+        let sixHoursAgo = Date().addingTimeInterval(-1 * 6 * 3600)  // 6hours 3600seconds
+        if (midnight.compare(date) == ComparisonResult.orderedAscending ||
+            sixHoursAgo.compare(date) == ComparisonResult.orderedAscending) {
             dateFor.dateFormat = "h:mm a"
         }
         else {
-            let threeDaysAgo = NSDate().dateByAddingTimeInterval(-1 * 3 * 24 * 3600) // 3days 24hours 3600seconds
-            if (threeDaysAgo.compare(date) == NSComparisonResult.OrderedAscending) {
+            let threeDaysAgo = Date().addingTimeInterval(-1 * 3 * 24 * 3600) // 3days 24hours 3600seconds
+            if (threeDaysAgo.compare(date) == ComparisonResult.orderedAscending) {
                 if (withTrailingHours) {
                     dateFor.dateFormat = "EEE, h:mm a"
                 }
@@ -67,10 +67,10 @@ class Utilities {
             }
         }
 
-        return dateFor.stringFromDate(date)
+        return dateFor.string(from: date)
     }
     
-    class func formattedLastMessageText(chatEvent: ChatEvent) -> String {
+    class func formattedLastMessageText(_ chatEvent: ChatEvent) -> String {
         var lastMessageText: String = ""
         if (chatEvent.type == ChatEventType.Message.rawValue) {
             lastMessageText = chatEvent.alias.name + ": "
@@ -79,28 +79,28 @@ class Utilities {
         lastMessageText = lastMessageText + chatEvent.body
         
         if (chatEvent.type == ChatEventType.NameChange.rawValue) {
-            lastMessageText = lastMessageText.substringToIndex(lastMessageText.endIndex.advancedBy((chatEvent.roomName.characters.count + 4) * -1)) // +4 for _to_ text
+            lastMessageText = lastMessageText.substring(to: lastMessageText.index(lastMessageText.endIndex, offsetBy: (chatEvent.roomName.characters.count + 4) * -1)) // +4 for _to_ text
         }
 
         return lastMessageText
     }
     
-    class func sendAnswersEvent(eventName: String, alias:Alias, attributes:[String:AnyObject]) {
+    class func sendAnswersEvent(_ eventName: String, alias:Alias, attributes:[String:AnyObject]) {
         
         var mutableAttrs = attributes
-        mutableAttrs["aliasId"] = alias.objectId
-        mutableAttrs["chatRoomId"] = alias.chatRoomId
+        mutableAttrs["aliasId"] = alias.objectId as AnyObject
+        mutableAttrs["chatRoomId"] = alias.chatRoomId as AnyObject
         
-        Answers.logCustomEventWithName(eventName, customAttributes: mutableAttrs)
+        Answers.logCustomEvent(withName: eventName, customAttributes: mutableAttrs)
     }
     
-    class func getKeyConstant(name: String) -> String! {
+    class func getKeyConstant(_ name: String) -> String! {
         var keys: NSDictionary?
         
-        if let path = NSBundle.mainBundle().pathForResource("Keys", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: "Keys", ofType: "plist") {
             keys = NSDictionary(contentsOfFile: path)
         }
-        if let dict = keys![envName()] {
+        if let dict = keys![envName()] as? NSDictionary {
             return (dict[name] as? String)!
         }
         return nil

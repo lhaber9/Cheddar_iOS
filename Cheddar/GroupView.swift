@@ -19,7 +19,7 @@ class GroupView: FrontPageView {
     override func awakeFromNib() {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineSpacing = 10
-        paragraphStyle.alignment = NSTextAlignment.Center;
+        paragraphStyle.alignment = NSTextAlignment.center;
         let attributes = [NSParagraphStyleAttributeName: paragraphStyle]
         let attributedText = NSAttributedString(string: bottomTextLabel.text!, attributes: attributes)
         bottomTextLabel.attributedText = attributedText
@@ -32,6 +32,6 @@ class GroupView: FrontPageView {
     }
     
     class func instanceFromNib() -> GroupView {
-        return UINib(nibName: "GroupView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! GroupView
+        return UINib(nibName: "GroupView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! GroupView
     }
 }

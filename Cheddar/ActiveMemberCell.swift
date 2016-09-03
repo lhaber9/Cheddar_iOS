@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ActiveMembersCellDelegate:class {
-    func reportAlias(alias:Alias)
+    func reportAlias(_ alias:Alias)
 }
 
 class ActiveMemberCell: UITableViewCell {
@@ -24,7 +24,7 @@ class ActiveMemberCell: UITableViewCell {
     var alias: Alias!
     var aliasIcon: AliasCircleView!
     
-    func setAlias(alias: Alias, chatRoom: ChatRoom) {
+    func setAlias(_ alias: Alias, chatRoom: ChatRoom) {
         self.alias = alias
         if (aliasIcon == nil) {
             var color: UIColor
@@ -42,7 +42,7 @@ class ActiveMemberCell: UITableViewCell {
         }
         
         if (chatRoom.myAlias.objectId == alias.objectId) {
-            reportUserButton.hidden = true
+            reportUserButton.isHidden = true
         }
         
         reportUserButton.titleLabel?.textColor = ColorConstants.textSecondary

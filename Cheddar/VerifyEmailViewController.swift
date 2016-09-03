@@ -15,7 +15,7 @@ protocol VerifyEmailDelegate: class {
 }
 
 protocol VerifyEmailErrorDelegate: class {
-    func showErrorText(text: String)
+    func showErrorText(_ text: String)
 }
 
 class VerifyEmailViewController: UIViewController {
@@ -30,7 +30,7 @@ class VerifyEmailViewController: UIViewController {
     @IBOutlet var buttonsCenterConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
-        NSNotificationCenter.defaultCenter().addObserverForName("applicationDidBecomeActive", object: nil, queue: nil) { (notification: NSNotification) in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "applicationDidBecomeActive"), object: nil, queue: nil) { (notification: Notification) in
             self.checkVerification()
         }
         
@@ -48,7 +48,7 @@ class VerifyEmailViewController: UIViewController {
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: "applicationDidBecomeActive", object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "applicationDidBecomeActive"), object: nil)
     }
     
     @IBAction func logout() {

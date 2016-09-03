@@ -22,7 +22,7 @@ class ChatListCell: UITableViewCell {
         chatNameLabel.adjustsFontSizeToFitWidth = true
     }
     
-    func setAlias(alias: Alias, chatRoom:ChatRoom) {
+    func setAlias(_ alias: Alias, chatRoom:ChatRoom) {
         var color: UIColor!
         if (alias.objectId != chatRoom.myAlias?.objectId) {
             color = ColorConstants.iconColors[Int(alias.colorId)]
@@ -44,23 +44,23 @@ class ChatListCell: UITableViewCell {
         layoutIfNeeded()
     }
     
-    func setMostRecentChatEvent(chatEvent: ChatEvent!, chatRoom:ChatRoom) {
+    func setMostRecentChatEvent(_ chatEvent: ChatEvent!, chatRoom:ChatRoom) {
         chatNameLabel.text = chatRoom.name
         
         if (chatEvent != nil) {
             lastMessageLabel.text = Utilities.formattedLastMessageText(chatEvent)
             setAlias(chatEvent.alias, chatRoom:chatRoom)
-            timeLabel.hidden = false
+            timeLabel.isHidden = false
             timeLabel.text = Utilities.formatDate(chatEvent.createdAt, withTrailingHours: false)
         }
         else {
             lastMessageLabel.text = "No Activity"
             setAlias(chatRoom.myAlias, chatRoom:chatRoom)
-            timeLabel.hidden = true
+            timeLabel.isHidden = true
         }
     }
     
-    func showUnreadIndicator(show: Bool) {
+    func showUnreadIndicator(_ show: Bool) {
         aliasIcon?.showUnreadIndicator(show)
         if (show) {
             chatNameLabel.font = UIFont(name: "Effra-Medium", size: 16)

@@ -16,7 +16,7 @@ class AlphaWarningView: FrontPageView {
     @IBOutlet var buttonOffsetSmallConstraint: NSLayoutConstraint!
     
     class func instanceFromNib() -> AlphaWarningView {
-        return UINib(nibName: "AlphaWarningView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! AlphaWarningView
+        return UINib(nibName: "AlphaWarningView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! AlphaWarningView
     }
     
     override func awakeFromNib() {

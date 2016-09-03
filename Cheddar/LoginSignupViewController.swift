@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 
 protocol LoginSignupDelegate: class {
-    func didCompleteSignup(user: PFUser)
+    func didCompleteSignup(_ user: PFUser)
     func didCompleteLogin()
-    func showLoadingViewWithText(text: String)
+    func showLoadingViewWithText(_ text: String)
     func hideLoadingView()
     func showOverlay()
     func hideOverlay()
@@ -31,7 +31,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     
     @IBOutlet var errorTextContainer: UIView!
     @IBOutlet var errorLabel: UILabel!
-    var errorLabelTimer: NSTimer!
+    var errorLabelTimer: Timer!
     
     @IBOutlet var registerContainer: UIView!
     @IBOutlet var loginContainer: UIView!
@@ -59,8 +59,8 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         errorTextContainer.backgroundColor = ColorConstants.textPrimary
         errorTextContainer.alpha = 0
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginSignupViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginSignupViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginSignupViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginSignupViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(LoginSignupViewController.deselectTextFields)))
         
@@ -72,14 +72,14 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func setupLogin() {
         loginButton.setSecondaryButton()
         
-        loginController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+        loginController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
         loginController.delegate = self
         addChildViewController(loginController)
         loginContainer.addSubview(loginController.view)
@@ -89,7 +89,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     func setupRegister() {
         registerButton.setPrimaryButton()
         
-        registerController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("SignupViewController") as! SignupViewController
+        registerController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
         registerController.delegate = self
         addChildViewController(registerController)
         registerContainer.addSubview(registerController.view)
@@ -108,7 +108,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     func showMain() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.loginContainer.alpha = 0
             self.registerContainer.alpha = 0
             self.mainContainer.alpha = 1
@@ -116,7 +116,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     @IBAction func showLogin() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.loginContainer.alpha = 1
             self.registerContainer.alpha = 0
             self.mainContainer.alpha = 0
@@ -124,15 +124,15 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     @IBAction func showRegister() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.loginContainer.alpha = 0
             self.registerContainer.alpha = 1
             self.mainContainer.alpha = 0
         }
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        let keyboardHeight: CGFloat = (notification.userInfo![UIKeyboardFrameEndUserInfoKey]?.CGRectValue.height)!
+    func keyboardWillShow(_ notification: Notification) {
+        let keyboardHeight: CGFloat = (((notification as NSNotification).userInfo![UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.height)
         
         topConstraintKeyboard.constant = self.topConstraint.constant - (keyboardHeight / 3)
         bottomConstraintKeyboard.constant = keyboardHeight + 5
@@ -154,7 +154,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         view.layoutIfNeeded()
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    func keyboardWillHide(_ notification: Notification) {
         topConstraintKeyboard.priority = 200
         topConstraintKeyboardSmallSize.priority = 200
         bottomConstraintKeyboard.priority = 200
@@ -170,7 +170,7 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         view.layoutIfNeeded()
     }
     
-    func didCompleteSignup(user: PFUser) {
+    func didCompleteSignup(_ user: PFUser) {
         reset()
         delegate.didCompleteSignup(user)
     }
@@ -180,9 +180,9 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
         delegate.didCompleteLogin()
     }
     
-    func showErrorText(text: String) {
+    func showErrorText(_ text: String) {
         errorLabel.text = text
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorTextContainer.alpha = 1
             self.view.layoutIfNeeded()
         }
@@ -192,18 +192,18 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             errorLabelTimer = nil
         }
         
-        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(LoginSignupViewController.hideErrorLabel), userInfo: nil, repeats: false)
+        errorLabelTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(LoginSignupViewController.hideErrorLabel), userInfo: nil, repeats: false)
     }
     
     func hideErrorLabel() {
         errorLabelTimer = nil
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorTextContainer.alpha = 0
             self.view.layoutIfNeeded()
         }
     }
     
-    func showLoadingViewWithText(text: String) {
+    func showLoadingViewWithText(_ text: String) {
         delegate.showLoadingViewWithText(text)
     }
     
@@ -213,27 +213,27 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     
     func showResetPasswordView() {
         delegate.showOverlay()
-        performSegueWithIdentifier("showResetPasswordSegue", sender: self)
+        performSegue(withIdentifier: "showResetPasswordSegue", sender: self)
     }
     
     func showChangeSchoolView() {
         delegate.showOverlay()
-        performSegueWithIdentifier("showChangeSchoolSegue", sender: self)
+        performSegue(withIdentifier: "showChangeSchoolSegue", sender: self)
     }
     
     func showRegistrationCodeView() {
         delegate.showOverlay()
-        performSegueWithIdentifier("showRegistrationCodeSegue", sender: self)
+        performSegue(withIdentifier: "showRegistrationCodeSegue", sender: self)
     }
     
     func hidePopup() {
         delegate.hideOverlay()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: SignupDelegate
     
-    func registerNewUser(registrationCode:String!) {
+    func registerNewUser(_ registrationCode:String!) {
         CheddarRequest.registerNewUser(registerController.emailField.text!,
                                        password: registerController.passwordField.text!,
                                        registrationCode: registrationCode,
@@ -259,35 +259,36 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     
     // MARK: UIPopoverPresentationControllerDelegate
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showChangeSchoolSegue" {
-            let popoverViewController = segue.destinationViewController as! ChangeSchoolViewController
+            let popoverViewController = segue.destination as! ChangeSchoolViewController
             popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
             popoverViewController.popoverPresentationController!.delegate = self
         } else if segue.identifier == "showRegistrationCodeSegue" {
-            let popoverViewController = segue.destinationViewController as! RegistrationCodeViewController
+            let popoverViewController = segue.destination as! RegistrationCodeViewController
             popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
             popoverViewController.popoverPresentationController!.delegate = self
         } else if segue.identifier == "showResetPasswordSegue" {
-            let popoverViewController = segue.destinationViewController as! ResetPasswordViewController
+            let popoverViewController = segue.destination as! ResetPasswordViewController
             popoverViewController.delegate = self
-            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
             popoverViewController.popoverPresentationController!.delegate = self
             popoverViewController.initialEmail = loginController.emailField.text
         }
 
     }
     
-    func popoverPresentationControllerWillDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         delegate.hideOverlay()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
+        return true
     }
-    
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         
         // Force popover style
-        return UIModalPresentationStyle.None
+        return UIModalPresentationStyle.none
     }
 }

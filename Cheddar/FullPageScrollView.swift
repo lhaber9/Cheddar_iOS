@@ -26,7 +26,7 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         return pages[currentPageIndex]
     }
     
-    func addPage(pageContents: UIView) {
+    func addPage(_ pageContents: UIView) {
         if (scrollViewWidthConstraint != nil) {
             scrollView.removeConstraint(scrollViewWidthConstraint)
         }
@@ -34,23 +34,23 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         scrollViewWidthConstraint = nil
         scrollView.addSubview(pageContents)
         
-        pageContents.autoSetDimension(ALDimension.Width, toSize: UIScreen.mainScreen().bounds.size.width)
+        pageContents.autoSetDimension(ALDimension.width, toSize: UIScreen.main.bounds.size.width)
         
         if (pages.count > 0) {
             let lastPage = pages.last!
-            pageContents.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: lastPage)
-            pageContents.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: lastPage)
-            pageContents.autoPinEdge(ALEdge.Left, toEdge: ALEdge.Right, ofView: lastPage)
+            pageContents.autoPinEdge(ALEdge.top, to: ALEdge.top, of: lastPage)
+            pageContents.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: lastPage)
+            pageContents.autoPinEdge(ALEdge.left, to: ALEdge.right, of: lastPage)
         }
         else {
-            pageContents.autoPinEdgeToSuperviewEdge(ALEdge.Left)
-            pageContents.autoPinEdgeToSuperviewEdge(ALEdge.Top)
-            pageContents.autoPinEdgeToSuperviewEdge(ALEdge.Bottom)
-            pageContents.autoPinEdge(ALEdge.Top, toEdge: ALEdge.Top, ofView: view, withOffset: -22)
-            pageContents.autoPinEdge(ALEdge.Bottom, toEdge: ALEdge.Bottom, ofView: view)
+            pageContents.autoPinEdge(toSuperviewEdge: ALEdge.left)
+            pageContents.autoPinEdge(toSuperviewEdge: ALEdge.top)
+            pageContents.autoPinEdge(toSuperviewEdge: ALEdge.bottom)
+            pageContents.autoPinEdge(ALEdge.top, to: ALEdge.top, of: view, withOffset: -22)
+            pageContents.autoPinEdge(ALEdge.bottom, to: ALEdge.bottom, of: view)
         }
         
-        scrollViewWidthConstraint = NSLayoutConstraint(item: pageContents, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0)
+        scrollViewWidthConstraint = NSLayoutConstraint(item: pageContents, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: scrollView, attribute: NSLayoutAttribute.trailing, multiplier: 1, constant: 0)
         scrollViewWidthConstraint.priority = 900
         
         scrollView.addConstraint(scrollViewWidthConstraint)
@@ -58,7 +58,7 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         pages.append(pageContents)
     }
     
-    func didScrollToPage(page: Int) {
+    func didScrollToPage(_ page: Int) {
         // implemented by subclasses
     }
     
@@ -85,14 +85,14 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
         scrollToPage(0, animated: true)
     }
     
-    func scrollToPage(pageIdx: Int, animated: Bool) {
+    func scrollToPage(_ pageIdx: Int, animated: Bool) {
         if (pageIdx < 0 || pageIdx >= pages.count) {
             return
         }
         isAnimatingPages = true
         
         currentPageIndex = pageIdx
-        scrollView.setContentOffset(CGPointMake(scrollView.frame.size.width * CGFloat(currentPageIndex), 0.0), animated:animated)
+        scrollView.setContentOffset(CGPoint(x: scrollView.frame.size.width * CGFloat(currentPageIndex),y: 0.0), animated:animated)
     }
     
     // MARK: FrontPageViewDelegate
@@ -107,11 +107,11 @@ class FullPageScrollView: UIViewController, UIScrollViewDelegate, FrontPageViewD
   
     // MARK: UIScrollViewDelegate
 
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         currentPageIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         isAnimatingPages = false
         currentPageIndex = Int(scrollView.contentOffset.x / scrollView.frame.size.width);
     }

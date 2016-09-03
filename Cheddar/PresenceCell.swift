@@ -17,27 +17,27 @@ class PresenceCell: UITableViewCell {
     var alias: Alias!
     var body: String!
     
-    override func willMoveToSuperview(newSuperview: UIView?) {
+    override func willMove(toSuperview newSuperview: UIView?) {
         backgroundView?.backgroundColor = ColorConstants.whiteColor
         timestampLabel.backgroundColor = ColorConstants.whiteColor
         aliasLabel.backgroundColor = ColorConstants.whiteColor
     }
     
-    func setAlias(presenceEvent: ChatEvent, showTimestamp:Bool) {
+    func setAlias(_ presenceEvent: ChatEvent, showTimestamp:Bool) {
         if (presenceEvent.type != ChatEventType.Presence.rawValue) {
             return
         }
         
         self.alias = presenceEvent.alias
-        aliasLabel.text = presenceEvent.body.uppercaseString
+        aliasLabel.text = presenceEvent.body.uppercased()
         aliasLabel.textColor = ColorConstants.presenceText
         
         if (showTimestamp) {
             timestampLabel.text = Utilities.formatDate(presenceEvent.createdAt, withTrailingHours: true)
             timestampLabel.textColor = ColorConstants.timestampText
-            timestampLabelView.hidden = false;
+            timestampLabelView.isHidden = false;
         } else {
-            timestampLabelView.hidden = true;
+            timestampLabelView.isHidden = true;
         }
     }
 }

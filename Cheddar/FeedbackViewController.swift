@@ -22,12 +22,12 @@ class FeedbackViewController: UIViewController {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var errorLabel: UILabel!
     
-    var errorLabelTimer:NSTimer!
+    var errorLabelTimer:Timer!
     
     override func viewDidLoad() {
         textView.layer.cornerRadius = 5
         textView.layer.borderWidth = 1
-        textView.layer.borderColor = UIColor.grayColor().CGColor
+        textView.layer.borderColor = UIColor.gray.cgColor
         sendButton.setPrimaryButton()
         errorLabel.textColor = ColorConstants.colorAccent
         titleLabel.textColor = ColorConstants.colorAccent
@@ -35,14 +35,14 @@ class FeedbackViewController: UIViewController {
     
     @IBAction func sendFeedback() {
         let feedbackString = textView.text
-        if (feedbackString.isEmpty) {
+        if (feedbackString?.isEmpty)! {
             displayError("Feedback cannot be blank")
             return
         }
         
         sendButton.displaySpinner()
         
-        CheddarRequest.sendFeedback(feedbackString, alias: (delegate?.myAlias()), successCallback: { (object) in
+        CheddarRequest.sendFeedback(feedbackString!, alias: (delegate?.myAlias()), successCallback: { (object) in
                 self.sendButton.removeSpinner()
                 self.delegate?.shouldCloseAll()
             }) { (error) in
@@ -51,9 +51,9 @@ class FeedbackViewController: UIViewController {
         }
     }
     
-    func displayError(text: String) {
+    func displayError(_ text: String) {
         errorLabel.text = text
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 1
             self.view.layoutIfNeeded()
         }
@@ -63,11 +63,11 @@ class FeedbackViewController: UIViewController {
             errorLabelTimer = nil
         }
         
-        errorLabelTimer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(FeedbackViewController.hideError), userInfo: nil, repeats: false)
+        errorLabelTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(FeedbackViewController.hideError), userInfo: nil, repeats: false)
     }
     
     func hideError() {
-        UIView.animateWithDuration(0.333) {
+        UIView.animate(withDuration: 0.333) {
             self.errorLabel.alpha = 0
             self.view.layoutIfNeeded()
         }

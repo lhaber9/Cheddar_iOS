@@ -13,11 +13,11 @@ class LoadingView: UIView {
     @IBOutlet var loadingImageView: UIImageView!
     @IBOutlet var loadingTextLabel: UILabel!
     
-    override func willMoveToSuperview(newSuperview: UIView?) {
+    override func willMove(toSuperview newSuperview: UIView?) {
         loadingImageView.image = UIImage.animatedImageNamed("LoadingImage-", duration: 2.0)
     }
     
     class func instanceFromNib() -> LoadingView {
-        return UINib(nibName: "LoadingView", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! LoadingView
+        return UINib(nibName: "LoadingView", bundle: nil).instantiate(withOwner: nil, options: nil)[0] as! LoadingView
     }
 }

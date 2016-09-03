@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import Parse
+//import Parse
 
 protocol IntroDelegate: class {
-    func didCompleteSignup(user: PFUser)
+    func didCompleteSignup(_ user: PFUser)
     func didCompleteLogin()
-    func scrollViewDidScroll(scrollView: UIScrollView)
-    func showLoadingViewWithText(text: String)
+    func scrollViewDidScroll(_ scrollView: UIScrollView)
+    func showLoadingViewWithText(_ text: String)
     func hideLoadingView()
     func showOverlay()
     func hideOverlay()
@@ -34,7 +34,7 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
         
         setupOnboardingPages()
         
-        loginSignupViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginSignupViewController") as! LoginSignupViewController
+        loginSignupViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginSignupViewController") as! LoginSignupViewController
         addChildViewController(loginSignupViewController)
         loginSignupViewController.delegate = self
         
@@ -55,9 +55,9 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
         addPage(groupView)
     }
     
-    override func didScrollToPage(page: Int) {
+    override func didScrollToPage(_ page: Int) {
         super.didScrollToPage(page)
-        UIView.animateWithDuration(0.1) { () -> Void in
+        UIView.animate(withDuration: 0.1) { () -> Void in
             if (page == 0) {
                 self.leftArrow.alpha = 0
                 self.rightArrow.alpha = 1
@@ -79,22 +79,22 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
     
     func setOnboardingHidden() {
         goToLastPageNoAnimation()
-        scrollView.scrollEnabled = false
+        scrollView.isScrollEnabled = false
     }
     
     // MARK: UIScrollViewDelegate
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         super.scrollViewDidEndDecelerating(scrollView);
         didScrollToPage(self.currentPageIndex)
     }
     
-    override func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+    override func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         super.scrollViewDidEndScrollingAnimation(scrollView);
         didScrollToPage(self.currentPageIndex)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate.scrollViewDidScroll(scrollView)
         
         if (scrollView.contentOffset.x >= scrollView.contentSize.width - scrollView.frame.size.width) {
@@ -109,12 +109,12 @@ class IntroViewController: FullPageScrollView, LoginSignupDelegate {
         Utilities.appDelegate().setDeviceOnboarded()
     }
     
-    func didCompleteSignup(user: PFUser) {
+    func didCompleteSignup(_ user: PFUser) {
         delegate.didCompleteSignup(user)
         Utilities.appDelegate().setDeviceOnboarded()
     }
     
-    func showLoadingViewWithText(text: String) {
+    func showLoadingViewWithText(_ text: String) {
         delegate.showLoadingViewWithText(text)
     }
     
