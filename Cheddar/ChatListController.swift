@@ -108,12 +108,12 @@ class ChatListController : UIViewController, UITableViewDelegate, UITableViewDat
                         self.refreshRooms()
                         
                     }, errorCallback: { (error) in
-                        NSLog("Error getting chatrooms: %@",error)
+                        NSLog("Error getting chatrooms: %@",error as NSError)
                 })
             
             }) { (error) in
             
-                NSLog("%@",error)
+                NSLog("%@",error as NSError)
                 //devalidate user
                 CheddarRequest.logoutUser({ 
                     

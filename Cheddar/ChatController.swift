@@ -227,7 +227,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             
             self.checkMaxRooms()
         }) { (error) in
-            NSLog("Error Joining Room: %@", error)
+            NSLog("Error Joining Room: %@", error as NSError)
             self.chatListController.reloadRooms()
             self.delegate.hideLoadingView()
             return
@@ -546,7 +546,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             self.forceLeaveChatRoom(alias)
             self.checkMaxRooms()
         }) { (error) in
-            NSLog("Error leaving chatroom: %@", error)
+            NSLog("Error leaving chatroom: %@", error as NSError)
             self.delegate.hideLoadingView()
             return
         }

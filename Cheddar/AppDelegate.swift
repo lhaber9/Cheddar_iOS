@@ -313,7 +313,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             let currentBuildNum = Int(Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as! String)
             
             if (minmumBuildNum > currentBuildNum) {
-                self.mustUpdateAlert.show()
+                self.mustUpdateAlert?.show()
             }
             
         }) { (error) in
@@ -321,7 +321,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         }
         
         if (!deviceDidAgreeTos()) {
-            termsOfServiceAlert.show()
+            termsOfServiceAlert?.show()
         }
     }
 

@@ -8,26 +8,23 @@
 
 import Foundation
 import Crashlytics
-//import Parse
 
 class CheddarRequest: NSObject {
     
-    static func callFunction(_ name: String, params: [NSObject : AnyObject]!,successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
-        PFCloud.callFunction(inBackground: name, withParameters: params) { (object: AnyObject?, error: NSError?) in
-            
+    static func callFunction(_ name: String, params: [String : Any]!,successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+
+        PFCloud.callFunction(inBackground: name, withParameters: params) { (object: Any?, error: Error?) in
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
                 return
             }
             
-            successCallback(object: object!)
+            successCallback(object! as AnyObject)
         }
     }
     
-    
-    
-    static func getMinimumBuildNumber(_ successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError?) -> ()) {
+    static func getMinimumBuildNumber(_ successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
         
         callFunction("minimumIosBuildNumber",
                      params: nil,
@@ -35,7 +32,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func registerNewUser(_ email: String, password: String, registrationCode: String!, successCallback: (_ user: PFUser) -> (), errorCallback: (_ error: NSError?) -> ()) {
+    static func registerNewUser(_ email: String, password: String, registrationCode: String!, successCallback: @escaping (_ user: PFUser) -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
         
         let user = PFUser()
         user.username = email
@@ -45,44 +42,44 @@ class CheddarRequest: NSObject {
             user.setValue(registrationCode, forKey: "registrationCode")
         }
         
-        user.signUpInBackground { (completed: Bool, error: NSError?) in
+        user.signUpInBackground { (completed: Bool, error: Error?) in
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
             }
             else if (!completed) {
-                errorCallback(error: nil)
+                errorCallback(nil)
             }
             else {
-                successCallback(user: user)
+                successCallback(user)
             }
         }
     }
     
-    static func loginUser(_ email: String, password: String, successCallback: (_ user: PFUser) -> (), errorCallback: (_ error: NSError?) -> ()) {
-        
+    static func loginUser(_ email: String, password: String, successCallback: @escaping (_ user: PFUser) -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
+    
         PFUser.logInWithUsername(inBackground: email,
                                              password: password)
-        { (user: PFUser?, error: NSError?) in
+        { (user: PFUser?, error: Error?) in
             
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
             }
             
             if (user != nil) {
-                successCallback(user: user!)
+                successCallback(user!)
                 Answers.logCustomEvent(withName: "Login", customAttributes: ["userId":(user?.objectId)!])
             }
         }
     }
     
-    static func logoutUser(_ successCallback: () -> (), errorCallback: (_ error: NSError?) -> ()) {
+    static func logoutUser(_ successCallback: @escaping () -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
         let userId = CheddarRequest.currentUser()?.objectId
-        PFUser.logOutInBackground { (error: NSError?) in
+        PFUser.logOutInBackground { (error: Error?) in
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
             }
             
             successCallback()
@@ -91,16 +88,16 @@ class CheddarRequest: NSObject {
         }
     }
     
-    static func requestPasswordReset(_ email: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func requestPasswordReset(_ email: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
-        PFUser.requestPasswordResetForEmail(inBackground: email) { (completed:Bool, error: NSError?) in
+        PFUser.requestPasswordResetForEmail(inBackground: email) { (completed:Bool, error: Error?) in
             
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
             }
             
-            successCallback(object: completed)
+            successCallback(completed as AnyObject)
             
             Answers.logCustomEvent(withName: "Reset Password", customAttributes: ["email":email])
         }
@@ -114,19 +111,19 @@ class CheddarRequest: NSObject {
         return CheddarRequest.currentUser()?.objectId
     }
     
-    static func currentUserIsVerified(_ successCallback: (_ isVerified: Bool) -> (), errorCallback: (_ error: NSError?) -> ()) {
-        currentUser()?.fetchInBackground(block: { (user: PFObject?, error: NSError?) in
+    static func currentUserIsVerified(_ successCallback: @escaping (_ isVerified: Bool) -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
+        currentUser()?.fetchInBackground(block: { (user: PFObject?, error: Error?) in
             
             if (error != nil) {
                 Crashlytics.sharedInstance().recordError(error!)
-                errorCallback(error: error!)
+                errorCallback(error!)
             }
             
-            successCallback(isVerified: user!["emailVerified"] as! Bool)
+            successCallback(user!["emailVerified"] as! Bool)
         })
     }
     
-    static func sendMessage(_ messageId: String, alias: Alias, body: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendMessage(_ messageId: String, alias: Alias, body: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
     
         callFunction("sendMessage",
                      params: ["aliasId":alias.objectId,
@@ -136,18 +133,18 @@ class CheddarRequest: NSObject {
                               "messageId":messageId],
         successCallback: { (object) in
             
-            successCallback(object: object)
-            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "SENT"])
+            successCallback(object)
+            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "SENT" as AnyObject])
                         
         }, errorCallback: { (object) in
             
-            errorCallback(error: object)
-            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "FAILED"])
+            errorCallback(object)
+            Utilities.sendAnswersEvent("Sent Message", alias: alias, attributes: ["lifeCycle": "FAILED" as AnyObject])
                 
         })
     }
     
-    static func joinNextAvailableChatRoom(_ userId: String, maxOccupancy:Int, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func joinNextAvailableChatRoom(_ userId: String, maxOccupancy:Int, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("joinNextAvailableChatRoom",
                      params: ["userId": userId,
@@ -156,14 +153,14 @@ class CheddarRequest: NSObject {
                               "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
         successCallback: { (object) in
                         
-            successCallback(object: object)
+            successCallback(object)
             let pfObject = (object as! PFObject)
             Answers.logCustomEvent(withName: "Joined Chat", customAttributes: ["aliasId":pfObject.objectId!, "chatRoomId":pfObject["chatRoomId"]])
             
         }, errorCallback: errorCallback)
     }
     
-    static func leaveChatroom(_ alias: Alias, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func leaveChatroom(_ alias: Alias, successCallback: @escaping(_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("leaveChatRoom",
                      params: [  "aliasId": alias.objectId,
@@ -171,13 +168,13 @@ class CheddarRequest: NSObject {
                                 "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
         successCallback: { (object) in
                         
-            successCallback(object: object)
+            successCallback(object)
             Utilities.sendAnswersEvent("Left Chat", alias: alias, attributes: [:])
                         
         }, errorCallback: errorCallback)
     }
     
-    static func findUser(_ userId: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func findUser(_ userId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("findUser",
                      params: ["userId":userId],
@@ -185,7 +182,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func getChatRooms(_ userId: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func getChatRooms(_ userId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("getChatRooms",
                      params: ["userId":userId],
@@ -193,7 +190,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func getActiveAliases(_ chatRoomId: String!, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func getActiveAliases(_ chatRoomId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("getActiveAliases",
                      params: ["chatRoomId":chatRoomId],
@@ -201,7 +198,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func replayEvents(_ params: [NSObject:AnyObject], successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func replayEvents(_ params: [String:Any], successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         var mutableParams = params
         mutableParams["subkey"] = Utilities.getKeyConstant("PubnubSubscribeKey")
@@ -212,7 +209,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func findAlias(_ aliasId: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func findAlias(_ aliasId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("findAlias",
                      params: ["aliasId":aliasId],
@@ -220,7 +217,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func resendVerificationEmail(_ userId: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func resendVerificationEmail(_ userId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("resendVerificationEmail",
                      params: ["userId":userId],
@@ -231,13 +228,13 @@ class CheddarRequest: NSObject {
                      params: ["userId":userId],
         successCallback: { (object) in
             
-            successCallback(object: object)
+            successCallback(object)
             Answers.logCustomEvent(withName: "Resend Email", customAttributes: ["userId":userId])
             
         }, errorCallback: errorCallback)
     }
     
-    static func updateChatRoomName(_ alias: Alias, name: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func updateChatRoomName(_ alias: Alias, name: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("updateChatRoomName",
                      params: [
@@ -248,13 +245,13 @@ class CheddarRequest: NSObject {
         
         successCallback: { (object) in
             
-            successCallback(object: object)
+            successCallback(object)
             Utilities.sendAnswersEvent("Change Chat Name", alias: alias, attributes: ["name": name])
                 
         }, errorCallback: errorCallback)
     }
     
-    static func sendFeedback(_ feedbackBody: String, alias: Alias!, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendFeedback(_ feedbackBody: String, alias: Alias!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let build = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as! String
         let userId = CheddarRequest.currentUser()?.objectId
@@ -277,7 +274,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func sendReportUser(_ reportedAliasId: String!, chatRoomId: String!, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendReportUser(_ reportedAliasId: String!, chatRoomId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let userId = CheddarRequest.currentUser()?.objectId
         let params = [  "environment": Utilities.envName(),
@@ -291,7 +288,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func sendDeleteChatEvent(_ aliasId: String!, chatEventId: String!, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendDeleteChatEvent(_ aliasId: String!, chatEventId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let params = [  "aliasId": aliasId!,
                         "chatEventId": chatEventId ]
@@ -300,13 +297,13 @@ class CheddarRequest: NSObject {
                      params: params,
                      successCallback: { (object) in
                         
-                        successCallback(object: object)
+                        successCallback(object)
                         Answers.logCustomEvent(withName: "Delete Message", customAttributes: ["aliasId":aliasId, "chatEventId":chatEventId])
                         
             }, errorCallback: errorCallback)
     }
     
-    static func sendBlockUser(_ blockedUserId: String!, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendBlockUser(_ blockedUserId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let userId = CheddarRequest.currentUser()?.objectId
         let params = [  "userId": userId!,
@@ -316,13 +313,13 @@ class CheddarRequest: NSObject {
                      params: params,
                      successCallback: { (object) in
                         
-                        successCallback(object: object)
+                        successCallback(object)
                         Answers.logCustomEvent(withName: "Block User", customAttributes: ["userId":userId!, "blockedUserId":blockedUserId])
                         
             }, errorCallback: errorCallback)
     }
     
-    static func sendSchoolChangeRequest(_ schoolName: String, email: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func sendSchoolChangeRequest(_ schoolName: String, email: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("sendChangeSchoolRequest",
                      params: [ "platform": "iOS",
@@ -333,7 +330,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func checkRegistrationCode(_ code: String, successCallback: (_ object: AnyObject) -> (), errorCallback: (_ error: NSError) -> ()) {
+    static func checkRegistrationCode(_ code: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("checkRegistrationCode",
                      params: [ "registrationCode": code],

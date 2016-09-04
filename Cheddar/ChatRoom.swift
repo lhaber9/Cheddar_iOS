@@ -302,7 +302,7 @@ class ChatRoom: NSManagedObject {
                 
             }) { (error) in
                 self.loadAliasCallInFlight = false
-                NSLog("error: %@", error)
+                NSLog("error: %@", error as NSError)
                 return
         }
     }
@@ -361,8 +361,8 @@ class ChatRoom: NSManagedObject {
         
         loadMessageCallInFlight = true
         
-        let params: [NSObject:AnyObject] = ["aliasId" as NSObject: myAlias.objectId! as AnyObject,
-                                              "count" as NSObject: pageSize as AnyObject]
+        let params: [String:Any] = ["aliasId": myAlias.objectId!,
+                                      "count": pageSize]
         
         CheddarRequest.replayEvents(params,
             successCallback: { (object) in
@@ -422,14 +422,16 @@ class ChatRoom: NSManagedObject {
             return
         }
         
-        let params: NSMutableDictionary = ["count" as NSObject:pageSize as AnyObject, "aliasId" as NSObject: myAlias.objectId! as AnyObject, "subkey" as NSObject:Utilities.getKeyConstant("PubnubSubscribeKey") as AnyObject]
+        var params: [String:Any] = ["count":pageSize,
+                                  "aliasId": myAlias.objectId!,
+                                  "subkey":Utilities.getKeyConstant("PubnubSubscribeKey")]
         if (currentStartToken != nil) {
             params["startTimeToken"] = currentStartToken
         }
         
         loadMessageCallInFlight = true
         
-        CheddarRequest.replayEvents(params as [NSObject : AnyObject],
+        CheddarRequest.replayEvents(params,
             successCallback: { (object) in
                 
                 let objectDict = object as! NSDictionary

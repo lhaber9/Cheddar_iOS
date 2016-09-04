@@ -132,26 +132,27 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
     }
     
     func keyboardWillShow(_ notification: Notification) {
-        let keyboardHeight: CGFloat = (((notification as NSNotification).userInfo![UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.height)
-        
-        topConstraintKeyboard.constant = self.topConstraint.constant - (keyboardHeight / 3)
-        bottomConstraintKeyboard.constant = keyboardHeight + 5
-        
-        topConstraintKeyboard.priority = 950
-        bottomConstraintKeyboard.priority = 950
-        
-        registerController.keyboardWillShow()
-        loginController.keyboardWillShow()
-        
-        if (Utilities.IS_IPHONE_4_OR_LESS()) {
-            taglineLabel.alpha = 0
-            cheddarLabelKeyboardConstraint.priority = 950
-            topConstraintKeyboardSmallSize.priority = 950
-        } else {
+        if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+            
+            topConstraintKeyboard.constant = self.topConstraint.constant - (keyboardHeight / 3)
+            bottomConstraintKeyboard.constant = keyboardHeight + 5
+            
             topConstraintKeyboard.priority = 950
+            bottomConstraintKeyboard.priority = 950
+            
+            registerController.keyboardWillShow()
+            loginController.keyboardWillShow()
+            
+            if (Utilities.IS_IPHONE_4_OR_LESS()) {
+                taglineLabel.alpha = 0
+                cheddarLabelKeyboardConstraint.priority = 950
+                topConstraintKeyboardSmallSize.priority = 950
+            } else {
+                topConstraintKeyboard.priority = 950
+            }
+            
+            view.layoutIfNeeded()
         }
-        
-        view.layoutIfNeeded()
     }
     
     func keyboardWillHide(_ notification: Notification) {
@@ -247,7 +248,8 @@ class LoginSignupViewController: UIViewController, LoginDelegate, SignupDelegate
             
             self.hideLoadingView()
             
-            let errorString = error?.userInfo["error"] as! String
+            let nsError = error as! NSError
+            let errorString = nsError.userInfo["error"] as! String
             self.showErrorText(errorString)
 //            if (errorString == "username " + self.registerController.emailField.text! + " already taken") {
 //                self.showErrorText("Email is already taken")

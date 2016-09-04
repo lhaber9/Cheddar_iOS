@@ -85,11 +85,11 @@ class Utilities {
         return lastMessageText
     }
     
-    class func sendAnswersEvent(_ eventName: String, alias:Alias, attributes:[String:AnyObject]) {
+    class func sendAnswersEvent(_ eventName: String, alias:Alias, attributes:[String:Any]) {
         
         var mutableAttrs = attributes
-        mutableAttrs["aliasId"] = alias.objectId as AnyObject
-        mutableAttrs["chatRoomId"] = alias.chatRoomId as AnyObject
+        mutableAttrs["aliasId"] = alias.objectId
+        mutableAttrs["chatRoomId"] = alias.chatRoomId
         
         Answers.logCustomEvent(withName: eventName, customAttributes: mutableAttrs)
     }

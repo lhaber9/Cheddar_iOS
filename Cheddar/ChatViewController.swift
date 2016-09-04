@@ -210,7 +210,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                 self.delegate?.subscribe(self.chatRoom)
                 
             }) { (error) in
-                NSLog("%@",error)
+                NSLog("%@",error as NSError)
                 let alias = self.myAlias()
                 self.chatRoom = nil
                 self.delegate?.forceLeaveChatRoom(alias!)
@@ -380,9 +380,10 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         }
         self.view.layoutIfNeeded()
         
-        let keyboardHeight: CGFloat = (((notification as NSNotification).userInfo![UIKeyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.height)
+        if let keyboardHeight = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height {
+            self.chatBarBottomConstraint.constant = keyboardHeight
+        }
         
-        self.chatBarBottomConstraint.constant = keyboardHeight
         self.view.layoutIfNeeded()
         self.scrollToBottom(true)
     }
