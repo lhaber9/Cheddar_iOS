@@ -126,7 +126,7 @@ class CheddarRequest: NSObject {
     static func sendMessage(_ messageId: String, alias: Alias, body: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
     
         callFunction("sendMessage",
-                     params: ["aliasId":alias.objectId,
+                     params: ["aliasId":alias.objectId!,
                               "body":body,
                               "pubkey" :Utilities.getKeyConstant("PubnubPublishKey"),
                               "subkey" :Utilities.getKeyConstant("PubnubSubscribeKey"),
@@ -163,7 +163,7 @@ class CheddarRequest: NSObject {
     static func leaveChatroom(_ alias: Alias, successCallback: @escaping(_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("leaveChatRoom",
-                     params: [  "aliasId": alias.objectId,
+                     params: [  "aliasId": alias.objectId!,
                                 "pubkey" : Utilities.getKeyConstant("PubnubPublishKey"),
                                 "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
         successCallback: { (object) in
@@ -190,7 +190,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func getActiveAliases(_ chatRoomId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+    static func getActiveAliases(_ chatRoomId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         callFunction("getActiveAliases",
                      params: ["chatRoomId":chatRoomId],
@@ -221,11 +221,6 @@ class CheddarRequest: NSObject {
         
         callFunction("resendVerificationEmail",
                      params: ["userId":userId],
-                     successCallback: successCallback,
-                     errorCallback: errorCallback)
-        
-        callFunction("resendVerificationEmail",
-                     params: ["userId":userId],
         successCallback: { (object) in
             
             successCallback(object)
@@ -238,7 +233,7 @@ class CheddarRequest: NSObject {
         
         callFunction("updateChatRoomName",
                      params: [
-                        "aliasId": alias.objectId,
+                        "aliasId": alias.objectId!,
                         "name":name,
                         "pubkey": Utilities.getKeyConstant("PubnubPublishKey"),
                         "subkey": Utilities.getKeyConstant("PubnubSubscribeKey")],
@@ -274,7 +269,7 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func sendReportUser(_ reportedAliasId: String!, chatRoomId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+    static func sendReportUser(_ reportedAliasId: String, chatRoomId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let userId = CheddarRequest.currentUser()?.objectId
         let params = [  "environment": Utilities.envName(),
@@ -288,10 +283,10 @@ class CheddarRequest: NSObject {
                      errorCallback: errorCallback)
     }
     
-    static func sendDeleteChatEvent(_ aliasId: String!, chatEventId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+    static func sendDeleteChatEvent(_ aliasId: String, chatEventId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
-        let params = [  "aliasId": aliasId!,
-                        "chatEventId": chatEventId! ]
+        let params = [  "aliasId": aliasId,
+                        "chatEventId": chatEventId ]
         
         callFunction("deleteChatEventForAlias",
                      params: params,
@@ -303,7 +298,7 @@ class CheddarRequest: NSObject {
             }, errorCallback: errorCallback)
     }
     
-    static func sendBlockUser(_ blockedUserId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+    static func sendBlockUser(_ blockedUserId: String, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let userId = CheddarRequest.currentUser()?.objectId
         let params = [  "userId": userId!,

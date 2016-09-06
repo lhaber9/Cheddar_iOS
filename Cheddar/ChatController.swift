@@ -451,7 +451,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     func deleteEvent(_ object: AnyObject?) {
         optionOverlayController?.shouldClose()
         let deleteEvent = object as! ChatEvent
-        CheddarRequest.sendDeleteChatEvent(chatViewController.myAlias().objectId, chatEventId: deleteEvent.objectId,
+        let aliasId = chatViewController.myAlias().objectId!
+        CheddarRequest.sendDeleteChatEvent(aliasId, chatEventId: deleteEvent.objectId,
         successCallback: { (object) in
             
                 let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
@@ -490,8 +491,8 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     
     func sendReportUserRequest(_ reportedAlias: Alias) {
         
-        CheddarRequest.sendReportUser(reportedAlias.objectId,
-                                      chatRoomId: reportedAlias.chatRoomId,
+        CheddarRequest.sendReportUser(reportedAlias.objectId!,
+                                      chatRoomId: reportedAlias.chatRoomId!,
         successCallback: { (object) in
             
         }) { (error) in
@@ -767,7 +768,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
             sendReportUserRequest(reportedAlias)
             confirmBlockUserAlertView.show()
         } else if (buttonIndex == 1 && alertView.isEqual(confirmBlockUserAlertView)) {
-            CheddarRequest.sendBlockUser(reportedAlias.userId,
+            CheddarRequest.sendBlockUser(reportedAlias.userId!,
                                          successCallback: { (object) in
                 }, errorCallback: { (error) in
             })

@@ -280,7 +280,7 @@ class ChatRoom: NSManagedObject {
         
         loadAliasCallInFlight = true
         
-        CheddarRequest.getActiveAliases(myAlias?.chatRoomId,
+        CheddarRequest.getActiveAliases((myAlias?.chatRoomId)!,
             successCallback: { (object) in
                 
                 self.loadAliasCallInFlight = false

@@ -34,15 +34,15 @@ class FeedbackViewController: UIViewController {
     }
     
     @IBAction func sendFeedback() {
-        let feedbackString = textView.text
-        if (feedbackString?.isEmpty)! {
+        let feedbackString = textView.text!
+        if (feedbackString.isEmpty) {
             displayError("Feedback cannot be blank")
             return
         }
         
         sendButton.displaySpinner()
         
-        CheddarRequest.sendFeedback(feedbackString!, alias: (delegate?.myAlias()), successCallback: { (object) in
+        CheddarRequest.sendFeedback(feedbackString, alias: (delegate?.myAlias()), successCallback: { (object) in
                 self.sendButton.removeSpinner()
                 self.delegate?.shouldCloseAll()
             }) { (error) in

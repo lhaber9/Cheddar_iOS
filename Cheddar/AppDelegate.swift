@@ -175,9 +175,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
         
         let message = messagesToSend.first!
         
-        CheddarRequest.sendMessage(message.messageId,
-                                   alias: message.alias,
-                                   body: message.body,
+        CheddarRequest.sendMessage(message.messageId!,
+                                   alias: message.alias!,
+                                   body: message.body!,
             successCallback: { (object) in
                 
                 self.messagesToSend.remove(at: 0)
