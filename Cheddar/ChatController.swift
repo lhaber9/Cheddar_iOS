@@ -441,7 +441,10 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
     }
 
     func showRename(_ object: AnyObject?) {
-        optionOverlayController?.shouldClose()
+        if let inciteFromOptions = object as? Bool, inciteFromOptions == true {
+            optionOverlayController?.willHide()
+            hideOverlayContents()
+        }
         chatViewController.showRename()
     }
     
@@ -507,7 +510,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         optionOverlayController.delegate = self
         
         optionOverlayController.buttonNames = ["Leave Group", "Change Room Name", "View Active Members", "Send Feedback"]
-        optionOverlayController.buttonData = [chatRoom,nil,nil,chatViewController.myAlias()]
+        optionOverlayController.buttonData = [chatRoom,true as Optional<AnyObject>,nil,chatViewController.myAlias()]
         optionOverlayController.buttonActions = [tryLeaveChatRoom, showRename, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()

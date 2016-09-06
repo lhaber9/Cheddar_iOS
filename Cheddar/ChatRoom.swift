@@ -385,7 +385,7 @@ class ChatRoom: NSManagedObject {
                         if (objectType == "ChatEvent") {
                             let replayEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
                             let objectId = replayEvent?.objectId
-                            if (self.myAlias.deletedChatEventIdsArray().contains(objectId!)) {
+                            if (!self.myAlias.deletedChatEventIdsArray().contains(objectId!)) {
                                 replayEvents.insert(replayEvent!)
                             }
                         }
