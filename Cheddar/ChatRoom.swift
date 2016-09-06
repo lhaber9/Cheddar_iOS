@@ -384,9 +384,7 @@ class ChatRoom: NSManagedObject {
                         
                         if (objectType == "ChatEvent") {
                             let replayEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
-                            if (!self.myAlias.deletedChatEventIdsArray().contains(replayEvent.objectId)) {
-                                replayEvents.insert(replayEvent)
-                            }
+                            replayEvents.insert(replayEvent)
                         }
                     }
                     
@@ -402,7 +400,7 @@ class ChatRoom: NSManagedObject {
                     
                     if (replayEvents.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
-                    } else if (startingNumberOfChatEvents > replayEvents.count) {
+                    } else if (startingNumberOfChatEvents > replayEvents.count || replayEvents.count == self.pageSize) {
                         self.setMessagesAllLoaded(false)
                     }
                 }
@@ -454,9 +452,7 @@ class ChatRoom: NSManagedObject {
                         if (objectType == "ChatEvent") {
                             
                             let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
-                            if (!self.myAlias.deletedChatEventIdsArray().contains(chatEvent.objectId)) {
-                                self.chatEvents.insert(chatEvent)
-                            }
+                            self.chatEvents.insert(chatEvent)
                         }
                     }
                     
