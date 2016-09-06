@@ -281,7 +281,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             return
         }
         
-        if let index = chatRoom.indexForEvent(topEventForLoading) {
+        if let index = chatRoom.indexForEvent(topEventForLoading), index > 0 {
             scrollToEventIndex(index - 1, animated: false)
         }
         topEventForLoading = nil

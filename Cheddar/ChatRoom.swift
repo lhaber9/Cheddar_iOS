@@ -383,11 +383,8 @@ class ChatRoom: NSManagedObject {
                         let objectDict = eventDict["object"] as! PFObject
                         
                         if (objectType == "ChatEvent") {
-                            let replayEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
-                            let objectId = replayEvent?.objectId
-                            if (!self.myAlias.deletedChatEventIdsArray().contains(objectId!)) {
-                                replayEvents.insert(replayEvent!)
-                            }
+                            let replayEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)!
+                            replayEvents.insert(replayEvent)
                         }
                     }
                     
@@ -403,7 +400,7 @@ class ChatRoom: NSManagedObject {
                     
                     if (events.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
-                    } else if (startingNumberOfChatEvents > events.count) {
+                    } else if (replayEvents.count == self.pageSize || startingNumberOfChatEvents > replayEvents.count) {
                         self.setMessagesAllLoaded(false)
                     }
                 }
@@ -455,13 +452,8 @@ class ChatRoom: NSManagedObject {
                         let objectDict = eventDict["object"] as! PFObject
                         
                         if (objectType == "ChatEvent") {
-                            
-                            let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)
-                            if let objectId = chatEvent?.objectId {
-                                if (!self.myAlias.deletedChatEventIdsArray().contains(objectId)) {
-                                    self.chatEvents.insert(chatEvent!)
-                                }
-                            }
+                            let chatEvent = ChatEvent.createOrUpdateEventFromParseObject(objectDict)!
+                            self.chatEvents.insert(chatEvent)
                         }
                     }
                     
@@ -476,6 +468,8 @@ class ChatRoom: NSManagedObject {
                     
                     if (events.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
+                    } else if (events.count == self.pageSize) {
+                        self.setMessagesAllLoaded(false)
                     }
                 }
                 
