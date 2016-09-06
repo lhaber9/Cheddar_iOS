@@ -401,9 +401,9 @@ class ChatRoom: NSManagedObject {
                     
                     self.delegate?.didUpdateEvents(self)
                     
-                    if (replayEvents.count < self.pageSize) {
+                    if (events.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
-                    } else if (startingNumberOfChatEvents > replayEvents.count) {
+                    } else if (startingNumberOfChatEvents > events.count) {
                         self.setMessagesAllLoaded(false)
                     }
                 }
