@@ -400,7 +400,7 @@ class ChatRoom: NSManagedObject {
                     
                     if (replayEvents.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
-                    } else if (startingNumberOfChatEvents > replayEvents.count || replayEvents.count == self.pageSize) {
+                    } else if (replayEvents.count == self.pageSize || startingNumberOfChatEvents > replayEvents.count) {
                         self.setMessagesAllLoaded(false)
                     }
                 }
@@ -467,6 +467,8 @@ class ChatRoom: NSManagedObject {
                     
                     if (events.count < self.pageSize) {
                         self.setMessagesAllLoaded(true)
+                    } else if (events.count == self.pageSize) {
+                        self.setMessagesAllLoaded(false)
                     }
                 }
                 
