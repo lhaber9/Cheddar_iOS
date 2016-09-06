@@ -14,7 +14,7 @@ protocol ChatListControllerDelegate: class {
     func forceCloseChat()
     func showChatRoom(_ chatRoom: ChatRoom)
     func subscribe(_ chatRoom:ChatRoom)
-    func tryLeaveChatRoom(_ object: AnyObject!)
+    func tryLeaveChatRoom(_ object: AnyObject?)
     func showOverlay()
     func hideOverlay()
     func showOverlayContents(_ viewController: UIViewController)

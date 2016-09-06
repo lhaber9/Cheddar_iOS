@@ -19,6 +19,8 @@ class ActiveMembersController: UIViewController, ActiveMembersCellDelegate {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var tableView: UITableView!
     
+    static var rowHeight:CGFloat = 58
+    
     override func viewDidLoad() {
         titleLabel.textColor = ColorConstants.colorAccent
     }
@@ -49,7 +51,7 @@ class ActiveMembersController: UIViewController, ActiveMembersCellDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 58
+        return ActiveMembersController.rowHeight
     }
     
     // MARK: ActiveMembersCellDelegate

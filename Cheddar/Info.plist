@@ -30,7 +30,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>SchemeName</key>
-	<string>InternalBeta</string>
+	<string>Development</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Effra-Regular.ttf</string>

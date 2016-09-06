@@ -11,7 +11,7 @@ import Crashlytics
 
 class CheddarRequest: NSObject {
     
-    static func callFunction(_ name: String, params: [String : Any]!,successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
+    static func callFunction(_ name: String, params: [AnyHashable : Any]!,successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
 
         PFCloud.callFunction(inBackground: name, withParameters: params) { (object: Any?, error: Error?) in
             if (error != nil) {
@@ -59,7 +59,7 @@ class CheddarRequest: NSObject {
     static func loginUser(_ email: String, password: String, successCallback: @escaping (_ user: PFUser) -> (), errorCallback: @escaping (_ error: Error?) -> ()) {
     
         PFUser.logInWithUsername(inBackground: email,
-                                             password: password)
+                                     password: password)
         { (user: PFUser?, error: Error?) in
             
             if (error != nil) {
@@ -291,7 +291,7 @@ class CheddarRequest: NSObject {
     static func sendDeleteChatEvent(_ aliasId: String!, chatEventId: String!, successCallback: @escaping (_ object: AnyObject) -> (), errorCallback: @escaping (_ error: Error) -> ()) {
         
         let params = [  "aliasId": aliasId!,
-                        "chatEventId": chatEventId ]
+                        "chatEventId": chatEventId! ]
         
         callFunction("deleteChatEventForAlias",
                      params: params,

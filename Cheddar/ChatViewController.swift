@@ -43,7 +43,7 @@ protocol ChatViewControllerDelegate: class {
     func showDeleteMessageOptions(_ chatEvent: ChatEvent)
 }
 
-class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, ChatCellDelegate, UITableViewDelegate {
+class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresentationControllerDelegate, FeedbackViewDelegate, RenameChatDelegate, ActiveMembersDelegate, ChatCellDelegate, UITableViewDelegate, UITableViewDataSource {
     
     weak var delegate: ChatViewControllerDelegate?
     
@@ -410,8 +410,8 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         return count
     }
     
-    
-    private func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if (chatRoom == nil) {
             return UITableViewCell()
         }
@@ -687,7 +687,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
             popoverViewController.delegate = self
             
             var height = popoverViewController.bottomBuffer() + popoverViewController.headerHeight()
-            height += (popoverViewController.tableView.rowHeight * CGFloat(chatRoom.activeAliases.count))
+            height += (ActiveMembersController.rowHeight * CGFloat(chatRoom.activeAliases.count))
             
             popoverViewController.preferredContentSize = CGSize(width: 300, height: height)
             popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover

@@ -13,26 +13,6 @@ import UIKit
 import CoreData
 import Fabric
 import Crashlytics
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
-}
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UIAlertViewDelegate {
@@ -52,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
     var termsOfServiceAlert: UIAlertView!
     var mustUpdateAlert: UIAlertView!
 
-    private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
         
         let configuration = PNConfiguration(publishKey:  Utilities.getKeyConstant("PubnubPublishKey"),
                                           subscribeKey:  Utilities.getKeyConstant("PubnubSubscribeKey"))
@@ -312,7 +292,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
             
             let currentBuildNum = Int(Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as! String)
             
-            if (minmumBuildNum > currentBuildNum) {
+            if (minmumBuildNum > currentBuildNum!) {
                 self.mustUpdateAlert?.show()
             }
             

@@ -335,7 +335,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         return false
     }
     
-    func askLogoutUser(_ object: AnyObject!) {
+    func askLogoutUser(_ object: AnyObject?) {
         optionOverlayController?.shouldClose()
         confirmLogoutAlertView.show()
     }
@@ -440,16 +440,16 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         titleTap()
     }
 
-    func showRename(_ object: AnyObject!) {
+    func showRename(_ object: AnyObject?) {
         optionOverlayController?.shouldClose()
         chatViewController.showRename()
     }
     
-    func deleteEvent(_ object: AnyObject!) {
+    func deleteEvent(_ object: AnyObject?) {
         optionOverlayController?.shouldClose()
         let deleteEvent = object as! ChatEvent
-        CheddarRequest.sendDeleteChatEvent(chatViewController.myAlias().objectId, chatEventId: deleteEvent.objectId
-            , successCallback: { (object) in
+        CheddarRequest.sendDeleteChatEvent(chatViewController.myAlias().objectId, chatEventId: deleteEvent.objectId,
+        successCallback: { (object) in
             
                 let alias = Alias.createOrUpdateAliasFromParseObject(object as! PFObject)
                 Utilities.appDelegate().saveContext()
@@ -457,7 +457,9 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
                 self.didUpdateEvents(ChatRoom.fetchById(alias.chatRoomId))
                 
         }) { (error) in
-            
+        
+            NSLog("HERE")
+        
         }
     }
     
@@ -469,7 +471,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         optionOverlayController.buttonNames = ["Delete"]
         optionOverlayController.buttonData = [chatEvent]
-        optionOverlayController.buttonActions = [deleteEvent as! (Optional<AnyObject>) -> ()]
+        optionOverlayController.buttonActions = [deleteEvent]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
@@ -506,7 +508,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         optionOverlayController.buttonNames = ["Leave Group", "Change Room Name", "View Active Members", "Send Feedback"]
         optionOverlayController.buttonData = [chatRoom,nil,nil,chatViewController.myAlias()]
-        optionOverlayController.buttonActions = [tryLeaveChatRoom as! (Optional<AnyObject>) -> (), showRename as! (Optional<AnyObject>) -> (), showActiveMembers as! (Optional<AnyObject>) -> (), selectedFeedback as! (Optional<AnyObject>) -> ()]
+        optionOverlayController.buttonActions = [tryLeaveChatRoom, showRename, showActiveMembers, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
@@ -575,7 +577,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         delegate.hideOverlayContents()
     }
     
-    func selectedFeedback(_ object: AnyObject!) {
+    func selectedFeedback(_ object: AnyObject?) {
         optionOverlayController.willHide()
         hideOverlayContents()
         if (object == nil) {
@@ -585,13 +587,13 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         chatViewController.performSegue(withIdentifier: "showFeedbackSegue", sender: self)
     }
     
-    func tryLeaveChatRoom(_ object: AnyObject!) {
+    func tryLeaveChatRoom(_ object: AnyObject?) {
         leavingChatRoom = object as! ChatRoom
         optionOverlayController?.shouldClose()
         confirmLeaveAlertView.show()
     }
     
-    func showActiveMembers(_ object: AnyObject!) {
+    func showActiveMembers(_ object: AnyObject?) {
         optionOverlayController?.willHide()
         chatViewController.showActiveMembers()
     }
@@ -604,7 +606,7 @@ class ChatController: UIViewController, UIAlertViewDelegate, ChatListControllerD
         
         optionOverlayController.buttonNames = ["Logout", "Send Feedback"]
         optionOverlayController.buttonData = [nil, nil]
-        optionOverlayController.buttonActions = [askLogoutUser as! (Optional<AnyObject>) -> (), selectedFeedback as! (Optional<AnyObject>) -> ()]
+        optionOverlayController.buttonActions = [askLogoutUser, selectedFeedback]
         
         self.delegate!.showOverlay()
         self.delegate!.showOverlayContents(optionOverlayController)
