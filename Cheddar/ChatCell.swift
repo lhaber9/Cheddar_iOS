@@ -52,6 +52,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     static var timestampLabelHeight:CGFloat = 15
     static var singleRowHeight:CGFloat = 32
     static var messageMaxWidth:CGFloat = 230
+    static var messageMinWidth:CGFloat = singleRowHeight
     
     override func willMove(toSuperview newSuperview: UIView?) {
         addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell(_:))))
@@ -101,6 +102,10 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     class func backgroundWidthForText(_ text: String) -> CGFloat {
         
         let width = round(labelWidthForText(text)) + 20
+        
+        if (width < messageMinWidth) {
+            return messageMinWidth
+        }
         
         return width
     }
@@ -186,6 +191,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         self.chatEvent = options["chatEvent"] as! ChatEvent
         
         self.errorLabel.isHidden = true
+        setMessageBackgroundAlphaValue(1)
         
         let alias = chatEvent.alias
         self.aliasLabel.text = alias?.name.lowercased()
@@ -366,7 +372,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         ctx.fillPath()
         ctx.restoreGState()
         
-        let textRect = CGRect(x: backgroundRect.origin.x + 10, y: backgroundRect.origin.y + 7, width: ChatCell.labelWidthForText(text), height: ChatCell.labelHeightForText(text))
+        var textRect = CGRect(x: backgroundRect.origin.x + 10, y: backgroundRect.origin.y + 7, width: ChatCell.labelWidthForText(text), height: ChatCell.labelHeightForText(text))
 
         var attributes: [String : Any] = [
             NSForegroundColorAttributeName: ColorConstants.textPrimary,
@@ -379,6 +385,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         
         let paragraphStyle = NSMutableParagraphStyle()
         if (text.characters.count == 1) {
+            textRect.origin.x += 1.5
             paragraphStyle.alignment = .center
         }
         else {
