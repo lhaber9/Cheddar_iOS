@@ -473,6 +473,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                                                 "bottomGapSize": bottomGapSize as AnyObject ]
             
             messageCell.setMessageOptions(options)
+            messageCell.setNeedsDisplay()
         }
         else if let presenceCell = cell as? PresenceCell {
             presenceCell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index))

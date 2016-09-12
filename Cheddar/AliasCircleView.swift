@@ -34,8 +34,7 @@ class AliasCircleView: LockedBackgroundColorView {
             
         height = newSuperview!.frame.height
         
-        layer.cornerRadius = height / 2
-        lockedBackgroundColor = color
+        lockedBackgroundColor = UIColor.clear
         
         indicatorView.layer.cornerRadius = indicatorView.frame.size.height / 2
         indicatorView.lockedBackgroundColor = ColorConstants.outboundChatBubble
@@ -48,6 +47,7 @@ class AliasCircleView: LockedBackgroundColorView {
         initalsLabel.adjustsFontSizeToFitWidth = true
         
         layoutIfNeeded()
+        setNeedsDisplay()
     }
     
     class func instanceFromNibWithAlias(_ alias: Alias, color: UIColor, sizeFactor: CGFloat) -> AliasCircleView {
@@ -61,7 +61,9 @@ class AliasCircleView: LockedBackgroundColorView {
     func setCellAlias(_ alias: Alias, color:UIColor) {
         self.alias = alias
         initalsLabel.text = alias.initials()
-        lockedBackgroundColor = color
+        self.color = color
+        layoutIfNeeded()
+        setNeedsDisplay()
     }
     
     func setTextSize(_ size: CGFloat) {
@@ -69,6 +71,7 @@ class AliasCircleView: LockedBackgroundColorView {
         initalsLabel.font = UIFont(name: "Effra-Medium", size: size)
         initalsLabel.removeConstraint(initialsWidthConstraint)
         layoutIfNeeded()
+        setNeedsDisplay()
     }
     
     func showUnreadIndicator(_ show: Bool) {
@@ -85,5 +88,27 @@ class AliasCircleView: LockedBackgroundColorView {
         else {
             indicatorStrokeView.isHidden = true
         }
+        
+        layoutIfNeeded()
+        setNeedsDisplay()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        ctx.saveGState()
+        
+        let path = UIBezierPath(roundedRect: rect, cornerRadius: rect.height / 2)
+        let clipPath: CGPath = path.cgPath
+        
+        ctx.addPath(clipPath)
+        if (color != nil) {
+            ctx.setFillColor(color.cgColor)
+        }
+        
+        ctx.closePath()
+        ctx.fillPath()
+        ctx.restoreGState()
     }
 }
