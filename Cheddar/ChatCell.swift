@@ -43,6 +43,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     var isOutbound: Bool!
     var status: ChatEventStatus!
     var bottomGap: CGFloat!
+    var messageBackgroundAlpha: CGFloat = 1
     
     static var verticalTextBuffer:CGFloat = 13
     static var bufferSize:CGFloat = 8
@@ -53,9 +54,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     static var messageMaxWidth:CGFloat = 230
     
     override func willMove(toSuperview newSuperview: UIView?) {
-        //messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        
-        //messageBackground.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell)))
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell(_:))))
         
         backgroundView?.backgroundColor = ColorConstants.whiteColor
         timestampLabel.backgroundColor = ColorConstants.whiteColor
@@ -173,6 +172,12 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
     func setBottomGapSize(_ size: CGFloat) {
         bottomGap = 2 + size
+        setNeedsDisplay()
+    }
+    
+    func setMessageBackgroundAlphaValue(_ alpha: CGFloat) {
+        messageBackgroundAlpha = alpha
+        setNeedsDisplay()
     }
     
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
@@ -231,8 +236,13 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         return detect.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.characters.count))
     }
     
-    func didTapCell() {
-        //messageLabel.isUserInteractionEnabled = false
+    func didTapCell(_ longPressRecognizer: UILongPressGestureRecognizer) {
+        
+        let point = longPressRecognizer.location(in: self)
+        if (!messageBackgroundRect(frame).contains(point)) {
+            return
+        }
+
         let _ = becomeFirstResponder()
         let theMenu = UIMenuController.shared
         
@@ -245,7 +255,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         }
         
         theMenu.menuItems = menuItems
-        //theMenu.setTargetRect(messageBackground.frame, in:self)
+        theMenu.setTargetRect(messageBackgroundRect(frame), in:self)
         theMenu.setMenuVisible(true, animated:true)
     }
     
@@ -273,13 +283,13 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     }
     
     override func becomeFirstResponder() -> Bool {
-        //messageBackground.alpha = 0.8
+        setMessageBackgroundAlphaValue(0.8)
         NotificationCenter.default.addObserver(self, selector: #selector(UIResponder.resignFirstResponder), name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
         return super.becomeFirstResponder()
     }
     
     override func resignFirstResponder() -> Bool {
-        //messageBackground.alpha = 1
+        setMessageBackgroundAlphaValue(1)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
         return super.resignFirstResponder()
     }
@@ -289,7 +299,7 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         board.string = chatEvent.body
         let menu = UIMenuController.shared
         menu.setMenuVisible(false, animated: true)
-        //messageBackground.alpha = 1
+        setMessageBackgroundAlphaValue(1)
     }
     
     override func copy() -> Any {
@@ -301,6 +311,21 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         return chatEvent.body
     }
     
+    func messageBackgroundRect(_ rect: CGRect) -> CGRect! {
+        let text = chatEvent.body!
+        
+        let backgroundWidth = ChatCell.backgroundWidthForText(text)
+        let backgroundHeight = ChatCell.backgroundHeightForText(text)
+        let y = rect.height - bottomGap - backgroundHeight
+        var x = rect.width - 48 - backgroundWidth
+
+        if (isOutbound == false) {
+            x = 48
+        }
+        
+        return CGRect(x: x, y: y, width: backgroundWidth, height: backgroundHeight)
+    }
+    
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
@@ -309,43 +334,39 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
         let text = chatEvent.body!
         
-        let backgroundWidth = ChatCell.backgroundWidthForText(text)
-        let backgroundHeight = ChatCell.backgroundHeightForText(text)
-        let y = rect.height - bottomGap - backgroundHeight
-        var x = rect.width - 48 - backgroundWidth
+        let backgroundRect = messageBackgroundRect(rect)!
         
-        errorLeftConstraint?.constant = backgroundWidth + 8 + 48
-        errorRightConstraint?.constant = backgroundWidth + 8 + 48
+        errorLeftConstraint?.constant = backgroundRect.width + 8 + 48
+        errorRightConstraint?.constant = backgroundRect.width + 8 + 48
         
-        if (isOutbound == false) {
-            x = 48
-        }
-        
-        let backgroundRect = CGRect(x: x, y: y, width: backgroundWidth, height: backgroundHeight)
         let path = UIBezierPath(roundedRect: backgroundRect, cornerRadius: ChatCell.singleRowHeight/2)
         let clipPath: CGPath = path.cgPath
         
         ctx.addPath(clipPath)
         
+        var color:UIColor = ColorConstants.outboundChatBubble
         if (isOutbound == true) {
             if (status == ChatEventStatus.Success) {
-                ctx.setFillColor(ColorConstants.outboundChatBubble.cgColor)
+                color = ColorConstants.outboundChatBubble
             }
             else if (status == ChatEventStatus.Sent) {
-                ctx.setFillColor(ColorConstants.outboundChatBubbleSending.withAlphaComponent(0.62).cgColor)
+                setMessageBackgroundAlphaValue(0.62)
+                color = ColorConstants.outboundChatBubbleSending
             }
             else if (status == ChatEventStatus.Error) {
-                ctx.setFillColor(ColorConstants.outboundChatBubbleFail.cgColor)
+                color = ColorConstants.outboundChatBubbleFail
             }
         } else {
-            ctx.setFillColor(ColorConstants.inboundChatBubble.cgColor)
+            color = ColorConstants.inboundChatBubble
         }
+        
+        ctx.setFillColor(color.withAlphaComponent(messageBackgroundAlpha).cgColor)
         
         ctx.closePath()
         ctx.fillPath()
         ctx.restoreGState()
         
-        let textRect = CGRect(x: x + 10, y: y + 7, width: ChatCell.labelWidthForText(text), height: ChatCell.labelHeightForText(text))
+        let textRect = CGRect(x: backgroundRect.origin.x + 10, y: backgroundRect.origin.y + 7, width: ChatCell.labelWidthForText(text), height: ChatCell.labelHeightForText(text))
 
         var attributes: [String : Any] = [
             NSForegroundColorAttributeName: ColorConstants.textPrimary,
