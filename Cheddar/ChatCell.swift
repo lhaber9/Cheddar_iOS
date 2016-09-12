@@ -16,8 +16,8 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
     weak var delegate:ChatCellDelegate!
     
-    //@IBOutlet var errorLeftConstraint: NSLayoutConstraint!
-    //@IBOutlet var errorRightConstraint: NSLayoutConstraint!
+    @IBOutlet var errorLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var errorRightConstraint: NSLayoutConstraint!
     @IBOutlet var errorLabel: UILabel!
     
     @IBOutlet var aliasLabelView: UIView!
@@ -147,16 +147,16 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     func setIsOutbound(_ isOutbound: Bool) {
         self.isOutbound = isOutbound
         if (isOutbound) {
-            //errorLeftConstraint.priority = 200;
-            //errorRightConstraint.priority = 900;
+            errorLeftConstraint.priority = 200;
+            errorRightConstraint.priority = 900;
             aliasLabelLeftConstraint.priority = 200
             aliasLabelRightConstraint.priority = 900
             rightIconContainer.isHidden = false;
             leftIconContainer.isHidden = true;
         }
         else {
-            //errorLeftConstraint.priority = 900;
-            //errorRightConstraint.priority = 200;
+            errorLeftConstraint.priority = 900;
+            errorRightConstraint.priority = 200;
             aliasLabelLeftConstraint.priority = 900
             aliasLabelRightConstraint.priority = 200
             rightIconContainer.isHidden = true;
@@ -191,7 +191,6 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         self.timestampLabel.textColor = ColorConstants.timestampText
         self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
         self.setBottomGapSize(options["bottomGapSize"] as! CGFloat)
-        
         
         let isOutbound = options["isOutbound"] as! Bool
         self.setIsOutbound(isOutbound)
@@ -314,6 +313,9 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         let backgroundHeight = ChatCell.backgroundHeightForText(text)
         let y = rect.height - bottomGap - backgroundHeight
         var x = rect.width - 48 - backgroundWidth
+        
+        errorLeftConstraint?.constant = backgroundWidth + 8 + 48
+        errorRightConstraint?.constant = backgroundWidth + 8 + 48
         
         if (isOutbound == false) {
             x = 48

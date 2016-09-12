@@ -79,9 +79,7 @@
                                     <constraint firstAttribute="height" constant="32" id="h53-OU-ejY"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
-                                <frame key="frameInset" minX="117" minY="10" width="139" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error: Message Not Sent" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-Gd-Lgq">
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -92,11 +90,14 @@
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="leading" secondItem="JLw-Dz-RJj" secondAttribute="trailing" priority="900" constant="18" id="0nH-TU-4ee"/>
                             <constraint firstItem="ZdJ-BW-BaN" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" id="3HD-BD-oCr"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" constant="8" id="3vY-3D-RHs"/>
+                            <constraint firstAttribute="trailing" secondItem="DmO-Gd-Lgq" secondAttribute="trailing" priority="900" constant="120" id="60M-fH-lmM"/>
                             <constraint firstItem="ZdJ-BW-BaN" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" id="83b-MY-gUu"/>
                             <constraint firstItem="pt8-I5-5ej" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="91T-zQ-j9i"/>
+                            <constraint firstItem="DmO-Gd-Lgq" firstAttribute="leading" secondItem="jgt-br-nSn" secondAttribute="leading" priority="200" constant="117" id="Br4-P4-KnX"/>
                             <constraint firstAttribute="height" constant="172.5" id="Hj0-gU-VG3"/>
                             <constraint firstAttribute="height" constant="17.5" id="Kri-1Q-gZA"/>
                             <constraint firstItem="aoB-dj-1gj" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" priority="900" id="KtO-nJ-ME1"/>
+                            <constraint firstItem="DmO-Gd-Lgq" firstAttribute="centerY" secondItem="jgt-br-nSn" secondAttribute="centerY" id="LYQ-dk-gOm"/>
                             <constraint firstAttribute="top" secondItem="aoB-dj-1gj" secondAttribute="bottom" id="Tkq-FM-lGB"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" id="XfA-3E-GJQ"/>
                             <constraint firstItem="rR7-Sb-RzQ" firstAttribute="top" secondItem="jgt-br-nSn" secondAttribute="top" constant="2" id="YU1-Qb-61J"/>
@@ -138,6 +139,8 @@
                 <outlet property="aliasLabelRightConstraint" destination="0nH-TU-4ee" id="tY6-hh-5Ry"/>
                 <outlet property="aliasLabelView" destination="aoB-dj-1gj" id="cZg-vz-q5e"/>
                 <outlet property="errorLabel" destination="DmO-Gd-Lgq" id="rX8-Ch-dqu"/>
+                <outlet property="errorLeftConstraint" destination="Br4-P4-KnX" id="XCG-cG-yeL"/>
+                <outlet property="errorRightConstraint" destination="60M-fH-lmM" id="3JD-MJ-Eqj"/>
                 <outlet property="leftIconContainer" destination="rR7-Sb-RzQ" id="beL-J2-wtu"/>
                 <outlet property="mainViewTopConstraint" destination="Ewd-ve-v15" id="YQA-O3-1yz"/>
                 <outlet property="rightIconContainer" destination="pt8-I5-5ej" id="UXb-8z-mDs"/>

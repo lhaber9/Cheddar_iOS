@@ -185,19 +185,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PNObjectEventListener, UI
                 
             }) { (error) in
                 
+                self.messagesToSend.remove(at: 0)
                 message.status = ChatEventStatus.Error.rawValue
                 self.saveContext()
                 let chatRoom = ChatRoom.fetchById(message.alias.chatRoomId)
                 chatRoom?.delegate?.didUpdateEvents(chatRoom!)
+                self.sendingMessages = false
         }
     }
     
     func subscribeToPubNubChannel(_ channelId: String) {
         self.pnClient.subscribe(toChannels: [channelId], withPresence: true)
     }
-    
-    
-    
     
     func subscribeToPubNubPushChannel(_ channelId: String) {
         
