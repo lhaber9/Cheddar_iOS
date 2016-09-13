@@ -16,18 +16,6 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
     weak var delegate:ChatCellDelegate!
     
-    @IBOutlet var messageLabel: UITextView!
-    @IBOutlet var messageBackground: UIView!
-    @IBOutlet var messageBackgroundWidthConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var leftSideMessageConstraint: NSLayoutConstraint!
-    @IBOutlet var rightSideMessageConstraint: NSLayoutConstraint!
-    @IBOutlet var leftSideLabelConstraint: NSLayoutConstraint!
-    @IBOutlet var rightSideLabelConstraint: NSLayoutConstraint!
-    
-    @IBOutlet var messageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet var messageBottomConstraint: NSLayoutConstraint!
-    
     @IBOutlet var errorLeftConstraint: NSLayoutConstraint!
     @IBOutlet var errorRightConstraint: NSLayoutConstraint!
     @IBOutlet var errorLabel: UILabel!
@@ -35,6 +23,10 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet var aliasLabelView: UIView!
     @IBOutlet var aliasLabel: UILabel!
 
+    @IBOutlet var aliasLabelLeftConstraint: NSLayoutConstraint!
+    @IBOutlet var aliasLabelRightConstraint: NSLayoutConstraint!
+    @IBOutlet var mainViewTopConstraint: NSLayoutConstraint!
+    
     @IBOutlet var timestampLabelBottomToMessageConstraint: NSLayoutConstraint!
     @IBOutlet var timestampLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet var timestampLabelView: UIView!
@@ -48,6 +40,11 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
     var chatEvent:ChatEvent!
     
+    var isOutbound: Bool!
+    var status: ChatEventStatus!
+    var bottomGap: CGFloat!
+    var messageBackgroundAlpha: CGFloat = 1
+    
     static var verticalTextBuffer:CGFloat = 13
     static var bufferSize:CGFloat = 8
     static var largeBufferSize:CGFloat = 15
@@ -55,27 +52,19 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     static var timestampLabelHeight:CGFloat = 15
     static var singleRowHeight:CGFloat = 32
     static var messageMaxWidth:CGFloat = 230
+    static var messageMinWidth:CGFloat = singleRowHeight
     
     override func willMove(toSuperview newSuperview: UIView?) {
-        messageBackground.layer.cornerRadius = ChatCell.singleRowHeight/2;
-        messageLabel.textColor = ColorConstants.textPrimary
-        messageLabel.textContainer.lineFragmentPadding = 0;
-        messageLabel.textContainerInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
-        messageLabel.isOpaque = true
-        messageLabel.isSelectable = false
-        messageLabel.delegate = self
-        
-        messageBackground.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell)))
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(ChatCell.didTapCell(_:))))
         
         backgroundView?.backgroundColor = ColorConstants.whiteColor
         timestampLabel.backgroundColor = ColorConstants.whiteColor
         aliasLabel.backgroundColor = ColorConstants.whiteColor
         
-        rightIconContainer.isOpaque = true
-        leftIconContainer.isOpaque = true
+        //ChatCell.messageMaxWidth = 180
         
-        ChatCell.messageMaxWidth = messageBackgroundWidthConstraint.constant - 20
-
+        rightIconContainer.backgroundColor = UIColor.clear
+        leftIconContainer.backgroundColor = UIColor.clear
     }
     
     override var canBecomeFirstResponder: Bool {
@@ -84,12 +73,21 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
+    class func labelRectForText(_ text: String) -> CGRect {
+        return text.boundingRect(with: CGSize(width: messageMaxWidth, height: CGFloat(FLT_MAX)),
+                          options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                          attributes: [NSFontAttributeName: UIFont(name: "Effra-Regular", size: 16)!],
+                          context: nil)
+    }
+    
     class func labelHeightForText(_ text: String) -> CGFloat {
+        return labelRectForText(text).height
+    }
+
+
+    class func backgroundHeightForText(_ text: String) -> CGFloat {
         
-        var height = round(text.boundingRect(with: CGSize(width: messageMaxWidth, height: CGFloat(FLT_MAX)),
-            options: NSStringDrawingOptions.usesLineFragmentOrigin,
-            attributes: [NSFontAttributeName: UIFont(name: "Effra-Regular", size: 16)!],
-            context: nil).height) + verticalTextBuffer
+        var height = round(labelHeightForText(text)) + verticalTextBuffer
         
         if (height > ChatCell.singleRowHeight) {
             height += 4
@@ -97,8 +95,23 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         return height
     }
     
+    class func labelWidthForText(_ text: String) -> CGFloat {
+        return labelRectForText(text).width
+    }
+    
+    class func backgroundWidthForText(_ text: String) -> CGFloat {
+        
+        let width = round(labelWidthForText(text)) + 20
+        
+        if (width < messageMinWidth) {
+            return messageMinWidth
+        }
+        
+        return width
+    }
+    
     class func rowHeightForText(_ text: String, withAliasLabel: Bool, withTimestampLabel: Bool) -> CGFloat {
-        var height = labelHeightForText(text)
+        var height = backgroundHeightForText(text)
         if (withAliasLabel) {
             height += aliasLabelHeight
         }
@@ -110,13 +123,17 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     
     func setShowAliasLabel(_ showAliasLabel: Bool, andTimestampLabel showTimestampLabel: Bool) {
         
+        var topConstant:CGFloat = 0
+        
         if (showAliasLabel) {
+            topConstant += 15
             aliasLabelView.isHidden = false
         } else {
             aliasLabelView.isHidden = true
         }
         
         if (showTimestampLabel) {
+            topConstant += 15
             timestampLabelView.isHidden = false
             if (!showAliasLabel) {
                 timestampLabelBottomToMessageConstraint.priority = 950
@@ -126,55 +143,46 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         } else {
             timestampLabelView.isHidden = true
         }
+        
+        mainViewTopConstraint.constant = topConstant
+        layoutIfNeeded()
     }
     
     func setIsOutbound(_ isOutbound: Bool) {
+        self.isOutbound = isOutbound
         if (isOutbound) {
             errorLeftConstraint.priority = 200;
             errorRightConstraint.priority = 900;
-            leftSideMessageConstraint.priority = 200;
-            rightSideMessageConstraint.priority = 900;
-            leftSideLabelConstraint.priority = 200;
-            rightSideLabelConstraint.priority = 900;
-            messageLabel.textColor = ColorConstants.outboundMessageText
+            aliasLabelLeftConstraint.priority = 200
+            aliasLabelRightConstraint.priority = 900
             rightIconContainer.isHidden = false;
             leftIconContainer.isHidden = true;
         }
         else {
             errorLeftConstraint.priority = 900;
             errorRightConstraint.priority = 200;
-            leftSideMessageConstraint.priority = 900;
-            rightSideMessageConstraint.priority = 200;
-            leftSideLabelConstraint.priority = 900;
-            rightSideLabelConstraint.priority = 200;
-            messageLabel.textColor = ColorConstants.textPrimary
-            messageBackground.backgroundColor = ColorConstants.inboundChatBubble
-            messageLabel.backgroundColor = ColorConstants.inboundChatBubble
+            aliasLabelLeftConstraint.priority = 900
+            aliasLabelRightConstraint.priority = 200
             rightIconContainer.isHidden = true;
             leftIconContainer.isHidden = false;
         }
     }
     
     func setStatus(_ status:ChatEventStatus) {
-        if (status == ChatEventStatus.Success) {
-            messageBackground.backgroundColor = ColorConstants.outboundChatBubble
-            messageLabel.backgroundColor = ColorConstants.outboundChatBubble
-        }
-        else if (status == ChatEventStatus.Sent) {
-            messageBackground.backgroundColor = ColorConstants.outboundChatBubbleSending
-            messageLabel.backgroundColor = UIColor.clear
-            messageBackground.alpha = 0.62
-            messageBackground.isOpaque = false
-        }
-        else if (status == ChatEventStatus.Error) {
-            messageBackground.backgroundColor = ColorConstants.outboundChatBubbleFail
-            messageLabel.backgroundColor = ColorConstants.outboundChatBubbleFail
+        self.status = status
+        if (status == ChatEventStatus.Error) {
             errorLabel.isHidden = false
         }
     }
     
     func setBottomGapSize(_ size: CGFloat) {
-        messageBottomConstraint.constant = 2 + size
+        bottomGap = 2 + size
+        setNeedsDisplay()
+    }
+    
+    func setMessageBackgroundAlphaValue(_ alpha: CGFloat) {
+        messageBackgroundAlpha = alpha
+        setNeedsDisplay()
     }
     
     // options are {text:String, alias:Alias, showAliasLabel:Bool, isOutbound:Bool, status:String, showAliasIcon:Bool}
@@ -182,28 +190,18 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         
         self.chatEvent = options["chatEvent"] as! ChatEvent
         
-        self.messageLabel.text = chatEvent.body
-        let height = ChatCell.labelHeightForText( self.messageLabel.text )
-        self.messageHeightConstraint.constant = height
         self.errorLabel.isHidden = true
-        self.messageBackground.alpha = 1
-        self.messageBackground.isOpaque = true
-        
-        if (self.messageLabel.text.characters.count == 1) {
-            self.messageLabel.textAlignment = NSTextAlignment.center
-        }
-        else {
-            self.messageLabel.textAlignment = NSTextAlignment.left
-        }
+        setMessageBackgroundAlphaValue(1)
         
         let alias = chatEvent.alias
         self.aliasLabel.text = alias?.name.lowercased()
         self.aliasLabel.textColor = ColorConstants.aliasLabelText
-        self.timestampLabel.text = Utilities.formatDate(chatEvent.createdAt, withTrailingHours: true)
+        DispatchQueue.main.async {
+            self.timestampLabel.text = Utilities.formatDate(self.chatEvent.createdAt, withTrailingHours: true)
+        }
         self.timestampLabel.textColor = ColorConstants.timestampText
         self.setShowAliasLabel(options["showAliasLabel"] as! Bool, andTimestampLabel: options["showTimestampLabel"] as! Bool)
         self.setBottomGapSize(options["bottomGapSize"] as! CGFloat)
-        
         
         let isOutbound = options["isOutbound"] as! Bool
         self.setIsOutbound(isOutbound)
@@ -214,20 +212,20 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
                 rightAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias!, color: ColorConstants.outboundChatBubble, sizeFactor: 0.7)
                 self.rightIconContainer.addSubview(rightAliasIcon)
                 rightAliasIcon.autoPinEdgesToSuperviewEdges()
+                rightAliasIcon.setTextSize(15)
             }
             
             rightAliasIcon.setCellAlias(alias!, color: ColorConstants.outboundChatBubble)
-            rightAliasIcon.setTextSize(15)
         }
         else {
             if (leftAliasIcon == nil) {
                 leftAliasIcon = AliasCircleView.instanceFromNibWithAlias(alias!, color: ColorConstants.iconColors[Int((alias?.colorId)!)], sizeFactor: 0.7)
                 self.leftIconContainer.addSubview(leftAliasIcon)
                 leftAliasIcon.autoPinEdgesToSuperviewEdges()
+                leftAliasIcon.setTextSize(15)
             }
             
             leftAliasIcon.setCellAlias(alias!, color: ColorConstants.iconColors[Int((alias?.colorId)!)])
-            leftAliasIcon.setTextSize(15)
         }
         
         if (!(options["showAliasIcon"] as! Bool)){
@@ -244,8 +242,13 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         return detect.matches(in: text, options: .reportCompletion, range: NSMakeRange(0, text.characters.count))
     }
     
-    func didTapCell() {
-        messageLabel.isUserInteractionEnabled = false
+    func didTapCell(_ longPressRecognizer: UILongPressGestureRecognizer) {
+        
+        let point = longPressRecognizer.location(in: self)
+        if (!messageBackgroundRect(frame).contains(point)) {
+            return
+        }
+
         let _ = becomeFirstResponder()
         let theMenu = UIMenuController.shared
         
@@ -253,17 +256,18 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
         menuItems.append(UIMenuItem(title:"Copy", action:#selector(ChatCell.copyCell)))
         menuItems.append(UIMenuItem(title:"Delete", action:#selector(ChatCell.deleteMessage)))
         
-        if (links(messageLabel.attributedText.string).count > 0) {
+        if (links(chatEvent.body).count > 0) {
             menuItems.append(UIMenuItem(title:"Go To Link", action:#selector(ChatCell.showLink)))
         }
         
         theMenu.menuItems = menuItems
-        theMenu.setTargetRect(messageBackground.frame, in:self)
+        theMenu.setTargetRect(messageBackgroundRect(frame), in:self)
         theMenu.setMenuVisible(true, animated:true)
     }
     
     func showLink() {
-        var link = messageLabel.attributedText.attributedSubstring(from: links(messageLabel.attributedText.string)[0].range).string
+        let text: NSString = chatEvent.body! as NSString
+        var link = text.substring(with: links(chatEvent.body)[0].range)
         if (!link.lowercased().hasPrefix("http://")) {
             link = "http://" + link
         }
@@ -285,31 +289,110 @@ class ChatCell: UITableViewCell, UITextViewDelegate {
     }
     
     override func becomeFirstResponder() -> Bool {
-        messageBackground.alpha = 0.8
+        setMessageBackgroundAlphaValue(0.8)
         NotificationCenter.default.addObserver(self, selector: #selector(UIResponder.resignFirstResponder), name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
         return super.becomeFirstResponder()
     }
     
     override func resignFirstResponder() -> Bool {
-        messageBackground.alpha = 1
+        setMessageBackgroundAlphaValue(1)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIMenuControllerDidHideMenu, object: nil)
         return super.resignFirstResponder()
     }
     
     func copyCell() {
         let board = UIPasteboard.general
-        board.string = messageLabel.text
+        board.string = chatEvent.body
         let menu = UIMenuController.shared
         menu.setMenuVisible(false, animated: true)
-        messageBackground.alpha = 1
+        setMessageBackgroundAlphaValue(1)
     }
     
     override func copy() -> Any {
         let board = UIPasteboard.general
-        board.string = messageLabel.text
+        board.string = chatEvent.body
         let menu = UIMenuController.shared
         menu.setMenuVisible(false, animated: true)
-        messageBackground.alpha = 1
-        return messageLabel.text
+        //messageBackground.alpha = 1
+        return chatEvent.body
+    }
+    
+    func messageBackgroundRect(_ rect: CGRect) -> CGRect! {
+        let text = chatEvent.body!
+        
+        let backgroundWidth = ChatCell.backgroundWidthForText(text)
+        let backgroundHeight = ChatCell.backgroundHeightForText(text)
+        let y = rect.height - bottomGap - backgroundHeight
+        var x = rect.width - 48 - backgroundWidth
+
+        if (isOutbound == false) {
+            x = 48
+        }
+        
+        return CGRect(x: x, y: y, width: backgroundWidth, height: backgroundHeight)
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        let ctx: CGContext = UIGraphicsGetCurrentContext()!
+        ctx.saveGState()
+    
+        let text = chatEvent.body!
+        
+        let backgroundRect = messageBackgroundRect(rect)!
+        
+        errorLeftConstraint?.constant = backgroundRect.width + 8 + 48
+        errorRightConstraint?.constant = backgroundRect.width + 8 + 48
+        
+        let path = UIBezierPath(roundedRect: backgroundRect, cornerRadius: ChatCell.singleRowHeight/2)
+        let clipPath: CGPath = path.cgPath
+        
+        ctx.addPath(clipPath)
+        
+        var color:UIColor = ColorConstants.outboundChatBubble
+        if (isOutbound == true) {
+            if (status == ChatEventStatus.Success) {
+                color = ColorConstants.outboundChatBubble
+            }
+            else if (status == ChatEventStatus.Sent) {
+                setMessageBackgroundAlphaValue(0.62)
+                color = ColorConstants.outboundChatBubbleSending
+            }
+            else if (status == ChatEventStatus.Error) {
+                color = ColorConstants.outboundChatBubbleFail
+            }
+        } else {
+            color = ColorConstants.inboundChatBubble
+        }
+        
+        ctx.setFillColor(color.withAlphaComponent(messageBackgroundAlpha).cgColor)
+        
+        ctx.closePath()
+        ctx.fillPath()
+        ctx.restoreGState()
+        
+        var textRect = CGRect(x: backgroundRect.origin.x + 10, y: backgroundRect.origin.y + 7, width: ChatCell.labelWidthForText(text), height: ChatCell.labelHeightForText(text))
+
+        var attributes: [String : Any] = [
+            NSForegroundColorAttributeName: ColorConstants.textPrimary,
+            NSFontAttributeName: UIFont(name: "Effra-Regular", size: 16)!
+        ]
+        
+        if (isOutbound == true) {
+            attributes[NSForegroundColorAttributeName] = ColorConstants.outboundMessageText
+        }
+        
+        let paragraphStyle = NSMutableParagraphStyle()
+        if (text.characters.count == 1) {
+            textRect.origin.x += 1.5
+            paragraphStyle.alignment = .center
+        }
+        else {
+            paragraphStyle.alignment = .left
+        }
+        attributes[NSParagraphStyleAttributeName] = paragraphStyle
+        
+        text.draw(in: textRect, withAttributes: attributes)
     }
 }

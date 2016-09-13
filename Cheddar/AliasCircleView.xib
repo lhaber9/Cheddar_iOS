@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Effra-Medium.ttf">
+        <array key="Effra-Medium.ttf">
             <string>Effra-Medium</string>
-        </mutableArray>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -18,16 +19,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QNz-3P-pq9" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="190" height="176"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="byF-iq-0Yu">
-                            <rect key="frame" x="76" y="68" width="38.5" height="38.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="38.5" id="Gm8-Kq-o2j"/>
                                 <constraint firstAttribute="width" secondItem="byF-iq-0Yu" secondAttribute="height" multiplier="1:1" id="Y1K-vn-77C"/>
                             </constraints>
                             <fontDescription key="fontDescription" name="Effra-Medium" family="Effra" pointSize="24"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -38,14 +37,12 @@
                     </constraints>
                 </view>
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fLw-Er-ynw" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
-                    <rect key="frame" x="25" y="15" width="15" height="15"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-Zm-hK2" customClass="LockedBackgroundColorView" customModule="Cheddar" customModuleProvider="target">
-                            <rect key="frame" x="2" y="2" width="11" height="11"/>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="15" id="LVg-Dn-TBn"/>
                         <constraint firstAttribute="trailing" secondItem="l7y-Zm-hK2" secondAttribute="trailing" constant="2" id="Zlx-00-1cc"/>
@@ -56,7 +53,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="QNz-3P-pq9" secondAttribute="bottom" id="BE2-sO-SIS"/>
                 <constraint firstItem="QNz-3P-pq9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Gqr-UW-QJs"/>

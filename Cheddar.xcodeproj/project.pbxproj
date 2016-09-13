@@ -1134,15 +1134,15 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Cheddar/Cheddar.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 7DAS5PPLAD;
 				INFOPLIST_FILE = Cheddar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Cheddar.Cheddar.Internal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "b0d78ce2-5641-44ac-b8b4-70de956a2c26";
-				PROVISIONING_PROFILE_SPECIFIER = "XC: Cheddar.Cheddar.Internal";
+				PROVISIONING_PROFILE = "d1ba65a5-838b-47af-b8c6-ba710dfb6f39";
+				PROVISIONING_PROFILE_SPECIFIER = Luke;
 				SWIFT_OBJC_BRIDGING_HEADER = "Cheddar-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;

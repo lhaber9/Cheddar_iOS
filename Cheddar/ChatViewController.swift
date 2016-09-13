@@ -136,9 +136,9 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         
         textView.delegate = self
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ChatViewController.handleLongPress(_:)))
+        /*let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ChatViewController.handleLongPress(_:)))
         longPressRecognizer.minimumPressDuration = 1
-        tableView.addGestureRecognizer(longPressRecognizer)
+        tableView.addGestureRecognizer(longPressRecognizer)*/
         
         initStyle()
         
@@ -148,7 +148,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
         reloadTable()
     }
     
-    func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer) {
+    /*func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer) {
         let point = longPressRecognizer.location(in: tableView)
         
         let indexPath = tableView.indexPathForRow(at: point)
@@ -169,7 +169,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                 showDeleteMessageOptions(chatEvent)
             }
         }
-    }
+    }*/
     
     func showDeleteMessageOptions(_ chatEvent:ChatEvent) {
         delegate?.showDeleteMessageOptions(chatEvent)
@@ -473,6 +473,7 @@ class ChatViewController: UIViewController, UITextViewDelegate, UIPopoverPresent
                                                 "bottomGapSize": bottomGapSize as AnyObject ]
             
             messageCell.setMessageOptions(options)
+            messageCell.setNeedsDisplay()
         }
         else if let presenceCell = cell as? PresenceCell {
             presenceCell.setAlias(event, showTimestamp: chatRoom.shouldShowTimestampLabelForEventIndex(index))
